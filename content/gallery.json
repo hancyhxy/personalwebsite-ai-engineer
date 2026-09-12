@@ -1,0 +1,146 @@
+[
+  {
+    "date": "2026-02-28",
+    "project name": "Claude Code ↔ Figma: Building an AI-Powered Portfolio Assistant",
+    "tag": "AI, MCP, Product Design",
+    "classification": "UX/Product",
+    "coverImageUrl": "gallery/portfolio-ai-assistant/public/cover.png",
+    "projectUrl": "gallery/portfolio-ai-assistant/index.html",
+    "company": "Personal"
+  },
+  {
+    "date": "2025-11-01",
+    "project name": "Interactive Virtual Drum Kit",
+    "tag": "Media pipe, HTML/CSS, P5js, Interactive Music",
+    "classification": "Experiential",
+    "coverImageUrl": "gallery/interactive-virtual-drum-kit/public/cover.png",
+    "projectUrl": "gallery/interactive-virtual-drum-kit/index.html",
+    "company": "UTS"
+  },
+  {
+    "date": "2025-10-01",
+    "project name": "FriendUp Map-based Social App",
+    "tag": "UX Design, Social Wellbeing, Usability Testing",
+    "classification": "UX/Product",
+    "coverImageUrl": "gallery/friendup-social-app/public/cover.png",
+    "projectUrl": "gallery/friendup-social-app/index.html",
+    "company": "UTS"
+  },
+  {
+    "date": "2023-01-01",
+    "project name": "Rider Dispatch & Scheduling Platform",
+    "tag": "B2B Platform, Operations Design, Efficiency Optimization",
+    "classification": "UX/Product",
+    "coverImageUrl": "gallery/Rider-Dispatch-Scheduling-Platform/public/cover.png",
+    "projectUrl": "gallery/Rider-Dispatch-Scheduling-Platform/index.html",
+    "company": "TikTok, Local Life"
+  },
+  {
+    "date": "2023-01-01",
+    "project name": "Content-Driven Food Delivery Experience",
+    "tag": "Short-Video Commerce, End-to-End, Low-Friction Usability",
+    "classification": "UX/Product",
+    "coverImageUrl": "gallery/Content-Driven-Food-Delivery-Experience/public/cover.png",
+    "projectUrl": "gallery/Content-Driven-Food-Delivery-Experience/index.html",
+    "company": "TikTok, Local Life"
+  },
+  {
+    "date": "2022-11-02",
+    "project name": "Re-Architecting Alibaba Help Center for Global Consistency",
+    "tag": "Web Design, Localization Strategy, Information Architecture",
+    "classification": "UX/Product",
+    "coverImageUrl": "gallery/Re-Architecting-Alibaba-Help-Center-for-Global-Consistency/public/cover.png",
+    "projectUrl": "gallery/Re-Architecting-Alibaba-Help-Center-for-Global-Consistency/index.html",
+    "company": "Alibaba, Taobao"
+  },
+  {
+    "date": "2021-11-01",
+    "project name": "KOL Growth Strategy",
+    "tag": "Social Media, User Growth, Content Strategy, Brand Collaboration",
+    "classification": "Content",
+    "coverImageUrl": "gallery/KOL-Growth-Strategy/public/album.png",
+    "projectUrl": "gallery/KOL-Growth-Strategy/index.html",
+    "company": "Red Note"
+  },
+  {
+    "date": "2021-06-01",
+    "project name": "Customer Service Workspace & AI Chatbot",
+    "tag": "UX Design, AI Chatbot, Customer Service",
+    "classification": "UX/Product",
+    "coverImageUrl": "gallery/customer-service-workspace-chatbot/public/cover.png",
+    "projectUrl": "gallery/customer-service-workspace-chatbot/index.html",
+    "company": "Alibaba"
+  },
+  {
+    "date": "2020-05-30",
+    "project name": "My friends are my power station",
+    "tag": "Installation, Projection Mapping, Urban Culture",
+    "classification": "Experiential",
+    "coverImageUrl": "gallery/my-friends-are-my-power-station/public/thesis_wholeview.png",
+    "projectUrl": "gallery/my-friends-are-my-power-station/index.html",
+    "company": "Parsons School of Design"
+  },
+  {
+    "date": "2019-12-30",
+    "project name": "Design Museum Tour as a Game",
+    "tag": "Experience Design, Museum Interaction",
+    "classification": "Experiential",
+    "coverImageUrl": "gallery/gamify-museum-experience/public/album.png",
+    "projectUrl": "gallery/gamify-museum-experience/index.html",
+    "company": "Brooklyn Museum, Parsons"
+  },
+  {
+    "date": "2019-11-01",
+    "project name": "Food Memory",
+    "tag": "speculative design, food design, sci-fi movie",
+    "classification": "Experiential",
+    "coverImageUrl": "gallery/food-memory/public/cover.png",
+    "projectUrl": "gallery/food-memory/index.html",
+    "company": "Parsons School of Design"
+  },
+  {
+    "date": "2018-12-01",
+    "project name": "How Are Oscars Biased?",
+    "tag": "Data Visualization, Poster Design, Node.js",
+    "classification": "Visual",
+    "coverImageUrl": "gallery/how-are-oscars-biased/public/cover.png",
+    "projectUrl": "gallery/how-are-oscars-biased/index.html",
+    "company": "-"
+  },
+  {
+    "date": "2018-11-20",
+    "project name": "The Museum Kit — Reframing Art through Interaction",
+    "tag": "Interaction Design, Museum, Experience Design",
+    "classification": "Experiential",
+    "coverImageUrl": "gallery/the-museum-kit/public/cover.png",
+    "projectUrl": "gallery/the-museum-kit/index.html",
+    "company": "-"
+  },
+  {
+    "date": "2018-11-10",
+    "project name": "Relationship of the Eight Planets in Solar System",
+    "tag": "Data Visualization, Poster",
+    "classification": "Visual",
+    "coverImageUrl": "gallery/solar-system-relationship/public/cover.png",
+    "projectUrl": "gallery/solar-system-relationship/index.html",
+    "company": "-"
+  },
+  {
+    "date": "2018-05-30",
+    "project name": "Farmer Coffee Logo",
+    "tag": "Visual Identity Design",
+    "classification": "Visual",
+    "coverImageUrl": "gallery/Farmer-Coffee-Logo/public/cover.png",
+    "projectUrl": "gallery/Farmer-Coffee-Logo/index.html",
+    "company": "Farmer Coffee Company"
+  },
+  {
+    "date": "2017-11-01",
+    "project name": "Global 1 Million AUDITION",
+    "tag": "Content Strategy, Social Media, Campaign",
+    "classification": "Visual",
+    "coverImageUrl": "gallery/musically-1m-audition/public/cover.png",
+    "projectUrl": "gallery/musically-1m-audition/index.html",
+    "company": "musical.ly"
+  }
+]

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xinyi Han — Portfolio · Stickies</title>
+
+    <!-- Favicons -->
+    <link rel="icon" href="./assets/logo/favicon.ico" sizes="any">
+    <link rel="icon" href="./assets/logo/favicon.svg" type="image/svg+xml">
+    <link rel="icon" href="./assets/logo/favicon-32x32.png" type="image/png" sizes="32x32">
+
+    <!-- Fonts — Instrument Serif (editorial display) + Geist (grotesk body) + JetBrains Mono (labels) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&family=Geist:wght@300;400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="./style/variables.css">
+    <link rel="stylesheet" href="./style/base.css">
+    <link rel="stylesheet" href="./style/nav.css">
+    <link rel="stylesheet" href="./style/stickies-wall.css">
+</head>
+<body class="stickies-page booting">
+
+    <!-- Boot overlay — Claude Code–style loading + Accept prompt. Gates
+         the entire app behind a multi-phase fake-thinking sequence. -->
+    <div class="stk-boot" id="stk-boot" aria-live="polite"></div>
+
+    <div class="stk-app">
+
+        <!-- Editorial topbar — 3-col fixed, Stickies-specific (does not share the Polaroid/Retro/Vinyl header) -->
+        <header class="stk-topbar">
+            <div class="brand">Xinyi Han <span>— portfolio</span></div>
+            <nav>
+                <a href="#stk-hero">Top</a>
+                <a href="./assets/docs/CV_XinyiHan_2026.pdf" target="_blank" rel="noopener noreferrer">Resume</a>
+                <a href="mailto:xinyihancy@gmail.com">Contact</a>
+            </nav>
+        </header>
+
+        <!-- Act I · Hero collage: all projects on a 24×14 grid -->
+        <section class="stk-hero" id="stk-hero"></section>
+
+        <!-- Bridge · quote between hero and walkthrough acts -->
+        <section class="stk-bridge" id="stk-bridge"></section>
+
+        <!-- Acts · four horizontal-scroll walkthroughs, one per discipline -->
+        <div id="stk-acts"></div>
+
+        <!-- Case panel (single instance, populated on open) -->
+        <div class="stk-panel" id="stk-panel"></div>
+
+        <div data-component="footer"></div>
+
+    </div>
+
+    <!-- Scripts -->
+    <script src="./js/component-loader.js"></script>
+    <script src="./js/stickies-wall.js"></script>
+    <script src="./js/stickies-app.js"></script>
+
+</body>
+</html>

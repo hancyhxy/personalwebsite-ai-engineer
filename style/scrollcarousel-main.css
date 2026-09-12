@@ -1,0 +1,706 @@
+/* ============================================================
+   Scroll Trigger & Keyword Carousel — layout & behavior styles
+   All rules scoped under .scrollcarousel-page.
+
+   Layer order (z-index):
+     6  header (wordmark + menu pill, always readable)
+     5  hero text column (transparent, sits above the artworks)
+     4  fixed floating-artwork layer (tumbles away on scroll)
+     2  selected-work section + footer (opaque background)
+   ============================================================ */
+
+body.scrollcarousel-page {
+  margin: 0;
+  background: var(--scc-bg);
+  color: var(--scc-ink);
+  font-family: var(--scc-sans);
+  overflow-x: hidden;
+}
+
+body.scrollcarousel-page.scc-can-click { cursor: pointer; }
+body.scrollcarousel-page.scc-is-entering { overflow: hidden; }
+
+/* ---------------- Three.js artwork field ---------------- */
+
+.scrollcarousel-page .scc-webgl {
+  position: fixed;
+  inset: 0;
+  z-index: 4;
+  opacity: 0;
+  overflow: hidden;
+  pointer-events: none;
+  transition: opacity 0.8s ease;
+  will-change: opacity;
+}
+
+.scrollcarousel-page.scc-webgl-ready .scc-webgl { opacity: 1; }
+
+.scrollcarousel-page .scc-webgl-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  outline: none;
+}
+
+.scrollcarousel-page .scc-webgl-status {
+  position: fixed;
+  left: 50%;
+  bottom: 18px;
+  z-index: 7;
+  transform: translateX(-50%);
+  margin: 0;
+  font-size: 10px;
+  color: var(--scc-ink-soft);
+}
+
+.scrollcarousel-page.scc-no-webgl .scc-journey { display: none; }
+
+.scrollcarousel-page a:focus-visible,
+.scrollcarousel-page button:focus-visible {
+  outline: 2px solid var(--scc-ink);
+  outline-offset: 3px;
+}
+
+/* Visually hidden (screen-reader-only) text */
+.scrollcarousel-page .scc-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---------------- Header ---------------- */
+
+.scrollcarousel-page .scc-header {
+  position: relative;
+  z-index: 6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 26px 28px 10px;
+}
+
+.scrollcarousel-page .scc-wordmark {
+  font-family: var(--scc-serif);
+  font-optical-sizing: auto;
+  font-size: 26px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: var(--scc-ink);
+  text-decoration: none;
+}
+
+.scrollcarousel-page .scc-menu-btn {
+  position: absolute;
+  top: 20px;
+  right: 24px;
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  border: 1px solid rgba(23, 20, 16, 0.05);
+  background: #fff;
+  box-shadow: var(--scc-pill-shadow);
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 0;
+  cursor: default; /* decorative only */
+}
+
+.scrollcarousel-page .scc-menu-btn span {
+  display: block;
+  width: 14px;
+  height: 1.5px;
+  background: var(--scc-ink);
+}
+
+/* ---------------- Hero ---------------- */
+
+.scrollcarousel-page .scc-hero {
+  position: relative;
+  z-index: 5;
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+}
+
+.scrollcarousel-page .scc-hero-inner {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 24px 9vh;
+}
+
+.scrollcarousel-page .scc-kicker {
+  font-family: var(--scc-sans);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: var(--scc-ink);
+  margin: 0 0 20px;
+}
+
+.scrollcarousel-page .scc-headline {
+  font-family: var(--scc-serif);
+  font-optical-sizing: auto;
+  font-size: clamp(34px, 4.6vw, 62px);
+  font-weight: 420;
+  line-height: 1.18;
+  letter-spacing: -0.005em;
+  margin: 0;
+  max-width: 22ch;
+}
+
+.scrollcarousel-page .scc-headline-visual,
+.scrollcarousel-page .scc-line {
+  display: block;
+}
+
+/* In-sentence keyword slot. All four keywords are stacked in one
+   inline-grid cell so the slot always measures the widest word and
+   the static words around it never move. The inline margins produce
+   the visible Getty-style extra word gap. */
+.scrollcarousel-page .scc-kw-slot {
+  display: inline-grid;
+  margin-inline: 0.55em;
+  vertical-align: baseline;
+}
+
+.scrollcarousel-page .scc-kw {
+  grid-area: 1 / 1;
+  justify-self: center;
+  white-space: nowrap;
+  font-style: italic;
+  visibility: hidden;
+}
+
+.scrollcarousel-page .scc-kw.is-active {
+  visibility: visible;
+}
+
+/* Keep full keywords as invisible sizing guides. Only the typed fragment
+   grows, centered in that fixed slot, just like V1's centered title. */
+.scrollcarousel-page .has-typewriter .scc-kw {
+  visibility: hidden;
+}
+
+.scrollcarousel-page .scc-typewriter {
+  grid-area: 1 / 1;
+  justify-self: center;
+  align-self: baseline;
+  white-space: nowrap;
+  font-style: italic;
+}
+
+.scrollcarousel-page .scc-caret {
+  display: inline-block;
+  width: 0.085em;
+  height: 0.9em;
+  margin-left: 0.07em;
+  border-radius: 2px;
+  background: currentColor;
+  vertical-align: -0.06em;
+  animation: scc-caret-blink 1.1s ease-in-out infinite;
+}
+
+.scrollcarousel-page .scc-caret.is-typing {
+  animation: none;
+  opacity: 1;
+}
+
+@keyframes scc-caret-blink {
+  0%, 44%, 100% { opacity: 1; }
+  50%, 94% { opacity: 0; }
+}
+
+/* Scroll-down pill */
+.scrollcarousel-page .scc-scroll-btn {
+  margin-top: 48px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--scc-sans);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--scc-ink);
+  background: #fff;
+  border: 1px solid rgba(23, 20, 16, 0.05);
+  border-radius: 999px;
+  padding: 12px 22px;
+  box-shadow: var(--scc-pill-shadow);
+  cursor: pointer;
+  transition: box-shadow 0.25s ease;
+}
+
+.scrollcarousel-page .scc-scroll-btn:hover {
+  box-shadow: var(--scc-pill-shadow-hover);
+}
+
+/* ---------------- Floating artworks ---------------- */
+
+.scrollcarousel-page .scc-float-layer {
+  position: fixed;
+  inset: 0;
+  overflow: hidden; /* clips drift and tumble — never widens the page */
+  pointer-events: none;
+  z-index: 4;
+}
+
+/* Outer node: edge position, category opacity, tumble transform.
+   --w, --rot and --fall-delay are set inline per work by the app. */
+.scrollcarousel-page .scc-work {
+  position: absolute;
+  opacity: var(--scc-ghost);
+  transition:
+    opacity var(--scc-work-fade) ease,
+    transform 0.9s ease;
+  will-change: transform, opacity;
+}
+
+.scrollcarousel-page .scc-work.is-active {
+  opacity: 1;
+}
+
+/* Middle node: gentle independent drift */
+.scrollcarousel-page .scc-drift {
+  animation-duration: 9s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+.scrollcarousel-page .scc-drift--a { animation-name: scc-drift-a; }
+.scrollcarousel-page .scc-drift--b { animation-name: scc-drift-b; }
+.scrollcarousel-page .scc-drift--c { animation-name: scc-drift-c; }
+.scrollcarousel-page .scc-drift--d { animation-name: scc-drift-d; }
+
+@keyframes scc-drift-a { from { transform: translate(0, 0); } to { transform: translate(4px, -7px); } }
+@keyframes scc-drift-b { from { transform: translate(0, 0); } to { transform: translate(-5px, 6px); } }
+@keyframes scc-drift-c { from { transform: translate(0, 0); } to { transform: translate(6px, 4px); } }
+@keyframes scc-drift-d { from { transform: translate(0, 0); } to { transform: translate(-4px, -6px); } }
+
+/* Inner node: the artwork itself; active category scales up slightly */
+.scrollcarousel-page .scc-work img {
+  display: block;
+  width: var(--w, 140px);
+  height: auto;
+  box-shadow: 0 10px 30px rgba(23, 20, 16, 0.1);
+  transition: transform var(--scc-work-fade) ease;
+}
+
+.scrollcarousel-page .scc-work.is-active img {
+  transform: scale(1.06);
+}
+
+/* Tumble-away curtain: past the scroll threshold every work drops
+   off-screen with its own rotation and a staggered delay. */
+.scrollcarousel-page.is-past .scc-work {
+  transform: translateY(130vh) rotate(var(--rot, 14deg));
+  opacity: 0;
+  transition:
+    transform var(--scc-fall-duration) cubic-bezier(0.45, 0.02, 0.72, 0.3) var(--fall-delay, 0ms),
+    opacity 0.9s ease var(--fall-delay, 0ms);
+}
+
+/* ---------------- Scroll journey ---------------- */
+
+.scrollcarousel-page .scc-journey {
+  position: relative;
+  z-index: 3;
+  height: 650vh;
+  pointer-events: none;
+}
+
+.scrollcarousel-page .scc-journey-intro,
+.scrollcarousel-page .scc-chapter-marker {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
+  text-align: center;
+  color: var(--scc-ink);
+}
+
+.scrollcarousel-page .scc-journey-intro {
+  top: 4vh;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  font: 420 clamp(28px, 3vw, 42px)/1 var(--scc-serif);
+}
+
+.scrollcarousel-page .scc-journey-intro span,
+.scrollcarousel-page .scc-chapter-marker {
+  font: 500 10px/1.2 var(--scc-sans);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.scrollcarousel-page .scc-journey-intro span { color: var(--scc-ink-soft); }
+
+.scrollcarousel-page .scc-chapter-marker {
+  top: calc((var(--chapter) * 120vh) - 13vh);
+  width: min(44ch, 70vw);
+  padding-top: 14px;
+  border-top: 1px solid var(--scc-hairline);
+}
+
+/* ---------------- Project preview ---------------- */
+
+.scrollcarousel-page .scc-project-preview {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 100;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: 76px minmax(0, 1fr);
+  gap: 18px;
+  width: min(410px, calc(100vw - 40px));
+  padding: 18px 42px 18px 18px;
+  border: 1px solid rgba(23, 20, 16, 0.08);
+  border-radius: 18px;
+  background: rgba(244, 243, 240, 0.84);
+  box-shadow: 0 22px 70px rgba(23, 20, 16, 0.16);
+  backdrop-filter: blur(18px);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(24px) scale(0.97);
+  transition: opacity 0.35s ease, transform 0.45s cubic-bezier(.2,.8,.2,1), visibility 0s linear 0.45s;
+}
+
+.scrollcarousel-page .scc-project-preview.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: none;
+  transition-delay: 0s;
+}
+
+.scrollcarousel-page .scc-preview-thumb {
+  width: 76px;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+.scrollcarousel-page .scc-preview-copy { min-width: 0; }
+.scrollcarousel-page .scc-preview-number,
+.scrollcarousel-page .scc-preview-meta {
+  margin: 0;
+  color: var(--scc-ink-soft);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.scrollcarousel-page .scc-preview-copy h2 {
+  margin: 7px 0 4px;
+  font: 500 20px/1.08 var(--scc-serif);
+}
+
+.scrollcarousel-page .scc-preview-description {
+  margin: 12px 0 16px;
+  color: var(--scc-ink-soft);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.scrollcarousel-page .scc-preview-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 30px;
+  height: 30px;
+  border: 0;
+  background: transparent;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.scrollcarousel-page .scc-preview-enter {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 34px;
+  min-width: 118px;
+  padding: 10px 14px;
+  border: 1px solid var(--scc-ink);
+  border-radius: 999px;
+  background: var(--scc-ink);
+  color: var(--scc-bg);
+  font: 500 11px var(--scc-sans);
+  cursor: pointer;
+}
+
+/* ---------------- Accessible project index ---------------- */
+
+.scrollcarousel-page .scc-selected {
+  position: relative;
+  z-index: 8;
+  background: var(--scc-bg);
+  padding: 5vh 24px;
+  text-align: center;
+  opacity: 1;
+}
+
+.scrollcarousel-page .scc-static-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 54px;
+  min-width: 190px;
+  padding: 14px 18px;
+  border: 1px solid var(--scc-ink);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--scc-ink);
+  font: 500 11px var(--scc-sans);
+  letter-spacing: .04em;
+  cursor: pointer;
+}
+
+.scrollcarousel-page .scc-static-toggle:hover,
+.scrollcarousel-page .scc-static-toggle[aria-expanded="true"] { background: var(--scc-ink); color: var(--scc-bg); }
+.scrollcarousel-page .scc-static-content { padding-top: 10vh; text-align: left; }
+.scrollcarousel-page .scc-static-content[hidden] { display: none; }
+
+.scrollcarousel-page .scc-selected-heading {
+  font-family: var(--scc-serif);
+  font-optical-sizing: auto;
+  font-size: clamp(30px, 3.4vw, 46px);
+  font-weight: 420;
+  letter-spacing: -0.005em;
+  text-align: center;
+  margin: 0 0 8vh;
+}
+
+.scrollcarousel-page .scc-grid {
+  max-width: 1080px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 56px 36px;
+}
+
+.scrollcarousel-page .scc-card {
+  opacity: 0;
+  transform: translateY(24px);
+  cursor: pointer;
+  transition:
+    opacity 0.7s ease var(--reveal-delay, 0ms),
+    transform 0.7s ease var(--reveal-delay, 0ms);
+}
+
+.scrollcarousel-page .scc-card:hover .scc-card-title { text-decoration: underline; text-underline-offset: 3px; }
+
+.scrollcarousel-page .scc-card.is-inview {
+  opacity: 1;
+  transform: none;
+}
+
+.scrollcarousel-page .scc-card img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 4px;
+  background: #f1efe9; /* quiet placeholder while loading */
+}
+
+.scrollcarousel-page .scc-card--noimg img {
+  display: none; /* a missing thumb should fail quietly */
+}
+
+.scrollcarousel-page .scc-card-title {
+  font-family: var(--scc-serif);
+  font-optical-sizing: auto;
+  font-size: 20px;
+  font-weight: 460;
+  line-height: 1.3;
+  margin: 14px 0 5px;
+}
+
+.scrollcarousel-page .scc-card-meta {
+  font-family: var(--scc-sans);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--scc-ink-soft);
+  margin: 0;
+}
+
+/* ---------------- Footer ---------------- */
+
+.scrollcarousel-page .scc-footer {
+  position: relative;
+  z-index: 2;
+  background: var(--scc-bg);
+  text-align: center;
+  padding: 10vh 24px 8vh;
+}
+
+.scrollcarousel-page .scc-footer-wordmark {
+  font-family: var(--scc-serif);
+  font-optical-sizing: auto;
+  font-size: 24px;
+  font-weight: 500;
+  margin: 0 0 10px;
+}
+
+.scrollcarousel-page .scc-footer-copy {
+  font-family: var(--scc-sans);
+  font-size: 12px;
+  color: var(--scc-ink-soft);
+  margin: 0 0 24px;
+}
+
+.scrollcarousel-page .scc-footer-links {
+  display: flex;
+  justify-content: center;
+  gap: 28px;
+}
+
+.scrollcarousel-page .scc-footer-links a {
+  font-family: var(--scc-sans);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--scc-ink);
+  text-decoration: none;
+  border-bottom: 1px solid var(--scc-hairline);
+  padding-bottom: 2px;
+}
+
+.scrollcarousel-page .scc-footer-links a:hover {
+  border-bottom-color: var(--scc-ink);
+}
+
+/* ---------------- Responsive ---------------- */
+
+@media (max-width: 900px) {
+  .scrollcarousel-page .scc-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 44px 28px;
+  }
+}
+
+@media (max-width: 760px) {
+  .scrollcarousel-page .scc-journey { height: 650vh; }
+
+  .scrollcarousel-page .scc-project-preview {
+    right: 12px;
+    bottom: 12px;
+    grid-template-columns: 62px minmax(0, 1fr);
+    width: calc(100vw - 24px);
+    padding: 15px 40px 15px 15px;
+  }
+
+  .scrollcarousel-page .scc-preview-thumb { width: 62px; }
+
+  /* Legacy floating-work rules remain as a no-WebGL fallback. */
+  .scrollcarousel-page .scc-work img {
+    width: calc(var(--w, 140px) * 0.58);
+  }
+
+  .scrollcarousel-page .scc-work--wide-only {
+    display: none;
+  }
+
+  .scrollcarousel-page .scc-menu-btn {
+    top: 18px;
+    right: 16px;
+    width: 40px;
+    height: 40px;
+  }
+}
+
+@media (max-width: 560px) {
+  .scrollcarousel-page .scc-hero-inner {
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+    padding-inline: 18px;
+  }
+
+  .scrollcarousel-page .scc-headline {
+    width: 100%;
+    max-width: 100%;
+    font-size: clamp(24px, 6.8vw, 28px);
+    line-height: 1.22;
+  }
+
+  .scrollcarousel-page .scc-headline-visual,
+  .scrollcarousel-page .scc-line { display: block; }
+  .scrollcarousel-page .scc-kw-slot { margin-inline: 0.22em; }
+
+  .scrollcarousel-page .scc-print-launch {
+    box-sizing: border-box;
+    width: min(100%, 340px);
+    gap: 10px;
+    padding-right: 14px;
+  }
+
+  .scrollcarousel-page .scc-mini-machine { flex: 0 0 62px; width: 62px; }
+  .scrollcarousel-page .scc-print-launch > span:nth-child(2) { min-width: 0; }
+
+  .scrollcarousel-page .scc-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+}
+
+/* ---------------- Reduced motion ---------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  /* No drift */
+  .scrollcarousel-page .scc-drift {
+    animation: none;
+  }
+
+  /* Static complete keyword; no typing or blinking. */
+  .scrollcarousel-page .scc-caret {
+    display: none;
+    animation: none;
+  }
+
+  .scrollcarousel-page .scc-webgl,
+  .scrollcarousel-page .scc-project-preview {
+    transition: none;
+  }
+
+  /* No tumble in the legacy fallback. */
+  .scrollcarousel-page .scc-work,
+  .scrollcarousel-page.is-past .scc-work {
+    transition: opacity 0.6s ease;
+  }
+
+  .scrollcarousel-page.is-past .scc-work {
+    transform: none;
+  }
+
+  .scrollcarousel-page .scc-work.is-active img {
+    transform: none;
+  }
+
+  /* Grid cards: fade only */
+  .scrollcarousel-page .scc-card {
+    transform: none;
+    transition: opacity 0.6s ease;
+  }
+}

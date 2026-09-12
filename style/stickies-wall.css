@@ -1,0 +1,1368 @@
+/* Stickies — editorial collage with paper stickies
+   Warm paper ground · low-sat vintage sticky palette
+   Hero grid fits all works in one viewport (no rotation, regular layout).
+   Scroll-driven zoom + horizontal walkthrough acts per discipline. */
+
+/* NOTE: do NOT use `overflow-x: hidden` on html/body — it breaks position: sticky
+   on descendants. Use `overflow-x: clip` which doesn't create a scroll container. */
+html, body.stickies-page { overflow-x: clip; }
+
+body.stickies-page {
+    font-family: "Geist", "Inter", system-ui, sans-serif;
+    font-weight: 400;
+    background: #dcd8cc;
+    color: #26282a;
+    padding-top: 56px;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+}
+
+/* ====== BOOT GATE — hide the Stickies app until the Claude Code–style
+   opening sequence finishes. .stk-app sits beneath .stk-boot; it fades
+   in once body.booted is added by StickyBoot. ====== */
+body.stickies-page .stk-app {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.8s ease;
+}
+body.stickies-page.booted .stk-app {
+    opacity: 1;
+    pointer-events: auto;
+}
+body.stickies-page.booting {
+    overflow: hidden;
+    padding-top: 0;
+}
+
+/* Claude Code terminal palette during boot — orange active marker,
+   warm grays for everything else. Chartreuse green belongs to the app
+   state after Accept, not to the boot sequence itself.
+
+   Stage is anchored to a fixed position near the top of the viewport so
+   that each new line (Thinking → Reading → tasks → Ready → insight)
+   appears to "print downward" like in a real terminal, instead of the
+   whole block recentering every time content grows. */
+.stk-boot {
+    --stk-boot-active: #D97757;
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: var(--stk-hero-bg, #FFFCF3);
+    display: flex;
+    /* Terminal scroll feel — latest line sits near the bottom of the
+       viewport; earlier lines get pushed upward as new ones are printed.
+       flex-end on align-items anchors the stage to the bottom of overlay. */
+    align-items: flex-end;
+    justify-content: flex-start;
+    padding: 80px clamp(32px, 8vw, 96px) clamp(80px, 16vh, 160px);
+    overflow-y: auto;
+    transition: opacity 0.6s ease;
+}
+.stk-boot.is-gone {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.stk-boot-stage {
+    width: min(640px, 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-end;
+    gap: 16px;
+    /* Keep a generous starting height so the first Thinking line already
+       sits well below the top edge — when more lines append below, the
+       whole block appears to scroll upward as content "pushes" older lines
+       toward the top of the stage. */
+    min-height: clamp(360px, 60vh, 560px);
+}
+
+/* Fake CLI command preamble — "$ cd xinyi" etc. lines appear in turn,
+   each with a briefly blinking cursor. They stay on screen and scroll
+   upward naturally as the rest of the terminal output is appended. */
+.stk-boot-cmds {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin-bottom: 4px;
+}
+.stk-boot-cmd {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 13px;
+    color: var(--stk-ink-soft);
+    animation: stkBootCmdIn 0.2s ease;
+}
+/* Path prompt — muted gray, acts as the "you are here" marker */
+.stk-boot-cmd .prompt {
+    color: var(--stk-mute);
+    opacity: 0.85;
+}
+/* Verb (cd, ls, etc.) — same soft ink as the line baseline */
+.stk-boot-cmd .verb {
+    color: var(--stk-ink-soft);
+}
+/* Argument — treated like a filesystem link, subtle underline */
+.stk-boot-cmd .arg {
+    color: var(--stk-ink-soft);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+    text-decoration-color: var(--stk-mute);
+}
+.stk-boot-cmd .cursor {
+    display: inline-block;
+    margin-left: 2px;
+    color: var(--stk-boot-active);
+    animation: stkBootBlink 0.9s steps(2, end) infinite;
+}
+@keyframes stkBootCmdIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes stkBootBlink {
+    50% { opacity: 0; }
+}
+
+/* Status line — orange * + orange label + gray animated ellipsis */
+.stk-boot-status {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 14px;
+    letter-spacing: 0.01em;
+    transition: opacity 0.2s ease;
+}
+.stk-boot-status.is-fading { opacity: 0; }
+.stk-boot-status .mark {
+    color: var(--stk-boot-active);
+    font-weight: 500;
+}
+.stk-boot-status .label {
+    color: var(--stk-boot-active);
+}
+.stk-boot-status .ellipsis {
+    display: inline-block;
+    color: var(--stk-mute);
+    animation: stkBootEllipsis 1.4s steps(4, end) infinite;
+    overflow: hidden;
+    vertical-align: baseline;
+    width: 0.9em;
+    white-space: nowrap;
+}
+/* Ready state: everything goes gray, ellipsis hidden by JS */
+.stk-boot-status.is-ready .mark,
+.stk-boot-status.is-ready .label {
+    color: var(--stk-ink-soft);
+}
+
+@keyframes stkBootEllipsis {
+    0%   { width: 0; }
+    100% { width: 0.9em; }
+}
+
+/* Task list — all rows visible at once; .is-active walks down */
+.stk-boot-log {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    transition: opacity 0.3s ease;
+}
+.stk-boot-log.is-fading { opacity: 0; }
+.stk-boot-row {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--stk-mute);
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    transition: color 0.2s ease;
+    /* Rows slide up from below on render so the list appears to "print"
+       downward even though it's painted all at once. The stagger is
+       driven by animation-delay, indexed via nth-child. */
+    opacity: 0;
+    transform: translateY(10px);
+    animation: stkBootRowRise 0.4s cubic-bezier(0.2, 0.7, 0.15, 1) forwards;
+}
+.stk-boot-row:nth-child(1) { animation-delay: 0.00s; }
+.stk-boot-row:nth-child(2) { animation-delay: 0.08s; }
+.stk-boot-row:nth-child(3) { animation-delay: 0.16s; }
+.stk-boot-row:nth-child(4) { animation-delay: 0.24s; }
+.stk-boot-row:nth-child(5) { animation-delay: 0.32s; }
+.stk-boot-row:nth-child(6) { animation-delay: 0.40s; }
+.stk-boot-row:nth-child(7) { animation-delay: 0.48s; }
+.stk-boot-row:nth-child(8) { animation-delay: 0.56s; }
+
+@keyframes stkBootRowRise {
+    to { opacity: 1; transform: translateY(0); }
+}
+.stk-boot-row .tree {
+    width: 14px;
+    display: inline-block;
+    text-align: center;
+    color: var(--stk-mute);
+    opacity: 0.5;
+}
+.stk-boot-row .marker {
+    width: 14px;
+    display: inline-block;
+    text-align: center;
+    color: var(--stk-mute);
+    transition: color 0.15s ease;
+}
+.stk-boot-row .label {
+    transition: color 0.15s ease, text-decoration-color 0.15s ease;
+}
+.stk-boot-row.is-active .marker { color: var(--stk-boot-active); }
+.stk-boot-row.is-active .label  { color: var(--stk-ink-soft); font-weight: 500; }
+
+.stk-boot-row.is-done .marker { color: var(--stk-mute); }
+.stk-boot-row.is-done .label {
+    color: var(--stk-mute);
+    text-decoration: line-through;
+    text-decoration-color: var(--stk-mute);
+}
+
+/* Accept prompt — insight + chooser + hint, all left-aligned */
+.stk-boot-prompt {
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.2, 0.7, 0.15, 1);
+}
+.stk-boot-prompt.is-revealed {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ★ Insight card — lavender chrome (bullet + star + header + rules) */
+.stk-boot-insight-card {
+    --stk-boot-purple: #B5A3FF;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+    max-width: 520px;
+    transition: opacity 0.25s ease;
+}
+.stk-boot-insight-card.is-fading { opacity: 0; }
+
+.stk-boot-insight-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 13px;
+    color: var(--stk-boot-purple);
+    transition: opacity 0.25s ease;
+}
+.stk-boot-insight-header .bullet { font-size: 8px; }
+.stk-boot-insight-header .star   { font-size: 14px; }
+.stk-boot-insight-header .title  { font-weight: 500; letter-spacing: 0.02em; }
+.stk-boot-insight-header .rule {
+    flex: 1;
+    height: 0;
+    border-top: 1px solid var(--stk-boot-purple);
+    margin-left: 4px;
+    opacity: 0.7;
+}
+
+.stk-boot-insight {
+    margin: 0;
+    padding-left: 20px; /* aligns under the header text (after bullet + star) */
+    text-align: left;
+    font-family: "JetBrains Mono", monospace;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--stk-ink-soft);
+    transform-origin: 0 0;
+}
+
+/* Stagger reveal — shared across insight lines, footer rule, choices, and
+   hint. --i is the item index: insight 0–3, footer 4, Accept 5, Cancel 6,
+   hint 7. +300ms waits for the prompt's own fade-in before items print. */
+.stk-boot-insight .stk-boot-line,
+.stk-boot-prompt .stk-boot-insight-footer,
+.stk-boot-prompt .stk-boot-choice,
+.stk-boot-prompt .stk-boot-hint {
+    opacity: 0;
+    /* Larger translateY so new lines appear to "push up" from below,
+       reinforcing the terminal scroll-up feeling. */
+    transform: translateY(14px);
+    transition: opacity 0.45s ease, transform 0.5s cubic-bezier(0.2, 0.7, 0.15, 1);
+    transition-delay: calc(var(--i, 0) * 250ms + 300ms);
+}
+.stk-boot-insight .stk-boot-line { display: block; }
+
+.stk-boot-prompt.is-revealed .stk-boot-insight .stk-boot-line,
+.stk-boot-prompt.is-revealed .stk-boot-insight-footer,
+.stk-boot-prompt.is-revealed .stk-boot-choice,
+.stk-boot-prompt.is-revealed .stk-boot-hint {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.stk-boot-insight-footer {
+    display: flex;
+    padding-left: 20px;
+    transition: opacity 0.25s ease;
+}
+.stk-boot-insight-footer .rule {
+    flex: 1;
+    height: 0;
+    border-top: 1px solid var(--stk-boot-purple);
+    opacity: 0.7;
+}
+
+.stk-boot-choices {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    transition: opacity 0.2s ease;
+}
+.stk-boot-choices.is-fading { opacity: 0; }
+.stk-boot-choice {
+    background: none;
+    border: 0;
+    padding: 4px 0;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 13px;
+    color: var(--stk-mute);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    transition: color 0.15s ease;
+    text-align: left;
+}
+.stk-boot-choice .caret {
+    opacity: 0;
+    color: var(--stk-boot-active);
+    transition: opacity 0.15s ease;
+    width: 10px;
+    display: inline-block;
+}
+.stk-boot-choice.is-focus {
+    color: var(--stk-ink);
+}
+.stk-boot-choice.is-focus .caret {
+    opacity: 1;
+}
+
+.stk-boot-hint {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    color: var(--stk-mute);
+    letter-spacing: 0.08em;
+    transition: opacity 0.2s ease;
+}
+.stk-boot-hint.is-fading { opacity: 0; }
+
+/* ====== Editorial topbar — Stickies-specific, replaces shared header.html ====== */
+.stk-topbar {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 50;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    padding: 14px 28px;
+    background: linear-gradient(180deg, rgba(220,216,204,0.95), rgba(220,216,204,0.78));
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--stk-rule);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--stk-ink);
+}
+.stk-topbar .brand {
+    font-family: "Instrument Serif", serif;
+    font-style: italic;
+    font-size: 19px;
+    letter-spacing: 0;
+    text-transform: none;
+    line-height: 1;
+}
+.stk-topbar .brand span { color: var(--stk-mute); margin-left: 6px; }
+.stk-topbar .title-center {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    color: var(--stk-mute);
+    text-align: center;
+    letter-spacing: 0.15em;
+}
+.stk-topbar nav {
+    display: flex; gap: 20px;
+    justify-content: flex-end;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+}
+.stk-topbar nav a {
+    color: var(--stk-ink);
+    text-decoration: none;
+    opacity: 0.7;
+    transition: opacity .2s;
+}
+.stk-topbar nav a:hover {
+    opacity: 1;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+:root {
+    --stk-ink: #26282a;
+    --stk-ink-soft: #55585c;
+    --stk-paper: #dcd8cc;
+    --stk-paper-hi: #e6e2d6;
+    --stk-paper-lo: #c8c4b8;
+    --stk-mute: #8a8a85;
+    --stk-rule: #b6b3a8;
+    --stk-accent: #6a5a42;
+
+    /* Hero-specific tokens — override here (or in variables.css) to retheme. */
+    --stk-hero-bg: #FFFCF3;   /* pale warm paper behind the collage */
+
+    /* Restrained, cool-leaning sticky palette — fewer distinct hues, all muted */
+    --s-bone:   #e6e1d4;
+    --s-linen:  #dcd6c5;
+    --s-dust:   #d2cdbe;
+    --s-sage:   #c8cdbe;
+    --s-mist:   #c4cdd0;
+    --s-fog:    #b8bfc3;
+    --s-stone:  #b5b3aa;
+    --s-wheat:  #d8cca8;
+    --s-cream:  #dcd4b4;
+    --s-slate:  #a8afb5;
+    --s-putty:  #c5beae;
+    --s-ivory:  #e8e4d6;
+}
+
+/* ====== Paper ground — subtle grain on body ====== */
+body.stickies-page::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image:
+        radial-gradient(ellipse 1200px 700px at 30% 20%, rgba(245,242,232,0.35), transparent 60%),
+        radial-gradient(ellipse 900px 500px at 80% 80%, rgba(110,115,120,0.08), transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+}
+body.stickies-page::after {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' seed='4'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.06 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    opacity: 0.7;
+    pointer-events: none;
+    z-index: 0;
+    mix-blend-mode: multiply;
+}
+
+/* ====== ACT I — HERO COLLAGE ====== */
+.stk-hero {
+    position: relative;
+    padding: 28px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    z-index: 2;
+    /* Collage background — override --stk-hero-bg to retheme without
+       touching other Stickies chrome. */
+    background: var(--stk-hero-bg);
+    transform-origin: 50% 40%;
+    will-change: transform, opacity;
+    /* Prevent horizontal scroll on narrow viewports; canvas can bleed
+       beyond the visible area on smaller screens. */
+    overflow: hidden;
+}
+
+/* Fixed canvas — pixel-anchored layout that stays centered and never
+   reflows with browser width. Wider viewports show margins on the sides;
+   narrower ones crop the edges (acceptable trade for pixel fidelity). */
+.stk-collage {
+    position: relative;
+    width: 1440px;
+    height: 1280px;
+    margin: 0 auto;
+    flex: 0 0 auto;
+}
+
+/* Paper-tone wash sitting between the bg video and the stickies. Breaks out
+   of the 1440 canvas using calc(50% - 50vw) so the wash stretches to match
+   the viewport-wide video underneath. */
+.stk-collage::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: calc(50% - 50vw + 28px);
+    width: calc(100vw - 56px);
+    background: linear-gradient(
+        180deg,
+        rgba(245, 240, 225, 0.35) 0%,
+        rgba(245, 240, 225, 0.15) 50%,
+        rgba(245, 240, 225, 0.45) 100%
+    );
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* Background video — stretches to full viewport width even though it lives
+   inside the 1440px canvas. The calc(50% - 50vw) trick shifts its left edge
+   to the viewport edge, and width:100vw expands it to match. Stickies above
+   remain pixel-pinned on the 1440 grid. */
+.stk-hero-video {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: calc(50% - 50vw + 28px);
+    width: calc(100vw - 56px);
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+    pointer-events: none;
+    filter: blur(2px) brightness(0.92) saturate(0.85);
+    opacity: 0.55;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .stk-hero-video { display: none; }
+}
+
+/* Handwritten-style opening headline, centered on the 1440 canvas. */
+.stk-headline {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 140px;
+    margin: 0;
+    text-align: center;
+    font-family: "Instrument Serif", serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.6;
+    letter-spacing: 0;
+    color: var(--stk-ink);
+    z-index: 2;
+}
+.stk-headline .stk-strike {
+    text-decoration: line-through;
+    text-decoration-thickness: 1.5px;
+    text-decoration-color: var(--stk-ink);
+}
+/* Highlighter-marker effect: a chartreuse band covers the bottom ~45% of
+   the word, like someone ran a felt-tip marker through it. The 2px side
+   padding + negative margin keeps the band extending slightly past the
+   letterforms, matching the way a real highlighter doesn't stop cleanly
+   at the glyph edge. */
+.stk-headline .stk-underline {
+    text-decoration: none;
+    background-image: linear-gradient(
+        to bottom,
+        transparent 55%,
+        var(--stk-dot-color) 55%,
+        var(--stk-dot-color) 95%,
+        transparent 95%
+    );
+    padding: 0 3px;
+    margin: 0 -3px;
+}
+
+/* ---- Paper sticky tile ---- */
+.stk-tile {
+    position: absolute;
+    overflow: hidden;
+    cursor: pointer;
+    opacity: 0;
+    z-index: 2;
+    /* Per-slot rotation lives in --tile-rot (set by each [data-slot] rule
+       below). Keeping it in a variable lets hover/animation reuse the tilt
+       without clobbering it. */
+    --tile-rot: 0deg;
+    transform: rotate(var(--tile-rot)) translateY(20px);
+    animation: stkTileIn .9s cubic-bezier(0.2,0.7,0.15,1) forwards;
+    transition: transform .4s cubic-bezier(0.2,0.7,0.15,1), box-shadow .4s, filter .4s;
+    background: var(--s-cream);
+    background-image:
+        repeating-linear-gradient(180deg, transparent 0 23px, rgba(0,0,0,0.05) 23px 24px),
+        radial-gradient(ellipse 130% 70% at 50% 0%, rgba(255,255,255,0.4), transparent 65%),
+        radial-gradient(ellipse 100% 60% at 50% 100%, rgba(0,0,0,0.06), transparent 70%);
+    /* Asymmetric warm shadow stack — light falls from upper-left, so shadows
+       push down-right. Contact line + three offset layers at increasing blur
+       sell depth without any rotation. Inner highlights suggest a subtle
+       paper curve along the top and right edges. */
+    box-shadow:
+        /* 1. Tight contact line along the bottom edge — where paper meets wall */
+        0 1px 1px rgba(0,0,0,0.10),
+        /* 2. Short directional shadow — offset down-right */
+        4px 5px 8px -2px rgba(40,30,20,0.16),
+        /* 3. Mid-range diffused shadow */
+        8px 12px 22px -6px rgba(40,30,20,0.20),
+        /* 4. Long soft ambient shadow — lifts the sheet off the wall */
+        14px 26px 44px -14px rgba(30,25,15,0.22),
+        /* 5. Inner curl highlight along the top-left — as if the paper
+              bows very slightly toward the light */
+        inset 1px 1px 2px rgba(255,252,240,0.55),
+        /* 6. Inner shadow along bottom-right — matches the outer light direction */
+        inset -1px -2px 4px rgba(60,50,35,0.10),
+        /* 7. Original warm haze — kept for continuity with the existing palette */
+        inset 0 0 20px rgba(80,60,35,0.035);
+    isolation: isolate;
+}
+@keyframes stkTileIn { to { opacity: 1; transform: rotate(var(--tile-rot)) translateY(0); } }
+
+/* ---- Curl-shadow pseudo — the "warped" shadow the box-shadow stack cannot
+   produce. An asymmetric radial-gradient sits behind each sticky and gets
+   skewed, so the cast shadow has a slight diagonal deformation rather than
+   a perfectly straight drop. Reads as if the bottom-right corner of the
+   paper is lifting just a hair off the wall. */
+.stk-tile::after {
+    content: '';
+    position: absolute;
+    left: 6%;
+    right: 2%;
+    bottom: -8px;
+    height: 22px;
+    z-index: -1;
+    background: radial-gradient(
+        ellipse 72% 100% at 68% 0%,
+        rgba(30,25,15,0.32),
+        rgba(30,25,15,0.12) 48%,
+        transparent 82%
+    );
+    filter: blur(7px);
+    /* Slight skew — tilts the shadow ellipse so the right end drops lower
+       than the left, suggesting the right corner is lifting. No rotation
+       on the tile itself, but the shadow still reads as deformed. */
+    transform: skewX(-6deg) translateX(4px);
+    transform-origin: 0% 0%;
+    pointer-events: none;
+}
+
+.stk-tile:hover {
+    /* Lift the paper straight up on hover — the shadow layers below grow
+       in length and depth, which reads as the note peeling away from the wall. */
+    transform: rotate(calc(var(--tile-rot) * 0.3)) translateY(-6px);
+    box-shadow:
+        0 1px 1px rgba(0,0,0,0.10),
+        6px 8px 12px -3px rgba(40,30,20,0.20),
+        12px 18px 30px -8px rgba(40,30,20,0.26),
+        22px 36px 56px -16px rgba(30,25,15,0.30),
+        inset 1px 1px 2px rgba(255,252,240,0.55),
+        inset -1px -2px 4px rgba(60,50,35,0.10),
+        inset 0 0 20px rgba(80,60,35,0.035);
+    z-index: 20;
+}
+.stk-tile:hover::after {
+    bottom: -12px;
+    height: 30px;
+    background: radial-gradient(
+        ellipse 76% 100% at 68% 0%,
+        rgba(30,25,15,0.38),
+        rgba(30,25,15,0.14) 48%,
+        transparent 82%
+    );
+    filter: blur(9px);
+    transform: skewX(-7deg) translateX(6px);
+}
+
+/* Sticky color variants (currently overridden by the white rule below) */
+.stk-tile[data-c="cream"]  { background-color: var(--s-cream); }
+.stk-tile[data-c="wheat"]  { background-color: var(--s-wheat); }
+.stk-tile[data-c="sage"]   { background-color: var(--s-sage); }
+.stk-tile[data-c="mist"]   { background-color: var(--s-mist); }
+.stk-tile[data-c="fog"]    { background-color: var(--s-fog); }
+.stk-tile[data-c="dust"]   { background-color: var(--s-dust); }
+.stk-tile[data-c="linen"]  { background-color: var(--s-linen); }
+.stk-tile[data-c="bone"]   { background-color: var(--s-bone); }
+.stk-tile[data-c="putty"]  { background-color: var(--s-putty); }
+.stk-tile[data-c="ivory"]  { background-color: var(--s-ivory); }
+.stk-tile[data-c="stone"]  { background-color: var(--s-stone); }
+.stk-tile[data-c="slate"]  { background-color: var(--s-slate); }
+
+/* Hero tiles unify on white — placed after the variants so it wins by
+   source order (same specificity). Comment this out to re-enable the
+   per-tile colour scheme above. */
+.stk-tile[data-c] { background-color: #ffffff; }
+
+/* Grid-paper / dot-paper variants */
+.stk-tile.grid-paper {
+    background-image:
+        linear-gradient(90deg, transparent 0 23px, rgba(90,70,40,0.08) 23px 24px),
+        linear-gradient(180deg, transparent 0 23px, rgba(90,70,40,0.08) 23px 24px),
+        radial-gradient(ellipse 130% 70% at 50% 0%, rgba(255,255,255,0.4), transparent 65%);
+}
+.stk-tile.dot-paper {
+    background-image:
+        radial-gradient(circle at 12px 12px, rgba(90,70,40,0.18) 1.2px, transparent 1.5px),
+        radial-gradient(ellipse 130% 70% at 50% 0%, rgba(255,255,255,0.4), transparent 65%);
+    background-size: 24px 24px, 100% 100%;
+}
+
+/* Torn edges */
+.stk-tile::before,
+.stk-tile::after {
+    content: '';
+    position: absolute;
+    left: -2px; right: -2px;
+    height: 12px;
+    z-index: 4;
+    pointer-events: none;
+    background: var(--stk-paper);
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    display: none;
+}
+.stk-tile.torn-top::before {
+    display: block;
+    top: -1px;
+    -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 10' preserveAspectRatio='none'><path d='M0 10 L0 6 C12 4 18 8 28 5 C38 2 46 7 56 4 C66 1 74 6 84 3 C94 6 104 2 114 5 C124 8 132 3 142 6 C152 9 160 4 170 7 C180 2 190 8 200 5 C210 2 220 7 230 4 C240 9 250 3 260 6 C270 8 280 4 290 7 C300 3 310 8 320 5 C330 2 340 7 350 4 C360 9 370 3 380 6 C390 4 400 7 400 10 Z' fill='black'/></svg>");
+            mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 10' preserveAspectRatio='none'><path d='M0 10 L0 6 C12 4 18 8 28 5 C38 2 46 7 56 4 C66 1 74 6 84 3 C94 6 104 2 114 5 C124 8 132 3 142 6 C152 9 160 4 170 7 C180 2 190 8 200 5 C210 2 220 7 230 4 C240 9 250 3 260 6 C270 8 280 4 290 7 C300 3 310 8 320 5 C330 2 340 7 350 4 C360 9 370 3 380 6 C390 4 400 7 400 10 Z' fill='black'/></svg>");
+}
+.stk-tile.torn-bot::after {
+    display: block;
+    bottom: -1px;
+    transform: scaleY(-1);
+    -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 10' preserveAspectRatio='none'><path d='M0 10 L0 6 C12 4 18 8 28 5 C38 2 46 7 56 4 C66 1 74 6 84 3 C94 6 104 2 114 5 C124 8 132 3 142 6 C152 9 160 4 170 7 C180 2 190 8 200 5 C210 2 220 7 230 4 C240 9 250 3 260 6 C270 8 280 4 290 7 C300 3 310 8 320 5 C330 2 340 7 350 4 C360 9 370 3 380 6 C390 4 400 7 400 10 Z' fill='black'/></svg>");
+            mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 10' preserveAspectRatio='none'><path d='M0 10 L0 6 C12 4 18 8 28 5 C38 2 46 7 56 4 C66 1 74 6 84 3 C94 6 104 2 114 5 C124 8 132 3 142 6 C152 9 160 4 170 7 C180 2 190 8 200 5 C210 2 220 7 230 4 C240 9 250 3 260 6 C270 8 280 4 290 7 C300 3 310 8 320 5 C330 2 340 7 350 4 C360 9 370 3 380 6 C390 4 400 7 400 10 Z' fill='black'/></svg>");
+}
+
+/* Tape */
+.stk-tape {
+    position: absolute;
+    top: -4px; left: 50%;
+    transform: translateX(-50%) rotate(-1deg);
+    width: 52px; height: 12px;
+    background: rgba(230,226,214,0.55);
+    border-left: 1px solid rgba(120,118,108,0.22);
+    border-right: 1px solid rgba(120,118,108,0.22);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+    z-index: 5;
+    pointer-events: none;
+}
+.stk-tape.left { left: 14px; transform: rotate(-8deg); }
+.stk-tape.right { left: auto; right: 14px; transform: rotate(8deg); }
+
+/* Inner — positioned in flow so the tile grows to fit its content.
+   Each tile now has explicit width but no height; inner's flex column
+   (photo + meta) defines the tile's natural height. */
+.stk-inner {
+    position: relative;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    z-index: 2;
+}
+.stk-tile .stk-photo {
+    flex: 1 1 auto;
+    min-height: 0;
+    position: relative;
+    overflow: hidden;
+    margin: 0 2px;
+    border-radius: 2px;
+    background: #d6d1c3;
+    box-shadow:
+        inset 0 0 0 1px rgba(0,0,0,0.06),
+        inset 0 1px 3px rgba(0,0,0,0.06),
+        0 1px 2px rgba(0,0,0,0.05);
+}
+.stk-tile .stk-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: saturate(0.7) contrast(0.95) brightness(0.98);
+    mix-blend-mode: multiply;
+}
+.stk-tile .stk-photo::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 130% 70% at 50% 0%, rgba(255,255,255,0.12), transparent 60%);
+    pointer-events: none;
+}
+
+.stk-meta { flex: 0 0 auto; display: flex; flex-direction: column; gap: 2px; padding: 2px 4px 4px; }
+.stk-meta .row { display: flex; justify-content: space-between; align-items: baseline; }
+.stk-meta .num,
+.stk-meta .yr {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--stk-ink-soft);
+    opacity: 0.72;
+}
+.stk-meta .t {
+    font-family: "Instrument Serif", "Iowan Old Style", Georgia, serif;
+    font-weight: 400;
+    color: var(--stk-ink);
+    line-height: 1.04;
+    letter-spacing: -0.005em;
+}
+.stk-meta .sub {
+    font-family: "Instrument Serif", "Iowan Old Style", Georgia, serif;
+    font-style: italic;
+    color: var(--stk-ink-soft);
+    opacity: 0.85;
+    line-height: 1.3;
+}
+.stk-meta .kind {
+    font-family: "JetBrains Mono", monospace;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--stk-ink-soft);
+    opacity: 0.55;
+}
+
+/* Uniform tile density — one size fits all, like real post-it notes.
+   data-kind="image"  → photo slot visible (fixed aspect-ratio box)
+   data-kind="text"   → photo slot removed from DOM by JS; tile becomes
+                        pure-text and grows vertically to fit the heading. */
+.stk-tile .stk-inner { padding: 10px 11px; gap: 7px; }
+.stk-tile .stk-photo { aspect-ratio: 4 / 3; flex: 0 0 auto; max-height: none; }
+.stk-tile .stk-meta .num { font-size: 8.5px; letter-spacing: 0.14em; margin-bottom: 1px; }
+.stk-tile .stk-meta .t { font-size: clamp(14px, 1.05vw, 17px); }
+.stk-tile .stk-meta .kind { font-size: 8.5px; margin-top: 3px; }
+
+/* Text-only tiles: title can breathe more, since there's no image eating space */
+.stk-tile[data-kind="text"] .stk-inner { padding: 14px 14px 12px; gap: 8px; }
+.stk-tile[data-kind="text"] .stk-meta .t { font-size: clamp(15px, 1.15vw, 19px); line-height: 1.1; }
+.stk-tile[data-kind="text"] .stk-photo { display: none; }
+
+/* Keyword chips on xl/l/strip tiles */
+.stk-tile .chips {
+    display: flex; flex-wrap: wrap; gap: 5px 6px;
+    margin-top: 6px;
+}
+.stk-tile .chip {
+    display: inline-block;
+    padding: 2px 8px;
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #3a362e;
+    background: rgba(255,255,255,0.55);
+    border: 0.5px solid rgba(58,54,46,0.25);
+    border-radius: 2px;
+    white-space: nowrap;
+}
+.stk-tile .chip { font-size: 9px; padding: 1.5px 6px; }
+
+/* ---- Pixel-anchored layout on the 1440×1280 canvas. Coordinates mirror
+       the Figma source so tiles stay in the exact relative positions
+       regardless of viewport width. Order 1–14 matches HERO manifest in
+       stickies-wall.js. Rotations live in --tile-rot for hover reuse. ---- */
+/* Row 1 — top cluster around y=320. All left values +63px vs. initial draft
+   so the tile content bounding box (min-left..max-right) centers on the
+   1440px canvas instead of skewing leftward. Tops shifted -120px from the
+   original y=440 row so stickies appear above the fold on a ~900px tall viewport. */
+.stk-tile[data-slot="t1"]  { left: 203px; top: 355px; width: 200px; --tile-rot: 0deg; }  /* Claude Code */
+.stk-tile[data-slot="t2"]  { left: 418px; top: 325px; width: 260px; --tile-rot: 0deg; }  /* Interactive Virtual Drum Kit */
+.stk-tile[data-slot="t3"]  { left: 633px; top: 425px; width: 245px; --tile-rot: 0deg; }  /* Design Museum Tour (text) */
+.stk-tile[data-slot="t4"]  { left: 883px; top: 465px; width: 240px; --tile-rot: 0deg; }  /* FriendUp */
+.stk-tile[data-slot="t5"]  { left: 1053px; top: 395px; width: 220px; --tile-rot: 0deg; } /* Rider Dispatch */
+
+/* Row 2 — middle band around y=580 */
+.stk-tile[data-slot="t6"]  { left: 118px; top: 580px; width: 215px; --tile-rot: 0deg; }  /* Re-Architecting Alibaba */
+.stk-tile[data-slot="t7"]  { left: 358px; top: 560px; width: 250px; --tile-rot: 0deg; }  /* KOL Growth Strategy */
+.stk-tile[data-slot="t8"]  { left: 638px; top: 540px; width: 220px; --tile-rot: 0deg; }  /* Customer Service Workspace */
+.stk-tile[data-slot="t9"]  { left: 878px; top: 595px; width: 205px; --tile-rot: 0deg; }  /* FriendUp */
+.stk-tile[data-slot="t10"] { left: 1103px; top: 730px; width: 220px; --tile-rot: 0deg; }/* Content-Driven Food Delivery */
+
+/* Row 3 — bottom band, slightly staggered */
+.stk-tile[data-slot="t11"] { left: 168px; top: 840px; width: 190px; --tile-rot: 0deg; }  /* Farmer Coffee Logo */
+.stk-tile[data-slot="t12"] { left: 373px; top: 850px; width: 225px; --tile-rot: 0deg; }  /* Global 1 Million AUDITION */
+.stk-tile[data-slot="t13"] { left: 608px; top: 810px; width: 220px; --tile-rot: 0deg; }  /* The Museum Kit */
+.stk-tile[data-slot="t14"] { left: 833px; top: 755px; width: 215px; --tile-rot: 0deg; }  /* My friends are my power station */
+
+/* ---- Bottom plate ---- */
+.stk-plate {
+    display: flex; justify-content: space-between; align-items: baseline;
+    padding-top: 10px;
+    border-top: 1px solid var(--stk-ink);
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--stk-mute);
+}
+.stk-plate .issue {
+    font-family: "Instrument Serif", serif;
+    font-style: italic;
+    font-size: 14px;
+    letter-spacing: 0;
+    text-transform: none;
+    color: var(--stk-ink);
+}
+
+.stk-nudge {
+    position: absolute;
+    right: 28px; bottom: 56px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--stk-mute);
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    text-transform: uppercase;
+    animation: stkNudge 2.5s ease-in-out infinite;
+}
+@keyframes stkNudge { 0%,100% { transform: rotate(180deg) translateY(0); } 50% { transform: rotate(180deg) translateY(-10px); } }
+
+/* ====== BRIDGE ====== */
+.stk-bridge {
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 100px 40px;
+    position: relative;
+    z-index: 2;
+    text-align: center;
+}
+.stk-bridge q {
+    font-family: "Instrument Serif", serif;
+    font-style: italic;
+    font-size: clamp(28px, 3.8vw, 56px);
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    display: block;
+    max-width: 22ch;
+    quotes: none;
+    color: var(--stk-ink);
+    opacity: 0;
+    transform: translateY(30px) scale(0.96);
+    transition: opacity 1s cubic-bezier(0.2,0.7,0.15,1), transform 1s cubic-bezier(0.2,0.7,0.15,1);
+}
+.stk-bridge q::before, .stk-bridge q::after { content: ''; }
+.stk-bridge.on q { opacity: 1; transform: translateY(0) scale(1); }
+.stk-bridge .attr {
+    margin-top: 28px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--stk-mute);
+    opacity: 0;
+    transition: opacity 1s ease .4s;
+}
+.stk-bridge.on .attr { opacity: 1; }
+
+/* ====== HORIZONTAL WALKTHROUGH ACT ====== */
+.stk-hact {
+    position: relative;
+    z-index: 2;
+}
+.stk-hact-sticky {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow: hidden;
+    background: var(--stk-paper);
+}
+.stk-hact-sticky::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+        radial-gradient(ellipse 1400px 800px at 20% 30%, rgba(255,250,235,0.5), transparent 60%),
+        radial-gradient(ellipse 1000px 600px at 80% 80%, rgba(180,160,130,0.12), transparent 60%);
+    pointer-events: none;
+}
+.stk-hact-track {
+    position: absolute;
+    top: 0; left: 0;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0 8vw;
+    gap: 36px;
+    will-change: transform;
+    transform: translate3d(0,0,0);
+}
+
+.stk-hact-intro {
+    flex: 0 0 auto;
+    width: 70vw;
+    max-width: 760px;
+    padding-right: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 60vh;
+}
+.stk-hact-intro .k {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--stk-mute);
+    margin-bottom: 20px;
+}
+.stk-hact-intro .roman {
+    font-family: "Instrument Serif", serif;
+    font-style: italic;
+    font-size: clamp(80px, 10vw, 160px);
+    line-height: 0.85;
+    color: var(--stk-accent);
+    margin-bottom: 10px;
+    letter-spacing: -0.02em;
+    opacity: 0.9;
+}
+.stk-hact-intro h2 {
+    font-family: "Instrument Serif", serif;
+    font-weight: 400;
+    font-size: clamp(32px, 4.2vw, 64px);
+    line-height: 0.98;
+    letter-spacing: -0.01em;
+    max-width: 16ch;
+    color: var(--stk-ink);
+}
+.stk-hact-intro h2 em { font-style: italic; color: var(--stk-accent); }
+.stk-hact-intro .blurb {
+    margin-top: 24px;
+    font-family: "Instrument Serif", serif;
+    font-style: italic;
+    font-size: clamp(18px, 1.6vw, 24px);
+    line-height: 1.35;
+    color: var(--stk-ink);
+    max-width: 46ch;
+}
+.stk-hact-intro .count {
+    margin-top: 32px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--stk-mute);
+    display: flex;
+    gap: 40px;
+}
+.stk-hact-intro .count b {
+    display: block;
+    font-family: "Instrument Serif", serif;
+    font-style: italic;
+    font-size: 32px;
+    color: var(--stk-ink);
+    margin-top: 4px;
+    letter-spacing: 0;
+    text-transform: none;
+}
+
+/* Cards inside horizontal track */
+.stk-hcard {
+    flex: 0 0 auto;
+    width: clamp(220px, 17vw, 290px);
+    height: clamp(300px, 46vh, 420px);
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    position: relative;
+    transition: transform .4s cubic-bezier(0.2,0.7,0.15,1);
+}
+.stk-hcard:hover { transform: translateY(-4px); }
+.stk-hcard .big {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    background: var(--s-bone);
+    background-image:
+        repeating-linear-gradient(180deg, transparent 0 24px, rgba(0,0,0,0.022) 24px 25px),
+        radial-gradient(ellipse 130% 70% at 50% 0%, rgba(255,255,255,0.3), transparent 65%),
+        radial-gradient(ellipse 100% 60% at 50% 100%, rgba(0,0,0,0.05), transparent 70%);
+    box-shadow:
+        0 1px 2px rgba(30,30,30,0.08),
+        0 6px 16px rgba(30,30,30,0.08),
+        inset 0 0 24px rgba(60,55,45,0.03);
+    padding: 18px 18px 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.stk-hcard[data-c="cream"] .big  { background-color: var(--s-cream); }
+.stk-hcard[data-c="wheat"] .big  { background-color: var(--s-wheat); }
+.stk-hcard[data-c="sage"] .big   { background-color: var(--s-sage); }
+.stk-hcard[data-c="mist"] .big   { background-color: var(--s-mist); }
+.stk-hcard[data-c="fog"] .big    { background-color: var(--s-fog); }
+.stk-hcard[data-c="dust"] .big   { background-color: var(--s-dust); }
+.stk-hcard[data-c="linen"] .big  { background-color: var(--s-linen); }
+.stk-hcard[data-c="bone"] .big   { background-color: var(--s-bone); }
+.stk-hcard[data-c="putty"] .big  { background-color: var(--s-putty); }
+.stk-hcard[data-c="ivory"] .big  { background-color: var(--s-ivory); }
+
+.stk-hcard .top {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--stk-ink-soft);
+    opacity: 0.65;
+}
+.stk-hcard h3 {
+    font-family: "Instrument Serif", serif;
+    font-weight: 400;
+    font-size: clamp(18px, 1.5vw, 24px);
+    line-height: 1.05;
+    letter-spacing: -0.005em;
+    color: var(--stk-ink);
+}
+.stk-hcard .sub {
+    margin-top: 8px;
+    font-family: "Instrument Serif", serif;
+    font-style: italic;
+    font-size: clamp(12px, 0.95vw, 14px);
+    line-height: 1.32;
+    color: var(--stk-ink-soft);
+    max-width: 30ch;
+}
+.stk-hcard .foot {
+    margin-top: 14px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(0,0,0,0.12);
+    font-family: "JetBrains Mono", monospace;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--stk-ink-soft);
+    display: flex;
+    justify-content: space-between;
+    opacity: 0.75;
+}
+
+.stk-hcard .hcover {
+    margin: 10px 0 12px;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    position: relative;
+    box-shadow:
+        0 1px 2px rgba(0,0,0,0.08),
+        0 2px 6px rgba(0,0,0,0.06),
+        inset 0 0 0 1px rgba(0,0,0,0.05);
+    background: #efece2;
+}
+.stk-hcard .hcover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: saturate(0.88) contrast(0.98);
+}
+.stk-hcard .hcover::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 80%, rgba(0,0,0,0.06));
+    pointer-events: none;
+}
+
+/* Size variants for horizontal cards */
+.stk-hcard.wide  { width: clamp(290px, 24vw, 380px); }
+.stk-hcard.tall  { height: clamp(380px, 58vh, 500px); }
+.stk-hcard.small { width: clamp(180px, 14vw, 230px); height: clamp(240px, 36vh, 320px); }
+.stk-hcard.book  { width: clamp(320px, 26vw, 420px); }
+
+/* Progress indicator */
+.stk-hact-progress {
+    position: absolute;
+    bottom: 40px; left: 8vw; right: 8vw;
+    height: 1px;
+    background: rgba(0,0,0,0.1);
+    z-index: 10;
+}
+.stk-hact-progress .bar {
+    height: 100%;
+    background: var(--stk-ink);
+    width: 0%;
+    transition: width .1s linear;
+}
+.stk-hact-progress .label {
+    position: absolute;
+    top: -24px; left: 0;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--stk-mute);
+}
+.stk-hact-progress .counter {
+    position: absolute;
+    top: -24px; right: 0;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--stk-mute);
+}
+
+.stk-hact-hint {
+    position: absolute;
+    top: 50%; right: 40px;
+    transform: translateY(-50%);
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--stk-mute);
+    text-transform: uppercase;
+    writing-mode: vertical-rl;
+    opacity: 0.7;
+}
+
+/* ====== Case panel ====== */
+.stk-panel-backdrop {
+    position: fixed; inset: 0;
+    background: rgba(15,14,12,0.82);
+    z-index: 80; opacity: 0; pointer-events: none;
+    transition: opacity .35s;
+    backdrop-filter: blur(8px);
+}
+.stk-panel-backdrop.on { opacity: 1; pointer-events: auto; }
+.stk-panel {
+    position: fixed; top: 50%; left: 50%;
+    width: min(880px, 94vw);
+    max-height: 86vh;
+    transform: translate(-50%, -48%);
+    z-index: 90; opacity: 0; pointer-events: none;
+    transition: opacity .4s, transform .5s cubic-bezier(0.2,0.7,0.15,1);
+    background: #f8f3e3;
+    overflow-y: auto;
+    padding: 46px 52px 52px;
+    box-shadow: 0 40px 80px rgba(0,0,0,0.4);
+}
+.stk-panel.on { opacity: 1; transform: translate(-50%, -50%); pointer-events: auto; }
+.stk-panel .hero-img {
+    width: 100%;
+    aspect-ratio: 16/9;
+    margin-bottom: 28px;
+    overflow: hidden;
+    background: #e6e1d4;
+}
+.stk-panel .hero-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+.stk-panel .kicker {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--stk-mute);
+    margin-bottom: 8px;
+}
+.stk-panel h2 {
+    font-family: "Instrument Serif", serif;
+    font-weight: 400;
+    font-size: clamp(36px, 4vw, 56px);
+    line-height: 1;
+    letter-spacing: -0.01em;
+    margin-bottom: 10px;
+}
+.stk-panel h2 em { font-style: italic; color: var(--stk-accent); }
+.stk-panel .dek {
+    font-family: "Instrument Serif", serif;
+    font-style: italic;
+    font-size: 22px;
+    line-height: 1.35;
+    color: var(--stk-ink);
+    margin-bottom: 28px;
+    max-width: 52ch;
+}
+.stk-panel .facts {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 4px 20px;
+    padding: 18px 0;
+    border-top: 1px solid var(--stk-ink);
+    border-bottom: 1px solid var(--stk-ink);
+    margin-bottom: 28px;
+    color: var(--stk-mute);
+}
+.stk-panel .facts b {
+    display: block; font-weight: 500; color: var(--stk-ink);
+    margin-top: 4px; font-size: 14px; letter-spacing: 0;
+    text-transform: none;
+    font-family: "Instrument Serif", serif; font-style: italic;
+}
+.stk-panel .open-case {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 12px 20px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #f8f3e3;
+    background: var(--stk-ink);
+    border: 1px solid var(--stk-ink);
+    transition: background .2s, color .2s;
+}
+.stk-panel .open-case:hover {
+    background: var(--stk-accent);
+    border-color: var(--stk-accent);
+}
+.stk-panel .close {
+    position: absolute; top: 18px; right: 22px;
+    background: transparent; border: none;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    cursor: pointer;
+    color: var(--stk-ink);
+    padding: 8px 12px;
+}
+.stk-panel .close:hover { color: var(--stk-accent); }
+
+/* ====== Responsive ====== */
+@media (max-width: 900px) {
+    .stk-hero { padding-top: 80px; min-height: auto; }
+    /* Drop absolute positioning on mobile — tiles flow into a 2-col grid so
+       the collage stays readable on narrow screens. Mirrors the Studio
+       .pinboard mobile fallback. */
+    .stk-collage {
+        position: static;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        min-height: auto;
+    }
+    .stk-tile[data-slot] {
+        position: static !important;
+        left: auto !important; top: auto !important;
+        width: 100% !important; height: auto !important;
+        aspect-ratio: 4 / 3;
+        --tile-rot: 0deg;
+    }
+    .stk-tile[data-slot="t1"]  { grid-column: 1 / -1; aspect-ratio: 16 / 9; }
+    .stk-panel { padding: 30px 24px 40px; }
+    .stk-panel .facts { grid-template-columns: 1fr 1fr; }
+    .stk-hact { height: auto !important; }
+    .stk-hact-sticky { position: relative; height: auto; padding: 60px 20px; }
+    .stk-hact-track { position: relative; flex-direction: column; height: auto; padding: 0; gap: 24px; transform: none !important; }
+    .stk-hact-intro { width: 100%; height: auto; padding: 0 0 40px; }
+    .stk-hcard,
+    .stk-hcard.wide,
+    .stk-hcard.tall,
+    .stk-hcard.small,
+    .stk-hcard.book { width: 100%; height: auto; }
+    .stk-hcard .big { min-height: 360px; }
+    .stk-hact-progress, .stk-hact-hint { display: none; }
+    .stk-nudge { display: none; }
+}

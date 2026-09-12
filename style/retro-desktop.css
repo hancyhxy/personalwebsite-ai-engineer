@@ -1,0 +1,399 @@
+/* Retro macOS Desktop — portfolio as desktop icons */
+
+/* ── Desktop override variables ── */
+.retro-desktop {
+    --bg-wall: #5b7e9a;
+    --color-primary: #000000;
+    --color-secondary: #444444;
+    --color-muted: #777777;
+
+    --win-bg: #ececec;
+    --win-titlebar: linear-gradient(180deg, #f6f6f6 0%, #d8d8d8 100%);
+    --win-titlebar-active: linear-gradient(180deg, #e8e8e8 0%, #b8b8b8 50%, #c8c8c8 100%);
+    --win-border: #999999;
+    --win-shadow: 2px 4px 16px rgba(0, 0, 0, 0.35);
+    --win-radius: 8px;
+
+    background: var(--bg-wall);
+    min-height: 100vh;
+    overflow: hidden;
+    user-select: none;
+    cursor: default;
+    position: relative;
+}
+
+/* ── Menu Bar (top of screen) ── */
+
+.menu-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    height: 24px;
+    background: linear-gradient(180deg, #fafafa 0%, #e0e0e0 100%);
+    border-bottom: 1px solid #aaa;
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
+    font-size: 13px;
+    font-family: 'Geneva', 'Helvetica Neue', system-ui, sans-serif;
+    gap: 16px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.menu-bar__apple {
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.menu-bar__item {
+    font-weight: 600;
+    cursor: default;
+    padding: 2px 8px;
+    border-radius: 4px;
+}
+
+.menu-bar__item:hover {
+    background: rgba(0, 0, 0, 0.08);
+}
+
+.menu-bar__spacer {
+    flex: 1;
+}
+
+.menu-bar__clock {
+    font-variant-numeric: tabular-nums;
+    font-size: 12px;
+    color: #333;
+}
+
+/* ── Desktop Icons Area ── */
+
+.desktop-icons {
+    position: fixed;
+    top: 34px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap-reverse;
+    align-content: flex-end;
+    gap: 4px;
+    max-height: calc(100vh - 34px);
+    padding: 10px 0;
+}
+
+.desktop-icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80px;
+    padding: 6px 4px;
+    border-radius: 4px;
+    cursor: default;
+    text-align: center;
+}
+
+.desktop-icon:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.desktop-icon--selected {
+    background: rgba(50, 100, 200, 0.4);
+}
+
+.desktop-icon__img {
+    width: 48px;
+    height: 48px;
+    border-radius: 6px;
+    object-fit: cover;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+    margin-bottom: 4px;
+    image-rendering: auto;
+}
+
+.desktop-icon__label {
+    font-size: 10px;
+    font-family: 'Geneva', 'Helvetica Neue', system-ui, sans-serif;
+    color: #ffffff;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
+    line-height: 1.2;
+    max-width: 76px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.desktop-icon--selected .desktop-icon__label {
+    background: #3478f6;
+    color: white;
+    text-shadow: none;
+    border-radius: 2px;
+    padding: 0 3px;
+}
+
+/* ── Window ── */
+
+.window {
+    position: absolute;
+    background: var(--win-bg);
+    border-radius: var(--win-radius);
+    box-shadow: var(--win-shadow);
+    border: 1px solid var(--win-border);
+    display: flex;
+    flex-direction: column;
+    min-width: 360px;
+    min-height: 240px;
+    overflow: hidden;
+    z-index: 100;
+    transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.window--hidden {
+    display: none;
+}
+
+.window--active {
+    z-index: 200;
+}
+
+/* Title bar */
+.window__titlebar {
+    height: 28px;
+    background: var(--win-titlebar);
+    border-bottom: 1px solid #bbb;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    gap: 8px;
+    cursor: grab;
+    flex-shrink: 0;
+    border-radius: var(--win-radius) var(--win-radius) 0 0;
+}
+
+.window--active .window__titlebar {
+    background: var(--win-titlebar-active);
+}
+
+.window__titlebar:active {
+    cursor: grabbing;
+}
+
+/* Traffic light buttons */
+.window__btn-group {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+}
+
+.window__btn {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 0.5px solid rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+}
+
+.window__btn--close {
+    background: #ff5f57;
+}
+
+.window__btn--minimize {
+    background: #ffbd2e;
+}
+
+.window__btn--maximize {
+    background: #28c840;
+}
+
+.window__btn:hover {
+    filter: brightness(0.9);
+}
+
+/* Inactive window: grey dots */
+.window:not(.window--active) .window__btn--close,
+.window:not(.window--active) .window__btn--minimize,
+.window:not(.window--active) .window__btn--maximize {
+    background: #ccc;
+}
+
+.window__title {
+    flex: 1;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: 'Geneva', 'Helvetica Neue', system-ui, sans-serif;
+    color: #333;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.window:not(.window--active) .window__title {
+    color: #999;
+}
+
+/* Window content area */
+.window__content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px;
+    background: #fff;
+}
+
+/* ── Finder-style project grid inside a window ── */
+
+.finder-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 8px;
+}
+
+.finder-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 8px 4px;
+    border-radius: 6px;
+    cursor: default;
+    text-align: center;
+}
+
+.finder-item:hover {
+    background: #e8f0fe;
+}
+
+.finder-item--selected {
+    background: #3478f6;
+}
+
+.finder-item__icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 6px;
+    object-fit: cover;
+    margin-bottom: 4px;
+}
+
+.finder-item__name {
+    font-size: 11px;
+    font-family: 'Geneva', 'Helvetica Neue', system-ui, sans-serif;
+    color: #333;
+    line-height: 1.2;
+    max-width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.finder-item--selected .finder-item__name {
+    color: white;
+}
+
+/* ── Project detail inside window ── */
+
+.project-window__hero {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    border-radius: 4px;
+    margin-bottom: 16px;
+}
+
+.project-window__meta {
+    display: flex;
+    gap: 16px;
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 12px;
+    font-family: 'Geneva', 'Helvetica Neue', system-ui, sans-serif;
+}
+
+.project-window__meta span {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.project-window__description {
+    font-size: 13px;
+    line-height: 1.6;
+    color: #333;
+}
+
+/* ── Dock (bottom bar) ── */
+
+.dock {
+    position: fixed;
+    bottom: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 900;
+    display: flex;
+    align-items: flex-end;
+    gap: 4px;
+    padding: 4px 8px;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.dock__item {
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+    object-fit: cover;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.dock__item:hover {
+    transform: scale(1.3) translateY(-8px);
+}
+
+.dock__separator {
+    width: 1px;
+    height: 36px;
+    background: rgba(255, 255, 255, 0.3);
+    margin: 6px 4px;
+}
+
+/* ── Responsive ── */
+
+@media (max-width: 768px) {
+    .desktop-icons {
+        position: relative;
+        top: 34px;
+        right: auto;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-content: flex-start;
+        justify-content: center;
+        max-height: none;
+        padding: 20px 16px;
+    }
+
+    .window {
+        min-width: 0;
+        width: calc(100vw - 16px) !important;
+        left: 8px !important;
+    }
+
+    .dock {
+        bottom: 4px;
+        gap: 2px;
+        padding: 3px 6px;
+    }
+
+    .dock__item {
+        width: 40px;
+        height: 40px;
+    }
+}

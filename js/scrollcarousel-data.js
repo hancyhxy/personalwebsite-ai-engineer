@@ -1,0 +1,208 @@
+/* Project data for the WebGL field and accessible project index. */
+const SCROLLCAROUSEL_CATEGORY_LABELS = {
+  product: "UX/Product",
+  experiential: "Experiential",
+  content: "Content",
+  visual: "Visual"
+};
+
+const SCROLLCAROUSEL_PROJECTS = [
+  {
+    title: "Claude Code ↔ Figma",
+    section: "independent",
+    detailLayout: "stacked",
+    year: 2026,
+    category: "product",
+    company: "Personal",
+    summary: "An AI-powered portfolio assistant connecting design intent, Figma and implementation.",
+    thumb: "./assets/images/thumbs/portfolio-ai-assistant-thumb.jpg",
+    hero: "./assets/images/portfolio-ai-assistant/cover.png",
+    url: "./gallery/portfolio-ai-assistant/index.html"
+  },
+  {
+    title: "Interactive Virtual Drum Kit",
+    section: "independent",
+    detailLayout: "two-column",
+    year: 2025,
+    category: "experiential",
+    company: "UTS",
+    summary: "A gesture-driven virtual instrument combining computer vision, code and interactive music.",
+    thumb: "./assets/images/thumbs/interactive-virtual-drum-kit-thumb.jpg",
+    hero: "./assets/images/interactive-virtual-drum-kit/cover.png",
+    url: "./gallery/interactive-virtual-drum-kit/index.html"
+  },
+  {
+    title: "FriendUp Social App",
+    section: "independent",
+    detailLayout: "two-column",
+    year: 2025,
+    category: "product",
+    company: "UTS",
+    summary: "A map-based social experience designed to support connection and social wellbeing.",
+    thumb: "./assets/images/thumbs/friendup-social-app-thumb.jpg",
+    hero: "./assets/images/friendup-social-app/cover.png",
+    url: "./gallery/friendup-social-app/index.html"
+  },
+  {
+    title: "Rider Dispatch & Scheduling",
+    section: "ux",
+    detailLayout: "two-column",
+    year: 2023,
+    category: "product",
+    company: "TikTok, Local Life",
+    summary: "A B2B operations platform that makes rider dispatch and scheduling more efficient.",
+    thumb: "./assets/images/thumbs/Rider-Dispatch-Scheduling-Platform-thumb.jpg",
+    hero: "./assets/images/Rider-Dispatch-Scheduling-Platform/cover.png",
+    url: "./gallery/Rider-Dispatch-Scheduling-Platform/index.html"
+  },
+  {
+    title: "Content-Driven Food Delivery",
+    section: "ux",
+    detailLayout: "two-column",
+    year: 2023,
+    category: "product",
+    company: "TikTok, Local Life",
+    summary: "An end-to-end food delivery experience built around short-video discovery and low-friction ordering.",
+    thumb: "./assets/images/thumbs/Content-Driven-Food-Delivery-Experience-thumb.jpg",
+    hero: "./assets/images/Content-Driven-Food-Delivery-Experience/cover.png",
+    url: "./gallery/Content-Driven-Food-Delivery-Experience/index.html"
+  },
+  {
+    title: "Alibaba Help Center",
+    section: "ux",
+    detailLayout: "two-column",
+    year: 2022,
+    category: "product",
+    company: "Alibaba, Taobao",
+    summary: "A global information architecture and design system for a more consistent help experience.",
+    thumb: "./assets/images/thumbs/Re-Architecting-Alibaba-Help-Center-for-Global-Consistency-thumb.jpg",
+    hero: "./assets/images/Re-Architecting-Alibaba-Help-Center-for-Global-Consistency/cover.png",
+    url: "./gallery/Re-Architecting-Alibaba-Help-Center-for-Global-Consistency/index.html"
+  },
+  {
+    title: "KOL Growth Strategy",
+    section: "independent",
+    detailLayout: "two-column",
+    year: 2021,
+    category: "content",
+    company: "Red Note",
+    summary: "A content and collaboration strategy designed to help creators and communities grow.",
+    thumb: "./assets/images/thumbs/KOL-Growth-Strategy-thumb.jpg",
+    hero: "./assets/images/KOL-Growth-Strategy/album.png",
+    url: "./gallery/KOL-Growth-Strategy/index.html"
+  },
+  {
+    title: "Customer Service AI Workspace",
+    section: "ux",
+    detailLayout: "two-column",
+    year: 2021,
+    category: "product",
+    company: "Alibaba",
+    summary: "A customer-service workspace pairing operational tools with an AI-assisted chatbot.",
+    thumb: "./assets/images/thumbs/customer-service-workspace-chatbot-thumb.jpg",
+    hero: "./assets/images/customer-service-workspace-chatbot/cover.png",
+    url: "./gallery/customer-service-workspace-chatbot/index.html"
+  },
+  {
+    title: "My Friends Are My Power Station",
+    section: "experimental",
+    detailLayout: "two-column",
+    year: 2020,
+    category: "experiential",
+    company: "Parsons School of Design",
+    summary: "An installation using projection mapping to explore friendship, energy and urban culture.",
+    thumb: "./assets/images/thumbs/my-friends-are-my-power-station-thumb.jpg",
+    hero: "./assets/images/my-friends-are-my-power-station/thesis_wholeview.png",
+    url: "./gallery/my-friends-are-my-power-station/index.html"
+  },
+  {
+    title: "Design Museum Tour as a Game",
+    section: "experimental",
+    sceneNote: "Concept proposal, not a deployed museum system.",
+    detailLayout: "two-column",
+    year: 2019,
+    category: "experiential",
+    company: "Brooklyn Museum, Parsons",
+    summary: "A playful museum journey that turns observation and interpretation into participation.",
+    thumb: "./assets/images/thumbs/gamify-museum-experience-thumb.jpg",
+    hero: "./assets/images/gamify-museum-experience/album.png",
+    url: "./gallery/gamify-museum-experience/index.html"
+  },
+  {
+    title: "Food Memory",
+    section: "parsons",
+    sceneFeatured: false,
+    detailLayout: "stacked",
+    year: 2019,
+    category: "experiential",
+    company: "Parsons School of Design",
+    summary: "A speculative food-design project about memory, intimacy and possible futures.",
+    thumb: "./assets/images/thumbs/food-memory-thumb.jpg",
+    hero: "./assets/images/food-memory/cover.png",
+    url: "./gallery/food-memory/index.html"
+  },
+  {
+    title: "How Are Oscars Biased?",
+    section: "parsons",
+    sceneFeatured: false,
+    detailLayout: "stacked",
+    year: 2018,
+    category: "visual",
+    company: "Independent",
+    summary: "A data-visualisation study examining patterns and bias in Academy Award history.",
+    thumb: "./assets/images/thumbs/how-are-oscars-biased-thumb.jpg",
+    hero: "./assets/images/how-are-oscars-biased/cover.png",
+    url: "./gallery/how-are-oscars-biased/index.html"
+  },
+  {
+    title: "The Museum Kit",
+    section: "experimental",
+    detailLayout: "two-column",
+    year: 2018,
+    category: "experiential",
+    company: "Independent",
+    summary: "An interaction kit that helps visitors reinterpret art through active participation.",
+    thumb: "./assets/images/thumbs/the-museum-kit-thumb.jpg",
+    hero: "./assets/images/the-museum-kit/cover.png",
+    url: "./gallery/the-museum-kit/index.html"
+  },
+  {
+    title: "Solar System Relationships",
+    section: "parsons",
+    sceneFeatured: false,
+    detailLayout: "stacked",
+    year: 2018,
+    category: "visual",
+    company: "Independent",
+    summary: "A visual system mapping scale and relationships among the eight planets.",
+    thumb: "./assets/images/thumbs/solar-system-relationship-thumb.jpg",
+    hero: "./assets/images/solar-system-relationship/cover.png",
+    url: "./gallery/solar-system-relationship/index.html"
+  },
+  {
+    title: "Farmer Coffee Logo",
+    section: "parsons",
+    sceneFeatured: false,
+    detailLayout: "stacked",
+    year: 2018,
+    category: "visual",
+    company: "Farmer Coffee Company",
+    summary: "A grounded visual identity created for an independent coffee company.",
+    thumb: "./assets/images/thumbs/Farmer-Coffee-Logo-thumb.jpg",
+    hero: "./assets/images/Farmer-Coffee-Logo/cover.png",
+    url: "./gallery/Farmer-Coffee-Logo/index.html"
+  },
+  {
+    title: "Global 1M Audition",
+    section: "parsons",
+    sceneFeatured: false,
+    detailLayout: "stacked",
+    year: 2017,
+    category: "content",
+    company: "musical.ly",
+    summary: "A global social campaign combining creator participation, content and community growth.",
+    thumb: "./assets/images/thumbs/musically-1m-audition-thumb.jpg",
+    hero: "./assets/images/musically-1m-audition/cover.png",
+    url: "./gallery/musically-1m-audition/index.html"
+  }
+];

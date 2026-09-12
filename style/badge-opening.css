@@ -1,0 +1,21 @@
+/* HAND-TUNABLE OPENING TYPE / PLACEMENT */
+.badge-page{--opening-thumb-width:140;--opening-stack-span:.09;--opening-stack-amplitude:.035;--opening-wave-amplitude:.11;--opening-wave-offset:.04;--opening-role-top:46%;--opening-role-size:clamp(26px,6.6vw,104px);--opening-ai-left:8%;--opening-engineer-right:7%}
+/* Getty-inspired opening; the persistent WebGL field is styled separately. */
+.opening-pending .badge-page .hero,
+.opening-pending .badge-page .mast{opacity:0}
+.badge-page.opening-active{overflow:hidden}
+.badge-page.opening-active .mast,
+.badge-page.opening-active .hero{opacity:0}
+.badge-page.opening-active .agent-fab{visibility:hidden}
+.badge-page .portfolio-opening{position:fixed;inset:0;z-index:40;overflow:hidden;pointer-events:none;background:transparent;isolation:isolate}
+.badge-page .opening-name{position:absolute;z-index:4;left:50%;top:50%;margin:0;opacity:1;white-space:nowrap;color:#171914;font:500 17px/1 Newsreader,Georgia,serif;letter-spacing:-.2px;transform:translate(-50%,-50%);will-change:left,top,font-size,opacity}
+.badge-page .opening-role{position:absolute;z-index:3;top:var(--opening-role-top);width:max-content;white-space:nowrap;margin:0;opacity:0;color:#171914;font:400 var(--opening-role-size)/.9 Newsreader,Georgia,serif;letter-spacing:-.055em;translate:0 -50%;will-change:transform,opacity}
+.badge-page .opening-role-left{left:var(--opening-ai-left)}
+.badge-page .opening-role-right{right:var(--opening-engineer-right)}
+.badge-page .opening-skip{position:absolute;right:4%;bottom:calc(24px + env(safe-area-inset-bottom));z-index:5;min-height:44px;padding:10px 0 10px 15px;border:0;background:transparent;pointer-events:auto;color:#747a6b;font:9px/1.5 ui-monospace,SFMono-Regular,monospace;letter-spacing:1px}
+.badge-page.opening-reveal .mast{animation:badge-header-reveal .5s ease both}
+.badge-page.opening-reveal .badge-perspective{animation:badge-card-reveal .9s cubic-bezier(.22,.7,.2,1) both}
+@keyframes badge-header-reveal{from{opacity:0}to{opacity:1}}
+@keyframes badge-card-reveal{from{opacity:0;transform:translateY(25px) scale(.97)}to{opacity:1;transform:none}}
+@media(max-width:700px){.badge-page .opening-role{top:46%;font-size:clamp(24px,6.6vw,46px)}.badge-page .opening-role-left{left:4%}.badge-page .opening-role-right{right:3%}}
+@media(prefers-reduced-motion:reduce){.opening-pending .badge-page .hero,.opening-pending .badge-page .mast{opacity:1}.badge-page .portfolio-opening{display:none}.badge-page.opening-reveal .mast,.badge-page.opening-reveal .badge-perspective{animation:none}}

@@ -1,0 +1,54 @@
+/* The Studio — design tokens (scoped to .studio-page / [data-theme="studio"]) */
+
+.studio-page {
+    /* Paper & ink */
+    --paper: #efe8dc;
+    --paper-2: #e6ddcb;
+    --paper-3: #d9cdb5;
+    --wall: #d4cab4;
+    --wall-shadow: #b8ad93;
+    --ink: #1c1a15;
+    --ink-2: #3a362d;
+    --ink-3: #6b6455;
+    --ink-4: #a89f89;
+
+    /* Signature accents — all share chroma 72 (ochre) */
+    --ochre: oklch(0.72 0.13 72);
+    --ochre-2: oklch(0.82 0.09 72);
+    --ink-blue: oklch(0.45 0.08 240);
+    --pencil-red: oklch(0.58 0.16 30);
+    --graph: oklch(0.55 0.05 240 / 0.22);
+
+    /* Type */
+    --serif: "Newsreader", "Iowan Old Style", Georgia, serif;
+    --grotesk: "Geist", "Söhne", ui-sans-serif, system-ui, sans-serif;
+    --mono: "JetBrains Mono", "IBM Plex Mono", ui-monospace, monospace;
+    --hand: "Caveat", "Gochi Hand", cursive;
+
+    /* Motion */
+    --ease-paper: cubic-bezier(0.2, 0.8, 0.2, 1);
+    --ease-settle: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-hand: cubic-bezier(0.65, 0, 0.35, 1);
+
+    /* Spacing */
+    --s-1: 4px; --s-2: 8px; --s-3: 12px; --s-4: 16px;
+    --s-5: 24px; --s-6: 32px; --s-7: 48px; --s-8: 64px; --s-9: 96px;
+
+    /* Paper grain as an SVG data URI — reused across surfaces */
+    --grain: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.1  0 0 0 0 0.09  0 0 0 0 0.08  0 0 0 0.08 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+/* Evening mode — triggered by [data-time="evening"] on <html> */
+html[data-time="evening"] .studio-page {
+    --paper: #26201580;
+    --paper-2: #1e180f;
+    --paper-3: #151008;
+    --wall: #120e08;
+    --wall-shadow: #0a0805;
+    --ink: #f0e6cf;
+    --ink-2: #d8ceb4;
+    --ink-3: #9a9076;
+    --ink-4: #5f5644;
+    --ochre: oklch(0.78 0.14 72);
+    --graph: oklch(0.75 0.06 60 / 0.12);
+}

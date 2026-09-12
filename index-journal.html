@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xinyi Han — Portfolio · Handbook</title>
+
+    <!-- Favicons -->
+    <link rel="icon" href="./assets/logo/favicon.ico" sizes="any">
+    <link rel="icon" href="./assets/logo/favicon.svg" type="image/svg+xml">
+    <link rel="icon" href="./assets/logo/favicon-32x32.png" type="image/png" sizes="32x32">
+
+    <!-- Fonts — same trio as Stickies for cross-variant consistency -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&family=Geist:wght@300;400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="./style/variables.css">
+    <link rel="stylesheet" href="./style/base.css">
+    <link rel="stylesheet" href="./style/journal.css">
+</head>
+<body class="journal-page">
+
+    <!-- Editorial topbar — Journal-specific (dark variant) -->
+    <header class="j-topbar">
+        <div class="brand">Xinyi Han <span>— portfolio</span></div>
+        <div class="title-center">Issue V · Handbook · Vol. 01 · Apr 2026</div>
+        <nav>
+            <a href="./index-stickies.html">Stickies</a>
+            <a href="./assets/docs/CV_XinyiHan_2026.pdf" target="_blank" rel="noopener noreferrer">Resume</a>
+            <a href="mailto:xinyihancy@gmail.com">Contact</a>
+        </nav>
+    </header>
+
+    <!-- Book stage -->
+    <main class="j-stage">
+        <div class="j-book" id="j-book">
+            <!-- Spreads, tabs and nav are injected by journal-app.js -->
+        </div>
+    </main>
+
+    <div data-component="footer"></div>
+
+    <!-- Scripts: load order matters (templates → spreads → book → app) -->
+    <script src="./js/component-loader.js"></script>
+    <script src="./js/journal-templates.js"></script>
+    <script src="./js/journal-spreads.js"></script>
+    <script src="./js/journal-book.js"></script>
+    <script src="./js/journal-app.js"></script>
+
+</body>
+</html>

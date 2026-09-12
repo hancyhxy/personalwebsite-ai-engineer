@@ -1,0 +1,28 @@
+/* ============================================================
+   Scroll Trigger & Keyword Carousel — design tokens
+   Museum-editorial white (reference: Getty Provenance Index).
+   All tokens scoped under .scrollcarousel-page so nothing
+   leaks into the other themes.
+   ============================================================ */
+
+.scrollcarousel-page {
+  /* Surfaces & ink */
+  --scc-bg: #fcfbf9;
+  --scc-ink: #171410;
+  --scc-ink-soft: #6f6a61;
+  --scc-hairline: rgba(23, 20, 16, 0.12);
+
+  /* Type */
+  --scc-serif: "Newsreader", "Iowan Old Style", Georgia, "Times New Roman", serif;
+  --scc-sans: "Inter", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+
+  /* Soft white pill shadow (menu button, scroll button) */
+  --scc-pill-shadow: 0 1px 2px rgba(23, 20, 16, 0.06), 0 6px 18px rgba(23, 20, 16, 0.08);
+  --scc-pill-shadow-hover: 0 2px 4px rgba(23, 20, 16, 0.07), 0 10px 26px rgba(23, 20, 16, 0.11);
+
+  /* Floating-work choreography */
+  --scc-ghost: 0.12;            /* opacity of non-active-category works */
+  --scc-kw-fade: 550ms;         /* keyword crossfade */
+  --scc-work-fade: 900ms;       /* work opacity crossfade on keyword change */
+  --scc-fall-duration: 1050ms;  /* tumble-away transform duration */
+}

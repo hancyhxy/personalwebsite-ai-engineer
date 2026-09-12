@@ -1,0 +1,101 @@
+/* Vinyl record hover and interaction animations — dark mode */
+
+/* ── Hover: disc slides out + spins, sleeve lifts ── */
+
+@media (hover: hover) and (pointer: fine) {
+    .vinyl-card:hover .vinyl-card__disc {
+        transform: translateX(40%) translateY(-50%);
+    }
+
+    .vinyl-card:hover .vinyl-card__disc-spinner {
+        animation: vinyl-spin 3s linear infinite;
+    }
+
+    .vinyl-card:hover .vinyl-card__sleeve {
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-card-hover);
+    }
+}
+
+@keyframes vinyl-spin {
+    from { rotate: 0deg; }
+    to   { rotate: 360deg; }
+}
+
+/* ── Expanded state ── */
+
+.vinyl-card--expanded {
+    position: fixed;
+    z-index: 200;
+    transition: all var(--duration-slow) var(--ease-out);
+}
+
+.vinyl-card--expanded .vinyl-card__sleeve {
+    box-shadow: var(--shadow-card-expanded);
+}
+
+/* Stop disc animations when expanded */
+.vinyl-card--expanded .vinyl-card__disc-spinner {
+    animation: none;
+}
+
+.vinyl-card--expanded .vinyl-card__disc {
+    transform: translateX(0%) translateY(-50%);
+}
+
+/* ── Dimmed wall ── */
+
+.vinyl-wall--dimmed .vinyl-card:not(.vinyl-card--expanded):not(.vinyl-card--related) {
+    opacity: 0.1;
+    filter: grayscale(1);
+    pointer-events: none;
+    transition: opacity var(--duration-normal) var(--ease-out),
+                filter var(--duration-normal) var(--ease-out);
+}
+
+/* ── Related cards ── */
+
+.vinyl-card--related {
+    opacity: 1;
+    filter: none;
+    transition: opacity var(--duration-normal) var(--ease-out),
+                filter var(--duration-normal) var(--ease-out);
+}
+
+.vinyl-card--related .vinyl-card__sleeve {
+    box-shadow: 0 0 0 2px var(--color-accent), var(--shadow-card-hover);
+}
+
+/* ── SVG relationship overlay ── */
+
+.relationship-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 150;
+}
+
+.relationship-line {
+    stroke: rgba(255, 255, 255, 0.3);
+    stroke-width: 1;
+    stroke-dasharray: 6 4;
+    fill: none;
+}
+
+/* ── Entrance animation ── */
+
+.vinyl-card {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: vinyl-card-enter 0.4s var(--ease-out) forwards;
+}
+
+@keyframes vinyl-card-enter {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

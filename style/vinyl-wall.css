@@ -1,0 +1,203 @@
+/* Vinyl record shop — dark mode, sleeve + disc */
+
+/* ── Dark mode overrides ── */
+
+.vinyl-page {
+    --bg-wall: #0a0a0a;
+    --bg-card: #1a1a1a;
+    --color-primary: #e8e8e8;
+    --color-secondary: #888888;
+    --color-muted: #666666;
+    --color-border: #2a2a2a;
+    --color-accent: #e8e8e8;
+
+    --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.4), 0 1px 3px rgba(0, 0, 0, 0.3);
+    --shadow-card-hover: 0 12px 32px rgba(0, 0, 0, 0.5), 0 4px 12px rgba(0, 0, 0, 0.3);
+    --shadow-card-expanded: 0 24px 60px rgba(0, 0, 0, 0.6), 0 8px 20px rgba(0, 0, 0, 0.4);
+
+    background-color: var(--bg-wall);
+    color: var(--color-primary);
+}
+
+/* Dark nav overrides */
+.vinyl-page .nav-header {
+    background: rgba(10, 10, 10, 0.85);
+    border-bottom-color: var(--color-border);
+}
+
+.vinyl-page .contact-section {
+    border-top-color: var(--color-border);
+}
+
+/* ── Wall grid ── */
+
+.vinyl-wall {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 32px;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 80px 40px 60px;
+}
+
+/* ── Card container ── */
+
+.vinyl-card {
+    position: relative;
+    cursor: pointer;
+    overflow: visible;
+}
+
+/* ── Sleeve — square album cover ── */
+
+.vinyl-card__sleeve {
+    position: relative;
+    z-index: 2;
+    aspect-ratio: 1 / 1;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: var(--shadow-card);
+    transition: transform var(--duration-normal) var(--ease-out),
+                box-shadow var(--duration-normal) var(--ease-out);
+}
+
+.vinyl-card__sleeve-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Subtle worn edge overlay for vintage feel */
+.vinyl-card__sleeve::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 4px;
+    box-shadow:
+        inset 0 0 0 1px rgba(255, 255, 255, 0.06),
+        inset 0 0 30px rgba(0, 0, 0, 0.15);
+    pointer-events: none;
+}
+
+/* ── Vinyl disc — behind the sleeve ── */
+
+.vinyl-card__disc {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateX(0%) translateY(-50%);
+    width: 92%;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    z-index: 1;
+    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.vinyl-card__disc-spinner {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    position: relative;
+    overflow: hidden;
+    background:
+        /* Groove lines */
+        repeating-radial-gradient(
+            circle at center,
+            transparent 0px,
+            rgba(255, 255, 255, 0.02) 1px,
+            transparent 3px
+        ),
+        /* Ring bands */
+        radial-gradient(
+            circle at center,
+            #111 0%,
+            #1e1e1e 25%,
+            #151515 27%,
+            #1c1c1c 50%,
+            #131313 52%,
+            #1a1a1a 80%,
+            #111 100%
+        );
+    box-shadow:
+        0 2px 8px rgba(0, 0, 0, 0.5),
+        inset 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+/* Center label */
+.vinyl-card__disc-label {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 32%;
+    height: 32%;
+    border-radius: 50%;
+    background-color: #2a2a2a;
+    background-size: cover;
+    background-position: center;
+    box-shadow:
+        0 0 0 2px rgba(255, 255, 255, 0.08),
+        inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+/* Center hole */
+.vinyl-card__disc-label::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 12%;
+    height: 12%;
+    border-radius: 50%;
+    background: #080808;
+    box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.06),
+        inset 0 0 2px rgba(0, 0, 0, 0.8);
+}
+
+/* ── Info section ── */
+
+.vinyl-card__info {
+    padding-top: 14px;
+    position: relative;
+    z-index: 2;
+}
+
+.vinyl-card__name {
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    color: var(--color-primary);
+    line-height: 1.4;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.vinyl-card__tags {
+    font-size: var(--font-size-xs);
+    color: var(--color-muted);
+    margin-top: 2px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* ── Responsive ── */
+
+@media (max-width: 768px) {
+    .vinyl-wall {
+        padding: 60px 20px 40px;
+        gap: 24px;
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    }
+}
+
+@media (max-width: 480px) {
+    .vinyl-wall {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+        padding: 40px 16px 32px;
+    }
+}

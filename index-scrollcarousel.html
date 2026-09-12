@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en" class="scc-opening-pending">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Xinyi Han — Lens</title>
+
+  <!-- Theme fonts (inlined per theme, repo convention):
+       Newsreader (variable, optical sizing + italic) for wordmark/headlines,
+       Inter for kickers, captions and buttons. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style/scrollcarousel-tokens.css">
+  <link rel="stylesheet" href="style/scrollcarousel-main.css">
+  <link rel="stylesheet" href="style/scrollcarousel-contact.css">
+  <link rel="stylesheet" href="style/scrollcarousel-card.css">
+  <link rel="stylesheet" href="style/scrollcarousel-opening.css">
+</head>
+<body class="scrollcarousel-page">
+
+  <!-- Three.js artwork field. The canvas is visual; the project index below
+       remains the accessible representation of the same 16 projects. -->
+  <div class="scc-opening" id="scc-opening" role="status" aria-label="Loading portfolio">
+    <p class="scc-opening-wordmark">Xinyi Han</p>
+    <div class="scc-opening-progress" aria-hidden="true"><span id="scc-opening-progress"></span></div>
+    <p class="scc-opening-count" id="scc-opening-count">Loading · 0%</p>
+    <button class="scc-opening-skip" id="scc-opening-skip" type="button">Skip intro ↗</button>
+  </div>
+  <div class="scc-webgl" id="scc-webgl" aria-hidden="true"></div>
+  <p class="scc-webgl-status" id="scc-webgl-status" role="status">Loading the project field…</p>
+
+  <aside class="scc-project-preview blurredBg" id="scc-project-preview" aria-labelledby="scc-preview-title" aria-hidden="true">
+    <button class="scc-preview-close" id="scc-preview-close" type="button" aria-label="Close project preview">×</button>
+    <img class="scc-preview-thumb" id="scc-preview-thumb" alt="">
+    <div class="scc-preview-copy">
+      <p class="scc-preview-number" id="scc-preview-number"></p>
+      <h2 id="scc-preview-title"></h2>
+      <p class="scc-preview-meta" id="scc-preview-meta"></p>
+      <p class="scc-preview-description" id="scc-preview-description"></p>
+      <button class="scc-preview-enter" id="scc-preview-enter" type="button">Enter <span aria-hidden="true">↗</span></button>
+    </div>
+  </aside>
+
+  <!-- ============ HERO ============ -->
+  <section class="scc-hero">
+    <header class="scc-header">
+      <a class="scc-wordmark" href="#">Xinyi Han</a>
+      <!-- Decorative menu pill (no navigation in this demo) -->
+      <button class="scc-menu-btn" type="button" aria-label="Menu (decorative)">
+        <span></span><span></span><span></span>
+      </button>
+    </header>
+
+    <div class="scc-hero-inner">
+      <p class="scc-kicker">Portfolio · Sydney</p>
+      <div class="scc-card-stage">
+        <article class="scc-id-card" id="scc-id-card" aria-label="Interactive identity card">
+          <span class="scc-card-slot" aria-hidden="true"></span>
+          <div class="scc-card-top">
+            <div class="scc-card-portrait" id="scc-card-portrait" tabindex="0" role="group" aria-label="Interactive portrait. Use arrow keys to change direction.">
+              <img id="scc-card-face" src="assets/hero-portrait/center.webp" alt="Xinyi Han, front-facing portrait" width="600" height="600">
+            </div>
+            <div class="scc-card-manifesto"><span>AI-NATIVE / 001</span><p>One mind.<br>Full loop.</p><small>Think. Design.<br>Build. Ship.<br>Iterate.</small></div>
+          </div>
+          <div class="scc-card-identity"><h1>Xinyi Han</h1><p>AI Engineer</p></div>
+          <div class="scc-card-experience">
+            <p>PREVIOUS WORK EXPERIENCE</p>
+            <a href="./project-scrollcarousel.html?project=7"><strong><img src="assets/brand/alibaba-symbol.svg" alt="">Alibaba</strong><span>Chatbot · Customer Support</span><b aria-hidden="true">↗</b></a>
+            <a href="./project-scrollcarousel.html?project=4"><strong><img src="assets/brand/tiktok.svg" alt="">ByteDance</strong><span>Food Delivery · Social Media</span><b aria-hidden="true">↗</b></a>
+          </div>
+          <button class="scc-card-learn" id="scc-resume-link" type="button"><span>Learn more <em>about me</em></span><span aria-hidden="true">↗</span></button>
+          <div class="scc-card-bottom"><span>HUMAN INSIGHT.<br>MACHINE POSSIBILITY.</span><i aria-hidden="true"></i></div>
+        </article>
+      </div>
+      <button class="scc-scroll-btn" type="button" id="scc-scroll-btn"><span aria-hidden="true">↓</span><span>Scroll down</span></button>
+    </div>
+  </section>
+
+  <!-- The height of this section is the WebGL camera track. Projects remain
+       upright while the artwork world advances along one vertical axis. -->
+  <section class="scc-journey" id="scc-journey" aria-label="Selected work journey">
+    <p class="scc-journey-intro">Selected work <span>Move through the field</span></p>
+    <p class="scc-chapter-marker" style="--chapter: 1">Product systems</p>
+    <p class="scc-chapter-marker" style="--chapter: 2">Human connection</p>
+    <p class="scc-chapter-marker" style="--chapter: 3">Culture and experience</p>
+    <p class="scc-chapter-marker" style="--chapter: 4">Information made visible</p>
+    <p class="scc-chapter-marker" style="--chapter: 5">Earlier explorations</p>
+  </section>
+
+  <!-- Accessible project index and non-WebGL fallback. -->
+  <section class="scc-selected" id="selected-work">
+    <button class="scc-static-toggle" id="scc-static-toggle" type="button" aria-expanded="false" aria-controls="scc-static-content">View Static <span aria-hidden="true">＋</span></button>
+    <div class="scc-static-content" id="scc-static-content" hidden>
+      <h2 class="scc-selected-heading">Project index</h2>
+      <div class="scc-view-switch" role="group" aria-label="Work view">
+        <button type="button" data-view="gallery" aria-pressed="true" aria-controls="scc-grid">Gallery</button>
+        <button type="button" data-view="index" aria-pressed="false" aria-controls="scc-grid">Index</button>
+      </div>
+      <div class="scc-grid" id="scc-grid"></div>
+    </div>
+  </section>
+
+  <section class="scc-resume-section" id="scc-resume-section" aria-labelledby="scc-identity-title">
+    <header class="scc-identity-finale">
+      <p class="scc-kicker">One practice, many lenses</p>
+      <h2 class="scc-headline" id="scc-identity-title">
+        <span class="scc-sr-only">I design, build and connect.</span>
+        <span class="scc-headline-visual" aria-hidden="true">
+          <span class="scc-line">I<span class="scc-kw-slot"><span class="scc-kw is-active" data-kw="product">design</span><span class="scc-kw" data-kw="experiential">build</span><span class="scc-kw" data-kw="content">connect</span><span class="scc-kw" data-kw="visual">shape</span></span>experiences.</span>
+        </span>
+      </h2>
+    </header>
+    <iframe id="scc-resume-frame" title="Interactive résumé printer" data-src="index-resume-embed.html" loading="lazy"></iframe>
+  </section>
+
+  <section class="scc-contact" aria-labelledby="contact-title">
+    <p class="scc-contact-eyebrow">HUMAN BEHIND THE INTERFACE</p>
+    <h2 id="contact-title">Good things start<br>with a hello.</h2>
+    <button class="scc-contact-open" type="button" id="scc-contact-open">Contact me <span aria-hidden="true">↗</span></button>
+    <p class="scc-contact-note">A little introduction, in a different language.</p>
+  </section>
+
+  <dialog class="scc-terminal" id="scc-contact-dialog" aria-labelledby="terminal-title" data-mode="typewriter">
+    <div class="scc-terminal-bar">
+      <span id="terminal-title">xinyi / hello</span>
+      <button type="button" class="scc-terminal-close" aria-label="Close résumé">×</button>
+    </div>
+    <div class="scc-terminal-modes" role="group" aria-label="Animation concept">
+      <button type="button" data-mode="typewriter" aria-pressed="true">01 / Typewriter</button>
+      <button type="button" data-mode="agent" aria-pressed="false">02 / Agent</button>
+      <button type="button" data-mode="compile" aria-pressed="false">03 / Compile</button>
+    </div>
+    <div class="scc-terminal-screen">
+      <p class="scc-terminal-command" aria-hidden="true">~ / portfolio <span>→</span> <span id="scc-terminal-command">cat introduction.md</span></p>
+      <div id="scc-terminal-output" aria-live="off"></div>
+    </div>
+    <nav class="scc-terminal-actions" aria-label="Get in touch">
+      <a href="mailto:xinyi.han0816@outlook.com">Send email ↗</a>
+      <a href="./assets/docs/CV_XinyiHan_2026.pdf" target="_blank" rel="noopener noreferrer">Full résumé ↗</a>
+      <a href="https://www.linkedin.com/in/xinyi-han-601968166/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
+    </nav>
+    <p class="scc-terminal-status">Source: CV_XinyiHan_2026.md · Local animation, no live AI</p>
+  </dialog>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="scc-footer">
+    <p class="scc-footer-wordmark">Xinyi Han</p>
+    <p class="scc-footer-copy">© 2026 · Sydney, Australia</p>
+    <nav class="scc-footer-links" aria-label="Contact">
+      <a href="mailto:xinyi.han0816@outlook.com">Email</a>
+      <a href="https://www.linkedin.com/in/xinyi-han-601968166/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      <a href="./assets/docs/CV_XinyiHan_2026.pdf" target="_blank" rel="noopener noreferrer">Resume</a>
+    </nav>
+  </footer>
+
+  <script src="js/vendor/three-r125.min.js"></script>
+  <script src="js/vendor/gsap-3.10.4.min.js"></script>
+  <script src="js/vendor/lenis-1.1.9.min.js"></script>
+  <script src="js/scrollcarousel-data.js"></script>
+  <script src="js/scrollcarousel-scene.js"></script>
+  <script src="js/scrollcarousel-card.js"></script>
+  <script src="js/scrollcarousel-opening.js"></script>
+  <script src="js/scrollcarousel-app.js"></script>
+  <script src="js/scrollcarousel-contact.js"></script>
+</body>
+</html>

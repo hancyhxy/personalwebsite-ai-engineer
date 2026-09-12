@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en" data-time="day">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xinyi Han — The Studio</title>
+
+    <link rel="icon" href="./assets/logo/favicon.ico" sizes="any">
+    <link rel="icon" href="./assets/logo/favicon.svg" type="image/svg+xml">
+    <link rel="icon" href="./assets/logo/favicon-32x32.png" type="image/png" sizes="32x32">
+
+    <!-- Studio typography: editorial serif + grotesk + mono + hand -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..700&family=Geist:wght@300..700&family=JetBrains+Mono:wght@400;500&family=Caveat:wght@400..700&display=swap" rel="stylesheet">
+
+    <!-- Studio styles — scoped to .studio-page so they don't leak into other themes -->
+    <link rel="stylesheet" href="./style/studio-tokens.css">
+    <link rel="stylesheet" href="./style/studio-desk.css">
+</head>
+<body class="studio-page">
+
+    <!-- Custom pen cursor (hidden unless cursor-pen mode enabled) -->
+    <div id="studio-pen" aria-hidden="true">
+        <svg class="pen-tip" viewBox="0 0 22 22" fill="none">
+            <path d="M2 20 L6 20 L18 8 L14 4 L2 16 Z" fill="#1c1a15" stroke="#1c1a15" stroke-width="1"/>
+            <path d="M14 4 L18 8" stroke="#efe8dc" stroke-width="1"/>
+            <circle cx="4" cy="18" r="1.2" fill="#efe8dc"/>
+        </svg>
+    </div>
+
+    <!-- The stage — cloned into the loupe when active -->
+    <div class="wall" id="stage" data-screen-label="Studio">
+        <div class="lamp-glow"></div>
+
+        <!-- Masthead -->
+        <header class="masthead">
+            <div class="bar-left">
+                <span class="sig">Xinyi Han</span>
+                <span>Studio · est. 2020</span>
+            </div>
+            <nav>
+                <a href="#wall">Work</a>
+                <a href="#about">About</a>
+                <a href="#writing">Notes</a>
+                <a href="#contact">Contact</a>
+            </nav>
+            <div class="bar-right">
+                <span class="coord">33.88°S 151.20°E</span>
+                <span class="coord" id="studio-clock">—:— AEDT</span>
+            </div>
+        </header>
+
+        <!-- Desk hero -->
+        <section class="desk">
+            <!-- Left: the blotter (intro) -->
+            <div class="blotter">
+                <div class="stamp">Draft · Rev. 07<br>April 2026</div>
+                <div class="handle">
+                    <span class="dot"></span>
+                    In studio · Sydney
+                </div>
+                <h1 class="intro">
+                    <em>Xinyi</em> is a senior<br>
+                    <span class="underline">UX designer</span> thinking<br>
+                    with her hands <span class="struck">in pixels</span><br>
+                    in <em>paper, code,</em> and <em>space</em>.
+                </h1>
+                <p class="subhead">
+                    Four years at <span class="marker">Alibaba</span> and <span class="marker">ByteDance</span>,
+                    now studying Interaction Design at UTS. I care about the seam where AI
+                    meets human habit — the tiny moments where a tool starts to feel like
+                    a hand you can trust.
+                </p>
+                <dl class="factsheet">
+                    <dt>Based</dt><dd>Sydney, via Hangzhou + Shanghai</dd>
+                    <dt>Practice</dt><dd>Product · Experiential · Content · Visual</dd>
+                    <dt>Open to</dt><dd>Full-time · AI × human experience</dd>
+                    <dt>Say hi</dt>
+                    <dd>
+                        <a href="mailto:xinyihancy@gmail.com">xinyihancy@gmail.com</a>
+                        &nbsp;·&nbsp;
+                        <a href="https://www.linkedin.com/in/xinyi-han-601968166/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                    </dd>
+                </dl>
+            </div>
+
+            <!-- Right: the desk tools -->
+            <div class="tools">
+                <div class="ruler" id="studio-ruler"></div>
+
+                <div class="self-card" title="That's me, around here somewhere.">
+                    <div class="tape"></div>
+                    <div class="specimen">
+                        <img src="./assets/images/me/portrait.png" alt="Xinyi — Memoji portrait" onerror="this.style.display='none'">
+                    </div>
+                    <div class="caption">— hi, I'm Xinyi</div>
+                </div>
+
+                <div class="index-card">
+                    <h4>Currently on the desk</h4>
+                    <div class="row"><span>Studying</span><span>Interaction Design · UTS</span></div>
+                    <div class="row"><span>Reading</span><span>Tufte · VDQI</span></div>
+                    <div class="row"><span>Making</span><span>this portfolio, by hand</span></div>
+                    <div class="row"><span>Open to</span><span>senior UX · AI × human</span></div>
+                    <div class="row"><span>Based in</span><span>Sydney, AU</span></div>
+                </div>
+
+                <div class="coffee" title="ring no. 3 today"></div>
+
+                <div class="lamp">
+                    <button class="lamp-btn" id="lamp-toggle" aria-label="Toggle desk lamp">
+                        <span class="knob"></span>
+                    </button>
+                    <span class="lamp-label" id="lamp-label">Desk lamp · off</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section rule: Wall -->
+        <div class="section-rule" id="wall">
+            <span class="num">II.</span>
+            <span>The Wall</span>
+            <span class="line"></span>
+            <span>19 projects · four disciplines · six years</span>
+        </div>
+
+        <section class="wall-section">
+            <div class="wall-header">
+                <h2>
+                    Pinned to the wall<br>
+                    above the desk, in <em>rough order</em><br>
+                    of how much I still think about them.
+                </h2>
+                <p class="lede">
+                    Everything I'd pull down and talk you through in an interview, and a
+                    few things I wouldn't — left up because they taught me something.
+                    Pull the loupe if you want to look closer.
+                </p>
+            </div>
+
+            <div class="filters" id="studio-filters"></div>
+
+            <!-- Wall view (default) -->
+            <div class="pinboard" id="studio-pinboard"></div>
+
+            <!-- Index view (alt) -->
+            <div class="indexview" id="studio-index" style="display: none;"></div>
+        </section>
+
+        <!-- Section rule: Margins (about) -->
+        <div class="section-rule" id="about">
+            <span class="num">III.</span>
+            <span>The Margins</span>
+            <span class="line"></span>
+            <span>A short note, and where to find me</span>
+        </div>
+
+        <section class="margin-section">
+            <div class="blotter">
+                <div class="handle"><span class="dot"></span>About the designer</div>
+                <p class="lede-para">
+                    I grew up between Hangzhou and Shanghai, cut my teeth on consumer scale
+                    at Alibaba and ByteDance, and now I'm back at a desk at UTS trying to
+                    figure out what design means when the cheapest part of the pipeline is
+                    writing.
+                </p>
+                <p class="body-para">
+                    I like work that holds its shape after you stop looking at it — the kind
+                    of craft that shows up in a spreadsheet, a service map, a signage system,
+                    a ten-second onboarding. I treat every brief as an invitation to a
+                    conversation with a real person on the other side.
+                </p>
+                <p class="ps">
+                    p.s. this site is a studio — not a showreel. poke around, click the lamp, try the loupe.
+                </p>
+            </div>
+            <div class="where">
+                <h4>Where to find me</h4>
+                <div class="row"><span class="k">EMAIL</span><span>xinyihancy@gmail.com</span></div>
+                <div class="row"><span class="k">LINKEDIN</span><span>/in/xinyi-han</span></div>
+                <div class="row"><span class="k">READING</span><span>/notes</span></div>
+                <div class="row"><span class="k">RÉSUMÉ</span><span>PDF · 2 pp.</span></div>
+                <div class="row"><span class="k">HOURS</span><span>mostly 9–6 AEDT</span></div>
+
+                <h4 style="margin-top: 28px;">Colophon</h4>
+                <div class="colophon-body">
+                    Set in <em>Newsreader</em>, <em>Geist</em>, and <em>JetBrains Mono</em>.
+                    Built by hand with a little help from Claude. The paper grain is real, the
+                    coffee ring is older than the site, and the lamp actually works.
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="studio-footer" id="contact">
+            <div>
+                <h4>The Studio</h4>
+                <div class="serif-note">A quiet workroom on the internet, maintained by one designer with too many opinions about margins.</div>
+            </div>
+            <div>
+                <h4>Elsewhere</h4>
+                <a href="https://www.linkedin.com/in/xinyi-han-601968166/" target="_blank" rel="noopener noreferrer">LinkedIn → /in/xinyi-han</a>
+                <a href="#">Read.cv → xinyi</a>
+                <a href="#">Are.na → /xinyi-han</a>
+                <a href="#">Instagram → @xinyi.studio</a>
+            </div>
+            <div>
+                <h4>Small print</h4>
+                <a href="./assets/docs/CV_XinyiHan_2026.pdf" target="_blank" rel="noopener noreferrer">Résumé (PDF)</a>
+                <a href="#">Colophon</a>
+                <a href="#">Changelog · v4.2</a>
+                <div style="margin-top: 14px; font-family: var(--serif); font-size: 13px; font-style: italic; text-transform: none; letter-spacing: 0; color: var(--ink-3);">
+                    Last revised — April '26. Made in Sydney, on a Tuesday, with the lamp on.
+                </div>
+            </div>
+        </footer>
+    </div>
+    <!-- /#stage -->
+
+    <!-- Tool row — loupe + tweaks -->
+    <div class="tool-row">
+        <button class="tool-btn" id="tool-loupe" title="Loupe (magnifier)" aria-label="Toggle loupe">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.6">
+                <circle cx="9" cy="9" r="6"/>
+                <line x1="13.5" y1="13.5" x2="19" y2="19"/>
+            </svg>
+        </button>
+        <button class="tool-btn" id="tool-tweaks" title="Tweaks" aria-label="Toggle tweaks panel">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.6">
+                <circle cx="11" cy="11" r="2.5"/>
+                <path d="M11 2v3M11 17v3M2 11h3M17 11h3M4.5 4.5l2 2M15.5 15.5l2 2M4.5 17.5l2-2M15.5 6.5l2-2"/>
+            </svg>
+        </button>
+    </div>
+
+    <!-- Loupe magnifier -->
+    <div id="loupe" aria-hidden="true"><div id="loupe-inner"></div></div>
+
+    <!-- Tweaks panel -->
+    <div id="tweaks"></div>
+
+    <!-- Case study panel -->
+    <div class="panel-backdrop" id="studio-panel-backdrop"></div>
+    <div class="panel" id="studio-panel"></div>
+
+    <!-- Scripts -->
+    <script src="./js/studio-projects.js"></script>
+    <script src="./js/studio-app.js"></script>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f7f7f2">
+  <title>Xinyi Han — The Résumé Press</title>
+  <link rel="stylesheet" href="style/boarding-pass.css">
+</head>
+<body class="boarding-page">
+  <main class="resume-app">
+    <header class="resume-header">
+      <a href="index-scrollcarousel.html" class="back-link">↖ Back to portfolio</a>
+      <span class="header-edition">THE RÉSUMÉ PRESS / EDITION 01</span>
+      <a href="mailto:xinyi.han0816@outlook.com" class="header-contact">Say hello ↗</a>
+    </header>
+    <div class="resume-layout">
+      <section class="resume-intro" aria-labelledby="page-title">
+        <p class="eyebrow"><span></span> DESIGN, CODE & A LITTLE PAPER</p>
+        <h1 id="page-title">A digital mind.<br>A paper trail.</h1>
+        <p class="intro-copy">I'm Xinyi Han. I work at the intersection of design and technology. Here’s the experience behind the interface — in a format that never goes out of style.</p>
+        <div class="resume-spec"><span>DOCUMENT</span><strong>Curriculum vitæ</strong><span>FORMAT</span><strong>A4 · 2 pages · LaTeX-style typography</strong></div>
+        <div class="resume-actions">
+          <button id="print-copy" class="primary-action" type="button">Print another copy <span>↘</span></button>
+          <button id="read-resume" class="text-action" type="button">Read full résumé ↗</button>
+        </div>
+        <p class="save-help">One click to save. A little tear, just for fun.</p>
+        <a class="download-link" href="assets/docs/CV_XinyiHan_A4.pdf" download="Xinyi-Han-Resume-A4.pdf">Download PDF <span>↓</span></a>
+        <div class="interaction-guide"><p><span>01</span> Your résumé prints as you arrive.</p><p><span>02</span> Click Save my résumé to download.</p><p><span>03</span> Feeling curious? Pull the paper corner.</p></div>
+        <p class="source-note">Real résumé. Original typography.<br>No generated experience, no rewritten credentials.</p>
+      </section>
+      <section class="resume-studio" aria-label="Interactive résumé printer">
+        <div class="studio-heading"><span>YOUR COPY, FRESHLY PRINTED</span><span>A4 / 210 × 297 MM</span></div>
+        <div class="printer-stage" id="printer-stage" data-state="idle">
+          <button class="printer-body" id="printer-button" type="button" aria-label="Print résumé" aria-describedby="printer-status"><span class="printer-top-glint"></span><span class="printer-slot"></span><span class="status-light" aria-hidden="true"></span><span class="printer-brand">XINYI / PAPER PRESS</span><span class="printer-mark" aria-hidden="true">↘</span></button>
+          <div class="paper-viewport" id="paper-viewport">
+            <div class="paper" id="paper" hidden>
+              <button class="ticket-front" id="ticket-front" type="button" aria-label="Enlarge résumé and read both pages" disabled><img class="resume-sheet" src="assets/docs/resume-page-1.png" alt="Xinyi Han résumé, page one: education, skills and professional experience."><span class="paper-read-hint">View full résumé ↗</span></button>
+              <svg class="curl-layer" id="curl-layer" aria-hidden="true" preserveAspectRatio="none">
+                <defs>
+                  <linearGradient id="paper-back" x1="0" y1="0" x2="1" y2="1" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#c6c2b7"/><stop offset=".13" stop-color="#e4dfd2"/><stop offset=".32" stop-color="#fffdf4"/><stop offset=".69" stop-color="#f7f3e8"/><stop offset="1" stop-color="#ded8c9"/></linearGradient>
+                  <filter id="curl-shadow" x="-40%" y="-40%" width="190%" height="200%"><feDropShadow dx="3" dy="7" stdDeviation="6" flood-color="#4f493b" flood-opacity=".23"/></filter>
+                </defs>
+                <path id="curl-back" fill="url(#paper-back)" filter="url(#curl-shadow)"/>
+                <path id="curl-crease-shadow" fill="none" stroke="#82796a" stroke-opacity=".2" stroke-width="2.5"/>
+                <path id="curl-highlight" fill="none" stroke="#fffef8" stroke-opacity=".95" stroke-width="1"/>
+              </svg>
+              <button class="corner-handle" id="corner-handle" type="button" aria-label="Tear off and download résumé PDF. Drag the top-left corner down and right, or press Enter."><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 16V5h11M5 5l13 13"/></svg></button>
+            </div>
+          </div>
+          <svg class="tear-remnant" id="tear-remnant" aria-hidden="true"><path id="remnant-path" fill="#eeeadd"/></svg>
+          <div class="slot-contact-shadow" aria-hidden="true"></div>
+          <div class="drag-guide" aria-hidden="true">
+            <div class="drag-guide-copy"><strong>Drag this corner to save</strong><span>Click, hold, then pull down ↘</span></div>
+            <svg class="drag-guide-trail" viewBox="0 0 165 140"><path d="M8 8C28 33 76 73 130 110"/></svg>
+            <span class="drag-guide-press"></span>
+            <svg class="drag-guide-cursor" viewBox="0 0 40 48"><path d="M13 26V7a3.5 3.5 0 0 1 7 0v13-3a3.3 3.3 0 0 1 6.6 0v4-1.5a3.2 3.2 0 0 1 6.4 0V23a3 3 0 0 1 6 0v8c0 5.5-2.4 8.2-5 11H17c-1.5-4.3-5.7-7.8-8.1-11.1L3.8 24a3.2 3.2 0 0 1 4.8-4.1L13 26Z"/><path class="guide-hand-lines" d="M20 20v7m6.6-6v7M33 23v6"/></svg>
+          </div>
+          <div class="idle-prompt"><div class="empty-page-outline"><span>\documentclass{experience}</span><strong>Your next<br>good read.</strong><span>CLICK THE PRINTER TO BEGIN ↓</span></div></div>
+        </div>
+        <div class="studio-footer"><p id="printer-status" role="status">Preparing your copy · prints automatically</p><button id="reset-button" type="button">Reset ↻</button></div>
+      </section>
+    </div>
+    <footer class="page-footer"><span>Xinyi Han © 2026</span><span>Made of curiosity, code and a little friction.</span><span>Sydney, Australia</span></footer>
+  </main>
+  <dialog class="resume-reader" id="resume-reader" aria-labelledby="reader-title">
+    <header class="reader-header"><div><p>THE FULL DOCUMENT</p><h2 id="reader-title">Xinyi Han / Résumé</h2></div><div><a href="assets/docs/CV_XinyiHan_A4.pdf" download="Xinyi-Han-Resume-A4.pdf">Download PDF ↓</a><button id="reader-close" type="button" aria-label="Close résumé">×</button></div></header>
+    <div class="reader-pages"><img src="assets/docs/resume-page-1.png" alt="Résumé page 1: education, skills and professional experience"><img src="assets/docs/resume-page-2.png" alt="Résumé page 2: selected projects"><a href="assets/docs/CV_XinyiHan_A4.pdf" target="_blank" rel="noopener noreferrer">Open selectable PDF in a new tab ↗</a></div>
+  </dialog>
+  <script src="js/boarding-pass.js"></script>
+</body>
+</html>

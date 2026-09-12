@@ -1,0 +1,67 @@
+/* Polaroid card hover, expand, and relationship line animations */
+
+/* Hover and 3D tilt — only on devices with fine pointers */
+@media (hover: hover) and (pointer: fine) {
+    .polaroid-card:hover {
+        transform: translateY(-6px) rotateX(var(--rotateX, 0deg)) rotateY(var(--rotateY, 0deg));
+        box-shadow: var(--shadow-card-hover);
+    }
+
+    .polaroid-card:hover .polaroid-card__image {
+        filter: none;
+    }
+}
+
+/* Expanded card */
+.polaroid-card--expanded {
+    position: fixed;
+    z-index: 200;
+    box-shadow: var(--shadow-card-expanded);
+    transition: all var(--duration-slow) var(--ease-out);
+}
+
+/* Dimmed wall when a card is expanded */
+.polaroid-wall--dimmed .polaroid-card:not(.polaroid-card--expanded):not(.polaroid-card--related) {
+    opacity: 0.15;
+    filter: grayscale(0.5);
+    pointer-events: none;
+    transition: opacity 0.4s var(--ease-out),
+                filter 0.4s var(--ease-out);
+}
+
+/* Related cards highlight */
+.polaroid-card--related {
+    opacity: 1;
+    box-shadow: 0 0 0 3px #000, var(--shadow-card-hover);
+    transition: box-shadow var(--duration-normal) var(--ease-out),
+                opacity var(--duration-normal) var(--ease-out);
+}
+
+/* SVG relationship overlay */
+.relationship-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 150;
+}
+
+.relationship-line {
+    stroke: #000;
+    stroke-width: 1;
+    stroke-dasharray: 6 4;
+    animation: drawLine 0.6s var(--ease-out) forwards;
+}
+
+@keyframes drawLine {
+    from {
+        stroke-dashoffset: 200;
+        opacity: 0;
+    }
+    to {
+        stroke-dashoffset: 0;
+        opacity: 0.6;
+    }
+}

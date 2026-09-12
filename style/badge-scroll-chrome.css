@@ -1,0 +1,31 @@
+/* Identity → chapters: no header rule, no pinned extra viewport. */
+.badge-page .mast { border:0; z-index:24; pointer-events:none; }
+.badge-page .mast > a { position:fixed; left:50%; top:47px; transform:translate(-50%,-50%); transform-origin:center; width:max-content; white-space:nowrap; pointer-events:auto; will-change:opacity; }
+.badge-page .mast > .mast-docked { left:28px; top:34px; transform:translateY(-50%); font-size:24px; opacity:0; }
+.badge-page .work-story { border-top:0; }
+.badge-page .badge-stage { transform-origin:50% 45%; will-change:transform,opacity; }
+.badge-page .badge-scroll-guide { position:fixed; z-index:22; right:20px; top:50%; transform:translateY(-50%); width:44px; padding:14px 0 8px; border-radius:18px; background:rgba(236,237,233,.86); backdrop-filter:blur(10px); }
+.badge-page .badge-page-progress { position:relative; width:3px; height:44px; margin:0 auto 8px; background:#d4d7d0; border-radius:3px; }
+.badge-page .badge-page-progress > span { position:absolute; width:5px; height:5px; border-radius:50%; background:#30372b; left:-1px; top:calc(var(--page-progress,0) * 39px); }
+.badge-page .badge-scroll-guide .scene-chapter-nav { position:static; display:flex; flex-direction:column; gap:0; transform:none; }
+.badge-page .badge-scroll-guide .scene-chapter-nav a { display:grid; place-items:center; justify-content:center; min-height:32px; width:44px; padding:0; }
+.badge-page .badge-scroll-guide .scene-chapter-nav a:after { content:none; }
+.badge-page .chapter-dot { display:block; width:5px; height:5px; border-radius:4px; background:#b9beb4; }
+.badge-page [aria-current] > .chapter-dot { height:18px; background:#30372b; }
+.badge-page .badge-scroll-guide a:hover > .chapter-dot { background:#30372b; }
+.badge-page .badge-chapter-progress { position:fixed; z-index:21; left:50%; bottom:24px; transform:translateX(-50%); width:min(540px,56vw); padding:12px 18px; border-radius:4px; background:rgba(250,250,248,.93); pointer-events:none; }
+.badge-page .chapter-progress-label { display:flex; justify-content:space-between; gap:20px; margin-bottom:9px; font:10px/1.4 Inter,sans-serif; color:#62675e; }
+.badge-page .chapter-progress-label > :last-child { font-variant-numeric:tabular-nums; white-space:nowrap; }
+.badge-page .chapter-progress-track { height:2px; background:#e1e4dc; overflow:hidden; }
+.badge-page .chapter-progress-track > span { display:block; width:100%; height:100%; background:#30372b; transform:scaleX(var(--chapter-progress,0)); transform-origin:left; }
+@media(max-width:700px) {
+ .badge-page .mast > a { top:37.5px; }
+ .badge-page .mast > .mast-docked { left:18px; top:30px; }
+ .badge-page .badge-scroll-guide { right:8px; width:44px; padding-top:10px; }
+ .badge-page .badge-scroll-guide .scene-chapter-nav a { min-height:44px; }
+ .badge-page .badge-chapter-progress { width:calc(100% - 36px); bottom:calc(94px + env(safe-area-inset-bottom)); padding:10px 12px; }
+ .badge-page .chapter-progress-label { font-size:9px; }
+}
+@media(prefers-reduced-motion:reduce) {
+ .badge-page .mast > a,.badge-page .badge-stage { will-change:auto; }
+}

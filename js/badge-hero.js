@@ -1,0 +1,52 @@
+'use strict';
+(()=>{
+const $=id=>document.getElementById(id), motion=matchMedia('(prefers-reduced-motion: reduce)');
+const badge=$('badge'),portrait=$('portrait'),face=$('face'),badgeStyle=getComputedStyle(document.body);
+const cssNumber=(name,fallback)=>{const value=parseFloat(badgeStyle.getPropertyValue(name));return Number.isFinite(value)?value:fallback};
+const tiltLimitX=cssNumber('--badge-tilt-x',6),tiltLimitY=cssNumber('--badge-tilt-y',9),dragLimitX=cssNumber('--badge-drag-x',9),dragLimitY=cssNumber('--badge-drag-y',11),springStiffness=cssNumber('--badge-spring-stiffness',180),springDamping=cssNumber('--badge-spring-damping',20),glareMax=cssNumber('--badge-glare-max',.36);
+const names=['up-left','up','up-right','left','center','right','down-left','down','down-right'];
+const imgs=names.map(n=>{const i=new Image();i.src=`assets/hero-portrait/${n}.webp`;return i});
+let tx=0,ty=0,x=0,y=0,row=1,col=1,current=4,raf=0,last=0;
+let drag=null,targetTiltX=0,targetTiltY=0,renderTiltX=0,renderTiltY=0,velocityTiltX=0,velocityTiltY=0,suppressClickUntil=0;
+const bin=(v,old)=>old===0&&v<-.23?0:old===2&&v>.23?2:v<-.34?0:v>.34?2:1;
+function wake(){if(!raf)raf=requestAnimationFrame(tick)}
+function tick(now){raf=0;const dt=Math.min(50,last?now-last:16);last=now;const k=motion.matches?1:1-Math.exp(-dt/52);x+=(tx-x)*k;y+=(ty-y)*k;row=bin(y,row);col=bin(x,col);const next=row*3+col;if(next!==current&&imgs[next].complete&&imgs[next].naturalWidth){current=next;face.src=imgs[next].src;face.alt=`Xinyi Han portrait, ${names[next]}`;}const desiredX=targetTiltX+(motion.matches||drag?0:-y*tiltLimitX),desiredY=targetTiltY+(motion.matches||drag?0:x*tiltLimitY);if(motion.matches){renderTiltX=desiredX;renderTiltY=desiredY;velocityTiltX=velocityTiltY=0}else{const seconds=dt/1000;velocityTiltX+=(desiredX-renderTiltX)*springStiffness*seconds;velocityTiltY+=(desiredY-renderTiltY)*springStiffness*seconds;const damping=Math.exp(-springDamping*seconds);velocityTiltX*=damping;velocityTiltY*=damping;renderTiltX+=velocityTiltX*seconds;renderTiltY+=velocityTiltY*seconds}const transform=`rotateX(${renderTiltX.toFixed(3)}deg) rotateY(${renderTiltY.toFixed(3)}deg) scale(var(--card-hover-scale))`;badge.style.transform=transform;badge.style.setProperty('--manual-transform',transform);badge.style.setProperty('--shine-x',`${50+renderTiltY*.6}%`);badge.style.setProperty('--shine-y',`${35-renderTiltX*.7}%`);face.style.setProperty('--portrait-shift-x',`${(-x*4).toFixed(2)}px`);face.style.setProperty('--portrait-shift-y',`${(-y*3).toFixed(2)}px`);if(Math.abs(x-tx)>.001||Math.abs(y-ty)>.001||Math.abs(renderTiltX-desiredX)>.01||Math.abs(renderTiltY-desiredY)>.01||Math.abs(velocityTiltX)>.01||Math.abs(velocityTiltY)>.01)wake();else last=0}
+function paint(active=true){const px=50+tx*50,py=50+ty*50,distance=Math.min(1,Math.hypot(tx,ty));badge.classList.toggle('is-interacting',active&&!motion.matches);badge.style.setProperty('--pointer-x',`${px.toFixed(1)}%`);badge.style.setProperty('--pointer-y',`${py.toFixed(1)}%`);badge.style.setProperty('--surface-shift-x',`${(tx*36).toFixed(1)}px`);badge.style.setProperty('--surface-shift-y',`${(ty*24).toFixed(1)}px`);badge.style.setProperty('--glare-opacity',active&&!motion.matches?String((.035+distance*Math.max(0,glareMax-.035)).toFixed(3)):'0');badge.style.setProperty('--badge-shadow',`${(-tx*13).toFixed(1)}px ${(20+ty*10).toFixed(1)}px 48px -23px rgba(34,35,33,.48),0 4px 0 -2px #d7d8d3,inset 1px 1px 0 rgba(255,255,255,.85),inset -1px -1px 0 rgba(64,65,62,.14)`)}
+function point(e){const r=badge.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;tx=Math.max(-1,Math.min(1,(e.clientX-cx)/(r.width*.8)));ty=Math.max(-1,Math.min(1,(e.clientY-cy)/(r.height*.65)));paint();wake()}
+function reset(){tx=ty=0;badge.classList.remove('is-interacting');badge.style.setProperty('--pointer-x','50%');badge.style.setProperty('--pointer-y','50%');badge.style.setProperty('--glare-opacity','0');badge.style.removeProperty('--badge-shadow');wake()}
+function endDrag(){const old=drag;drag=null;badge.classList.remove('is-dragging');if(old){if(old.moved)suppressClickUntil=performance.now()+300;if(badge.hasPointerCapture(old.id))badge.releasePointerCapture(old.id)}targetTiltX=targetTiltY=0;reset()}
+// No visible controls: mouse drags freely; touch horizontal drags rotate,
+// while touch-action: pan-y reserves vertical gestures for native page scrolling.
+badge.addEventListener('pointerdown',e=>{if(drag||!e.isPrimary||e.button!==0||e.target.closest('button,a'))return;const pending=e.pointerType!=='mouse';drag={id:e.pointerId,x:e.clientX,y:e.clientY,moved:false,pending};if(!pending){badge.setPointerCapture(e.pointerId);badge.classList.add('is-dragging')}});
+badge.addEventListener('pointermove',e=>{if(!drag||drag.id!==e.pointerId)return;const dx=e.clientX-drag.x,dy=e.clientY-drag.y;if(drag.pending){if(Math.max(Math.abs(dx),Math.abs(dy))<8)return;if(Math.abs(dy)>=Math.abs(dx)){endDrag();return}drag.pending=false;badge.setPointerCapture(e.pointerId);badge.classList.add('is-dragging')}drag.moved ||= Math.hypot(dx,dy)>5;targetTiltY=Math.max(-dragLimitY,Math.min(dragLimitY,dx*.07));targetTiltX=Math.max(-dragLimitX,Math.min(dragLimitX,-dy*.06));tx=targetTiltY/dragLimitY;ty=-targetTiltX/dragLimitX;paint();wake()});
+badge.addEventListener('pointerup',e=>{if(drag&&drag.id===e.pointerId)endDrag()});badge.addEventListener('pointercancel',endDrag);badge.addEventListener('lostpointercapture',e=>{if(drag&&e.target===badge&&e.pointerId===drag.id)endDrag()});
+badge.addEventListener('click',e=>{if(performance.now()<suppressClickUntil){e.preventDefault();e.stopImmediatePropagation()}},true);
+
+window.addEventListener('blur',endDrag);motion.addEventListener('change',endDrag);
+// The WebGL hit layer sits outside .hero: listen across the viewport instead.
+// Only follow while the identity badge is on screen, never during the opening.
+function badgeVisible(){const r=badge.getBoundingClientRect();return r.bottom>0&&r.top<innerHeight&&!badge.closest('.badge-stage').inert&&!document.documentElement.classList.contains('opening-pending')&&!document.body.classList.contains('opening-active')}
+window.addEventListener('pointermove',e=>{if(!drag&&e.pointerType==='mouse'&&badgeVisible())point(e)},{passive:true});
+document.documentElement.addEventListener('pointerleave',()=>{if(!drag)reset()});
+window.addEventListener('scroll',()=>{if(!drag&&!badgeVisible()&&(tx||ty))reset()},{passive:true});
+portrait.addEventListener('pointerdown',point,{passive:true});portrait.addEventListener('pointerup',e=>{if(e.pointerType!=='mouse')reset()});portrait.addEventListener('pointercancel',reset);window.addEventListener('blur',reset);motion.addEventListener('change',reset);
+portrait.addEventListener('keydown',e=>{const dirs={ArrowLeft:[-1,0],ArrowRight:[1,0],ArrowUp:[0,-1],ArrowDown:[0,1],Home:[0,0],Escape:[0,0]};if(dirs[e.key]){e.preventDefault();[tx,ty]=dirs[e.key];paint(e.key!=='Home'&&e.key!=='Escape');wake()}});
+// Experience rows are plain case-study links; no hover preview or entrance side effects.
+const section=$('resume-section'),frame=$('resume-frame');let printerLoaded=false;
+let printerSizeObserver,saveQueued=false;
+const saveResume=document.querySelector('.resume-download-primary');
+function syncSaveButton(event){const detail=event.detail||{},state=detail.state,busy=detail.queued||['printing','tearing','falling'].includes(state);saveResume.setAttribute('aria-busy',String(Boolean(busy)));saveResume.innerHTML=state==='tearing'||state==='falling'?'Saving Resume…':detail.queued||state==='printing'?'Printing Resume…':'Download Résumé <span aria-hidden="true">↓</span>'}
+function pressPrinterSave(){try{if(frame.contentWindow?.resumePressSave?.()){saveQueued=false;return true}}catch{}return false}
+function nativeResumeDownload(){const link=document.createElement('a');link.href=saveResume.href;link.download=saveResume.download;link.hidden=true;document.body.append(link);link.click();link.remove()}
+frame.addEventListener('load',()=>{try{frame.contentWindow.addEventListener('resume-save-state',syncSaveButton);const app=frame.contentDocument?.querySelector('.resume-app');if(app){printerSizeObserver?.disconnect();const fit=()=>{const height=Math.ceil(app.getBoundingClientRect().height+12);if(height>0&&frame.style.height!==`${height}px`)frame.style.height=`${height}px`};fit();if('ResizeObserver'in window){printerSizeObserver=new ResizeObserver(fit);printerSizeObserver.observe(app)}}if(saveQueued&&!pressPrinterSave())setTimeout(()=>{if(saveQueued){saveQueued=false;nativeResumeDownload()}},1200)}catch{if(saveQueued){saveQueued=false;nativeResumeDownload()}}});
+function loadPrinter(){if(!printerLoaded){printerLoaded=true;frame.src=frame.dataset.src}}
+saveResume.addEventListener('click',event=>{if(event.metaKey||event.ctrlKey||event.shiftKey||event.altKey)return;event.preventDefault();saveQueued=true;loadPrinter();if(pressPrinterSave())return;setTimeout(()=>{if(saveQueued&&printerLoaded&&frame.contentDocument?.readyState==='complete'&&!pressPrinterSave()){saveQueued=false;nativeResumeDownload()}},1500)});
+$('resume-link').addEventListener('click',()=>{section.scrollIntoView({behavior:motion.matches?'auto':'smooth',block:'start'});if(!('IntersectionObserver'in window))loadPrinter()});
+if('IntersectionObserver'in window){const ob=new IntersectionObserver(entries=>{if(entries.some(e=>e.isIntersecting)){loadPrinter();ob.disconnect()}},{threshold:0.12});ob.observe(section)}else loadPrinter();
+const identityWord=$('resume-identity-word'),identityWords=['product','experiential','content','visual'];let identityIndex=0,identityTimer=0;
+function typeIdentity(){const word=identityWords[identityIndex];let length=0;function step(){identityWord.textContent=word.slice(0,++length);identityTimer=setTimeout(length<word.length?step:deleteIdentity,length<word.length?66:1900)}step()}
+function deleteIdentity(){if(identityWord.textContent.length){identityWord.textContent=identityWord.textContent.slice(0,-1);identityTimer=setTimeout(deleteIdentity,36)}else{identityIndex=(identityIndex+1)%identityWords.length;identityTimer=setTimeout(typeIdentity,320)}}
+function startIdentity(){clearTimeout(identityTimer);if(!identityWord)return;identityIndex=0;identityWord.textContent=identityWords[0];if(!motion.matches)identityTimer=setTimeout(deleteIdentity,2700)}
+startIdentity();motion.addEventListener('change',startIdentity);
+// Agent handoff is isolated in badge-agent.js.
+})();

@@ -1,0 +1,35 @@
+/* Navigation is page chrome, not an extra chapter in the story. */
+.badge-page .portfolio-menu-toggle { position:fixed; z-index:35; right:28px; top:12px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; width:44px; height:44px; border:0; border-radius:13px; background:#20211e; color:#fff; }
+.badge-page .portfolio-menu-toggle > span { width:17px; height:2px; background:currentColor; border-radius:1px; }
+.badge-page dialog.portfolio-menu { position:fixed; inset:0; width:100%; max-width:none; height:100dvh; max-height:none; margin:0; padding:0; border:0; border-radius:0; overflow:hidden; background:var(--paper); color:var(--ink); }
+.badge-page .portfolio-menu::backdrop { background:var(--paper); }
+.badge-page .portfolio-menu-header { display:flex; align-items:center; justify-content:space-between; height:68px; padding:12px 28px; }
+.badge-page .portfolio-menu-header h2 { font:400 26px/1 Newsreader,Georgia,serif; letter-spacing:-.4px; margin:0; }
+.badge-page .portfolio-menu-close { display:grid; place-items:center; width:44px; height:44px; border:0; border-radius:13px; background:#20211e; color:#fff; font:28px/1 Inter,sans-serif; }
+.badge-page .portfolio-menu-scroll { height:calc(100% - 68px); overflow:auto; overscroll-behavior:contain; touch-action:pan-y; padding:36px max(6vw,24px) 80px; scrollbar-gutter:stable; }
+.badge-page .portfolio-menu-links { max-width:860px; margin:5vh auto; display:flex; flex-direction:column; align-items:stretch; gap:18px; }
+.badge-page .portfolio-menu-links .micro { margin:0 0 8px; }
+.badge-page .portfolio-menu-chapters { display:flex; flex-direction:column; gap:5px; margin-bottom:22px; }
+.badge-page .portfolio-menu-links a,.badge-page .portfolio-menu-all { display:block; min-height:44px; padding:8px 0; text-align:left; border:0; background:transparent; font:400 clamp(25px,3.2vw,46px)/1.2 Newsreader,Georgia,serif; color:var(--ink); }
+.badge-page .portfolio-menu-links a:hover,.badge-page .portfolio-menu-all:hover { color:#667653; }
+.badge-page .portfolio-menu-all { display:flex; align-items:center; justify-content:space-between; gap:20px; }
+.badge-page .portfolio-menu-all > span { font:11px/1.4 Inter,sans-serif; color:var(--muted); }
+.badge-page .portfolio-menu-back { min-height:44px; padding:0 0 18px; border:0; background:none; font:12px Inter,sans-serif; }
+.badge-page .portfolio-menu-directory { max-width:1200px; margin:auto; }
+.badge-page .portfolio-menu .work-next { border:0; padding:0; margin:0; overflow:visible; }
+.badge-page .portfolio-menu .work-heading { margin-bottom:20px; }
+.badge-page .portfolio-menu .work-heading h2 { font-size:38px; }
+.badge-page .portfolio-menu .work-item { transition:background .15s; }
+.badge-page .portfolio-menu .work-thumb img { transform:none; opacity:1; will-change:auto; }
+/* The next real section, not an opaque View Static spacer, owns this background. */
+.badge-page.has-portfolio-menu .resume-section { position:relative; z-index:8; max-width:none; border-top:0; background:var(--paper); }
+.badge-page.has-portfolio-menu .site-footer { border-top:0; }
+@media(max-width:700px) {
+ .badge-page .portfolio-menu-toggle { right:18px; top:8px; }
+ .badge-page .portfolio-menu-header { height:60px; padding:8px 18px; }
+ .badge-page .portfolio-menu-scroll { height:calc(100% - 60px); padding:24px 20px 60px; }
+ .badge-page .portfolio-menu-links { margin-top:4vh; gap:14px; }
+ .badge-page .portfolio-menu-all > span { font-size:10px; }
+ .badge-page .portfolio-menu .work-heading h2 { font-size:32px; }
+}
+@media(prefers-reduced-motion:reduce) { .badge-page .portfolio-menu .work-item { transition:none; } }

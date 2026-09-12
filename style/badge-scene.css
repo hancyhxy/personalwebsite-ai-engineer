@@ -1,0 +1,62 @@
+/* Perspective stage. No white radial veil, grayscale filter or whole-column translation. */
+.badge-page .hero{position:relative;z-index:8;display:flex;justify-content:center;max-width:none;min-height:calc(100svh - 94px);padding:46px 5% 90px;background:transparent}
+.badge-page .mast,.badge-page .badge-stage{position:relative;z-index:8}
+.badge-page .badge-stage{width:min(420px,100%)}
+.badge-page .hero-scroll{position:absolute;z-index:9;left:50%;bottom:25px;min-height:44px;padding:10px 18px;border:1px solid var(--line);border-radius:99px;background:rgba(250,250,248,.88);transform:translateX(-50%);backdrop-filter:blur(8px)}
+.badge-page .work-story{position:relative;z-index:5;border-top:1px solid var(--line);background:transparent;min-height:0}
+.badge-page .scene-anchor{position:absolute;left:0;width:1px;height:1px;pointer-events:none}
+.badge-page.scene-ready .hero{z-index:8;pointer-events:none}
+.badge-page.scene-ready .hero .badge-stage,.badge-page.scene-ready .hero .hero-scroll{pointer-events:auto}
+.badge-page .badge-scene-canvas{position:fixed;inset:0;z-index:4;pointer-events:none}
+.badge-page .badge-scene-canvas canvas{display:block;width:100%;height:100%}
+.badge-page .badge-scene-overlay{position:fixed;inset:0;z-index:6;pointer-events:none;overflow:clip}
+.badge-page .scene-chapter-heading{position:absolute;left:50%;top:25%;width:min(880px,76vw);text-align:center;transform:translateX(-50%);pointer-events:none}
+.badge-page .scene-chapter-heading .micro{margin:0 0 20px;font-size:10px;letter-spacing:.16em}
+.badge-page .scene-chapter-heading h2{margin:0 0 20px;font:400 clamp(48px,6vw,88px)/1 Newsreader,Georgia,serif;letter-spacing:-.035em}
+.badge-page .scene-keywords{margin:0 0 24px;justify-content:center;gap:6px;letter-spacing:0}
+.badge-page .scene-keywords.ink-tags>span{font-size:clamp(10px,.85vw,12px);padding:2px 5px}
+.badge-page .scene-chapter-line{max-width:38ch;margin:0 auto;font:400 clamp(22px,2.3vw,34px)/1.3 Newsreader,Georgia,serif;text-wrap:balance}
+.badge-page .scene-project-hit[hidden],.badge-page .scene-chapter-nav[hidden]{display:none!important}
+.badge-page .scene-project-hit{position:absolute;left:0;top:0;display:block;pointer-events:auto;outline-offset:5px}
+.badge-page .scene-project-label{position:absolute;left:0;top:100%;width:100%;padding-top:calc(10px * var(--scene-project-scale,1));text-align:center;font:500 calc(12px * var(--scene-project-scale,1))/1.4 Inter,sans-serif;color:var(--ink,#171914);text-wrap:balance}
+.badge-page .scene-project-hit:hover .scene-project-label,.badge-page .scene-project-hit:focus-visible .scene-project-label{text-decoration:underline;text-underline-offset:3px}
+.badge-page .scene-overview-heading{top:0;width:min(820px,64vw);will-change:top,transform,opacity}
+.badge-page .scene-overview-heading h2{margin:0 0 14px;font-size:clamp(40px,min(4.7vw,7vh),72px);line-height:1.02}
+.badge-page .scene-overview-heading .scene-keywords{margin:0 0 18px;font-size:clamp(10px,1vw,12px)}
+.badge-page .scene-overview-heading .scene-chapter-line{max-width:38ch;font-size:clamp(20px,min(1.9vw,3vh),28px);line-height:1.3}
+.badge-page .scene-project-hit:focus-visible{outline:2px solid #30372b}
+.badge-page .scene-chapter-nav{position:absolute;right:22px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:3px;pointer-events:auto}
+.badge-page .scene-chapter-nav a{display:flex;align-items:center;justify-content:flex-end;gap:10px;min-height:44px;font:10px/1.3 Inter,sans-serif;color:#62675e;text-decoration:none}
+.badge-page .scene-chapter-nav a:after{content:'';height:5px;width:5px;border-radius:8px;background:#bcc1b8}
+.badge-page .scene-chapter-nav a[aria-current]:after{height:22px;background:#30372b}
+.badge-page .scene-chapter-nav a[aria-current]{color:#171914}
+.badge-page .scene-chapter-nav a:not(:hover):not(:focus-visible){font-size:0}
+.badge-page .scene-chapter-nav a:focus-visible{outline:2px solid #30372b;outline-offset:3px}
+.badge-page.scene-ready .scene-fallback{display:none}
+.badge-page .scene-fallback{padding:50px 6%;max-width:1100px;margin:auto}
+.badge-page .scene-fallback>section{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px;margin:0 0 80px}
+.badge-page .scene-fallback h2,.badge-page .scene-fallback>section>p{grid-column:1/-1}
+.badge-page .scene-fallback h2{font:400 42px/1.1 Newsreader,Georgia,serif;margin:0}
+.badge-page .scene-fallback a{display:block;text-decoration:none;color:inherit}
+.badge-page .scene-fallback img{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover}
+.badge-page .scene-fallback h3{font-size:17px;margin-bottom:8px}
+.badge-page .scene-fallback p{font-size:14px;line-height:1.6}
+.badge-page .work-next{position:relative;z-index:8;background:var(--paper)}
+@media(max-width:700px){
+ /* The exiting badge grows to 1.14; never let its bounds widen the mobile layout viewport. */
+ .badge-page .hero{padding:30px 18px 90px;overflow-x:clip}
+ .badge-page .scene-chapter-heading{top:29%;width:88vw}
+ .badge-page .scene-chapter-heading h2{font-size:44px}
+ .badge-page .scene-keywords{font-size:10px;margin-bottom:18px}
+ .badge-page .scene-chapter-line{font-size:24px;max-width:26ch}
+ .badge-page .scene-chapter-nav{right:8px}
+ .badge-page .scene-fallback>section{grid-template-columns:1fr}
+ /* Independent Work mobile art-direction pilot. Other chapters retain their existing layout. */
+ .badge-page .scene-overview-heading[data-group="independent"]{width:calc(100% - 48px);max-width:380px}
+ .badge-page .scene-overview-heading[data-group="independent"] h2{font-size:clamp(36px,10.3vw,44px);line-height:1.02;margin-bottom:16px}
+ .badge-page .scene-overview-heading[data-group="independent"] .scene-keywords{gap:6px;margin-bottom:18px}
+ .badge-page .scene-overview-heading[data-group="independent"] .scene-keywords>span{font-size:10px}
+ .badge-page .scene-overview-heading[data-group="independent"] .scene-chapter-line{font-size:20px;line-height:1.35;max-width:29ch}
+ .badge-page .scene-project-hit[data-group="independent"] .scene-project-label{font-size:13px;line-height:1.4;padding-top:12px}
+}
+@media(prefers-reduced-motion:reduce){.badge-page .scene-fallback{display:block!important}.badge-page .badge-scene-canvas,.badge-page .badge-scene-overlay{display:none!important}.badge-page .work-story{height:auto!important}}

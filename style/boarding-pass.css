@@ -1,0 +1,120 @@
+* { box-sizing:border-box; }
+body.boarding-page { margin:0; background:#f7f7f2; color:#282c25; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; -webkit-font-smoothing:antialiased; }
+.boarding-page button,.boarding-page a { -webkit-tap-highlight-color:transparent; }
+.boarding-page button { font:inherit; }
+.boarding-page button:focus-visible,.boarding-page a:focus-visible { outline:2px solid #8a9b78; outline-offset:5px; }
+.boarding-page [hidden] { display:none !important; }
+.boarding-page .resume-app { max-width:1320px; margin:auto; padding:0 64px; }
+.boarding-page .resume-header { display:flex; justify-content:space-between; align-items:center; gap:24px; height:108px; border-bottom:1px solid #dedfd5; }
+.boarding-page .resume-header a { font-size:12px; color:#616859; text-decoration:none; }
+.boarding-page .header-edition { font:10px ui-monospace,monospace; letter-spacing:.16em; color:#959c8d; }
+.boarding-page .resume-layout { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,500px); gap:90px; padding:64px 0 40px; align-items:start; }
+.boarding-page .resume-intro { padding-top:43px; }
+.boarding-page .eyebrow { font:9px ui-monospace,monospace; letter-spacing:.13em; color:#7f8b70; margin:0 0 30px; display:flex; align-items:center; gap:8px; }
+.boarding-page .eyebrow span { width:5px; height:5px; border-radius:50%; background:#8b9c78; }
+.boarding-page h1 { font:400 clamp(44px,4.5vw,67px)/1.05 Georgia,"Times New Roman",serif; letter-spacing:-2.5px; margin:0 0 27px; }
+.boarding-page .intro-copy { max-width:345px; font-size:13px; line-height:1.9; color:#838879; margin:0 0 32px; }
+.boarding-page .resume-spec { display:grid; grid-template-columns:76px 1fr; gap:11px 10px; padding:21px 0; border-block:1px solid #dedfd5; max-width:360px; font:10px/1.5 ui-monospace,monospace; }
+.boarding-page .resume-spec span { color:#a0a693; font-size:8px; letter-spacing:.1em; }
+.boarding-page .resume-spec strong { font-weight:400; color:#686f5f; }
+.boarding-page .resume-actions { display:flex; flex-wrap:wrap; align-items:center; gap:21px; margin-top:30px; }
+.boarding-page .primary-action { display:flex; gap:35px; padding:15px 20px; border:1px solid #3c4a31; background:#3c4a31; border-radius:999px; color:#f5f6ee; font-size:12px; cursor:pointer; }
+.boarding-page .primary-action:disabled { opacity:.55; cursor:default; }
+.boarding-page .text-action { padding:8px 0; border:0; background:none; color:#616c56; font-size:11px; cursor:pointer; }
+.boarding-page .save-help { margin:13px 0 0; color:#879378; font:10px/1.6 ui-monospace,monospace; }
+.boarding-page .download-link { display:inline-flex; gap:28px; margin-top:21px; padding-bottom:5px; color:#7d866f; font-size:11px; text-decoration:none; border-bottom:1px solid #cfd4c4; }
+.boarding-page .interaction-guide { margin-top:44px; }
+.boarding-page .interaction-guide p { font-size:11px; color:#7f8774; margin:12px 0; }
+.boarding-page .interaction-guide span { font:9px ui-monospace,monospace; color:#a3aa98; margin-right:15px; }
+.boarding-page .source-note { margin:30px 0 0; font:9px/1.8 ui-monospace,monospace; color:#a1a796; }
+.boarding-page .studio-heading { display:flex; justify-content:space-between; gap:15px; margin:0 3px 23px; font:8px ui-monospace,monospace; letter-spacing:.1em; color:#9ca38e; }
+.boarding-page .printer-stage { --ticket-height:630px; position:relative; height:calc(var(--ticket-height) + 70px); isolation:isolate; }
+.boarding-page .printer-body { position:absolute; inset:0 0 auto; height:108px; width:100%; border:1px solid #272b26; border-top-color:#595e54; border-radius:20px; background:linear-gradient(175deg,#484e44 0%,#363c32 24%,#2e342b 58%,#292e27 84%,#373d32 100%); box-shadow:inset 0 1px 1px #ffffff23,inset 0 -3px 3px #00000030,0 12px 19px -10px #1112144d,0 3px 6px #00000015; cursor:pointer; overflow:hidden; z-index:1; }
+.boarding-page .printer-body:disabled { cursor:default; opacity:1; }
+.boarding-page .printer-top-glint { position:absolute; height:1px; top:3px; left:27px; right:27px; background:linear-gradient(90deg,transparent,#ffffff38,transparent); }
+.boarding-page .printer-slot { position:absolute; left:16px; right:16px; top:25px; height:13px; border:1px solid #191c17; border-radius:7px; background:linear-gradient(#080b07,#141812); box-shadow:0 1px 1px #ffffff23,inset 0 3px 4px #000; }
+.boarding-page .status-light { position:absolute; top:13px; right:25px; width:4px; height:4px; border-radius:50%; background:#c0e4bb; box-shadow:0 0 5px #c0e4bb55; transition:background .2s,box-shadow .2s; }
+.boarding-page [data-state="printing"] .status-light { background:#edca8d; box-shadow:0 0 7px #e4b76588; }
+.boarding-page .printer-brand { position:absolute; bottom:15px; left:21px; color:#7d8575; font-size:7px; letter-spacing:2px; font-weight:500; }
+.boarding-page .printer-mark { position:absolute; right:23px; bottom:12px; color:#7d8575; font-size:16px; }
+/* An opaque body below a viewport whose top is inside the actual slot. */
+.boarding-page .paper-viewport { position:absolute; left:25px; right:25px; top:31px; height:calc(var(--ticket-height) + 100px); overflow:hidden; z-index:3; pointer-events:none; }
+.boarding-page .paper { position:relative; width:100%; height:var(--ticket-height); transform:translate3d(0,-100%,0); transform-origin:top right; filter:drop-shadow(0 9px 10px #514a3617); will-change:transform; pointer-events:none; }
+.boarding-page .ticket-front { position:absolute; inset:0; width:100%; height:100%; padding:0; border:0; background:#fffef9; overflow:hidden; text-align:initial; }
+.boarding-page .resume-sheet { display:block; width:100%; height:100%; object-fit:contain; mix-blend-mode:multiply; user-select:none; -webkit-user-drag:none; }
+.boarding-page [data-state="ready"] .ticket-front { pointer-events:auto; cursor:zoom-in; }
+.boarding-page .paper-read-hint { position:absolute; bottom:17px; left:50%; transform:translateX(-50%); padding:8px 13px; background:#edf1e5eb; border:1px solid #d7dfca; border-radius:999px; color:#718260; font:9px ui-monospace,monospace; white-space:nowrap; opacity:0; transition:opacity .2s; }
+.boarding-page [data-state="ready"] .ticket-front:hover .paper-read-hint,.boarding-page [data-state="ready"] .ticket-front:focus-visible .paper-read-hint { opacity:1; }
+.boarding-page .curl-layer { position:absolute; inset:0; width:100%; height:100%; overflow:visible; pointer-events:none; }
+.boarding-page .corner-handle { position:absolute; top:0; left:0; height:100px; width:110px; border:0; background:transparent; padding:0; cursor:grab; touch-action:none; pointer-events:none; color:#9d9689; }
+.boarding-page .corner-handle svg { position:absolute; top:5px; left:5px; width:15px; height:15px; fill:none; stroke:currentColor; stroke-width:1.1; opacity:0; transition:opacity .2s; }
+.boarding-page [data-state="ready"] .corner-handle,.boarding-page [data-state="dragging"] .corner-handle { pointer-events:auto; }
+.boarding-page [data-state="ready"] .corner-handle svg { opacity:.55; }
+/* A small pointing-hand demonstration, never an input target or a real paper drag. */
+.boarding-page .drag-guide { position:absolute; left:34px; top:41px; width:165px; height:140px; z-index:7; pointer-events:none; visibility:hidden; opacity:0; transition:opacity .2s; }
+.boarding-page [data-state="ready"]:not(.has-interacted) .drag-guide { visibility:visible; opacity:1; }
+.boarding-page .drag-guide-copy { position:absolute; top:-55px; left:0; width:222px; padding:10px 13px; border:1px solid #d1dbc3; border-radius:12px 12px 12px 3px; background:#f4f7ed; box-shadow:0 4px 14px #40502914; }
+.boarding-page .drag-guide-copy strong { display:block; font-size:12px; font-weight:550; color:#526640; }
+.boarding-page .drag-guide-copy span { display:block; margin-top:5px; font:9px ui-monospace,monospace; color:#8b987d; }
+.boarding-page .drag-guide-trail { position:absolute; inset:0; width:165px; height:140px; fill:none; stroke:#9eaf89; stroke-width:1.3; stroke-dasharray:3 6; stroke-linecap:round; opacity:.6; }
+.boarding-page .drag-guide-cursor { position:absolute; left:-7px; top:3px; width:34px; height:41px; fill:#fffffb; stroke:#516242; stroke-width:1.6; stroke-linecap:round; stroke-linejoin:round; filter:drop-shadow(1px 3px 3px #35462435); }
+.boarding-page .guide-hand-lines { fill:none; stroke-width:1.2; stroke-opacity:.65; }
+.boarding-page .drag-guide-press { position:absolute; left:-5px; top:-5px; width:24px; height:24px; border:1px solid #96a77c; border-radius:50%; background:#c5d5ab40; }
+.boarding-page .drag-guide-cursor,.boarding-page .drag-guide-press { animation-duration:3.6s; animation-iteration-count:infinite; animation-play-state:paused; }
+.boarding-page .drag-guide-cursor { animation-name:resume-guide-drag; }
+.boarding-page .drag-guide-press { animation-name:resume-guide-press; }
+.boarding-page [data-state="ready"]:not(.has-interacted) .drag-guide-cursor,.boarding-page [data-state="ready"]:not(.has-interacted) .drag-guide-press { animation-play-state:running; }
+@keyframes resume-guide-drag { 0%,7% { opacity:0; transform:translate(0,0); } 12%,25% { opacity:1; transform:translate(0,0); } 68%,78% { opacity:1; transform:translate(122px,102px); } 90%,100% { opacity:0; transform:translate(122px,102px); } }
+@keyframes resume-guide-press { 0%,12% { opacity:0; transform:scale(.5); } 20% { opacity:1; transform:scale(.8); } 32% { opacity:0; transform:scale(1.7); } 100% { opacity:0; transform:scale(1.7); } }
+.boarding-page [data-state="dragging"] .corner-handle { cursor:grabbing; }
+.boarding-page .tear-remnant { position:absolute; top:30px; left:25px; width:calc(100% - 50px); height:11px; z-index:4; pointer-events:none; overflow:visible; }
+.boarding-page .slot-contact-shadow { position:absolute; left:24px; right:24px; top:30px; height:6px; background:linear-gradient(#00000059,#00000017 45%,transparent); z-index:5; pointer-events:none; border-radius:1px; }
+.boarding-page .idle-prompt { position:absolute; top:140px; left:25px; right:25px; bottom:30px; transition:opacity .2s; pointer-events:none; }
+.boarding-page .empty-page-outline { height:100%; border:1px dashed #dbdfd0; display:flex; flex-direction:column; justify-content:center; align-items:center; gap:28px; color:#afb6a2; }
+.boarding-page .empty-page-outline span { font:8px ui-monospace,monospace; letter-spacing:.05em; }
+.boarding-page .empty-page-outline strong { font:400 40px/1.1 Georgia,serif; text-align:center; letter-spacing:-1px; color:#bec4b3; }
+.boarding-page .printer-stage:not([data-state="idle"]) .idle-prompt { opacity:0; }
+.boarding-page .studio-footer { display:flex; align-items:center; justify-content:space-between; gap:12px; font:9px/1.7 ui-monospace,monospace; color:#929d83; }
+.boarding-page .studio-footer p { margin:0; }
+.boarding-page .studio-footer button { border:0; background:none; font:inherit; color:inherit; cursor:pointer; flex-shrink:0; padding:5px; }
+.boarding-page .page-footer { border-top:1px solid #dedfd5; padding:25px 0 30px; display:flex; justify-content:space-between; gap:20px; color:#a1a995; font:9px/1.7 ui-monospace,monospace; }
+.boarding-page .resume-reader { width:min(1040px,calc(100% - 24px)); max-height:94vh; max-height:94dvh; border:1px solid #d9decf; border-radius:16px; padding:0; background:#edf0e6; color:#3a4531; box-shadow:0 30px 120px #17200e40; }
+.boarding-page .resume-reader[open] { display:flex; flex-direction:column; }
+.boarding-page .resume-reader::backdrop { background:#29302177; backdrop-filter:blur(8px); }
+.boarding-page .reader-header { display:flex; justify-content:space-between; align-items:center; gap:16px; padding:20px 26px; flex-shrink:0; }
+.boarding-page .reader-header p { margin:0 0 7px; font:8px ui-monospace,monospace; color:#939e82; letter-spacing:.15em; }
+.boarding-page .reader-header h2 { margin:0; font:400 24px Georgia,serif; }
+.boarding-page .reader-header > div:last-child { display:flex; align-items:center; gap:24px; }
+.boarding-page .reader-header a { color:#677955; font:10px ui-monospace,monospace; text-decoration:none; }
+.boarding-page .reader-header button { border:1px solid #cfd7c3; width:34px; height:34px; border-radius:50%; background:none; color:#677955; font-size:23px; cursor:pointer; }
+.boarding-page .reader-pages { overflow:auto; overscroll-behavior:contain; padding:0 26px 26px; }
+.boarding-page .reader-pages img { display:block; width:100%; height:auto; box-shadow:0 2px 8px #29322012; margin-bottom:22px; }
+.boarding-page .reader-pages a { color:#677955; font:11px ui-monospace,monospace; }
+@media(max-width:1050px) { .boarding-page .resume-app { padding-inline:36px; } .boarding-page .resume-layout { gap:42px; grid-template-columns:minmax(0,1fr) minmax(0,440px); } .boarding-page h1 { font-size:48px; } }
+@media(max-width:760px) {
+ .boarding-page .resume-app { padding:0 22px env(safe-area-inset-bottom); }
+ .boarding-page .resume-header { height:calc(76px + env(safe-area-inset-top)); padding-top:env(safe-area-inset-top); }
+ .boarding-page .header-edition { display:none; }
+ .boarding-page .resume-layout { display:flex; flex-direction:column; gap:40px; padding-top:10px; }
+ .boarding-page .resume-intro { padding-top:30px; width:100%; }
+ .boarding-page .eyebrow { margin-bottom:22px; font-size:8px; }
+ .boarding-page h1 { font-size:48px; }
+ .boarding-page .intro-copy { max-width:440px; }
+ .boarding-page .resume-spec { max-width:none; }
+ .boarding-page .interaction-guide { display:none; }
+ .boarding-page .source-note { font-size:8px; margin-top:21px; }
+ .boarding-page .resume-studio { width:100%; max-width:500px; align-self:center; }
+ .boarding-page .studio-heading { font-size:7px; }
+ .boarding-page .page-footer { flex-wrap:wrap; font-size:8px; }
+ .boarding-page .page-footer span:nth-child(2) { display:none; }
+ .boarding-page .reader-header { padding:15px; gap:10px; }
+ .boarding-page .reader-header h2 { font-size:18px; }
+ .boarding-page .reader-header > div:last-child { gap:12px; }
+ .boarding-page .reader-header a { font-size:9px; }
+ .boarding-page .reader-pages { padding:0 10px 20px; }
+ .boarding-page [data-state="ready"] .paper-read-hint { opacity:1; }
+}
+@media(prefers-reduced-motion:reduce) { .boarding-page .idle-prompt,.boarding-page .status-light,.boarding-page .corner-handle svg,.boarding-page .paper-read-hint,.boarding-page .drag-guide { transition:none; }
+ .boarding-page .drag-guide-cursor,.boarding-page .drag-guide-press { animation:none; }
+ .boarding-page .drag-guide-press { display:none; }
+}

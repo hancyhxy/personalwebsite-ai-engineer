@@ -1,0 +1,40 @@
+/* Reference: lnkiai.com Ask an AI. Independent implementation; retains Newsreader. */
+.badge-page .agent-fab{position:fixed;right:24px;bottom:calc(22px + env(safe-area-inset-bottom));z-index:45;display:flex;align-items:center;gap:14px;padding:9px 10px 9px 19px;border:1px solid #e7e4dc;border-radius:99px;background:#ebe8df;color:#666b5e;font-size:12px;min-height:60px;box-shadow:0 4px 18px -12px #343a2840}
+.badge-page .agent-orb{height:46px;width:46px;display:block;background:transparent;transform:rotate(var(--orb-turn,0deg));transition:transform .3s cubic-bezier(.2,.9,.3,1.3)}
+.badge-page .agent-dog svg{width:100%;height:100%;overflow:visible;transform:translateY(0) rotate(0);transition:transform .3s cubic-bezier(.2,.9,.3,1.3)}
+.badge-page .dog-face,.badge-page .dog-ear,.badge-page .dog-tuft{fill:#fffefa;stroke:#4e5546;stroke-width:1.5;stroke-linejoin:round;stroke-linecap:round}
+.badge-page .dog-ear{fill:#b78350;transform-box:fill-box;transform-origin:50% 10%;transition:transform .35s cubic-bezier(.2,.9,.3,1.3)}
+.badge-page .dog-patch{fill:#b78350}.badge-page .dog-muzzle{fill:#fffefa}.badge-page .dog-ear-fold{fill:none;stroke:#765438;stroke-width:1;stroke-linecap:round}
+.badge-page .dog-eyes{fill:#333b2c;transform:translate(var(--eye-x,0px),var(--eye-y,0px));transition:transform .12s ease-out}
+.badge-page .dog-eyes ellipse{transform-box:fill-box;transform-origin:center;animation:dog-blink 6.4s infinite}
+.badge-page .dog-nose{fill:#333b2c}.badge-page .dog-mouth{fill:none;stroke:#4e5546;stroke-width:1.3;stroke-linecap:round}.badge-page .dog-cheek{stroke:#c8b9a6;stroke-width:1.8;stroke-linecap:round}
+.badge-page .agent-fab:hover .agent-dog svg,.badge-page .agent-fab.is-awake .agent-dog svg{transform:translateY(-2px) rotate(-9deg)}
+.badge-page .agent-fab.is-awake .dog-ear-left{transform:rotate(16deg)}.badge-page .agent-fab.is-awake .dog-ear-right{transform:rotate(-20deg)}
+.badge-page .agent-fab:active .agent-dog svg{transform:translateY(1px) rotate(3deg) scale(.93)}
+@keyframes dog-blink{0%,43%,47%,100%{transform:scaleY(1)}45%{transform:scaleY(.12)}}
+/* Quiet idle life is visible before opening, including on touch devices. */
+.badge-page .agent-dog svg{animation:dog-idle 8s ease-in-out infinite;transform-origin:50% 80%}
+.badge-page .dog-gaze{animation:dog-look 11s ease-in-out infinite}
+.badge-page .agent-fab:not(.is-awake) .dog-ear-left{animation:dog-ear-flick 9s ease-in-out infinite;animation-delay:1.2s}
+.badge-page .agent-fab.is-awake .agent-dog svg,.badge-page .agent-fab:active .agent-dog svg{animation:none}
+.badge-page .agent-fab.is-awake .dog-gaze{animation:none}
+.badge-page .agent-fab.dog-paused svg,.badge-page .agent-fab.dog-paused svg *{animation-play-state:paused!important}
+@keyframes dog-idle{0%,100%{transform:translateY(0) rotate(0) scale(1)}22%{transform:translateY(-1.2px) rotate(0) scale(1.025)}36%{transform:translateY(0) rotate(0) scale(1)}55%,63%{transform:translateY(-1px) rotate(-6deg) scale(1.015)}77%{transform:translateY(0) rotate(2deg) scale(1)}90%{transform:translateY(-.8px) rotate(0) scale(1.02)}}
+@keyframes dog-look{0%,20%,50%,100%{transform:translate(0,0)}28%,39%{transform:translate(-1.4px,-.8px)}68%,78%{transform:translate(1.2px,-.5px)}}
+@keyframes dog-ear-flick{0%,45%,60%,100%{transform:rotate(0)}49%{transform:rotate(12deg)}53%{transform:rotate(-4deg)}57%{transform:rotate(5deg)}}
+.badge-page .agent-panel{position:fixed;z-index:44;right:24px;bottom:calc(94px + env(safe-area-inset-bottom));width:340px;max-width:calc(100vw - 32px);max-height:calc(100dvh - 120px);overflow:auto;background:#f0eee7;border:1px solid #e8e5dc;border-radius:22px 22px 5px 22px;padding:23px 19px 15px;box-shadow:0 20px 48px -30px #252e2855;animation:agent-arrive .2s ease-out;overscroll-behavior:contain}
+.badge-page .agent-panel h2{font:25px/1.1 Newsreader,Georgia,serif;letter-spacing:-.5px;margin:0 24px 10px 0}.badge-page .agent-panel h2 em{color:#657159}
+.badge-page .agent-subtitle{font-size:11px;line-height:1.7;color:#858579;margin:0 0 17px}
+.badge-page .agent-close{position:absolute;top:9px;right:7px;border:0;background:transparent;width:44px;height:44px;color:#777d6d;font-size:19px}
+.badge-page .agent-providers{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px}
+.badge-page .agent-providers a{background:#fcfbf8;min-height:64px;text-align:center;padding:8px 2px 7px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;border-radius:8px;transition:background .15s,transform .15s;color:#282d23;border:1px solid transparent}
+.badge-page .agent-providers a:first-child{border-radius:25px 8px 8px 25px}.badge-page .agent-providers a:last-child{border-radius:8px 25px 25px 8px}.badge-page .agent-providers a:hover{background:white;border-color:#c6cbbd;transform:translateY(-2px)}
+.badge-page .agent-providers .provider-logo{display:block;width:26px;height:26px;object-fit:contain}.badge-page .agent-providers [data-provider=chatgpt] .provider-logo{transform:scale(1.4)}.badge-page .agent-providers a{background:#fff}.badge-page .agent-providers small{font:8px/1.3 Inter,sans-serif;white-space:nowrap}
+.badge-page .agent-copy{display:block;width:100%;min-height:44px;border:0;background:transparent;margin:9px 0 0;color:#717768;font-size:11px}.badge-page .agent-copy span{margin-left:5px}.badge-page .agent-copy:hover{color:#222b18}
+.badge-page .agent-details summary{font-size:10px;color:#8b8f81;cursor:pointer;min-height:36px;padding:9px 0;text-align:center;list-style:none}.badge-page .agent-details summary::-webkit-details-marker{display:none}.badge-page .agent-details summary:after{content:' +';margin-left:3px}.badge-page .agent-details[open] summary:after{content:' −'}
+.badge-page .agent-prompt-label{display:block;font:8px/1.5 ui-monospace,monospace;color:#7c8570;margin:8px 0}
+.badge-page .agent-panel textarea{background:#fbfaf6;border:1px solid #d5d9cd;font-size:11px;padding:10px;line-height:1.6;border-radius:6px;min-height:150px;max-height:240px;width:100%}
+.badge-page .agent-details p{font-size:9px;line-height:1.6;color:#7f8577;margin:10px 0}.badge-page .agent-status{font-size:10px;line-height:1.5;color:#526244;margin:0}.badge-page .agent-status:empty{display:none}.badge-page footer{padding-bottom:110px}
+@keyframes agent-arrive{from{opacity:0;transform:translateY(9px) scale(.98)}to{opacity:1;transform:none}}
+@media(max-width:600px){.badge-page .agent-fab{right:15px;bottom:calc(14px + env(safe-area-inset-bottom));min-height:54px}.badge-page .agent-orb{width:42px;height:42px}.badge-page .agent-panel{right:15px;bottom:calc(80px + env(safe-area-inset-bottom));width:340px;max-height:calc(100dvh - 100px)}.badge-page .agent-providers small{font-size:9px}.badge-page .agent-details summary{min-height:44px}}
+@media(prefers-reduced-motion:reduce){.badge-page .agent-panel{animation:none}.badge-page .agent-orb,.badge-page .agent-providers a,.badge-page .agent-dog svg,.badge-page .dog-ear,.badge-page .dog-eyes{transition:none}.badge-page .agent-dog svg,.badge-page .dog-gaze,.badge-page .agent-fab .dog-ear,.badge-page .dog-eyes ellipse{animation:none!important}.badge-page .agent-orb,.badge-page .agent-dog svg,.badge-page .dog-ear,.badge-page .dog-eyes{transform:none!important}}

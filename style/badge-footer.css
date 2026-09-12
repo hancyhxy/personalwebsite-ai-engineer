@@ -1,0 +1,8 @@
+/* Content and three-column layout from the current xyhan.com footer.
+   Scoped locally: do not import the live site's global stylesheet. */
+.badge-page .site-footer{display:block;background:#f4f4f1;border-top:1px solid var(--line);padding:64px 6% 100px;margin-top:25px}
+.badge-page .footer-content{display:grid;grid-template-columns:1fr 2fr 1fr;gap:40px;align-items:start;max-width:1268px;margin:0 auto}
+.badge-page .footer-links{display:flex;flex-direction:column;align-items:flex-start;gap:3px}.badge-page .footer-links a{font-size:13px;color:#73786c;min-height:44px;display:inline-flex;align-items:center}.badge-page .footer-links a:hover{color:var(--ink)}
+.badge-page .footer-contact{text-align:center}.badge-page .footer-contact p{font:24px/1.4 Inter,sans-serif;margin:0 0 25px;letter-spacing:-.45px}.badge-page .footer-email{display:inline-flex;align-items:center;justify-content:center;min-height:46px;border:1px solid var(--ink);border-radius:4px;padding:11px 20px;font-size:13px}.badge-page .footer-email:hover{background:var(--ink);color:var(--paper)}
+.badge-page .footer-location{text-align:right}.badge-page .footer-location p{font-size:13px;margin:8px 0 12px}.badge-page .footer-location time{font:12px/1.5 ui-monospace,monospace;color:#7e8278;white-space:nowrap}
+@media(max-width:650px){.badge-page .site-footer{padding:38px 7% 110px;margin-top:10px}.badge-page .footer-content{grid-template-columns:1fr;gap:28px}.badge-page .footer-links{flex-direction:row;gap:25px}.badge-page .footer-contact,.badge-page .footer-location{text-align:left}.badge-page .footer-contact p{font-size:22px}.badge-page .footer-location p{margin-top:0}}

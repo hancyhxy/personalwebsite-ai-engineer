@@ -1,0 +1,1126 @@
+/* Journal — disc-bound handbook portfolio variant (Revision 2)
+   "A real binder sitting on a polka-dot tablecloth, stuffed with stickers,
+   notes, vellum cards, washi tape and ticket stubs."
+   Skeuomorphic, dense, ±3° rotated, layered. */
+
+:root {
+    --j-ink: #26282a;
+    --j-ink-soft: #55585c;
+    --j-paper: #f4ede0;
+    --j-paper-edge: #d6cfba;
+    --j-mute: #8a8a85;
+    --j-rule: #b6b3a8;
+    --j-accent: #6a5a42;
+
+    /* Sticky color palette */
+    --j-bone:   #e6e1d4;
+    --j-linen:  #dcd6c5;
+    --j-dust:   #d2cdbe;
+    --j-sage:   #c8cdbe;
+    --j-mist:   #c4cdd0;
+    --j-fog:    #b8bfc3;
+    --j-stone:  #b5b3aa;
+    --j-wheat:  #d8cca8;
+    --j-cream:  #dcd4b4;
+    --j-slate:  #a8afb5;
+    --j-putty:  #c5beae;
+    --j-ivory:  #e8e4d6;
+
+    /* Tab discipline accents */
+    --tab-ux:  var(--j-sage);
+    --tab-exp: var(--j-cream);
+    --tab-con: var(--j-mist);
+    --tab-vis: var(--j-wheat);
+
+    /* Sticky note tones — used for chips, washi tape, lined notes */
+    --note-yellow: #f5e89a;
+    --note-blue:   #b8d6e0;
+    --note-pink:   #f0c4c4;
+    --note-mint:   #c4e0c8;
+    --note-vellum: rgba(195, 215, 230, 0.55);
+
+    /* Book geometry — smaller than viewport so the desk shows around it */
+    --book-w: min(960px, 72vw);
+    --book-aspect: 16 / 11;
+    --flip-duration: .9s;
+    --flip-ease: cubic-bezier(.2,.7,.15,1);
+}
+
+/* ====== Page chrome ====== */
+html, body.journal-page { overflow-x: clip; }
+
+body.journal-page {
+    font-family: "Geist", "Inter", system-ui, sans-serif;
+    font-weight: 400;
+    background: #ebe4d8;
+    color: var(--j-ink);
+    margin: 0;
+    min-height: 100vh;
+    padding-top: 56px;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    /* Polka-dot tablecloth */
+    background-image:
+        radial-gradient(circle 1.6px at 14px 14px, rgba(40,30,25,0.45), transparent 2.2px),
+        radial-gradient(ellipse 1400px 800px at 50% 35%, rgba(255,250,240,0.5), transparent 70%);
+    background-size: 28px 28px, 100% 100%;
+}
+/* Linen weave noise overlay */
+body.journal-page::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' seed='5'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.05 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    opacity: 0.7;
+    mix-blend-mode: multiply;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* ====== Topbar ====== */
+.j-topbar {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 50;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    padding: 14px 28px;
+    background: linear-gradient(180deg, rgba(235,228,216,0.92), rgba(235,228,216,0.7));
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--j-ink);
+}
+.j-topbar .brand {
+    font-family: "Instrument Serif", serif;
+    font-style: italic;
+    font-size: 19px;
+    letter-spacing: 0;
+    text-transform: none;
+    color: var(--j-ink);
+}
+.j-topbar .brand span { color: var(--j-mute); margin-left: 6px; }
+.j-topbar .title-center {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    color: var(--j-mute);
+    text-align: center;
+    letter-spacing: 0.15em;
+}
+.j-topbar nav {
+    display: flex; gap: 20px;
+    justify-content: flex-end;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+}
+.j-topbar nav a {
+    color: var(--j-ink);
+    text-decoration: none;
+    opacity: 0.65;
+    transition: opacity .2s;
+}
+.j-topbar nav a:hover { opacity: 1; text-decoration: underline; text-underline-offset: 3px; }
+
+/* ====== Book stage ====== */
+.j-stage {
+    position: relative;
+    min-height: calc(100vh - 56px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6vh 0 10vh;
+    z-index: 2;
+}
+
+/* The book is a black leather binder.  Padding creates the leather frame
+   that wraps the inner spread.  overflow:visible lets pages peek out. */
+.j-book {
+    position: relative;
+    width: var(--book-w);
+    aspect-ratio: var(--book-aspect);
+    padding: 22px 26px;
+    border-radius: 6px;
+    background:
+        linear-gradient(135deg, #1a1410 0%, #2a221a 50%, #1a1410 100%);
+    box-shadow:
+        0 30px 60px rgba(0,0,0,0.45),
+        0 12px 24px rgba(0,0,0,0.3),
+        inset 0 0 60px rgba(0,0,0,0.55),
+        inset 0 1px 0 rgba(255,255,255,0.06);
+    overflow: visible;
+    isolation: isolate;
+}
+/* Leather grain via SVG noise */
+.j-book::after {
+    content: '';
+    position: absolute; inset: 0;
+    border-radius: 6px;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='3' seed='9'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.18 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    mix-blend-mode: overlay;
+    opacity: 0.7;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Inner stage holds the perspective/flip world */
+.j-book-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    perspective: 2400px;
+    perspective-origin: center center;
+    z-index: 2;
+}
+
+/* ====== Silver disc-bound rings ====== */
+/* 6 metallic rings overlaid on the spine */
+.j-rings {
+    position: absolute;
+    top: 22px; bottom: 22px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 26px;
+    z-index: 70;
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+.j-rings .ring {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background:
+        radial-gradient(circle at 35% 30%,
+            rgba(255,255,255,0.95) 0%,
+            #e8e8e8 18%,
+            #b8b8b8 38%,
+            #888 65%,
+            #444 90%,
+            #222 100%);
+    box-shadow:
+        0 2px 4px rgba(0,0,0,0.6),
+        0 0 8px rgba(0,0,0,0.35),
+        inset 0 -2px 4px rgba(0,0,0,0.4),
+        inset 0 1px 2px rgba(255,255,255,0.5);
+    position: relative;
+}
+/* Inner hole */
+.j-rings .ring::after {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 9px; height: 9px;
+    transform: translate(-50%,-50%);
+    border-radius: 50%;
+    background:
+        radial-gradient(circle at 50% 30%,
+            rgba(0,0,0,0.85) 0%,
+            rgba(20,15,10,0.95) 50%,
+            rgba(10,8,5,1) 100%);
+    box-shadow: inset 0 1px 2px rgba(255,255,255,0.15);
+}
+
+/* ====== Spreads / pages ====== */
+.j-spread {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    transform-style: preserve-3d;
+    pointer-events: none;
+}
+.j-spread.is-active { pointer-events: auto; }
+.j-spread.is-hidden { display: none; }
+
+.j-page {
+    position: relative;
+    background: var(--j-paper);
+    background-image:
+        repeating-linear-gradient(180deg, transparent 0 23px, rgba(0,0,0,0.025) 23px 24px),
+        radial-gradient(ellipse 130% 70% at 50% 0%, rgba(255,255,255,0.45), transparent 65%),
+        radial-gradient(ellipse 100% 60% at 50% 100%, rgba(0,0,0,0.06), transparent 70%);
+    overflow: visible;            /* let stickers peek out beyond the page */
+    box-shadow:
+        inset 0 0 60px rgba(120,100,70,0.08);
+}
+.j-page::before {
+    /* paper grain */
+    content: '';
+    position: absolute; inset: 0;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' seed='4'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.06 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    opacity: 0.45;
+    mix-blend-mode: multiply;
+    pointer-events: none;
+    z-index: 1;
+}
+.j-page > * { position: relative; z-index: 2; }
+.j-page.left  { box-shadow: inset -30px 0 50px -25px rgba(60,40,20,0.22), inset 0 0 60px rgba(120,100,70,0.08); }
+.j-page.right { box-shadow: inset  30px 0 50px -25px rgba(60,40,20,0.22), inset 0 0 60px rgba(120,100,70,0.08); }
+
+/* ====== Page-flip flap mechanics (unchanged from rev1) ====== */
+.j-flap {
+    position: absolute;
+    top: 0;
+    width: 50%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform var(--flip-duration) var(--flip-ease);
+    will-change: transform;
+}
+.j-flap.right { right: 0; transform-origin: left center; }
+.j-flap.left  { left: 0;  transform-origin: right center; }
+.j-flap .face {
+    position: absolute; inset: 0;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
+.j-flap .face.back { transform: rotateY(180deg); }
+.j-flap.right.flipped { transform: rotateY(-180deg); }
+.j-flap.left.flipped  { transform: rotateY(180deg); }
+
+/* ====== Tab nav (right-side colored paper edges) ====== */
+.j-tabs {
+    position: absolute;
+    top: 50%;
+    right: -36px;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    z-index: 75;
+}
+.j-tab {
+    display: flex; align-items: center; justify-content: center;
+    width: 34px;
+    height: 96px;
+    background: var(--c, var(--j-bone));
+    border: none;
+    border-left: 1px solid rgba(0,0,0,0.12);
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 9px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--j-ink);
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    box-shadow:
+        2px 2px 6px rgba(0,0,0,0.28),
+        inset 0 0 12px rgba(0,0,0,0.05);
+    transition: transform .25s var(--flip-ease), box-shadow .25s;
+}
+.j-tab:hover { transform: translateX(8px); }
+.j-tab.is-current {
+    transform: translateX(12px);
+    box-shadow:
+        4px 2px 10px rgba(0,0,0,0.32),
+        inset 0 0 12px rgba(0,0,0,0.06);
+}
+
+/* ====== Page content shells ====== */
+.j-page-pad {
+    padding: 28px 32px;
+    height: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+.j-page.left .j-page-pad  { padding-right: 22px; }
+.j-page.right .j-page-pad { padding-left: 22px; }
+
+.j-page-head {
+    display: flex; justify-content: space-between; align-items: baseline;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--j-mute);
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+    padding-bottom: 6px;
+}
+
+/* ====== Cover spread ====== */
+.j-cover {
+    background: linear-gradient(135deg, #1a1410 0%, #2a221a 50%, #1a1410 100%);
+    color: #e8e2d2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    box-shadow: inset 0 0 100px rgba(0,0,0,0.6);
+    position: relative;
+}
+.j-cover::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='3' seed='7'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.18 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    opacity: 0.6;
+    mix-blend-mode: overlay;
+}
+.j-cover .label-block {
+    position: relative;
+    z-index: 2;
+    border: 1px solid rgba(232,226,210,0.3);
+    padding: 24px 40px 28px;
+    text-align: center;
+    max-width: 70%;
+}
+.j-cover .label-kicker {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(232,226,210,0.65);
+    margin-bottom: 14px;
+}
+.j-cover .label-title {
+    font-family: "Instrument Serif", serif;
+    font-size: clamp(28px, 4vw, 52px);
+    font-style: italic;
+    line-height: 1;
+    letter-spacing: -0.01em;
+    color: #f4eed8;
+    margin-bottom: 12px;
+}
+.j-cover .label-sub {
+    font-family: "Instrument Serif", serif;
+    font-size: clamp(13px, 1vw, 16px);
+    font-style: italic;
+    color: rgba(232,226,210,0.7);
+}
+.j-cover .label-bottom {
+    margin-top: 18px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(232,226,210,0.22);
+    font-family: "JetBrains Mono", monospace;
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(232,226,210,0.55);
+}
+
+/* ====== Title spread ====== */
+.j-title-block {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 16px;
+}
+.j-title-block .kicker {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--j-mute);
+}
+.j-title-block h1 {
+    font-family: "Instrument Serif", serif;
+    font-weight: 400;
+    font-style: italic;
+    font-size: clamp(36px, 4.6vw, 64px);
+    line-height: 0.95;
+    letter-spacing: -0.015em;
+    color: var(--j-ink);
+    margin: 0;
+}
+.j-title-block .lede {
+    font-family: "Instrument Serif", serif;
+    font-style: italic;
+    font-size: clamp(15px, 1.3vw, 19px);
+    line-height: 1.4;
+    color: var(--j-ink-soft);
+    max-width: 28ch;
+    margin: 0;
+}
+.j-title-block .meta {
+    margin-top: 6px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--j-mute);
+    display: flex;
+    gap: 18px;
+}
+.j-toc {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-top: 8px;
+}
+.j-toc .toc-row {
+    display: grid;
+    grid-template-columns: 28px 1fr auto;
+    align-items: baseline;
+    gap: 12px;
+    padding: 8px 0;
+    border-bottom: 1px dashed rgba(0,0,0,0.15);
+    font-family: "Instrument Serif", serif;
+    cursor: pointer;
+    transition: padding-left .2s;
+}
+.j-toc .toc-row:hover { padding-left: 6px; }
+.j-toc .toc-row .num {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    color: var(--j-mute);
+    letter-spacing: 0.1em;
+}
+.j-toc .toc-row .name {
+    font-size: 18px;
+    font-style: italic;
+    color: var(--j-ink);
+}
+.j-toc .toc-row .count {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    color: var(--j-mute);
+}
+
+/* ====== Hero spread (column-masonry) ====== */
+.j-hero-pad {
+    grid-column: 1 / -1;
+    padding: 32px 44px;
+    overflow-y: auto;
+    height: 100%;
+    box-sizing: border-box;
+}
+.j-hero-head {
+    display: flex; justify-content: space-between; align-items: baseline;
+    margin-bottom: 18px;
+    border-bottom: 1px solid rgba(0,0,0,0.12);
+    padding-bottom: 10px;
+}
+.j-hero-head .h-title {
+    font-family: "Instrument Serif", serif;
+    font-style: italic;
+    font-size: clamp(20px, 1.8vw, 26px);
+    color: var(--j-ink);
+}
+.j-hero-head .h-sub {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--j-mute);
+}
+.j-hero-collage {
+    column-count: 4;
+    column-gap: 14px;
+}
+@media (max-width: 1100px) { .j-hero-collage { column-count: 3; } }
+@media (max-width: 800px)  { .j-hero-collage { column-count: 2; } }
+
+.j-hcard {
+    break-inside: avoid;
+    margin-bottom: 14px;
+    padding: 8px 8px 10px;
+    background: var(--c, var(--j-bone));
+    box-shadow:
+        0 1px 0 rgba(0,0,0,0.04),
+        0 4px 10px -3px rgba(0,0,0,0.16),
+        0 12px 22px -10px rgba(0,0,0,0.18);
+    cursor: pointer;
+    transition: transform .35s var(--flip-ease), box-shadow .35s;
+    position: relative;
+}
+.j-hcard:hover {
+    transform: translateY(-3px);
+    box-shadow:
+        0 2px 0 rgba(0,0,0,0.05),
+        0 10px 18px -5px rgba(0,0,0,0.22),
+        0 22px 36px -14px rgba(0,0,0,0.24);
+}
+.j-hcard .img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    background: #d6d1c3;
+    overflow: hidden;
+    margin-bottom: 6px;
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,0.06);
+}
+.j-hcard .img img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: saturate(0.78) contrast(0.97);
+    mix-blend-mode: multiply;
+}
+.j-hcard .h3 {
+    font-family: "Instrument Serif", serif;
+    font-size: 14px;
+    line-height: 1.15;
+    color: var(--j-ink);
+    margin: 4px 0 4px;
+}
+.j-hcard .meta {
+    display: flex; justify-content: space-between;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 8px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--j-mute);
+}
+.j-hcard[data-c="ux"]  { background: var(--tab-ux); }
+.j-hcard[data-c="exp"] { background: var(--tab-exp); }
+.j-hcard[data-c="con"] { background: var(--tab-con); }
+.j-hcard[data-c="vis"] { background: var(--tab-vis); }
+
+/* ====== Tab spread — collage canvas ====== */
+.j-tab-spread { grid-column: 1 / -1; }
+.j-tab-canvas {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+}
+/* Discipline color washes */
+.j-tab-spread[data-disc="ux"]  .j-page { background-color: color-mix(in srgb, var(--tab-ux) 14%, var(--j-paper)); }
+.j-tab-spread[data-disc="exp"] .j-page { background-color: color-mix(in srgb, var(--tab-exp) 14%, var(--j-paper)); }
+.j-tab-spread[data-disc="con"] .j-page { background-color: color-mix(in srgb, var(--tab-con) 14%, var(--j-paper)); }
+.j-tab-spread[data-disc="vis"] .j-page { background-color: color-mix(in srgb, var(--tab-vis) 14%, var(--j-paper)); }
+
+/* Title bar overlaid at the top of tab canvas */
+.j-tab-head {
+    position: absolute;
+    top: 18px; left: 24px; right: 24px;
+    display: flex; justify-content: space-between; align-items: baseline;
+    z-index: 5;
+}
+.j-tab-head .h-title {
+    font-family: "Instrument Serif", serif;
+    font-style: italic;
+    font-size: clamp(22px, 2vw, 30px);
+    color: var(--j-ink);
+}
+.j-tab-head .h-meta {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--j-mute);
+}
+
+/* Every collage element is absolutely positioned via JS-set inline styles.
+   Common base: small drop shadow, hover lift, micro rotation passed via --rot. */
+.j-el {
+    position: absolute;
+    transform: rotate(var(--rot, 0deg));
+    transition: transform .35s var(--flip-ease), box-shadow .35s, z-index 0s;
+    cursor: pointer;
+}
+.j-el:hover {
+    transform: rotate(var(--rot, 0deg)) translateY(-3px);
+    z-index: 50 !important;
+}
+
+/* ===== Element variants ===== */
+
+/* Polaroid — white border, 4:3 photo, hand-written caption */
+.j-polaroid {
+    background: #f8f4ea;
+    padding: 8px 8px 22px;
+    box-shadow:
+        0 1px 0 rgba(0,0,0,0.04),
+        0 4px 10px -2px rgba(0,0,0,0.2),
+        0 14px 24px -10px rgba(0,0,0,0.24);
+    display: flex;
+    flex-direction: column;
+    width: 180px;
+}
+.j-polaroid .photo {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    background: #d6d1c3;
+    overflow: hidden;
+}
+.j-polaroid .photo img {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+    filter: saturate(0.78) contrast(0.97);
+    mix-blend-mode: multiply;
+}
+.j-polaroid .caption {
+    margin-top: 6px;
+    font-family: "Instrument Serif", serif;
+    font-style: italic;
+    font-size: 12px;
+    line-height: 1.2;
+    color: var(--j-ink);
+    text-align: center;
+}
+.j-polaroid .date {
+    margin-top: 2px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 8px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--j-mute);
+    text-align: center;
+}
+
+/* Vellum info card — translucent semi-transparent ID-card look */
+.j-info {
+    width: 200px;
+    background: var(--note-vellum);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    border: 1px solid rgba(120,140,160,0.35);
+    padding: 12px 14px;
+    box-shadow:
+        0 2px 8px rgba(0,0,0,0.12),
+        0 8px 16px -6px rgba(0,0,0,0.18);
+    color: #1a3040;
+}
+.j-info .info-head {
+    display: flex; justify-content: space-between;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 8px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(26,48,64,0.7);
+    margin-bottom: 6px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid rgba(26,48,64,0.25);
+}
+.j-info .info-row {
+    display: grid;
+    grid-template-columns: 50px 1fr;
+    gap: 8px;
+    padding: 3px 0;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 9px;
+    line-height: 1.3;
+}
+.j-info .info-row dt {
+    color: rgba(26,48,64,0.55);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin: 0;
+}
+.j-info .info-row dd {
+    color: #1a3040;
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.j-info .info-name {
+    margin-top: 6px;
+    padding-top: 6px;
+    border-top: 1px dashed rgba(26,48,64,0.3);
+    font-family: "Instrument Serif", serif;
+    font-style: italic;
+    font-size: 14px;
+    line-height: 1.2;
+    color: #1a3040;
+}
+
+/* Grid weekly card — tinted with grid lines */
+.j-cal {
+    width: 220px;
+    background: var(--note-yellow);
+    background-image:
+        linear-gradient(90deg, transparent 0 31px, rgba(120,90,40,0.2) 31px 32px),
+        linear-gradient(180deg, transparent 0 19px, rgba(120,90,40,0.18) 19px 20px);
+    background-size: 32px 20px;
+    padding: 10px 12px 14px;
+    box-shadow:
+        0 2px 6px rgba(0,0,0,0.15),
+        0 8px 18px -6px rgba(0,0,0,0.18);
+    color: var(--j-ink);
+}
+.j-cal .cal-head {
+    display: flex; justify-content: space-between;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+}
+.j-cal .cal-head .yr {
+    font-family: "Instrument Serif", serif;
+    font-style: italic;
+    font-size: 14px;
+    letter-spacing: 0;
+    text-transform: none;
+}
+.j-cal .cal-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
+    margin: 6px 0;
+}
+.j-cal .cal-grid span {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 9px;
+    text-align: center;
+    color: rgba(60,40,20,0.7);
+    padding: 2px 0;
+}
+.j-cal .cal-grid span.is-mark {
+    color: #fff;
+    background: #c0392b;
+    border-radius: 50%;
+    font-weight: 500;
+}
+.j-cal .cal-foot {
+    margin-top: 6px;
+    font-family: "Instrument Serif", serif;
+    font-style: italic;
+    font-size: 11px;
+    line-height: 1.3;
+    color: var(--j-ink-soft);
+    border-top: 1px dashed rgba(120,90,40,0.4);
+    padding-top: 6px;
+}
+
+/* Lined note */
+.j-note {
+    width: 150px;
+    background: var(--j-cream);
+    background-image:
+        repeating-linear-gradient(180deg, transparent 0 22px, rgba(0,0,0,0.08) 22px 23px);
+    padding: 12px 14px;
+    box-shadow:
+        0 1px 0 rgba(0,0,0,0.05),
+        0 4px 10px -3px rgba(0,0,0,0.16),
+        0 12px 20px -12px rgba(0,0,0,0.18);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+.j-note[data-tone="yellow"] { background-color: var(--note-yellow); }
+.j-note[data-tone="blue"]   { background-color: var(--note-blue); }
+.j-note[data-tone="pink"]   { background-color: var(--note-pink); }
+.j-note[data-tone="mint"]   { background-color: var(--note-mint); }
+.j-note .n-kicker {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 8px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--j-ink-soft);
+    opacity: 0.7;
+}
+.j-note .n-title {
+    font-family: "Instrument Serif", serif;
+    font-style: italic;
+    font-size: 14px;
+    line-height: 1.18;
+    color: var(--j-ink);
+}
+.j-note .n-body {
+    font-family: "Instrument Serif", serif;
+    font-size: 11px;
+    line-height: 1.4;
+    color: var(--j-ink-soft);
+}
+
+/* Ticket stub */
+.j-ticket {
+    width: 200px;
+    display: grid;
+    grid-template-columns: 64px 1fr;
+    background: #f0e8d4;
+    background-image: radial-gradient(ellipse 130% 70% at 50% 0%, rgba(255,255,255,0.4), transparent 65%);
+    box-shadow:
+        0 1px 0 rgba(0,0,0,0.04),
+        0 4px 10px -3px rgba(0,0,0,0.18),
+        0 12px 22px -10px rgba(0,0,0,0.22);
+    overflow: hidden;
+}
+.j-ticket .stub {
+    background: #d8c89a;
+    border-right: 2px dashed rgba(0,0,0,0.3);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 8px 4px;
+    text-align: center;
+}
+.j-ticket .stub .yr {
+    font-family: "Instrument Serif", serif;
+    font-style: italic;
+    font-size: 22px;
+    line-height: 1;
+    color: var(--j-ink);
+}
+.j-ticket .stub .mo {
+    margin-top: 2px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 8px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--j-ink-soft);
+}
+.j-ticket .body {
+    padding: 10px 12px;
+    display: flex; flex-direction: column;
+    justify-content: center;
+    gap: 2px;
+}
+.j-ticket .body .venue {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 8px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--j-mute);
+}
+.j-ticket .body .name {
+    font-family: "Instrument Serif", serif;
+    font-style: italic;
+    font-size: 13px;
+    line-height: 1.18;
+    color: var(--j-ink);
+}
+.j-ticket .body .seat {
+    margin-top: 2px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 8px;
+    letter-spacing: 0.16em;
+    color: var(--j-mute);
+}
+
+/* Small handwritten card */
+.j-card {
+    width: 130px;
+    background: var(--j-ivory);
+    border-radius: 4px;
+    padding: 10px 12px;
+    box-shadow:
+        0 1px 0 rgba(0,0,0,0.04),
+        0 4px 10px -3px rgba(0,0,0,0.16),
+        0 10px 18px -10px rgba(0,0,0,0.16);
+}
+.j-card .c-title {
+    font-family: "Instrument Serif", serif;
+    font-style: italic;
+    font-size: 13px;
+    line-height: 1.2;
+    color: var(--j-ink);
+}
+.j-card .c-sub {
+    margin-top: 4px;
+    font-family: "Instrument Serif", serif;
+    font-size: 10px;
+    line-height: 1.35;
+    color: var(--j-ink-soft);
+}
+
+/* Washi tape — small translucent strip with pattern */
+.j-washi {
+    width: 90px;
+    height: 22px;
+    background: var(--w-color, var(--note-pink));
+    opacity: 0.78;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+}
+.j-washi[data-pattern="grid"] {
+    background-image:
+        linear-gradient(90deg, rgba(255,255,255,0.5) 0 1px, transparent 1px 6px),
+        linear-gradient(180deg, rgba(255,255,255,0.5) 0 1px, transparent 1px 6px);
+}
+.j-washi[data-pattern="dots"] {
+    background-image: radial-gradient(circle 1.5px at 4px 4px, rgba(255,255,255,0.7), transparent 2px);
+    background-size: 8px 8px;
+}
+.j-washi[data-pattern="stripes"] {
+    background-image: repeating-linear-gradient(45deg, rgba(255,255,255,0.5) 0 4px, transparent 4px 8px);
+}
+.j-washi[data-color="yellow"] { background-color: var(--note-yellow); }
+.j-washi[data-color="blue"]   { background-color: var(--note-blue); }
+.j-washi[data-color="mint"]   { background-color: var(--note-mint); }
+.j-washi[data-color="pink"]   { background-color: var(--note-pink); }
+
+/* Tag chip — small colored pill */
+.j-chip {
+    display: inline-block;
+    padding: 3px 8px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #3a362e;
+    background: var(--note-yellow);
+    border: 0.5px solid rgba(58,54,46,0.35);
+    border-radius: 2px;
+    white-space: nowrap;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.12);
+}
+.j-chip[data-tone="yellow"] { background: var(--note-yellow); }
+.j-chip[data-tone="pink"]   { background: var(--note-pink); }
+.j-chip[data-tone="blue"]   { background: var(--note-blue); }
+.j-chip[data-tone="mint"]   { background: var(--note-mint); }
+.j-chip[data-tone="ivory"]  { background: var(--j-ivory); }
+
+/* ====== Charm dangle (key chain at the bottom of book) ====== */
+.j-charm {
+    position: absolute;
+    left: 50%;
+    top: 100%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 80px;
+    z-index: 80;
+    pointer-events: none;
+    margin-top: -8px;
+}
+.j-charm svg { display: block; width: 100%; height: 100%; }
+
+/* ====== About spread ====== */
+.j-about {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+.j-about h2 {
+    font-family: "Instrument Serif", serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(28px, 3.4vw, 48px);
+    line-height: 1;
+    color: var(--j-ink);
+    margin: 0;
+}
+.j-about p {
+    font-family: "Instrument Serif", serif;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--j-ink-soft);
+    max-width: 36ch;
+    margin: 0;
+}
+.j-about .contact {
+    margin-top: 12px;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 6px 16px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    color: var(--j-ink);
+}
+.j-about .contact dt {
+    color: var(--j-mute);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-size: 9px;
+}
+
+/* ====== Page navigation arrows ====== */
+.j-nav {
+    position: absolute;
+    bottom: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--j-ink-soft);
+    z-index: 60;
+}
+.j-nav button {
+    background: rgba(255,255,255,0.6);
+    border: 1px solid rgba(0,0,0,0.18);
+    color: var(--j-ink);
+    padding: 6px 12px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: inherit;
+    letter-spacing: inherit;
+    text-transform: inherit;
+    border-radius: 3px;
+    transition: background .2s, color .2s, border-color .2s;
+    backdrop-filter: blur(4px);
+}
+.j-nav button:hover { background: #fff; }
+.j-nav button:disabled { opacity: 0.3; cursor: not-allowed; }
+.j-nav .pn { min-width: 64px; text-align: center; }
+
+/* ====== Mobile fallback ====== */
+@media (max-width: 720px) {
+    body.journal-page { padding-top: 56px; }
+    .j-stage { padding: 0; min-height: auto; }
+    .j-book {
+        width: 100%;
+        aspect-ratio: auto;
+        padding: 0;
+        background: transparent;
+        box-shadow: none;
+        border-radius: 0;
+    }
+    .j-book::after { display: none; }
+    .j-book-inner { perspective: none; }
+    .j-rings { display: none; }
+    .j-charm { display: none; }
+    .j-spread {
+        position: relative;
+        display: block;
+        pointer-events: auto;
+    }
+    .j-spread.is-hidden { display: block; }
+    .j-flap {
+        position: relative;
+        width: 100%;
+        height: auto;
+        transform: none !important;
+    }
+    .j-flap .face.back { display: none; }
+    .j-page { min-height: auto; padding: 8px 0; }
+    .j-page-pad, .j-hero-pad { padding: 18px 14px; }
+    .j-hero-collage { column-count: 1; }
+    .j-tab-canvas { position: relative; min-height: 600px; padding: 18px 14px; }
+    /* On mobile, collapse absolute layout to natural flow */
+    .j-tab-canvas .j-el {
+        position: relative;
+        top: auto !important; left: auto !important; right: auto !important;
+        transform: none !important;
+        margin: 12px auto;
+        display: block;
+    }
+    .j-tab-head { position: relative; top: auto; left: auto; right: auto; padding: 0 14px 12px; }
+    .j-tabs {
+        position: sticky;
+        top: 56px;
+        right: auto;
+        transform: none;
+        flex-direction: row;
+        justify-content: center;
+        gap: 4px;
+        background: rgba(236,230,214,0.95);
+        padding: 8px 0;
+        z-index: 40;
+        backdrop-filter: blur(4px);
+    }
+    .j-tab {
+        writing-mode: horizontal-tb;
+        width: auto;
+        height: 30px;
+        padding: 0 10px;
+        border-radius: 4px 4px 0 0;
+        border: 1px solid rgba(0,0,0,0.12);
+    }
+    .j-nav { display: none; }
+    .j-cover { padding: 60px 24px; }
+}
+
+/* Footer wrapper */
+body.journal-page [data-component="footer"] {
+    position: relative;
+    z-index: 5;
+    background: transparent;
+    color: var(--j-ink-soft);
+    padding-top: 60px;
+}

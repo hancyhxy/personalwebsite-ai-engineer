@@ -1,0 +1,55 @@
+.scrollcarousel-page .scc-print-launch { margin-top:28px; display:flex; align-items:center; gap:16px; padding:8px 20px 8px 10px; border:1px solid #cbcfc0; border-radius:14px; background:#f5f6eddd; color:#414c38; font:13px var(--scc-sans); text-align:left; cursor:pointer; box-shadow:0 4px 14px #28322406; transition:transform .25s,box-shadow .25s; }
+.scrollcarousel-page .scc-print-launch:hover { transform:translateY(-3px); box-shadow:0 9px 22px #28322412; }
+.scrollcarousel-page .scc-print-launch-note { display:block; margin-top:5px; font:9px ui-monospace,monospace; color:#7a826e; }
+.scrollcarousel-page .scc-mini-machine { width:82px; display:block; }
+.scrollcarousel-page .scc-mini-machine svg { display:block; width:100%; }
+.scrollcarousel-page .scc-print-launch + .scc-scroll-btn { margin-top:24px; }
+.scrollcarousel-page .scc-print-dialog { --feed:0; --carriage:0px; box-sizing:border-box; width:min(760px,calc(100% - 20px)); max-height:94vh; max-height:94dvh; padding:28px 32px; border:1px solid #d9d9c9; border-radius:20px; background:#f3f2e9; color:#384031; box-shadow:0 35px 120px #20291f44; overflow:auto; }
+.scrollcarousel-page .scc-print-dialog[open] { animation:scc-terminal-open .4s ease both; }
+.scrollcarousel-page .scc-print-dialog::backdrop { background:#272c2366; backdrop-filter:blur(10px); }
+.scrollcarousel-page .scc-print-header { display:flex; align-items:start; justify-content:space-between; gap:16px; }
+.scrollcarousel-page .scc-print-header p { font:9px ui-monospace,monospace; letter-spacing:.16em; color:#7c856f; margin:0 0 9px; }
+.scrollcarousel-page .scc-print-header h2 { font:420 38px/1.05 var(--scc-serif); margin:0; letter-spacing:-.025em; }
+.scrollcarousel-page .scc-print-close { width:36px; height:36px; border:1px solid #d8dacd; border-radius:50%; font:24px var(--scc-sans); background:transparent; color:inherit; cursor:pointer; flex-shrink:0; }
+.scrollcarousel-page .scc-print-theatre { container-type:inline-size; position:relative; width:min(100%,500px); height:540px; margin:10px auto 0; }
+.scrollcarousel-page .scc-paper-slot { position:absolute; width:254px; height:365px; left:50%; bottom:35cqw; transform:translateX(-50%); overflow:hidden; padding:7px 8px 0; }
+.scrollcarousel-page .scc-printed-paper { box-sizing:border-box; position:absolute; width:254px; height:359.2px; left:8px; bottom:0; padding:0; border:0; background:#fff; box-shadow:0 2px 8px #1e251c22; transform:translateY(calc((1 - var(--feed)) * 100%)); cursor:zoom-in; transform-origin:bottom center; }
+.scrollcarousel-page .scc-printed-paper:disabled { cursor:default; }
+.scrollcarousel-page .scc-printed-paper img { display:block; width:100%; height:100%; object-fit:contain; }
+.scrollcarousel-page .scc-paper-zoom { position:absolute; bottom:12px; left:50%; transform:translateX(-50%); white-space:nowrap; border-radius:30px; padding:7px 13px; background:#e8eddff2; color:#3b5030; font:10px ui-monospace,monospace; opacity:0; transition:opacity .3s; }
+.scrollcarousel-page .is-printed .scc-paper-zoom { opacity:1; }
+.scrollcarousel-page .is-printed .scc-printed-paper:hover { box-shadow:0 5px 15px #1e251c40; }
+.scrollcarousel-page .scc-print-mechanism { position:absolute; bottom:0; left:0; width:100%; pointer-events:none; }
+.scrollcarousel-page .scc-print-mechanism svg { display:block; width:100%; }
+.scrollcarousel-page .is-printing .scc-print-mechanism .tw-carriage { transform:translateX(var(--carriage)); }
+.scrollcarousel-page .is-printing .tw-key { animation:scc-key-strike .32s steps(2,end) var(--delay) infinite; }
+.scrollcarousel-page .is-printing .tw-space { animation:scc-key-strike .8s steps(2,end) infinite; }
+.scrollcarousel-page .scc-print-progress { height:2px; background:#dce0d2; max-width:300px; margin:6px auto 0; }
+.scrollcarousel-page .scc-print-progress span { display:block; height:100%; background:#819371; width:0; }
+.scrollcarousel-page .scc-print-message { font:10px/1.6 ui-monospace,monospace; color:#7b846e; text-align:center; margin:13px 0 20px; }
+.scrollcarousel-page .scc-print-controls { display:flex; justify-content:center; align-items:center; flex-wrap:wrap; gap:10px; }
+.scrollcarousel-page .scc-print-controls button,.scrollcarousel-page .scc-print-controls a,.scrollcarousel-page .scc-reader-back { border:1px solid #cbd2bd; border-radius:999px; padding:10px 15px; color:#48593b; background:transparent; font:10px ui-monospace,monospace; text-decoration:none; cursor:pointer; }
+.scrollcarousel-page .scc-print-controls a { background:#43563b; color:#f3f5ec; border-color:#43563b; }
+.scrollcarousel-page .scc-print-reader { margin-top:20px; }
+.scrollcarousel-page .scc-reader-toolbar { display:flex; justify-content:space-between; align-items:center; gap:10px; margin-bottom:20px; font:9px ui-monospace,monospace; color:#7b846e; }
+.scrollcarousel-page .scc-print-reader img { display:block; width:100%; height:auto; background:#fff; box-shadow:0 3px 16px #1d29191a; margin-bottom:20px; }
+.scrollcarousel-page .scc-print-reader > a { display:block; color:#48593b; font:11px ui-monospace,monospace; padding:12px 0; }
+.scrollcarousel-page .scc-print-dialog.is-reading { width:min(1000px,calc(100% - 16px)); }
+.scrollcarousel-page .is-reading .scc-print-theatre,.scrollcarousel-page .is-reading .scc-print-progress,.scrollcarousel-page .is-reading .scc-print-message { display:none; }
+.scrollcarousel-page .is-reading .scc-print-controls { margin-top:20px; }
+.scrollcarousel-page .is-reading .scc-print-read,.scrollcarousel-page .is-reading .scc-print-replay { display:none; }
+.scrollcarousel-page .scc-print-dialog [hidden] { display:none !important; }
+@keyframes scc-key-strike { 0%,70%,100% { transform:translateY(0); } 35% { transform:translateY(2px); } }
+@media(max-width:560px) {
+ .scrollcarousel-page .scc-print-dialog { padding:20px 14px; }
+ .scrollcarousel-page .scc-print-header h2 { font-size:30px; }
+ .scrollcarousel-page .scc-print-theatre { height:445px; max-width:340px; }
+ .scrollcarousel-page .scc-paper-slot { width:218px; height:315px; bottom:35cqw; }
+ .scrollcarousel-page .scc-printed-paper { width:218px; height:308.3px; }
+ .scrollcarousel-page .scc-print-launch { margin-top:20px; }
+ .scrollcarousel-page .scc-print-launch + .scc-scroll-btn { margin-top:18px; }
+}
+@media(prefers-reduced-motion:reduce) {
+ .scrollcarousel-page .scc-print-dialog[open],.scrollcarousel-page .is-printing .tw-key,.scrollcarousel-page .is-printing .tw-space { animation:none; }
+ .scrollcarousel-page .scc-print-launch { transition:none; }
+}

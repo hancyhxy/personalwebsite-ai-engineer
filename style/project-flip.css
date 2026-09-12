@@ -1,0 +1,31 @@
+/* Shared only by the Badge homepage and its real case pages. No iframe or stretched image. */
+html.project-flip-return-pending body{visibility:hidden}
+.project-flip-layer.project-flip-layer{
+ position:fixed;inset:0;box-sizing:border-box;width:100%;height:100%;max-width:none;max-height:none;
+ margin:0;padding:0;border:0;border-radius:0;overflow:hidden;background:transparent;color:#171410;
+ visibility:visible;outline:none;perspective:1800px;touch-action:none;overscroll-behavior:none;
+}
+.project-flip-layer.project-flip-layer::backdrop{background:transparent;backdrop-filter:none}
+.project-flip-layer .project-flip-scrim{position:absolute;inset:0;background:#fcfbf9;opacity:0;pointer-events:none}
+.project-flip-layer .project-flip-geometry{position:absolute;left:0;top:0;transform-style:preserve-3d;will-change:transform,width,height}
+.project-flip-layer .project-flip-turn{position:absolute;inset:0;transform-style:preserve-3d;will-change:transform}
+.project-flip-layer .project-flip-face{position:absolute;inset:0;overflow:hidden;backface-visibility:hidden;-webkit-backface-visibility:hidden;background:#fcfbf9;pointer-events:none}
+.project-flip-layer .project-flip-front{top:50%;bottom:auto;height:auto;aspect-ratio:16/9;transform:translateY(-50%) rotateY(0deg) translateZ(.1px)}
+.project-flip-layer .project-flip-front>img{display:block;width:100%;height:100%;aspect-ratio:16/9;object-fit:cover}
+.project-flip-layer .project-flip-back{transform:rotateY(180deg) translateZ(.1px)}
+.project-flip-layer .project-flip-document{position:absolute;left:0;top:0;margin:0;transform-origin:0 0;overflow:hidden;background:var(--scc-bg,#fcfbf9);color:var(--scc-ink,#171410);font-family:var(--scc-sans,Inter,sans-serif);text-align:left}
+.project-flip-layer .project-flip-document *{box-sizing:border-box}
+.project-flip-layer .project-flip-document .scc-detail-hero-media{border-radius:0}
+.project-flip-layer .project-flip-document .scc-detail-close{pointer-events:none}
+/* Neutralize Badge's generic dialog typography inside the real case-study snapshot. */
+.project-flip-layer .project-flip-document .scc-detail-content p{font:inherit;color:inherit}
+.project-flip-layer .project-flip-document .scc-detail-content :is(h2,h3,h4){letter-spacing:normal}
+.project-flip-layer .project-flip-document .scc-detail-footer{gap:0}
+.project-flip-status{position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.badge-page a[aria-busy="true"]{cursor:progress}
+.badge-page :is(.scene-project-hit,.work-item,.scene-fallback a){-webkit-tap-highlight-color:transparent}
+.badge-page [data-flip-pointer-focus]:focus-visible{outline:none}
+@media(prefers-reduced-motion:reduce){
+ html.project-flip-return-pending body{visibility:visible}
+ .project-flip-layer.project-flip-layer{display:none}
+}

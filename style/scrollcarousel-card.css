@@ -1,0 +1,79 @@
+.scrollcarousel-page .scc-card-stage {
+  position: relative;
+  z-index: 8;
+  width: min(375px, calc(100vw - 40px));
+  perspective: 1400px;
+}
+
+.scrollcarousel-page .scc-id-card {
+  --card-rx: 0deg;
+  --card-ry: 0deg;
+  box-sizing: border-box;
+  position: relative;
+  width: 100%;
+  padding: 30px 27px 22px;
+  border: 1px solid #e2e3dc;
+  border-radius: 16px;
+  background: linear-gradient(115deg, #fff 65%, #f5f5ef);
+  box-shadow: 0 1px 0 #d6d8d0, 0 3px 0 -1px #e6e8e1, 0 30px 45px -28px #33392b50;
+  text-align: left;
+  transform-style: preserve-3d;
+}
+
+.scrollcarousel-page .scc-card-slot {
+  position: absolute;
+  top: 13px;
+  left: calc(50% - 29px);
+  width: 58px;
+  height: 5px;
+  border-radius: 5px;
+  background: #e5e6df;
+  box-shadow: inset 0 1px 2px #7773;
+}
+
+.scrollcarousel-page .scc-card-top { display: grid; grid-template-columns: 145px 1fr; gap: 19px; margin-top: 6px; }
+.scrollcarousel-page .scc-card-portrait { aspect-ratio: 1 / 1.08; overflow: hidden; border-radius: 5px; background: #e8e7e1; }
+.scrollcarousel-page .scc-card-portrait img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.scrollcarousel-page .scc-card-manifesto { display: flex; flex-direction: column; justify-content: space-between; padding: 5px 0; }
+.scrollcarousel-page .scc-card-manifesto span,
+.scrollcarousel-page .scc-card-manifesto small,
+.scrollcarousel-page .scc-card-bottom { color: #747a6b; font: 7px/1.5 ui-monospace, monospace; letter-spacing: .08em; }
+.scrollcarousel-page .scc-card-manifesto p { margin: 0; font: 500 16px/1.18 var(--scc-serif); }
+.scrollcarousel-page .scc-card-manifesto small { font-size: 8px; }
+.scrollcarousel-page .scc-card-identity { margin: 22px 0 20px; }
+.scrollcarousel-page .scc-card-identity h1 { margin: 0; font: 500 40px/1 var(--scc-serif); letter-spacing: -.035em; }
+.scrollcarousel-page .scc-card-identity p { margin: 7px 0 0; font-size: 12px; }
+.scrollcarousel-page .scc-card-experience { border-top: 1px solid #e3e5de; }
+.scrollcarousel-page .scc-card-experience > p { margin: 12px 0 6px; color: #7e8278; font: 7px ui-monospace, monospace; letter-spacing: .08em; }
+.scrollcarousel-page .scc-card-experience a { display: grid; grid-template-columns: 92px 1fr 12px; align-items: center; gap: 8px; min-height: 42px; border-bottom: 1px solid #eeefe9; color: inherit; font-size: 9px; text-decoration: none; }
+.scrollcarousel-page .scc-card-experience strong { display: flex; align-items: center; gap: 5px; font-size: 10px; }
+.scrollcarousel-page .scc-card-experience img { width: 18px; height: 18px; object-fit: contain; }
+.scrollcarousel-page .scc-card-experience b { font-weight: 400; }
+.scrollcarousel-page .scc-card-learn { display: flex; justify-content: space-between; width: 100%; margin: 15px 0 0; padding: 11px 0; border: 0; border-bottom: 1px solid #dfe2d8; background: transparent; color: inherit; font: 12px var(--scc-sans); cursor: pointer; }
+.scrollcarousel-page .scc-card-learn em { color: #718164; font-family: var(--scc-serif); font-size: 14px; }
+.scrollcarousel-page .scc-card-bottom { display: flex; justify-content: space-between; align-items: center; margin-top: 18px; font-size: 6px; }
+.scrollcarousel-page .scc-card-bottom i { width: 58px; height: 22px; background: repeating-linear-gradient(90deg,#62685b 0 1px,transparent 1px 3px,#62685b 3px 5px,transparent 5px 7px); opacity: .65; }
+
+.scrollcarousel-page .scc-identity-finale {
+  position: relative;
+  z-index: 8;
+  padding: 13vh 24px 6vh;
+  background: var(--scc-bg);
+  text-align: center;
+}
+.scrollcarousel-page .scc-identity-finale .scc-headline { max-width: none; font-size: clamp(38px, 5vw, 72px); }
+
+.scrollcarousel-page .scc-resume-section { position: relative; z-index: 8; scroll-margin-top: 0; padding: 6vh 5% 0; background: var(--scc-bg); border-top: 1px solid var(--scc-hairline); }
+.scrollcarousel-page .scc-resume-section > header { text-align: center; margin-bottom: 4vh; }
+.scrollcarousel-page .scc-resume-section > header h2 { margin: 10px 0 0; font: 430 clamp(38px, 5vw, 68px)/1 var(--scc-serif); }
+.scrollcarousel-page .scc-resume-section iframe { display: block; width: 100%; height: 980px; border: 0; background: #f7f7f2; }
+
+@media (max-width: 560px) {
+  .scrollcarousel-page .scc-card-stage { width: min(345px, calc(100vw - 28px)); }
+  .scrollcarousel-page .scc-id-card { padding: 28px 22px 20px; }
+  .scrollcarousel-page .scc-card-top { grid-template-columns: 135px 1fr; gap: 15px; }
+  .scrollcarousel-page .scc-card-identity h1 { font-size: 36px; }
+  .scrollcarousel-page .scc-resume-section { padding-inline: 0; }
+  .scrollcarousel-page .scc-resume-section > header { padding-inline: 18px; }
+  .scrollcarousel-page .scc-resume-section iframe { height: 1120px; }
+}
