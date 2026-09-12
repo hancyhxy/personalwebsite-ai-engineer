@@ -134,7 +134,12 @@ function overlap(a,b) { return a.left < b.left+b.width && a.left+a.width > b.lef
     await intro.evaluate(()=>{window.__introCheck={bad:0,last:null,after:null};function sample(){const r=BadgeScene.runtime,o=r.field.opening,items=r.field.items.filter(i=>i.featured);if(o.active){if(Math.abs(o.land-o.size)>.000001)__introCheck.bad++;if(o.land===1)__introCheck.last=items.map(i=>({...i.rect}));for(const i of items)if(Math.abs(i.rect.width/i.rect.height-16/9)>.001)__introCheck.bad++;requestAnimationFrame(sample)}else requestAnimationFrame(()=>{__introCheck.after=items.map(i=>({...i.rect}))})}sample()});
     await intro.waitForFunction(()=>window.__introCheck?.after,{timeout:15000});const continuity=await intro.evaluate(()=>__introCheck);assert.equal(continuity.bad,0);assert.ok(continuity.last);assert.equal(continuity.after.length,11);
     for(let i=0;i<11;i++)for(const k of ['left','top','width','height'])assert.ok(Math.abs(continuity.last[i][k]-continuity.after[i][k])<1);
-    pass('Opening uses 11 curated images, 16:9 throughout, synchronized landing without geometry jump');await intro.close();
+    pass('Opening uses 11 curated images, 16:9 throughout, synchronized landing without geometry jump');
+    await intro.locator('#resume-section').scrollIntoViewIfNeeded();const beforeReload=await intro.evaluate(()=>scrollY);assert.ok(beforeReload>800);
+    await intro.reload({waitUntil:'load'});await intro.waitForTimeout(600);
+    assert.equal(await intro.evaluate(()=>performance.getEntriesByType('navigation')[0]?.type),'reload');assert.ok(await intro.evaluate(()=>scrollY>innerHeight));assert.equal(await intro.locator('.portfolio-opening').count(),0);assert.equal(await intro.evaluate(()=>document.documentElement.classList.contains('opening-pending')||document.body.classList.contains('opening-active')),false);
+    await intro.evaluate(()=>scrollTo(0,0));await intro.reload({waitUntil:'load'});await intro.waitForTimeout(300);assert.equal(await intro.locator('.portfolio-opening').count(),0);
+    pass('Reload and hard-refresh lifecycle preserve restored position and never replay or overlap the opening');await intro.close();
     // Mobile art direction is deferred: only functional/static access is asserted here.
     const mobile=await browser.newPage({viewport:{width:390,height:844},isMobile:true,hasTouch:true});watch(mobile);await mobile.goto(base+'/'+entry+'#work-ux');await mobile.waitForFunction(()=>window.BadgeScene?.runtime?.state);
     assert.equal(await mobile.evaluate(()=>BadgeScene.scroll.lenis.options.syncTouch),false);assert.equal(await mobile.locator('.scene-fallback a').count(),16);await mobile.close();

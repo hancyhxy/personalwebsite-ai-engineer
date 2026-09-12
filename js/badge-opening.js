@@ -102,8 +102,16 @@
   addEventListener("keydown", function onKey(event) { if (event.key === "Escape" && !done) skipIntro(); });
   reduced.addEventListener("change", function () { if (reduced.matches) finish(true); }, { once: true });
 
-  Promise.race([Promise.all([window.BADGE_SCENE.texturesReady, document.fonts.ready]), new Promise(function (resolve) { setTimeout(resolve, 1100); })]).then(function () {
+  // Browser scroll restoration happens after parsing. Wait through pageshow and
+  // two paints so a restored non-top position can cancel the intro cleanly.
+  var restorationReady = new Promise(function (resolve) {
+    function settle() { requestAnimationFrame(function () { requestAnimationFrame(resolve); }); }
+    if (document.readyState === 'complete') settle();
+    else addEventListener('pageshow', settle, { once: true });
+  });
+  Promise.all([restorationReady, Promise.race([Promise.all([window.BADGE_SCENE.texturesReady, document.fonts.ready]), new Promise(function (resolve) { setTimeout(resolve, 1100); })])]).then(function () {
     if (done) return;
+    if (scrollY > 2) { finish(true); return; }
     layoutComposition();
     document.fonts.ready.then(function () { if (!done) layoutComposition(); });
     var target = document.querySelector(".mast > a").getBoundingClientRect();

@@ -48,7 +48,7 @@ function typeIdentity(){if(!identityVisible||motion.matches)return;const word=id
 function deleteIdentity(){if(!identityVisible||motion.matches)return;if(identityWord.textContent.length){identityWord.textContent=identityWord.textContent.slice(0,-1);identityTimer=setTimeout(deleteIdentity,36)}else{identityIndex=(identityIndex+1)%identityWords.length;identityTimer=setTimeout(typeIdentity,320)}}
 function startIdentity(){stopIdentity();identityIndex=0;identityWord.textContent=identityWords[0];if(identityVisible&&!motion.matches)identityTimer=setTimeout(deleteIdentity,900)}
 function setIdentityVisible(visible){identityVisible=visible;stopIdentity();if(!visible){identityWord.textContent=identityWords[0];return}identityDwell=setTimeout(startIdentity,350)}
-if('IntersectionObserver'in window){const identityObserver=new IntersectionObserver(entries=>{setIdentityVisible(entries.some(e=>e.isIntersecting&&e.intersectionRatio>=.65))},{threshold:[0,.65,1],rootMargin:'-12% 0px -12%'});identityObserver.observe(identityLine)}else setIdentityVisible(true);
+if('IntersectionObserver'in window){const identityObserver=new IntersectionObserver(entries=>{setIdentityVisible(entries.some(e=>e.isIntersecting&&e.intersectionRatio>=.65))},{threshold:[0,.65,1],rootMargin:'0px 0px -12%'});identityObserver.observe(identityLine)}else setIdentityVisible(true);
 document.addEventListener('visibilitychange',()=>{if(document.hidden)stopIdentity();else if(identityVisible)startIdentity()});
 motion.addEventListener('change',()=>{stopIdentity();identityWord.textContent=identityWords[0];if(identityVisible&&!motion.matches)identityDwell=setTimeout(startIdentity,350)});
 // Agent handoff is isolated in badge-agent.js.
