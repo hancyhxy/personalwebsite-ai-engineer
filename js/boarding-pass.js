@@ -31,6 +31,10 @@
   var copyDownloaded = false;
   var embedded = document.body.classList.contains('resume-embedded');
   var autoPrintPending = !embedded;
+  if (embedded) {
+    printer.tabIndex = -1;
+    printer.setAttribute('aria-hidden', 'true');
+  }
   var saveAfterPrint = false;
 
   function setState(next) {

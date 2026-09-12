@@ -119,7 +119,7 @@ function overlap(a,b) { return a.left < b.left+b.width && a.left+a.width > b.lef
     pass('Ask AI panel and all three providers preserved');
     await page.locator('#resume-link').click();await page.waitForFunction(()=>typeof document.querySelector('#resume-frame').contentWindow?.resumePressPrimary==='function',null,{timeout:20000});
     const printer=page.frameLocator('#resume-frame');await printer.locator('#printer-stage[data-state="idle"]').waitFor();
-    assert.equal(await page.locator('#resume-print-trigger').isVisible(),true);assert.equal(await page.locator('.resume-download-direct').isVisible(),true);
+    assert.equal(await page.locator('#resume-print-trigger').isVisible(),true);assert.equal(await page.locator('.resume-printer-actions').locator('button,a').count(),1);assert.equal(await printer.locator('#printer-button').getAttribute('tabindex'),'-1');
     await page.waitForFunction(()=>document.getElementById('resume-identity-word').textContent!=='product',null,{timeout:5000});
     await page.locator('#resume-print-trigger').click();await printer.locator('#printer-stage[data-state="ready"]').waitFor({timeout:20000});
     const fit=await page.locator('#resume-frame').evaluate(f=>({height:f.getBoundingClientRect().height,app:f.contentDocument.querySelector('.resume-app').getBoundingClientRect().height}));assert.ok(fit.height>=fit.app);
@@ -128,8 +128,8 @@ function overlap(a,b) { return a.left < b.left+b.width && a.left+a.width > b.lef
     const corner=await printer.locator('#corner-handle').boundingBox();await page.mouse.move(corner.x+corner.width/2,corner.y+corner.height/2);await page.mouse.down();await page.mouse.move(corner.x+corner.width/2+18,corner.y+corner.height/2+18,{steps:3});await page.mouse.up();await printer.locator('#printer-stage[data-state="ready"]').waitFor({timeout:10000});
     pass('Résumé reading and short paper drag preserved');
     const downloadPromise=page.waitForEvent('download',{timeout:20000});await page.locator('#resume-print-trigger').click();const download=await downloadPromise;assert.ok(/\.pdf$/i.test(download.suggestedFilename()));await download.delete();
-    await printer.locator('#printer-stage[data-state="idle"]').waitFor({timeout:10000});await printer.locator('#printer-button').click();await printer.locator('#printer-stage[data-state="ready"]').waitFor({timeout:20000});
-    pass('Résumé save/download and printer replay preserved');
+    await printer.locator('#printer-stage[data-state="idle"]').waitFor({timeout:10000});await page.locator('#resume-print-trigger').click();await printer.locator('#printer-stage[data-state="ready"]').waitFor({timeout:20000});
+    pass('Single résumé control preserves print, download and replay sequence');
     const intro=await browser.newPage({viewport:{width:1280,height:800}});watch(intro);await intro.goto(base+'/'+entry,{waitUntil:'domcontentloaded'});await intro.waitForFunction(()=>window.BadgeScene?.runtime?.field);
     await intro.evaluate(()=>{window.__introCheck={bad:0,last:null,after:null};function sample(){const r=BadgeScene.runtime,o=r.field.opening,items=r.field.items.filter(i=>i.featured);if(o.active){if(Math.abs(o.land-o.size)>.000001)__introCheck.bad++;if(o.land===1)__introCheck.last=items.map(i=>({...i.rect}));for(const i of items)if(Math.abs(i.rect.width/i.rect.height-16/9)>.001)__introCheck.bad++;requestAnimationFrame(sample)}else requestAnimationFrame(()=>{__introCheck.after=items.map(i=>({...i.rect}))})}sample()});
     await intro.waitForFunction(()=>window.__introCheck?.after,{timeout:15000});const continuity=await intro.evaluate(()=>__introCheck);assert.equal(continuity.bad,0);assert.ok(continuity.last);assert.equal(continuity.after.length,11);
