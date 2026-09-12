@@ -130,7 +130,7 @@ There are 11 curated scene images, not 16 repeated reading stops. Preserve 16 ca
 
 ### Scroll guidance
 
-- The fixed right-hand capsule indicates whole-page scroll progress and provides keyboard-accessible links to the three chapters in narrative order.
+- The fixed right-hand capsule indicates whole-page scroll progress and provides keyboard-accessible links to the three chapters in narrative order. At widths ≤700px it retires as the résumé enters, so it cannot cover the printer or footer; scrolling back restores it.
 - A single bottom axis spans all of Selected Work: fixed endpoints **2026 → 2018**, derived from the featured projects' overall year range. Its fill uses physical travel, reaching 100% at the final overview center, and never resets at chapter boundaries. It fades away as the résumé enters the bottom 9% of the viewport and must not overlay the printer. Year labels describe the collection's date coverage, not a fabricated current year or employment timeline; Independent Work remains first even where chapter dates overlap.
 - Both guides use physical scroll position, reverse without replay and stay hidden during the opening. No second scroll smoother or scroll hijacking.
 - Reduced-motion/WebGL fallback retains chapter navigation and progress over real HTML sections, with no animated badge scaling or fading.
@@ -156,7 +156,7 @@ There are 11 curated scene images, not 16 repeated reading stops. Preserve 16 ca
 
 - The parent section is a centered single-column composition on desktop and mobile.
 - The centered identity copy is `A multidisciplinary lens into the [product / experiential / content / visual] side of everyday experience.` Only the middle word is deleted and typed again with a caret inside one fixed-width inline slot; the compact three-line layout never reflows. No separate eyebrow appears above it.
-- The identity typing waits until at least 65% of the line rests in the viewport for 350ms, pauses when it leaves and restarts on re-entry. It never starts at initial page load while offscreen. Reduced motion keeps the complete first word static.
+- The identity typing waits until at least 20% of the line rests in the viewport for 350ms, pauses when it leaves and restarts on re-entry. It never starts at initial page load while offscreen. Reduced motion keeps the complete first word static.
 - Its typography keeps the previously established restrained Selected Work statement scale (17–24px desktop, 15px mobile), not the new large chapter-title or project-description scale.
 - The embedded printer has no independent scrollbar; the parent page owns vertical scrolling and fits the iframe to its rendered content.
 - Intersection only preloads the embedded printer. The embedded homepage printer never auto-prints on iframe/image load.
@@ -228,7 +228,7 @@ Ask AI remains globally available and contains exactly three providers:
 
 ### Locked behavior
 
-- Fixed bottom-right launcher
+- Fixed bottom-right launcher; at widths ≤600px it collapses to an accessible 48px dog-only button through the résumé and footer, avoiding content overlap while preserving access
 - restrained dog idle motion
 - eyes follow pointer
 - hover/focus previews the panel

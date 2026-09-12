@@ -38,8 +38,11 @@
   function update() {
     frame = 0;
     var opening = document.documentElement.classList.contains('opening-pending') || document.body.classList.contains('opening-active');
-    rail.hidden = opening;
     var y = scrollY, h = innerHeight;
+    var resumeTop = document.getElementById('resume-section').getBoundingClientRect().top;
+    var mobileResume = innerWidth <= 700 && resumeTop < h * .92;
+    rail.hidden = opening || mobileResume;
+    document.body.classList.toggle('mobile-resume-active', innerWidth <= 600 && resumeTop < h * .92);
     // Two stationary names crossfade; no logo travels across the screen.
     var centerAlpha = reduced.matches ? (y > 24 ? 0 : 1) : 1 - B.smooth(0, h * .18, y);
     var dockAlpha = reduced.matches ? (y > 24 ? 1 : 0) : B.smooth(h * .08, h * .24, y);
@@ -79,7 +82,6 @@
       showing = first.top <= h * .45 && last.bottom > h * .45 && !opening;
     }
     // Finish at the last overview, then retire before the incoming résumé reaches the axis.
-    var resumeTop = document.getElementById('resume-section').getBoundingClientRect().top;
     showing = showing && resumeTop > h * .91;
     timeline.hidden = !showing;
     timeline.style.opacity = reduced.matches ? 1 : B.smooth(h * .91, h * .98, resumeTop);

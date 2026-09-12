@@ -87,8 +87,13 @@ const out = process.env.ARTIFACT_DIR;
       const end=await page.evaluate(() => BadgeScene.duration-.35);
       await go(end);
       assert.ok(await page.evaluate(() => BadgeScene.runtime.opacity<.001));
+      await page.locator('#resume-section').scrollIntoViewIfNeeded();await page.waitForTimeout(300);
+      assert.equal(await page.locator('.badge-scroll-guide').isVisible(),false,'mobile progress rail retires before the printer');
+      if(width<=600){const fab=await page.locator('#agent-fab').boundingBox();assert.ok(fab.width<=50&&fab.height<=50,'Ask AI collapses over résumé/footer');assert.equal(await page.evaluate(()=>document.body.classList.contains('mobile-resume-active')),true)}
+      assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=document.documentElement.clientWidth+1),true);
+      if(out&&width===320)await page.screenshot({path:path.join(out,'mobile-resume-320.png')});
       await page.close();
-      console.log(`PASS ${width}×${height}: readable copy, four large/tappable projects, native touch, reverse, resize/breakpoint, next chapter and exit`);
+      console.log(`PASS ${width}×${height}: readable/tappable projects, native touch, reverse, resize, next chapter, clean résumé handoff`);
     }
     assert.deepEqual(errors,[]);
   } finally { await browser.close(); }
