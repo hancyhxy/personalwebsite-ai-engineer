@@ -39,7 +39,6 @@
 .badge-page .experience-row{grid-template-columns:88px minmax(0,1fr) 12px;gap:7px}.badge-page .company{display:flex;align-items:center;gap:5px;font-size:11px}.badge-page .company-logo{width:18px;height:18px;object-fit:contain;flex-shrink:0}
 .badge-page .experience-row:hover{color:inherit}.badge-page .experience-row:hover .ink-tags>span{background:none;color:inherit}
 @media(max-width:800px){.badge-page .ink-tags>span{padding:2px 3px;font-size:6.5px}}
-.badge-page .resume-heading>.resume-download-primary{display:inline-flex;align-items:center;justify-content:center;gap:22px;min-height:46px;margin-top:0;padding:12px 20px;border:1px solid #1f201e;border-radius:99px;background:#1f201e;color:#f4f4f1;text-decoration:none;font:12px/1.4 Inter,sans-serif}.badge-page .resume-heading>.resume-download-primary:hover{background:#050505}.badge-page .resume-heading>.resume-download-primary:active{transform:translateY(1px)}
 /* Animate the outer wrapper so the interactive card transform remains independent. */
 .badge-page .badge-perspective{animation:badge-settle 1.25s cubic-bezier(.22,.72,.24,1) both;transform-origin:50% 0}
 @keyframes badge-settle{0%{opacity:0;transform:translateY(-78px) rotate(-2deg)}58%{opacity:1;transform:translateY(7px) rotate(.7deg)}80%{opacity:1;transform:translateY(-3px) rotate(-.2deg)}100%{opacity:1;transform:translateY(0) rotate(0)}}

@@ -147,22 +147,23 @@ There are 11 curated scene images, not 16 repeated reading stops. Preserve 16 ca
 
 ### Parent-section order
 
-1. Centered three-line identity copy
-2. Explicit `Download Résumé` button
+1. Centered three-line identity copy with a quiet replay control
+2. Explicit `Print my résumé` control and separate direct PDF link
 3. Existing embedded résumé printer
 
 ### Locked behavior
 
 - The parent section is a centered single-column composition on desktop and mobile.
 - The centered identity copy is `A multidisciplinary lens into the [product / experiential / content / visual] side of everyday experience.` Only the middle word is deleted and typed again with a caret inside one fixed-width inline slot; the compact three-line layout never reflows. No separate eyebrow appears above it.
+- The identity typing waits until at least 65% of the line rests in the viewport for 350ms, pauses when it leaves, restarts on re-entry, and offers `Replay text`. It never starts at initial page load while offscreen. Reduced motion keeps the complete first word static.
 - Its typography keeps the previously established restrained Selected Work statement scale (17–24px desktop, 15px mobile), not the new large chapter-title or project-description scale.
 - The embedded printer has no independent scrollbar; the parent page owns vertical scrolling and fits the iframe to its rendered content.
-- `Download Résumé` drives the embedded printer’s print/save sequence, including the visible paper feed and tear-off, then downloads the canonical résumé PDF.
-- If the embedded printer is unavailable, the same control falls back to a direct native PDF download.
-- `Learn more about me` scrolls to this section, lazy-loads `index-resume-embed.html`, and preserves its automatic print sequence.
+- Intersection only preloads the embedded printer. The embedded homepage printer never auto-prints on iframe/image load.
+- `Print my résumé` is the sole parent trigger for the visible paper feed; after printing it becomes `Save my résumé`, which runs the existing tear-off and canonical PDF download. A separate `Download PDF directly` link bypasses the animation.
+- `Learn more about me` only scrolls to this section; the visibility trigger owns the identity animation and the user owns printer playback.
 - Preserve reading, replay, paper dragging, save, and PDF-download behavior inside the printer.
 - The identity line does not control or synchronize with printer animation.
-- The parent Download control may call the printer’s public `resumePressSave()` API; it must not duplicate or rewrite the printer state machine.
+- The parent print control calls the printer’s public `resumePressPrimary()` API; it must not duplicate or rewrite the printer state machine. Keep `resumePressSave()` for compatibility.
 - Fit the same-origin iframe to its rendered application height so controls are not clipped.
 
 Treat the printer’s internal interaction as a separate locked module; visual work around it must not rewrite its state machine.

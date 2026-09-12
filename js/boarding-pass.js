@@ -29,8 +29,8 @@
   var pendingPeel = 0;
   var keyboardClick = false;
   var copyDownloaded = false;
-  var autoPrintPending = true;
   var embedded = document.body.classList.contains('resume-embedded');
+  var autoPrintPending = !embedded;
   var saveAfterPrint = false;
 
   function setState(next) {
@@ -232,19 +232,27 @@
     saveAfterPrint = false;
     idle();
   }
-  if (embedded) window.resumePressSave = function () {
-    if (state === 'tearing' || state === 'falling' || saveAfterPrint) return true;
-    if (state === 'dragging') { releaseCapture(); detach(); return true; }
-    if (state === 'ready') { detach(); return true; }
-    if (state === 'returning') { cancelAnimation(); draw(0); setState('ready'); detach(); return true; }
-    if (state === 'idle' || state === 'printing') {
-      saveAfterPrint = true;
-      if (state === 'idle') print();
-      else setState('printing');
-      return true;
-    }
-    return false;
-  };
+  if (embedded) {
+    window.resumePressPrimary = function () {
+      if (state === 'idle') { print(); return true; }
+      if (state === 'ready') { detach(); return true; }
+      return state === 'printing' || state === 'tearing' || state === 'falling' || state === 'returning' || state === 'dragging';
+    };
+    // Retained for older callers and direct save actions.
+    window.resumePressSave = function () {
+      if (state === 'tearing' || state === 'falling' || saveAfterPrint) return true;
+      if (state === 'dragging') { releaseCapture(); detach(); return true; }
+      if (state === 'ready') { detach(); return true; }
+      if (state === 'returning') { cancelAnimation(); draw(0); setState('ready'); detach(); return true; }
+      if (state === 'idle' || state === 'printing') {
+        saveAfterPrint = true;
+        if (state === 'idle') print();
+        else setState('printing');
+        return true;
+      }
+      return false;
+    };
+  }
   function queueDraw(p) {
     pendingPeel = p;
     if (renderFrame) return;
