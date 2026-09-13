@@ -27,10 +27,21 @@
     .section-title { font-size: var(--font-size-xl); font-weight: 600; margin-bottom: var(--spacing-md); }
     .content-text { max-width: 720px; font-size: var(--font-size-base); line-height: 1.7; color: var(--primary-color); }
     .project-image { width: 100%; margin: var(--spacing-lg) 0 var(--spacing-2xl); display: block; }
+    .project-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: var(--spacing-md); }
+    .project-link { display: inline-flex; align-items: center; min-height: 42px; padding: 0 16px; border: 1px solid var(--primary-color); border-radius: 999px; color: var(--primary-color); font-size: 14px; font-weight: 500; text-decoration: none; transition: background .2s ease, color .2s ease; }
+    .project-link:hover, .project-link:focus-visible { background: var(--primary-color); color: #fff; }
+    .showcase-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 14px; margin-top: var(--spacing-lg); }
+    .showcase-photo { grid-column: span 6; margin: 0; overflow: hidden; background: #f2f2f2; }
+    .showcase-photo:nth-child(1), .showcase-photo:nth-child(4) { grid-column: span 7; }
+    .showcase-photo:nth-child(2), .showcase-photo:nth-child(3) { grid-column: span 5; }
+    .showcase-photo img { width: 100%; height: 100%; min-height: 320px; max-height: 620px; object-fit: cover; display: block; }
     @media (max-width: 768px) {
       .hero-image-container { width: 100%; margin-left: 0; }
       .project-content { margin: 84px auto 64px; padding: 0 var(--spacing-sm); }
       .project-title { font-size: var(--font-size-xl); }
+      .showcase-grid { grid-template-columns: 1fr; gap: 10px; }
+      .showcase-photo, .showcase-photo:nth-child(1), .showcase-photo:nth-child(2), .showcase-photo:nth-child(3), .showcase-photo:nth-child(4) { grid-column: 1; }
+      .showcase-photo img { min-height: 0; max-height: none; }
     }
   </style>
 </head>
@@ -47,14 +58,33 @@
       <p class="content-text">At Tech Fest | AI Showcase, I presented two working prototypes that move from interaction design into implementation: Linkaroo, a runnable iOS product, and Anonymous Connection, a web-and-hardware social installation.</p>
     </section>
     <section class="content-section">
-      <h2 class="section-title">Linkaroo</h2>
-      <p class="content-text">Linkaroo helps newcomers to Australia find context-aware community information and one-to-one volunteer support. I used an AI-assisted, spec-driven workflow to move from product concept and interface system to a runnable SwiftUI prototype.</p>
+      <h2 class="section-title">Software Engineer Showcase</h2>
+      <p class="content-text"><strong>Linkaroo</strong> is a runnable SwiftUI prototype that helps newcomers to Australia find context-aware community information and one-to-one volunteer support. I used an AI-assisted, spec-driven workflow to move from product concept and interface system to nine connected product screens.</p>
+      <div class="project-links">
+        <a class="project-link" href="https://github.com/hancyhxy/linkaroo" target="_blank" rel="noopener noreferrer">View Linkaroo on GitHub ↗</a>
+      </div>
       <img class="project-image" src="./public/linkaroo.jpg" alt="Linkaroo iOS prototype screens">
     </section>
     <section class="content-section">
-      <h2 class="section-title">Anonymous Connection</h2>
-      <p class="content-text">Anonymous Connection explores a lower-pressure way for strangers to meet. Participants create an avatar from their current mood and interests; the browser experience, collective wall and ESP32 screen turn those signals into a shared physical interaction.</p>
+      <h2 class="section-title">Physical Computing Showcase</h2>
+      <p class="content-text"><strong>Anonymous Connection</strong> explores a lower-pressure way for strangers to meet. Participants create an avatar from their current mood and interests; a browser experience, collective wall and ESP32 screens carry that identity into a shared physical interaction.</p>
+      <div class="project-links">
+        <a class="project-link" href="https://hancyhxy.github.io/anonymous-connection/" target="_blank" rel="noopener noreferrer">Try the live experience ↗</a>
+        <a class="project-link" href="https://github.com/hancyhxy/anonymous-connection" target="_blank" rel="noopener noreferrer">View on GitHub ↗</a>
+      </div>
       <img class="project-image" src="./public/anonymous-connection.jpg" alt="Anonymous Connection collective avatar wall">
+    </section>
+    <section class="content-section" aria-labelledby="showcase-photos-title">
+      <h2 class="section-title" id="showcase-photos-title">At the showcase</h2>
+      <p class="content-text">Both prototypes were presented live, letting visitors move from the software experience to the physical interaction.</p>
+      <div class="showcase-grid">
+        <figure class="showcase-photo"><img src="../../assets/images/tech-fest-ai-showcase/on-site/software-booth-overview.jpg" alt="Linkaroo software showcase booth" decoding="async"></figure>
+        <figure class="showcase-photo"><img src="../../assets/images/tech-fest-ai-showcase/on-site/software-live-demo.jpg" alt="Demonstrating Linkaroo to showcase visitors" decoding="async"></figure>
+        <figure class="showcase-photo"><img src="../../assets/images/tech-fest-ai-showcase/on-site/physical-installation.jpg" alt="Anonymous Connection collective wall and physical computing installation" decoding="async"></figure>
+        <figure class="showcase-photo"><img src="../../assets/images/tech-fest-ai-showcase/on-site/physical-devices.jpg" alt="Phones and ESP32 screens in the Anonymous Connection installation" decoding="async"></figure>
+        <figure class="showcase-photo"><img src="../../assets/images/tech-fest-ai-showcase/on-site/physical-computing-team.jpg" alt="Physical Computing showcase team with the interactive devices" decoding="async"></figure>
+        <figure class="showcase-photo"><img src="../../assets/images/tech-fest-ai-showcase/on-site/visitor-demo.jpg" alt="A visitor trying the prototypes at the showcase" decoding="async"></figure>
+      </div>
     </section>
   </main>
   <div data-component="footer"></div>
