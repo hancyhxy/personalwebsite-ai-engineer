@@ -10,7 +10,7 @@
 
 ## Selected work
 
-- [Tech Fest | AI Showcase](https://xyhan.com/gallery/tech-fest-ai-showcase/index.html): AI-assisted Development, SwiftUI, Physical Computing.
+- [Tech Fest | AI Showcase](https://xyhan.com/project-scrollcarousel.html?project=16): AI-assisted Development, SwiftUI, Physical Computing.
 - [Claude Code ↔ Figma: Building an AI-Powered Portfolio Assistant](https://xyhan.com/gallery/portfolio-ai-assistant/index.html): AI, MCP, Product Design.
 - [Interactive Virtual Drum Kit](https://xyhan.com/gallery/interactive-virtual-drum-kit/index.html): Media pipe, HTML/CSS, P5js, Interactive Music.
 - [FriendUp Map-based Social App](https://xyhan.com/gallery/friendup-social-app/index.html): UX Design, Social Wellbeing, Usability Testing.
