@@ -115,7 +115,7 @@ function overlap(a,b) { return a.left < b.left+b.width && a.left+a.width > b.lef
     await page.waitForFunction(()=>document.querySelector('#portfolio-menu')?.open);
     pass('Menu archive retains 16 links; archive-only detail returns to the open directory');
     await page.locator('.portfolio-menu-close').click();
-    await page.locator('#agent-fab').click();assert.equal(await page.locator('#agent-panel').isVisible(),true);assert.equal(await page.locator('.agent-providers a').count(),3);await page.keyboard.press('Escape');
+    await page.locator('#agent-fab').click();assert.equal(await page.locator('#agent-panel').isVisible(),true);assert.equal(await page.locator('.agent-providers a').count(),3);const askHref=await page.locator('[data-provider="chatgpt"]').getAttribute('href');assert.ok(new URL(askHref).searchParams.get('q').includes('https://hancyhxy.github.io/personalwebsite-ai-engineer/'));await page.keyboard.press('Escape');
     pass('Ask AI panel and all three providers preserved');
     await page.locator('#resume-link').click();await page.waitForFunction(()=>typeof document.querySelector('#resume-frame').contentWindow?.resumePressPrimary==='function',null,{timeout:20000});
     const printer=page.frameLocator('#resume-frame');await printer.locator('#printer-stage[data-state="idle"]').waitFor();
