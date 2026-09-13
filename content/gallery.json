@@ -152,5 +152,15 @@
     "coverImageUrl": "gallery/musically-1m-audition/public/cover.png",
     "projectUrl": "gallery/musically-1m-audition/index.html",
     "company": "musical.ly"
+  },
+  {
+    "date": "2026-08-01",
+    "project name": "AI-Assisted Video Editing Workflow",
+    "tag": "AI Workflow, Semantic Media, Human-in-the-loop Editing",
+    "classification": "Content",
+    "coverImageUrl": "assets/images/ai-assisted-video-editing/cover.jpg",
+    "projectUrl": "gallery/ai-assisted-video-editing/index.html",
+    "publicUrl": "project-scrollcarousel.html?project=17",
+    "company": "Personal"
   }
 ]

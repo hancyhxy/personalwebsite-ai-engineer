@@ -61,7 +61,7 @@ window.BADGE_WORK_READY = (async () => {
     const data = await response.json();
     projects = data.map((p, i) => {
       const slug = p.projectUrl.split('/')[1], company = p.company || '';
-      const topic = /chatbot|help-center/i.test(slug) ? 'conversation' : /Delivery|Dispatch/i.test(slug) ? 'commerce' : /portfolio-ai|friendup|drum-kit|tech-fest/i.test(slug) ? 'build' : /KOL|audition/i.test(slug) ? 'content' : 'experience';
+      const topic = /chatbot|help-center/i.test(slug) ? 'conversation' : /Delivery|Dispatch/i.test(slug) ? 'commerce' : /portfolio-ai|friendup|drum-kit|tech-fest|ai-assisted-video-editing/i.test(slug) ? 'build' : /KOL|audition/i.test(slug) ? 'content' : 'experience';
       const chapter = /Alibaba/i.test(company) ? 'alibaba' : /TikTok/i.test(company) ? 'bytedance' : /Personal|UTS|Red Note/i.test(company) ? 'independent' : 'early';
       const localIndex = SCROLLCAROUSEL_PROJECTS.findIndex(project => project.url.replace(/^\.\//, '') === p.projectUrl.replace(/^\.\//, ''));
       const el = document.createElement('a'); el.className = 'work-item'; el.dataset.projectId = slug;

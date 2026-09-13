@@ -162,6 +162,17 @@ body.scc-detail-page {
   transform: none;
 }
 .scc-detail-page .scc-showcase-gallery figure img { background: #efeee9; }
+.scc-detail-page .scc-detail-content figure.scc-video-figure {
+  width: min(420px, 82vw);
+  margin-block: 6vh 9vh;
+}
+.scc-detail-page .scc-video-figure video {
+  display: block;
+  width: 100%;
+  aspect-ratio: 9 / 16;
+  background: #111;
+  object-fit: cover;
+}
 
 .scc-detail-page .scc-detail-content[data-layout="two-column"] {
   width: min(1160px, calc(100% - 48px));

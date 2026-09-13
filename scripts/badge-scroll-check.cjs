@@ -115,7 +115,7 @@ const overlap = (a, b) => a.left < b.left + b.width && a.left + a.width > b.left
       await page.waitForFunction(() => document.querySelector('.scene-chapter-nav a[aria-current]')?.hash === '#work-experimental');
       assert.deepEqual(await page.locator('.chapter-progress-label').evaluate(el => [...el.children].map(e => e.textContent)), ['2026', '2018']);
       assert.notEqual(await page.evaluate(() => getComputedStyle(document.body).overflow), 'hidden');
-      assert.equal(await page.locator('.scene-fallback a').count(), 17);
+      assert.equal(await page.locator('.scene-fallback a').count(), 18);
       console.log('PASS mobile', reducedMotion, 'chapter keyboard navigation and global range');
       await page.close();
     }

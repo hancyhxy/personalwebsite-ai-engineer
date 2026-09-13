@@ -10,6 +10,7 @@ const SCROLLCAROUSEL_PROJECTS = [
   {
     title: "Claude Code ↔ Figma",
     section: "independent",
+    sceneOrder: 1,
     detailLayout: "stacked",
     year: 2026,
     category: "product",
@@ -22,6 +23,7 @@ const SCROLLCAROUSEL_PROJECTS = [
   {
     title: "Interactive Virtual Drum Kit",
     section: "independent",
+    sceneOrder: 2,
     detailLayout: "two-column",
     year: 2025,
     category: "experiential",
@@ -34,6 +36,7 @@ const SCROLLCAROUSEL_PROJECTS = [
   {
     title: "FriendUp Social App",
     section: "independent",
+    sceneFeatured: false,
     detailLayout: "two-column",
     year: 2025,
     category: "product",
@@ -209,6 +212,7 @@ const SCROLLCAROUSEL_PROJECTS = [
   {
     title: "Tech Fest | AI Showcase",
     section: "independent",
+    sceneOrder: 0,
     detailLayout: "stacked",
     year: 2026,
     category: "experiential",
@@ -217,5 +221,19 @@ const SCROLLCAROUSEL_PROJECTS = [
     thumb: "./assets/images/thumbs/tech-fest-ai-showcase-thumb.jpg",
     hero: "./assets/images/tech-fest-ai-showcase/cover.jpg",
     url: "./gallery/tech-fest-ai-showcase/index.html"
+  },
+  {
+    title: "AI-Assisted Video Editing Workflow",
+    section: "independent",
+    sceneOrder: 3,
+    detailLayout: "stacked",
+    year: 2026,
+    category: "content",
+    company: "Independent",
+    summary: "A human-in-the-loop workflow that turns semantically tagged footage and natural-language direction into an editable timeline.",
+    sceneNote: "Tested through a real social video built from 25 shots across six source videos.",
+    thumb: "./assets/images/thumbs/ai-assisted-video-editing-thumb.jpg",
+    hero: "./assets/images/ai-assisted-video-editing/cover.jpg",
+    url: "./gallery/ai-assisted-video-editing/index.html"
   }
 ];

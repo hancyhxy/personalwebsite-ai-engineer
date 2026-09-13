@@ -63,6 +63,11 @@
     return "./assets/images/" + slug + "/" + filename;
   }
 
+  function mediaPath(relative) {
+    var filename = relative.replace(/^\.\/media\//, "").replace(/^media\//, "");
+    return "./assets/media/" + slug + "/" + filename;
+  }
+
   function renderMarkdown(markdown) {
     content.replaceChildren();
     var lines = markdown.split(/\r?\n/);
@@ -75,6 +80,29 @@
     lines.forEach(function (raw) {
       var line = raw.trim();
       if (!line) { endList(); return; }
+
+      var video = line.match(/^!\[video(?::\s*([^\]]*))?\]\(([^)]+)\)$/i);
+      if (video) {
+        endList();
+        showcaseGallery = null;
+        var videoFigure = document.createElement("figure");
+        videoFigure.className = "scc-video-figure";
+        var player = document.createElement("video");
+        player.src = mediaPath(video[2]);
+        player.controls = true;
+        player.playsInline = true;
+        player.preload = "metadata";
+        player.poster = project.hero || project.thumb;
+        player.setAttribute("aria-label", video[1] || project.title);
+        videoFigure.appendChild(player);
+        if (video[1]) {
+          var videoCaption = document.createElement("figcaption");
+          videoCaption.textContent = video[1];
+          videoFigure.appendChild(videoCaption);
+        }
+        content.appendChild(videoFigure);
+        return;
+      }
 
       var image = line.match(/^(?:(0?\.\d+)\s+)?!\[([^\]]*)\]\(([^)]+)\)$/);
       if (image) {

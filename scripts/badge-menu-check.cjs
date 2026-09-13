@@ -35,7 +35,7 @@ const out = process.env.SCREENSHOT_DIR;
       }
       if (out) await page.screenshot({ path: path.join(out, name + '-menu.png') });
       await page.locator('.portfolio-menu-all').click();
-      assert.equal(await page.locator('#work-collection .work-item').count(), 17);
+      assert.equal(await page.locator('#work-collection .work-item').count(), 18);
       assert.equal(await page.locator('#work-collection .work-item[target="_blank"]').count(), 0);
       assert.equal(await page.evaluate(() => document.documentElement.scrollHeight), origin.height, 'opening directory must not lengthen page');
       await page.locator('button[data-layout="journey"]').click();
@@ -77,7 +77,7 @@ const out = process.env.SCREENSHOT_DIR;
       } else {
         await page.waitForFunction(() => document.getElementById('fallback-ux').getBoundingClientRect().top < 50);
       }
-      console.log('PASS', name, 'menu visibility, keyboard trap/Escape, 17 projects, internal scrolling, sort+scroll return through Next, chapter navigation, clean résumé handoff');
+      console.log('PASS', name, 'menu visibility, keyboard trap/Escape, 18 projects, internal scrolling, sort+scroll return through Next, chapter navigation, clean résumé handoff');
       await page.close();
     }
     const lost = await browser.newPage(); lost.on('pageerror', e => errors.push(e.message));
@@ -97,10 +97,10 @@ const out = process.env.SCREENSHOT_DIR;
     await failure.goto(base + '/index-badge.html#work-next');
     await failure.waitForFunction(() => document.getElementById('portfolio-menu')?.open);
     await failure.evaluate(() => BADGE_WORK_READY);
-    assert.equal(await failure.locator('#work-collection .work-item[href*="project-scrollcarousel.html"]').count(), 17);
+    assert.equal(await failure.locator('#work-collection .work-item[href*="project-scrollcarousel.html"]').count(), 18);
     await failure.keyboard.press('Escape');
     await failure.waitForFunction(() => getComputedStyle(document.body).overflow !== 'hidden');
-    console.log('PASS failed gallery retains 17 local detail links, legacy archive hash and Escape unlock');
+    console.log('PASS failed gallery retains 18 local detail links, legacy archive hash and Escape unlock');
     await failure.close();
     assert.deepEqual(errors, []);
   } finally { await browser.close(); }

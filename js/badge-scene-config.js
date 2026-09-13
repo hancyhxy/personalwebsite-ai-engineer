@@ -24,7 +24,10 @@
     return { left: B.mix(r.left, left, strength), top: r.top, width: r.width, height: r.height };
   };
   B.groups.forEach(function (g, n) {
-    g.projects = B.projects.map(function (p, i) { return p.section === g.id && p.sceneFeatured !== false ? i : -1; }).filter(function (i) { return i >= 0; }).sort(function (a, b) { return B.projects[b].year - B.projects[a].year || a - b; });
+    g.projects = B.projects.map(function (p, i) { return p.section === g.id && p.sceneFeatured !== false ? i : -1; }).filter(function (i) { return i >= 0; }).sort(function (a, b) {
+      var authored = (B.projects[a].sceneOrder ?? 999) - (B.projects[b].sceneOrder ?? 999);
+      return authored || B.projects[b].year - B.projects[a].year || a - b;
+    });
     var years = g.projects.map(function (i) { return B.projects[i].year; });
     g.years = Math.max.apply(null, years) + '–' + Math.min.apply(null, years);
     g.start = n * B.timing.group; g.end = g.start + B.timing.group; g.center = (g.start + g.end) / 2;

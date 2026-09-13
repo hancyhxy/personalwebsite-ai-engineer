@@ -101,7 +101,7 @@ const base=process.env.BASE_URL||'http://127.0.0.1:8765', out=process.env.ARTIFA
     await page.waitForFunction(()=>document.activeElement===BadgeScene.interaction.links[0]);
     await page.evaluate(()=>{ProjectFlip.warm(0);BadgeScene.interaction.links[0].click();});
     await page.waitForFunction(()=>ProjectFlip.phase==='opening');await page.emulateMedia({reducedMotion:'reduce'});await idle();
-    assert.equal(await page.locator('.scene-fallback a').count(),17);assert.equal(await page.locator('.project-flip-layer').count(),0);
+    assert.equal(await page.locator('.scene-fallback a').count(),18);assert.equal(await page.locator('.project-flip-layer').count(),0);
     assert.notEqual(await page.evaluate(()=>getComputedStyle(document.body).overflow),'hidden');
     console.log('PASS resize/reduced-motion interruption and Next-project return preserve access and original card');
    }
@@ -112,7 +112,7 @@ const base=process.env.BASE_URL||'http://127.0.0.1:8765', out=process.env.ARTIFA
   await reduced.waitForURL(u=>u.pathname.endsWith('/project-scrollcarousel.html'));
   assert.equal(await reduced.locator('.project-flip-layer').count(),0);await reduced.locator('.scc-detail-close').click();
   await reduced.waitForURL(u=>u.pathname.endsWith('/index-badge.html'));await reduced.waitForFunction(()=>window.ProjectFlip?.phase==='idle');
-  assert.equal(await reduced.locator('.scene-fallback a').count(),17);assert.notEqual(await reduced.evaluate(()=>getComputedStyle(document.body).overflow),'hidden');await reduced.close();
+  assert.equal(await reduced.locator('.scene-fallback a').count(),18);assert.notEqual(await reduced.evaluate(()=>getComputedStyle(document.body).overflow),'hidden');await reduced.close();
   console.log('PASS reduced motion retains plain navigation and complete HTML access');
   const unavailable=await browser.newPage();unavailable.on('pageerror',e=>errors.push(e.message));
   await unavailable.addInitScript(()=>{const set=Storage.prototype.setItem;Storage.prototype.setItem=function(key,value){if(key.startsWith('badge-'))throw new Error('Storage denied');return set.call(this,key,value);};});
@@ -137,7 +137,7 @@ const base=process.env.BASE_URL||'http://127.0.0.1:8765', out=process.env.ARTIFA
    assert.equal(image.src,data[i].hero);assert.ok(image.width>0);
    assert.equal(await failure.locator('#scc-detail-content').getAttribute('data-layout'),data[i].layout);
   }
-  await failure.close();console.log('PASS all 17 canonical full-resolution Heroes load and template identities are unchanged');
+  await failure.close();console.log('PASS all 18 canonical full-resolution Heroes load and template identities are unchanged');
   assert.deepEqual(errors,[]);
  }finally{await browser.close();}
 })().catch(e=>{console.error(e);process.exitCode=1;});
