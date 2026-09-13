@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Visual Drum Kit - Xinyi Han</title>
+    <meta name="description" content="Gesture-driven drum kit that fuses motion tracking, real-time audio, and generative visuals.">
+    <meta name="robots" content="index,follow">
+    <meta property="og:title" content="Interactive Visual Drum Kit">
+    <meta property="og:description" content="Gesture-driven drum kit that fuses motion tracking, real-time audio, and generative visuals.">
+    <meta property="og:type" content="article">
+    <meta property="og:image" content="./public/cover.png">
+    <link rel="icon" type="image/x-icon" href="../../logo/favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="../../logo/favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../logo/favicon-32x32.png">
+    <link rel="stylesheet" href="../../style/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        .hero-image-container { width: 100vw; margin-left: calc(-50vw + 50%); padding: 0; display: flex; align-items: center; }
+        .hero-image { width: 100%; aspect-ratio: 2/1; object-fit: cover; display: block; }
+        .hero-image-container.hero-fallback { min-height: 40vh; background: linear-gradient(135deg, #a8edea, #fed6e3); }
+
+        .project-brief-container { padding: var(--spacing-sm) 0; border-bottom: 1px solid var(--border-color); background-color: #ffffff; }
+        .project-title { font-size: var(--font-size-2xl); font-weight: 600; margin-bottom: var(--spacing-sm); line-height: 1.2; }
+        .project-content { max-width: 1140px; margin: 180px auto 120px; padding: 0 clamp(16px, 3vw, 30px); }
+        .content-section { margin-bottom: var(--spacing-2xl); }
+        .subsection-title { font-size: var(--font-size-lg); font-weight: 500; margin: var(--spacing-md) 0 var(--spacing-sm) 0; color: var(--primary-color); }
+        .content-text { font-size: var(--font-size-base); line-height: 1.7; color: var(--primary-color); margin-bottom: var(--spacing-md); }
+        .project-image { width: 100%; height: auto; max-width: 100%; margin: var(--spacing-lg) 0; display: block; border-radius: var(--border-radius); box-shadow: none; }
+        .image-grid { display: grid; grid-template-columns: 1fr; gap: var(--spacing-lg); margin: var(--spacing-lg) 0; }
+        .image-grid img { width: 100%; height: auto; border-radius: var(--border-radius); box-shadow: none; }
+
+        .video-embed {
+            position: relative;
+            padding-top: 56.25%;
+            margin: var(--spacing-lg) 0;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+        }
+        .video-embed iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        .two-column-section { display: grid; grid-template-columns: minmax(200px, 240px) 1fr; gap: var(--spacing-2xl); margin-bottom: var(--spacing-2xl); align-items: flex-start; }
+        .column-title { font-size: var(--font-size-2xl); font-weight: 600; color: var(--primary-color); line-height: 1.2; position: sticky; top: var(--spacing-lg); }
+        .column-content { display: flex; flex-direction: column; gap: var(--spacing-lg); }
+
+        /* Bullet point left alignment */
+        ul.content-text { padding-left: 1.2em; }
+
+        /* Reduce spacing for subsection titles that start a content block */
+        .column-content > div > h4.subsection-title:first-child { margin-top: 0; }
+
+        @media (min-width: 1200px) {
+            .project-content { max-width: 1140px; margin: 180px auto 120px; padding: 0 30px; }
+            .two-column-section { gap: calc(var(--spacing-2xl) * 1.5); }
+            .column-title { font-size: calc(var(--font-size-2xl) * 1.1); }
+        }
+        @media (min-width: 1600px) {
+            .project-content { max-width: 1140px; margin: 180px auto 120px; padding: 0 30px; }
+            .two-column-section { grid-template-columns: minmax(260px, 300px) 1fr; gap: calc(var(--spacing-2xl) * 1.8); }
+        }
+        @media (max-width: 1199px) and (min-width: 993px) {
+            .project-content { max-width: 1000px; margin: 140px auto 110px; padding: 0 24px; }
+            .two-column-section { grid-template-columns: minmax(180px, 220px) 1fr; gap: var(--spacing-xl); }
+        }
+        @media (max-width: 992px) and (min-width: 769px) {
+            .project-content { max-width: 900px; margin: 120px auto 96px; padding: 0 20px; }
+            .two-column-section { grid-template-columns: minmax(160px, 200px) 1fr; gap: var(--spacing-lg); }
+            .column-title { font-size: var(--font-size-xl); }
+        }
+        @media (max-width: 768px) {
+            .hero-image-container { width: 100%; margin-left: 0; overflow: hidden; height: 50vw; }
+            .hero-image { aspect-ratio: 2/1; object-fit: cover; object-position: center center; }
+            .project-brief-container { padding: var(--spacing-sm) 0; }
+            .project-title { font-size: var(--font-size-xl); }
+            .project-content { max-width: 100%; margin: 96px auto 80px; padding: 0 var(--spacing-sm); }
+            .two-column-section { grid-template-columns: 1fr; gap: var(--spacing-md); }
+            .column-title { font-size: var(--font-size-lg); position: static; }
+        }
+    </style>
+</head>
+<body>
+    <div data-component="header"></div>
+
+    <main class="project-page">
+        <section class="hero-image-container" data-hero>
+            <img src="./public/cover.png" alt="Interactive Visual Drum Kit hero image" class="hero-image" loading="lazy">
+        </section>
+
+        <section class="project-brief-container">
+            <div class="container">
+                <div data-component="project-info"></div>
+            </div>
+        </section>
+
+        <div class="project-content" data-layout="two-column">
+            <section class="content-section">
+                <h1 class="project-title">Interactive Visual Drum Kit</h1>
+            </section>
+
+        <!-- SYNC:CONTENT-START -->
+<section class="two-column-section">
+  <div class="column-title">Concept</div>
+  <div class="column-content">
+    <div>
+      <p class="content-text">My project is an Interactive Visual Drum Kit that transforms your webcam into a musical instrument. Instead of using a mouse or keyboard, you play drums by moving your hands through virtual drum pads. The system combines hand tracking with audio-reactive pixel visual effects, creating an immersive experience where every gesture produces both sound and dynamic visuals.</p>
+    </div>
+    <div>
+      <h4 class="subsection-title">Experience Goals</h4>
+      <ul class="content-text">
+        <li>Deliver a playful, performance-ready interface that works anywhere with just a laptop.</li>
+        <li>Fuse motion tracking, percussive audio, and GPU-generated effects so sound and visuals feel inseparable.</li>
+        <li>Offer a production-grade demo that can scale into installations, remote jam sessions, or educational tools.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+<section class="two-column-section">
+  <div class="column-title">Development Stage</div>
+  <div class="column-content">
+    <img class="project-image" src="./public/2-development.png" alt="Development Stage">
+  </div>
+</section>
+<section class="two-column-section">
+  <div class="column-title">System Architecture</div>
+  <div class="column-content">
+    <img class="project-image" src="./public/3-structure.png" alt="System architecture diagram showing tracking, audio, and shader modules">
+  </div>
+</section>
+<section class="two-column-section">
+  <div class="column-title">User Journey</div>
+  <div class="column-content">
+    <img class="project-image" src="./public/4-user.png" alt="Annotated user journey interface">
+    <div>
+      <ul class="content-text">
+        <li>First, you grant webcam and microphone permissions. Immediately, you see your hands tracked in real-time with a blue skeletal overlay your index fingertip becomes your drumstick.</li>
+        <li>As you explore, you can move your hand over the drums without triggering them. To actually play, you need to strike with intent - a fast punching motion.</li>
+        <li>As you build rhythm, the entire scene responds - the background pixelates with the bass, colors shift from cool teals to warm oranges, and the visuals create an immersive musical experience.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+<section class="two-column-section">
+  <div class="column-title">Show Case</div>
+  <div class="column-content">
+    <div>
+      <p class="content-text"><a href="https://youtu.be/A7vTR0k6ijA?si=RwsSLF3tCkNWvNvh" target="_blank" rel="noreferrer">https://youtu.be/A7vTR0k6ijA?si=RwsSLF3tCkNWvNvh</a></p>
+      <p class="content-text">Open the link to experience it 👏 (allow the camera and microphone permissions). <a href="https://hancyhxy.github.io/virtual_band/" target="_blank" rel="noreferrer">https://hancyhxy.github.io/virtual_band/</a></p>
+    </div>
+  </div>
+</section>
+<section class="two-column-section">
+  <div class="column-title">Impact, Learning &amp; Future Potential</div>
+  <div class="column-content">
+    <img class="project-image" src="./public/6-impact.png" alt="Impact &amp; Next Steps">
+  </div>
+</section>
+<!-- SYNC:CONTENT-END -->
+        </div>
+    </main>
+
+    <div data-component="footer"></div>
+    <script src="../../components/component-loader.js"></script>
+    <script src="../../components/project-info.js"></script>
+    <script src="../../style/script.js"></script>
+</body>
+</html>

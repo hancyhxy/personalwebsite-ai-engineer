@@ -1,0 +1,380 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KOL Growth Strategy - Xinyi Han</title>
+    <link rel="icon" type="image/x-icon" href="../../logo/favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="../../logo/favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../logo/favicon-32x32.png">
+    <link rel="stylesheet" href="../../style/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        .hero-image-container {
+            width: 100vw;
+            margin-left: calc(-50vw + 50%);
+            padding: 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-image {
+            width: 100%;
+            aspect-ratio: 2/1;
+            object-fit: cover;
+            display: block;
+        }
+
+        .project-brief-container {
+            padding: var(--spacing-sm) 0;
+            border-bottom: 1px solid var(--border-color);
+            background-color: #ffffff;
+        }
+
+        .project-title {
+            font-size: var(--font-size-2xl);
+            font-weight: 600;
+            margin-bottom: var(--spacing-sm);
+            line-height: 1.2;
+        }
+
+        .project-subtitle {
+            font-size: var(--font-size-lg);
+            color: var(--secondary-color);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .project-date {
+            font-size: var(--font-size-base);
+            color: var(--secondary-color);
+            font-style: italic;
+        }
+
+        .project-content {
+            /* Content container: centered with predictable width */
+            max-width: 1140px;
+            margin: 180px auto 120px;
+            /* Follow the contentcontainer idea: fixed side padding */
+            padding: 0 clamp(16px, 3vw, 30px);
+        }
+
+        .content-section {
+            margin-bottom: var(--spacing-2xl);
+        }
+
+        .section-title {
+            font-size: var(--font-size-xl);
+            font-weight: 600;
+            margin-bottom: var(--spacing-md);
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: var(--spacing-xs);
+        }
+
+        .subsection-title {
+            font-size: var(--font-size-lg);
+            font-weight: 500;
+            margin: var(--spacing-md) 0 var(--spacing-sm) 0;
+            color: var(--primary-color);
+        }
+
+        .content-text {
+            font-size: var(--font-size-base);
+            line-height: 1.7;
+            color: var(--primary-color);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .project-image {
+            width: 100%;
+            max-width: 100%;
+            margin: var(--spacing-lg) 0;
+            display: block;
+            border-radius: var(--border-radius);
+            /* remove shadow for a cleaner look */
+            box-shadow: none;
+        }
+
+        .image-grid {
+            display: grid;
+            /* one image per row on this page */
+            grid-template-columns: 1fr;
+            gap: var(--spacing-lg);
+            margin: var(--spacing-lg) 0;
+        }
+
+        .image-grid img {
+            width: 100%;
+            border-radius: var(--border-radius);
+            /* remove shadow */
+            box-shadow: none;
+        }
+
+        .highlight-text {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .conversion-flow {
+            background-color: var(--light-gray);
+            padding: var(--spacing-md);
+            border-radius: var(--border-radius);
+            margin: var(--spacing-md) 0;
+            text-align: center;
+        }
+
+        .flow-arrow {
+            font-size: var(--font-size-lg);
+            margin: 0 var(--spacing-sm);
+        }
+
+        /* Two-column layout styles */
+        .two-column-section {
+            display: grid;
+            grid-template-columns: minmax(200px, 240px) 1fr;
+            gap: var(--spacing-2xl);
+            margin-bottom: var(--spacing-2xl);
+            align-items: flex-start;
+        }
+
+        .column-title {
+            font-size: var(--font-size-2xl);
+            font-weight: 600;
+            color: var(--primary-color);
+            line-height: 1.2;
+            position: sticky;
+            top: var(--spacing-lg);
+        }
+
+        .column-content {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-lg);
+        }
+
+        .column-content .subsection-title {
+            margin-top: 0;
+        }
+
+
+        /* brief styles are centralized in global CSS */
+
+        /* Large screens: optimize content width and spacing */
+        @media (min-width: 1200px) {
+            .project-content {
+                max-width: 1140px;
+                margin: 180px auto 120px;
+                padding: 0 30px;
+            }
+
+            .two-column-section {
+                gap: calc(var(--spacing-2xl) * 1.5);
+            }
+
+            .column-title {
+                font-size: calc(var(--font-size-2xl) * 1.1);
+            }
+        }
+
+        /* Extra large screens: maintain readability while using space */
+        @media (min-width: 1600px) {
+            .project-content {
+                max-width: 1140px;
+                margin: 180px auto 120px;
+                padding: 0 30px;
+            }
+
+            .two-column-section {
+                grid-template-columns: minmax(260px, 300px) 1fr;
+                gap: calc(var(--spacing-2xl) * 1.8);
+            }
+        }
+
+        /* Medium screens: balanced layout */
+        @media (max-width: 1199px) and (min-width: 993px) {
+            .project-content {
+                max-width: 1000px;
+                margin: 140px auto 110px;
+                padding: 0 24px;
+            }
+
+            .two-column-section {
+                grid-template-columns: minmax(180px, 220px) 1fr;
+                gap: var(--spacing-xl);
+            }
+        }
+
+        /* Small desktop/large tablet screens */
+        @media (max-width: 992px) and (min-width: 769px) {
+            .project-content {
+                max-width: 900px;
+                margin: 120px auto 96px;
+                padding: 0 20px;
+            }
+
+            .two-column-section {
+                grid-template-columns: minmax(160px, 200px) 1fr;
+                gap: var(--spacing-lg);
+            }
+
+            .column-title {
+                font-size: var(--font-size-xl);
+            }
+        }
+
+        /* Tablet screens */
+        @media (max-width: 768px) {
+            /* Avoid horizontal overflow on mobile */
+            .hero-image-container {
+                width: 100%;
+                margin-left: 0;
+                overflow: hidden;
+                height: 50vw;
+            }
+
+            .hero-image {
+                /* Keep 2:1 aspect ratio on tablets */
+                aspect-ratio: 2/1;
+                /* Show more of the top area on mobile */
+                object-position: center center;
+            }
+
+            .project-brief-container {
+                padding: var(--spacing-sm) 0;
+            }
+
+            /* brief styles are centralized in global CSS */
+
+            .project-title {
+                font-size: var(--font-size-xl);
+            }
+
+            .project-content {
+                max-width: 100%;
+                margin: 96px auto 80px;
+                padding: 0 var(--spacing-sm);
+            }
+
+            .image-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .two-column-section {
+                grid-template-columns: 1fr;
+                gap: var(--spacing-md);
+            }
+
+            .column-title {
+                font-size: var(--font-size-xl);
+                position: static;
+                margin-bottom: var(--spacing-sm);
+            }
+        }
+
+        /* Mobile screens */
+        @media (max-width: 480px) {
+            .project-content {
+                margin: 72px auto 64px;
+                padding: 0 var(--spacing-sm);
+            }
+
+            .hero-image {
+                /* Keep 2:1 aspect ratio on mobile */
+                aspect-ratio: 2/1;
+                object-position: center center;
+            }
+
+            /* brief styles are centralized in global CSS */
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Header -->
+    <div data-component="header"></div>
+
+    <!-- Hero Image Section -->
+    <section class="hero-image-container">
+        <img src="./public/album.png" alt="Project Overview" class="hero-image">
+    </section>
+
+    <!-- Project Brief Section -->
+    <section class="project-brief-container">
+        <div class="container">
+            <div data-component="project-info"></div>
+        </div>
+    </section>
+
+    <!-- Project Content -->
+    <div class="project-content">
+        <!-- Project Title Section -->
+        <section class="content-section">
+            <h1 class="project-title">Social Media: From 0 to 50,000+ Fans</h1>
+        </section>
+
+        <!-- Overview Section -->
+        <section class="two-column-section">
+            <div class="column-title">Overview</div>
+            <div class="column-content">
+                <div>
+                    <h4 class="subsection-title">Everyday life as a fashion runway</h4>
+                    <p class="content-text">
+                        Created the Xiaohongshu account Xiao Han Student Reports, gained over 200k followers in 2 years, specializing in daily fashion and style sharing. Collaborated with various brands to launch products, including Adidas, Uniqlo, Vans, etc. Earned a commercial return of about 100,000 USD.
+                    </p>
+                </div>
+
+                <div class="image-grid">
+                    <img src="./public/contentdata.png" alt="Content Data Analysis" class="project-image">
+                    <img src="./public/workflow.png" alt="Content Workflow" class="project-image">
+                </div>
+            </div>
+        </section>
+
+        <!-- Data Tracking Section -->
+        <section class="two-column-section">
+            <div class="column-title">Data Tracking</div>
+            <div class="column-content">
+                <div>
+                    <p class="content-text">
+                        I identified a new demand among women for athletic wear that integrates with the rhythm of daily life, blending into everyday casual outfits, not just for fitness. Consequently, I set the scenes in representative locations like 'supermarkets,' 'urban street views,' and 'cycling,' capturing leisure-style pairings that blur the lines between sportswear and everyday wear. The post successfully garnered 5,000 interactions.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Growth Strategy Section -->
+        <section class="two-column-section">
+            <div class="column-title">Growth Strategy</div>
+            <div class="column-content">
+                <div>
+                    <p class="content-text">
+                        The three stages of social media conversion:
+                    </p>
+
+                    <div class="conversion-flow">
+                        <span class="highlight-text">Discovery</span>
+                        <span class="flow-arrow">→</span>
+                        <span class="highlight-text">Conversion</span>
+                        <span class="flow-arrow">→</span>
+                        <span class="highlight-text">Fandom</span>
+                    </div>
+                </div>
+
+                <div class="image-grid">
+                    <img src="./public/discoverypool.png" alt="Discovery Pool Strategy" class="project-image">
+                    <img src="./public/conversation.png" alt="Conversion Strategy" class="project-image">
+                    <img src="./public/fandom.png" alt="Fandom Building Strategy" class="project-image">
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Contact Section -->
+    <div data-component="footer"></div>
+
+    <script src="../../components/component-loader.js"></script>
+    <script src="../../components/project-info.js"></script>
+    <script src="../../style/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Content-Driven Food Delivery Experience - Xinyi Han</title>
+    <meta name="description" content="TikTok Local Life | Food Delivery via Live & Short Video. Order First, Then Schedule Delivery — bridging content engagement with food delivery conversion.">
+    <meta name="robots" content="index,follow">
+    <meta property="og:title" content="Content-Driven Food Delivery Experience">
+    <meta property="og:description" content="Order First, Then Schedule Delivery — converting content-driven desire into real food orders.">
+    <meta property="og:type" content="article">
+    <meta property="og:image" content="./public/cover.png">
+    <link rel="icon" type="image/x-icon" href="../../logo/favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="../../logo/favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../logo/favicon-32x32.png">
+    <link rel="stylesheet" href="../../style/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        .hero-image-container { width: 100vw; margin-left: calc(-50vw + 50%); padding: 0; display: flex; align-items: center; }
+        .hero-image { width: 100%; aspect-ratio: 2/1; object-fit: cover; display: block; }
+
+        .project-brief-container { padding: var(--spacing-sm) 0; border-bottom: 1px solid var(--border-color); background-color: #ffffff; }
+        .project-title { font-size: var(--font-size-2xl); font-weight: 600; margin-bottom: var(--spacing-sm); line-height: 1.2; }
+        .project-content { max-width: 1140px; margin: 180px auto 120px; padding: 0 clamp(16px, 3vw, 30px); }
+        .content-section { margin-bottom: var(--spacing-2xl); }
+        .subsection-title { font-size: var(--font-size-lg); font-weight: 500; margin: var(--spacing-md) 0 var(--spacing-sm) 0; color: var(--primary-color); }
+        .content-text { font-size: var(--font-size-base); line-height: 1.7; color: var(--primary-color); margin-bottom: 0; }
+
+        /* Bullet point left alignment fix */
+        ul.content-text {
+            padding-left: 1.2em;
+        }
+
+        .project-image { width: 100%; height: auto; max-width: 100%; margin: var(--spacing-lg) 0; display: block; border-radius: var(--border-radius); box-shadow: none; }
+        .image-grid { display: grid; grid-template-columns: 1fr; gap: var(--spacing-lg); margin: var(--spacing-lg) 0; }
+        .image-grid img { width: 100%; height: auto; border-radius: var(--border-radius); box-shadow: none; }
+
+        /* Ensure body images keep aspect ratio and auto-adjust height */
+        img { max-width: 100%; height: auto; display: block; }
+        .project-image, .image-grid img { width: 100%; height: auto !important; }
+
+        /* Override global fixed aspect ratio for body images on this page */
+        .project-content img.project-image { aspect-ratio: auto; }
+
+        .two-column-section { display: grid; grid-template-columns: minmax(200px, 240px) 1fr; gap: var(--spacing-2xl); margin-bottom: var(--spacing-2xl); align-items: flex-start; }
+        .column-title { font-size: var(--font-size-2xl); font-weight: 600; color: var(--primary-color); line-height: 1.2; position: sticky; top: var(--spacing-lg); }
+        .column-content { display: flex; flex-direction: column; gap: 0; }
+
+        /* brief styles are centralized in global CSS */
+
+        /* Responsive */
+        @media (min-width: 1200px) { .project-content { max-width: 1140px; margin: 180px auto 120px; padding: 0 30px; } .two-column-section { gap: calc(var(--spacing-2xl) * 1.5); } .column-title { font-size: calc(var(--font-size-2xl) * 1.1); } }
+        @media (min-width: 1600px) { .project-content { max-width: 1140px; margin: 180px auto 120px; padding: 0 30px; } .two-column-section { grid-template-columns: minmax(260px, 300px) 1fr; gap: calc(var(--spacing-2xl) * 1.8); } }
+        @media (max-width: 1199px) and (min-width: 993px) { .project-content { max-width: 1000px; margin: 140px auto 110px; padding: 0 24px; } .two-column-section { grid-template-columns: minmax(180px, 220px) 1fr; gap: var(--spacing-xl); } }
+        @media (max-width: 992px) and (min-width: 769px) { .project-content { max-width: 900px; margin: 120px auto 96px; padding: 0 20px; } .two-column-section { grid-template-columns: minmax(160px, 200px) 1fr; gap: var(--spacing-lg); } .column-title { font-size: var(--font-size-xl); } }
+        @media (max-width: 768px) {
+            .hero-image-container { width: 100%; margin-left: 0; overflow: hidden; height: 50vw; }
+            .hero-image { aspect-ratio: 2/1; object-position: center center; }
+            .project-brief-container { padding: var(--spacing-sm) 0; }
+            /* brief styles are centralized in global CSS */
+            .project-title { font-size: var(--font-size-xl); }
+            .project-content { max-width: 100%; margin: 96px auto 80px; padding: 0 var(--spacing-sm); }
+            .image-grid { grid-template-columns: 1fr; }
+            .two-column-section { grid-template-columns: 1fr; gap: var(--spacing-md); }
+            .column-title { font-size: var(--font-size-xl); position: static; margin-bottom: var(--spacing-sm); }
+        }
+        @media (max-width: 480px) { .project-content { margin: 72px auto 64px; padding: 0 var(--spacing-sm); } .hero-image { aspect-ratio: 2/1; object-position: center center; } }
+    </style>
+    </head>
+<body>
+    <div data-component="header"></div>
+
+    <!-- Hero Image Section -->
+    <section class="hero-image-container">
+        <img src="./public/cover.png" alt="Content-Driven Food Delivery Experience cover" class="hero-image">
+    </section>
+
+    <!-- Project Brief Section -->
+    <section class="project-brief-container">
+        <div class="container">
+            <div data-component="project-info"></div>
+        </div>
+    </section>
+
+    <!-- Project Content -->
+    <div class="project-content">
+        <!-- Project Title -->
+        <section class="content-section">
+            <h1 class="project-title">Content-Driven Food Delivery Experience</h1>
+        </section>
+
+        <!-- Introduction -->
+        <section class="two-column-section">
+            <div class="column-title">Introduction</div>
+            <div class="column-content">
+                <p class="content-text">This project introduced TikTok's "Order Now, Deliver Later" food-delivery mechanism, allowing users to collect delivery vouchers during live streams or short videos and redeem them later when they actually want to eat.</p>
+                <p class="content-text">Although the operation strategy behind this mechanism was innovative, the design direction was intentionally restrained. Our goal was not to add new gameplay, but to make this experience feel like a natural extension of the existing voucher logic users already understood.</p>
+                <img class="project-image" src="./public/timetable.png" alt="Timing mismatch between content-driven desire and actual hunger">
+                <p class="content-text">To achieve this, we focused on two priorities:</p>
+                <p class="content-text"><strong>For Users — Zero Friction Adoption</strong><br>Make "Order Now, Deliver Later" vouchers behave exactly like familiar in-store vouchers, reducing cognitive load and keeping existing flows intact.</p>
+                <p class="content-text"><strong>For Merchants — Minimal Operational Cost</strong><br>Allow merchants to configure delivery items quickly with low maintenance and low onboarding effort, ensuring the model can scale efficiently.</p>
+                <p class="content-text">This restrained, system-first approach helped a new business idea land smoothly on both ends—intuitive for users, and operationally sustainable for merchants.</p>
+            </div>
+        </section>
+
+        <!-- Overview -->
+        <section class="two-column-section">
+            <div class="column-title">Overview</div>
+            <div class="column-content">
+                <p class="content-text">TikTok Local Life explored how food delivery could support not only immediate hunger, but also future cravings triggered by content. Users might feel inspired in a live stream—"this looks amazing!"—but they usually are not hungry right now.</p>
+                <img class="project-image" src="./public/orderfirst.png" alt="Order First then Schedule Delivery flow">
+                <p class="content-text">I led the product design for a new "Store-Now-Deliver-Later" mechanism that lets users collect meal vouchers during content consumption and redeem them later when they actually want to eat.</p>
+                <img class="project-image" src="./public/problem-role.png" alt="Problem and role overview">
+                <p class="content-text">The new chain:<br>Content inspiration → Collect voucher → Store future intent → Activate later → Delivery</p>
+            </div>
+        </section>
+
+        <!-- User-Side Design -->
+        <section class="two-column-section">
+            <div class="column-title">User-Side Design</div>
+            <div class="column-content">
+                <h4 class="subsection-title">Restrained, Familiar UX: Embedding Delivery Inside Existing Voucher Logic</h4>
+                <p class="content-text">The goal was to make the new mechanism feel like it already belonged in the ecosystem.</p>
+                <ul class="content-text">
+                    <li>Reused the same visual and interaction patterns as existing in-store vouchers</li>
+                    <li>Placed "collect delivery voucher" at familiar touchpoints</li>
+                    <li>No new concepts or extra education required</li>
+                    <li>Entire main funnel remained uninterrupted</li>
+                </ul>
+                <p class="content-text">This ensured the innovation happened at the business level, not at the cost of user experience complexity.</p>
+                <h4 class="subsection-title">Seamlessly Embedding "Food Delivery" Within an Existing In-Store Voucher System</h4>
+                <p class="content-text">Food delivery and in-store vouchers were originally two separate ecosystems. My goal was to introduce the new mechanism without disrupting the main user flow:</p>
+                <ul class="content-text">
+                    <li>Reused the exact voucher visual pattern users were already familiar with</li>
+                    <li>Placed "collect delivery voucher" at the same interaction point as in-store vouchers</li>
+                    <li>Avoided additional onboarding or new learning for users</li>
+                    <li>Ensured existing conversion funnels remained untouched</li>
+                </ul>
+                <p class="content-text">This allowed the delivery scenario to integrate naturally into TikTok's current commerce structure.</p>
+                <h4 class="subsection-title">Converting Emotional Impulse into Stored Intent</h4>
+                <p class="content-text">Most content-driven craving happens before actual hunger. I redesigned the content-side UX to safely capture and store this impulse:</p>
+                <ul class="content-text">
+                    <li>Lightweight "Collect Now / Order Later" overlays</li>
+                    <li>Clear promise: "refundable anytime"</li>
+                    <li>Vouchers saved in the user wallet for later use</li>
+                    <li>No pressure to order immediately</li>
+                </ul>
+                <p class="content-text">This transformed momentary emotion into future conversion potential.</p>
+                <h4 class="subsection-title">Time-Gap Activation: Reawakening Intent When Hunger Arrives</h4>
+                <p class="content-text">To bridge the delay between inspiration and actual need, I designed a complete activation system:</p>
+                <ul class="content-text">
+                    <li>Smart reminders (push + feed cards)</li>
+                    <li>Voucher detection when user enters the delivery flow</li>
+                    <li>Auto-matching products tied to the voucher</li>
+                    <li>Pathway that naturally encourages voucher usage</li>
+                </ul>
+                <p class="content-text">Users only need to be inspired once — the system handles the rest.</p>
+                <img class="project-image" src="./public/appinterface.png" alt="App interface examples for voucher redemption">
+            </div>
+        </section>
+
+        <!-- Merchant-Side Design -->
+        <section class="two-column-section">
+            <div class="column-title">Merchant-Side Design</div>
+            <div class="column-content">
+                <h4 class="subsection-title">Merchant-Side Architecture: Low-Cost, Fast-to-Run Configuration</h4>
+                <p class="content-text">To help merchants adopt this new model without extra burden, I designed:</p>
+                <ul class="content-text">
+                    <li>One-click duplication of dine-in menu → delivery menu</li>
+                    <li>Delivery-specific settings (pricing, inventory, packaging)</li>
+                    <li>A unified structure that allows consistency but preserves necessary differences</li>
+                    <li>Minimal maintenance overhead for large-scale rollout</li>
+                </ul>
+                <p class="content-text">This ensured the model could grow operationally, not just conceptually.</p>
+                <p class="content-text"><a href="https://www.life-partner.cn/site" target="_blank" rel="noopener noreferrer">View Merchant Backend Platform</a></p>
+                <img class="project-image" src="./public/merchantservice.png" alt="Merchant service flow and configuration">
+            </div>
+        </section>
+
+        <!-- Process -->
+        <section class="two-column-section">
+            <div class="column-title">Process</div>
+            <div class="column-content">
+                <h4 class="subsection-title">1. Cross-Domain Alignment</h4>
+                <p class="content-text">Synced product, content, voucher, delivery, and merchant ops teams to build an end-to-end mechanism.</p>
+                <h4 class="subsection-title">2. Designing the Store-Now-Use-Later Experience</h4>
+                <p class="content-text">Voucher logic, UX flows, refund rules, merchant mapping, and product structures.</p>
+                <h4 class="subsection-title">3. A/B Testing Conversion Triggers</h4>
+                <p class="content-text">Examined timing, UI patterns, and activation strategies to maximize re-engagement.</p>
+            </div>
+        </section>
+
+        <!-- Outcome -->
+        <section class="two-column-section">
+            <div class="column-title">Outcome</div>
+            <div class="column-content">
+                <ul class="content-text">
+                    <li>Improved post-live order conversion and repeat user rate</li>
+                    <li>Established a reusable framework for other verticals (beauty, retail)</li>
+                    <li>Demonstrated TikTok’s potential to link “content → intent → transaction”</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Reflection -->
+        <section class="two-column-section">
+            <div class="column-title">Reflection</div>
+            <div class="column-content">
+                <p class="content-text">This project strengthened my ability to design system-level, restrained UX that serves complex business innovation:</p>
+                <ul class="content-text">
+                    <li>Capture emotional desire at the right moment</li>
+                    <li>Store it without adding friction to any flow</li>
+                    <li>Reactivate it at the exact moment of need</li>
+                    <li>All while keeping merchant operations simple and scalable</li>
+                </ul>
+                <p class="content-text">It taught me to balance business creativity with UX discipline, and to design for both sides of the ecosystem—users and merchants.</p>
+            </div>
+        </section>
+    </div>
+
+    <div data-component="footer"></div>
+
+    <script src="../../components/component-loader.js"></script>
+    <script src="../../components/project-info.js"></script>
+    <script src="../../style/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,284 @@
+<!-- gallery/customer-service-workspace-chatbot/index.html -->
+<!-- Renders the Customer Service Workspace & AI Chatbot case study page. -->
+<!-- Not responsible for global navigation, homepage gallery, or shared components. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Service Workspace & AI Chatbot - Xinyi Han</title>
+    <meta name="description" content="">
+    <meta name="robots" content="index,follow">
+    <meta property="og:title" content="Customer Service Workspace & AI Chatbot">
+    <meta property="og:description" content="">
+    <meta property="og:type" content="article">
+    <meta property="og:image" content="./public/cover.png">
+    <link rel="icon" type="image/x-icon" href="../../logo/favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="../../logo/favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../logo/favicon-32x32.png">
+    <link rel="stylesheet" href="../../style/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        .hero-image-container { width: 100vw; margin-left: calc(-50vw + 50%); padding: 0; display: flex; align-items: center; }
+        /* Standardize hero at 2:1 ratio across pages */
+        .hero-image { width: 100%; aspect-ratio: 2/1; object-fit: cover; display: block; }
+        .hero-image-container.hero-fallback { min-height: 40vh; background: linear-gradient(135deg, #a8edea, #fed6e3); }
+
+        .project-brief-container { padding: var(--spacing-sm) 0; border-bottom: 1px solid var(--border-color); background-color: #ffffff; }
+        .project-title { font-size: var(--font-size-2xl); font-weight: 600; margin-bottom: var(--spacing-sm); line-height: 1.2; }
+        .project-content { max-width: 1140px; margin: 180px auto 120px; padding: 0 clamp(16px, 3vw, 30px); }
+        .content-section { margin-bottom: var(--spacing-2xl); }
+        .subsection-title { font-size: var(--font-size-lg); font-weight: 500; margin: var(--spacing-md) 0 var(--spacing-sm) 0; color: var(--primary-color); }
+        .content-text { font-size: var(--font-size-base); line-height: 1.7; color: var(--primary-color); margin-bottom: var(--spacing-md); }
+
+        /* Bullet point alignment and subsection spacing (per gallery guide) */
+        ul.content-text {
+            padding-left: 1.2em;
+            margin-bottom: var(--spacing-sm); /* Reduced from inherited --spacing-md */
+        }
+
+        ul.content-text li {
+            margin-bottom: 0.4em; /* Control spacing between list items */
+        }
+
+        ul.content-text li:last-child {
+            margin-bottom: 0; /* Remove bottom margin from last item */
+        }
+
+        .column-content > div > h4.subsection-title:first-child {
+            margin-top: 0;
+        }
+        .project-image { width: 100%; height: auto; max-width: 100%; margin: var(--spacing-lg) 0; display: block; border-radius: var(--border-radius); box-shadow: none; }
+        .image-grid { display: grid; grid-template-columns: 1fr; gap: var(--spacing-lg); margin: var(--spacing-lg) 0; }
+        .image-grid img { width: 100%; height: auto; border-radius: var(--border-radius); box-shadow: none; }
+
+        /* Video embed styles */
+        .video-embed {
+            position: relative;
+            padding-top: 56.25%; /* 16:9 aspect ratio */
+            margin: var(--spacing-lg) 0;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+        }
+        .video-embed iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        .two-column-section { display: grid; grid-template-columns: minmax(200px, 240px) 1fr; gap: var(--spacing-2xl); margin-bottom: var(--spacing-2xl); align-items: flex-start; }
+        .column-title { font-size: var(--font-size-2xl); font-weight: 600; color: var(--primary-color); line-height: 1.2; position: sticky; top: var(--spacing-lg); }
+        .column-content { display: flex; flex-direction: column; gap: var(--spacing-lg); }
+
+        /* brief styles are centralized in global CSS */
+
+        /* Responsive */
+        @media (min-width: 1200px) { .project-content { max-width: 1140px; margin: 180px auto 120px; padding: 0 30px; } .two-column-section { gap: calc(var(--spacing-2xl) * 1.5); } .column-title { font-size: calc(var(--font-size-2xl) * 1.1); } }
+        @media (min-width: 1600px) { .project-content { max-width: 1140px; margin: 180px auto 120px; padding: 0 30px; } .two-column-section { grid-template-columns: minmax(260px, 300px) 1fr; gap: calc(var(--spacing-2xl) * 1.8); } }
+        @media (max-width: 1199px) and (min-width: 993px) { .project-content { max-width: 1000px; margin: 140px auto 110px; padding: 0 24px; } .two-column-section { grid-template-columns: minmax(180px, 220px) 1fr; gap: var(--spacing-xl); } }
+        @media (max-width: 992px) and (min-width: 769px) { .project-content { max-width: 900px; margin: 120px auto 96px; padding: 0 20px; } .two-column-section { grid-template-columns: minmax(160px, 200px) 1fr; gap: var(--spacing-lg); } .column-title { font-size: var(--font-size-xl); } }
+        @media (max-width: 768px) {
+            .hero-image-container {
+                width: 100%;
+                margin-left: 0;
+                overflow: hidden;
+                aspect-ratio: 2 / 1;
+            }
+            .hero-image {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                object-position: center center;
+            }
+            .project-brief-container { padding: var(--spacing-sm) 0; }
+            .project-title { font-size: var(--font-size-xl); }
+            .project-content { max-width: 100%; margin: 96px auto 80px; padding: 0 var(--spacing-sm); }
+            .two-column-section { grid-template-columns: 1fr; gap: var(--spacing-md); }
+            .column-title { font-size: var(--font-size-xl); position: static; margin-bottom: var(--spacing-sm); }
+        }
+        @media (max-width: 480px) { .project-content { margin: 72px auto 64px; padding: 0 var(--spacing-sm); } }
+    </style>
+    </head>
+<body>
+    <div data-component="header"></div>
+
+    <section class="hero-image-container">
+        <img src="./public/cover.png" alt="Customer Service Workspace & AI Chatbot cover" class="hero-image" onerror="this.onerror=null; this.src='../../logo/hero-placeholder.svg';">
+    </section>
+
+    <section class="project-brief-container">
+        <div class="container">
+            <div data-component="project-info"></div>
+        </div>
+    </section>
+
+    <div class="project-content" data-layout="two-column">
+        <section class="content-section">
+            <h1 class="project-title">Customer Service Workspace & AI Chatbot</h1>
+        </section>
+
+        <!-- SYNC:CONTENT-START -->
+<section class="two-column-section">
+  <div class="column-title">Overview</div>
+  <div class="column-content">
+    <div>
+      <p class="content-text"><strong>Chatbot, Help Center, and Agent Workspace Modules</strong></p>
+    </div>
+    <div>
+      <img class="project-image" style="margin: var(--spacing-xs) 0;" src="./public/overview.png" alt="overview">
+      <p class="content-text">I designed key components of Taobao’s merchant-facing customer service ecosystem, supporting 200,000 daily inquiries on China’s largest e-commerce platform.</p>
+    </div>
+    <img class="project-image" src="./public/challengeandrole.png" alt="challengeandrole">
+    <div>
+      <p class="content-text">The project consists of two major product surfaces:</p>
+      <ul class="content-text">
+        <li>Merchant Self-Service (Chatbot + Help Center) — fully designed by me</li>
+        <li>Agent Workspace (Internal Customer Service Platform) — I owned several core modules</li>
+      </ul>
+      <p class="content-text">The shared goal was to reduce support load while helping merchants resolve operational issues quickly and accurately.</p>
+    </div>
+  </div>
+</section>
+<section class="two-column-section">
+  <div class="column-title">Merchant Self-Service: Chatbot &amp; Help Center</div>
+  <div class="column-content">
+    <img class="project-image" src="./public/appinall.png" alt="appinall">
+    <div>
+      <img class="project-image" style="margin: var(--spacing-xs) 0;" src="./public/approach.png" alt="approach">
+      <p class="content-text"><strong>Role: Lead Designer (sole designer responsible for this entire track)</strong> Merchants often face operational, policy, and fulfillment questions that are more complex than consumer inquiries. I designed a complete self-service experience that allows sellers to diagnose and resolve issues without relying on human agents.</p>
+    </div>
+    <div>
+      <h4 class="subsection-title">Chatbot System (End-to-End)</h4>
+      <p class="content-text">I independently designed the full Chatbot solution, including:</p>
+      <ul class="content-text">
+        <li><strong>Conversation Architecture:</strong> Multi-layer decision tree tailored to merchant workflows (orders, fulfillment, promotions, rules, seller tools, etc.)</li>
+        <li><strong>Interaction Flow Design:</strong> Guided questioning, context-aware branching, and progressive disclosure to prevent overload</li>
+        <li><strong>Smart Linking with Help Center:</strong>Bot automatically surfaces relevant help articles based on intent</li>
+        <li><strong>UI Patterns &amp; Quick Actions:</strong> Message components, reply buttons, action shortcuts for faster task completion</li>
+      </ul>
+      <p class="content-text">Message components, reply buttons, action shortcuts for faster task completion</p>
+    </div>
+    <img class="project-image" src="./public/1.png" alt="workspace interface">
+    <img class="project-image" src="./public/2.png" alt="workspace dashboard">
+    <img class="project-image" src="./public/bot2.png" alt="chatbot interface examples">
+    <div>
+      <h4 class="subsection-title">Help Center Information Architecture</h4>
+      <ul class="content-text">
+        <li>Rebuilt the entire IA based on merchant journeys</li>
+        <li>Standardized article structures for clarity</li>
+        <li>Designed linking logic between articles and Chatbot pathways</li>
+      </ul>
+    </div>
+    <img class="project-image" src="./public/bot1.png" alt="chatbot conversation flow">
+    <img class="project-image" src="./public/bot3.png" alt="chatbot UI details">
+    <img class="project-image" src="./public/2-8.png" alt="chatbot interaction patterns">
+    <div>
+      <h4 class="subsection-title">Innovation Patent: Plugin for a Tone-Customization Chatbot</h4>
+      <p class="content-text">As a self-initiated exploration, I collaborated with a designer friend, a product friend, and an algorithm friend to prototype a lightweight tone-customization plugin for the Chatbot, aiming to let NLP and CS operations teams adjust the AI assistant's communication style for different merchant profiles and service scenarios. The concept centered on two simple but high-impact ideas —</p>
+      <ul class="content-text">
+        <li>quick tone switching with clear, instant previews</li>
+        <li>direct application of tone presets to AI-generated replies for brand-consistent responses</li>
+      </ul>
+      <p class="content-text">creating an experience that felt intuitive, controllable, and easy to operationalize. The prototype was well-received by the NLP team and later informed broader discussions around personalized AI response generation.</p>
+    </div>
+    <img class="project-image" src="./public/plugin.png" alt="plugin">
+  </div>
+</section>
+<section class="two-column-section">
+  <div class="column-title">Agent Workspace: Core Modules I Owned</div>
+  <div class="column-content">
+    <div>
+      <p class="content-text"><em>Agent Workspace is a large mission-critical internal tool. I contributed to several high-impact modules that directly shape the daily workflow of customer service agents.</em></p>
+    </div>
+    <div>
+      <h4 class="subsection-title">Intelligent Reply Module (Real-time Assistance)</h4>
+      <p class="content-text">I designed the intelligent features inside the chat handling area:</p>
+      <ul class="content-text">
+        <li><strong>AI-Powered Reply Suggestions</strong> triggered by real-time agent typing</li>
+        <li><strong>Unified Reply Panel</strong> combining AI suggestions, knowledge-base search, and quick phrases</li>
+        <li><strong>Quick Phrase System</strong> including categorization, search, and insert patterns</li>
+      </ul>
+      <p class="content-text">This module reduces response time and improves consistency across agents.</p>
+    </div>
+    <div>
+      <h4 class="subsection-title">Ticketing System (Forms &amp; Details)</h4>
+      <p class="content-text">I owned key flows within the ticketing system:</p>
+      <ul class="content-text">
+        <li>Ticket creation forms</li>
+        <li>Ticket detail pages</li>
+        <li>Information layout, state transitions, escalation logic</li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="subsection-title">Merchant Onboarding &amp; Back-Office Configuration</h4>
+      <ul class="content-text">
+        <li>Designed several foundational configuration pages</li>
+        <li>Included field management, permission toggles, and operational setup workflows</li>
+      </ul>
+    </div>
+    <div>
+      <img class="project-image" style="margin: var(--spacing-xs) 0;" src="./public/xixikf.png" alt="xixikf">
+      <p class="content-text"><a href="https://xixikf.com/" target="_blank" rel="noreferrer">Xixi Service OS</a></p>
+    </div>
+  </div>
+</section>
+<section class="two-column-section">
+  <div class="column-title">Outcome</div>
+  <div class="column-content">
+    <div>
+      <ul class="content-text">
+        <li>Chatbot achieved high self-service resolution and became the default first step for merchant troubleshooting</li>
+        <li>Workspace intelligent features reduced agent workload and improved handling efficiency</li>
+        <li>Components from this project were later integrated into Alibaba’s enterprise customer service platform</li>
+        <li>Strengthened alignment between self-service and human-assisted service, improving end-to-end support experience for merchants</li>
+      </ul>
+    </div>
+  </div>
+</section>
+<section class="two-column-section">
+  <div class="column-title">Contribution Summary</div>
+  <div class="column-content">
+    <div>
+      <ul class="content-text">
+        <li>Sole designer for the entire merchant-facing Chatbot &amp; Help Center system, including end-to-end conversation architecture, IA redesign, and UI patterns.</li>
+        <li>Designed core intelligent modules within the Agent Workspace, such as AI reply suggestions, unified reply panel, quick phrases, and key ticketing flows.</li>
+        <li>Delivered interaction models that balanced high-volume operational demands with clarity, speed, and scalability.</li>
+        <li>Collaborated with PMs, NLP engineers, and service operations teams to ensure real-world feasibility, accuracy, and performance in production.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+<section class="two-column-section">
+  <div class="column-title">Design Reflection</div>
+  <div class="column-content">
+    <div>
+      <p class="content-text">My design approach focused on balancing complexity, scalability, and clarity within a high-volume customer service environment. I grounded the work in three principles:</p>
+    </div>
+    <div>
+      <h4 class="subsection-title">1. System Thinking for Multi-Endpoint Consistency</h4>
+      <p class="content-text">I treated the merchant Chatbot, Help Center, and Agent Workspace as a unified service ecosystem rather than isolated features. Every design decision—IA, flows, response logic, or UI patterns—was evaluated for cross-end consistency and long-term scalability.</p>
+    </div>
+    <div>
+      <h4 class="subsection-title">2. Progressive Disclosure for Cognitive Load Reduction</h4>
+      <p class="content-text">Merchant issues can involve tools, policies, logistics, and platform rules. I designed both the Chatbot and Workspace flows around progressive disclosure, revealing information step-by-step to keep users focused and avoid overwhelming them.</p>
+    </div>
+    <div>
+      <h4 class="subsection-title">3. Human–AI Collaboration as a Core Interaction Model</h4>
+      <p class="content-text">Whether on the merchant side or agent side, automation and AI suggestions were intentionally embedded as supportive guidance, not as disruptive intervention. The goal was to empower users—merchants and agents—to act more confidently and faster with context-aware assistance. This approach enabled the entire service system to feel coherent, intuitive, and operationally efficient across very different user groups.</p>
+    </div>
+  </div>
+</section>
+<!-- SYNC:CONTENT-END -->
+    </div>
+
+    <div data-component="footer"></div>
+    <script src="../../components/component-loader.js"></script>
+    <script src="../../components/project-info.js"></script>
+    <script src="../../style/script.js"></script>
+</body>
+</html>

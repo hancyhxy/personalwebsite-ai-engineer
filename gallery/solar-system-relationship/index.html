@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relationship of the Eight Planets in Solar System - Xinyi Han</title>
+    <meta name="description" content="With Newtonian mechanics alone, the celestial positions in the solar system are infinitely many solutions. Therefore, physicists have still exclaimed: 'The first time to promote the results'">
+    <meta name="robots" content="index,follow">
+    <meta property="og:title" content="Relationship of the Eight Planets in Solar System">
+    <meta property="og:description" content="With Newtonian mechanics alone, the celestial positions in the solar system are infinitely many solutions. Therefore, physicists have still exclaimed: 'The first time to promote the results'">
+    <meta property="og:type" content="article">
+    <meta property="og:image" content="./public/cover.png">
+    <link rel="icon" type="image/x-icon" href="../../logo/favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="../../logo/favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../logo/favicon-32x32.png">
+    <link rel="stylesheet" href="../../style/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        .hero-image-container {
+            width: 100vw;
+            margin-left: calc(-50vw + 50%);
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .hero-image {
+            width: 100%;
+            aspect-ratio: 2/1;
+            object-fit: cover;
+            display: block;
+        }
+        .hero-image-container.hero-fallback { min-height: 40vh; background: linear-gradient(135deg, #a8edea, #fed6e3); }
+
+        .project-brief-container {
+            padding: var(--spacing-sm) 0;
+            border-bottom: 1px solid var(--border-color);
+            background-color: #ffffff;
+        }
+        .project-title {
+            font-size: var(--font-size-2xl);
+            font-weight: 600;
+            margin-bottom: var(--spacing-sm);
+            line-height: 1.2;
+        }
+        .project-subtitle { font-size: var(--font-size-lg); color: var(--secondary-color); margin-bottom: var(--spacing-sm); }
+        .project-date { font-size: var(--font-size-base); color: var(--secondary-color); font-style: italic; }
+
+        .project-content {
+            max-width: 1140px;
+            margin: 180px auto 120px;
+            padding: 0 clamp(16px, 3vw, 30px);
+        }
+        .content-section { margin-bottom: var(--spacing-2xl); }
+        .section-title {
+            font-size: var(--font-size-xl);
+            font-weight: 600;
+            margin-bottom: var(--spacing-md);
+            padding-bottom: var(--spacing-xs);
+        }
+        .subsection-title { font-size: var(--font-size-lg); font-weight: 500; margin: var(--spacing-md) 0 var(--spacing-sm) 0; color: var(--primary-color); }
+        .content-text { font-size: var(--font-size-base); line-height: 1.7; color: var(--primary-color); margin-bottom: var(--spacing-md); }
+
+        .project-image { width: 100%; max-width: 100%; margin: var(--spacing-lg) 0; display: block; border-radius: var(--border-radius); box-shadow: none; }
+        .project-image-scaled { max-width: 100%; margin: var(--spacing-lg) auto; display: block; border-radius: var(--border-radius); box-shadow: none; }
+        .image-grid { display: grid; grid-template-columns: 1fr; gap: var(--spacing-lg); margin: var(--spacing-lg) 0; }
+
+        /* brief styles are centralized in global CSS */
+
+        /* Large screens */
+        @media (min-width: 1200px) {
+            .project-content { max-width: 1140px; margin: 180px auto 120px; padding: 0 30px; }
+        }
+        /* Extra large screens */
+        @media (min-width: 1600px) {
+            .project-content { max-width: 1140px; margin: 180px auto 120px; padding: 0 30px; }
+        }
+        /* Medium screens */
+        @media (max-width: 1199px) and (min-width: 993px) {
+            .project-content { max-width: 1000px; margin: 140px auto 110px; padding: 0 24px; }
+        }
+        /* Small desktop/large tablet */
+        @media (max-width: 992px) and (min-width: 769px) {
+            .project-content { max-width: 900px; margin: 120px auto 96px; padding: 0 20px; }
+        }
+        /* Tablet */
+        @media (max-width: 768px) {
+            .hero-image-container { width: 100%; margin-left: 0; overflow: hidden; height: 50vw; }
+            .hero-image { aspect-ratio: 2/1; object-position: center center; }
+            .project-brief-container { padding: var(--spacing-sm) 0; }
+            /* brief styles are centralized in global CSS */
+            .project-title { font-size: var(--font-size-xl); }
+            .project-content { max-width: 100%; margin: 96px auto 80px; padding: 0 var(--spacing-sm); }
+            .project-image-scaled { width: 100% !important; }
+        }
+        /* Mobile */
+        @media (max-width: 480px) {
+            .project-content { margin: 72px auto 64px; padding: 0 var(--spacing-sm); }
+            .hero-image { aspect-ratio: 2/1; object-position: center center; }
+        }
+    </style>
+    </head>
+<body>
+    <div data-component="header"></div>
+
+    <section class="hero-image-container">
+        <img src="./public/cover.png" alt="Relationship of the Eight Planets in Solar System cover" class="hero-image" onerror="this.onerror=null; this.src='../../logo/hero-placeholder.svg';">
+    </section>
+
+    <section class="project-brief-container">
+        <div class="container">
+            <div data-component="project-info"></div>
+        </div>
+    </section>
+
+    <div class="project-content" data-layout="stacked">
+        <section class="content-section">
+            <h1 class="project-title">Relationship of the Eight Planets in Solar System</h1>
+        </section>
+
+        <!-- SYNC:CONTENT-START -->
+<section class="content-section">
+  <p class="content-text">With Newtonian mechanics alone, the celestial positions in the solar system are infinitely many solutions. Therefore, physicists have still exclaimed: "The first time to promote the results"</p>
+</section>
+
+<section class="content-section">
+  <img class="project-image-scaled" style="width: 70%;" src="./public/pic2.png" alt="Example 1">
+  <img class="project-image-scaled" style="width: 70%;" src="./public/pic3.png" alt="Example 2">
+  <img class="project-image-scaled" style="width: 70%;" src="./public/pic4.png" alt="Example 4">
+  <img class="project-image" src="./public/cover.png" alt="Example 5">
+</section>
+
+<section class="content-section">
+  <h2 class="section-title">Process</h2>
+  <img class="project-image" src="./public/process.png" alt="Process">
+</section>
+<!-- SYNC:CONTENT-END -->
+    </div>
+
+    <div data-component="footer"></div>
+    <script src="../../components/component-loader.js"></script>
+    <script src="../../components/project-info.js"></script>
+    <script src="../../style/script.js"></script>
+</body>
+</html>

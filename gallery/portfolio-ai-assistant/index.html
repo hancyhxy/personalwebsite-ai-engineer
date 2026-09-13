@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claude Code ↔ Figma: Building an AI-Powered Portfolio Assistant - Xinyi Han</title>
+    <meta name="description" content="">
+    <meta name="robots" content="index,follow">
+    <meta property="og:title" content="Claude Code ↔ Figma: Building an AI-Powered Portfolio Assistant">
+    <meta property="og:description" content="">
+    <meta property="og:type" content="article">
+    <meta property="og:image" content="./public/cover.png">
+    <link rel="icon" type="image/x-icon" href="../../logo/favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="../../logo/favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../logo/favicon-32x32.png">
+    <link rel="stylesheet" href="../../style/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        .hero-image-container {
+            width: 100vw;
+            margin-left: calc(-50vw + 50%);
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .hero-image {
+            width: 100%;
+            aspect-ratio: 2/1;
+            object-fit: cover;
+            display: block;
+        }
+        .hero-image-container.hero-fallback { min-height: 40vh; background: linear-gradient(135deg, #a8edea, #fed6e3); }
+
+        .project-brief-container {
+            padding: var(--spacing-sm) 0;
+            border-bottom: 1px solid var(--border-color);
+            background-color: #ffffff;
+        }
+        .project-title {
+            font-size: var(--font-size-2xl);
+            font-weight: 600;
+            margin-bottom: var(--spacing-sm);
+            line-height: 1.2;
+        }
+        .project-subtitle { font-size: var(--font-size-lg); color: var(--secondary-color); margin-bottom: var(--spacing-sm); }
+        .project-date { font-size: var(--font-size-base); color: var(--secondary-color); font-style: italic; }
+
+        .project-content {
+            max-width: 1140px;
+            margin: 180px auto 120px;
+            padding: 0 clamp(16px, 3vw, 30px);
+        }
+        .content-section { margin-bottom: var(--spacing-2xl); }
+        .section-title {
+            font-size: var(--font-size-xl);
+            font-weight: 600;
+            margin-bottom: var(--spacing-md);
+            padding-bottom: var(--spacing-xs);
+        }
+        .subsection-title { font-size: var(--font-size-lg); font-weight: 500; margin: var(--spacing-md) 0 var(--spacing-sm) 0; color: var(--primary-color); }
+        .content-text { font-size: var(--font-size-base); line-height: 1.7; color: var(--primary-color); margin-bottom: var(--spacing-md); }
+
+        /* Bullet point left alignment */
+        ul.content-text { padding-left: 1.2em; }
+
+        /* Reduce spacing for subsection titles following content */
+        .content-section > h4.subsection-title { margin-top: var(--spacing-lg); }
+
+        .project-image { width: 100%; max-width: 100%; margin: var(--spacing-lg) 0; display: block; border-radius: var(--border-radius); box-shadow: none; }
+        .image-grid { display: grid; grid-template-columns: 1fr; gap: var(--spacing-lg); margin: var(--spacing-lg) 0; }
+
+        /* Video embed styles */
+        .video-embed {
+            position: relative;
+            padding-top: 56.25%; /* 16:9 aspect ratio */
+            margin: var(--spacing-lg) 0;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+        }
+        .video-embed iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        /* Pull quote / lede block */
+        .pull-quote {
+            padding: 0;
+            margin: var(--spacing-xl) auto;
+            font-size: clamp(1.1rem, 2vw, 1.35rem);
+            font-weight: 500;
+            line-height: 1.55;
+            color: var(--primary-color);
+            width: 70%;
+            text-align: center;
+        }
+
+        @media (max-width: 992px) {
+            .pull-quote { width: 60%; }
+        }
+        @media (max-width: 768px) {
+            .pull-quote { width: 80%; }
+        }
+        @media (max-width: 480px) {
+            .pull-quote { width: 100%; }
+        }
+
+        /* brief styles are centralized in global CSS */
+
+        /* Large screens */
+        @media (min-width: 1200px) {
+            .project-content { max-width: 1140px; margin: 180px auto 120px; padding: 0 30px; }
+        }
+        /* Extra large screens */
+        @media (min-width: 1600px) {
+            .project-content { max-width: 1140px; margin: 180px auto 120px; padding: 0 30px; }
+        }
+        /* Medium screens */
+        @media (max-width: 1199px) and (min-width: 993px) {
+            .project-content { max-width: 1000px; margin: 140px auto 110px; padding: 0 24px; }
+        }
+        /* Small desktop/large tablet */
+        @media (max-width: 992px) and (min-width: 769px) {
+            .project-content { max-width: 900px; margin: 120px auto 96px; padding: 0 20px; }
+        }
+        /* Tablet */
+        @media (max-width: 768px) {
+            .hero-image-container {
+                width: 100%;
+                margin-left: 0;
+                overflow: hidden;
+                aspect-ratio: 2 / 1;
+            }
+            .hero-image {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                object-position: center center;
+            }
+            .project-brief-container { padding: var(--spacing-sm) 0; }
+            /* brief styles are centralized in global CSS */
+            .project-title { font-size: var(--font-size-xl); }
+            .project-content { max-width: 100%; margin: 96px auto 80px; padding: 0 var(--spacing-sm); }
+        }
+        /* Mobile */
+        @media (max-width: 480px) {
+            .project-content { margin: 72px auto 64px; padding: 0 var(--spacing-sm); }
+        }
+    </style>
+    </head>
+<body>
+    <div data-component="header"></div>
+
+    <section class="hero-image-container">
+        <img src="./public/cover.png" alt="Claude Code ↔ Figma: Building an AI-Powered Portfolio Assistant cover" class="hero-image" onerror="this.onerror=null; this.src='../../logo/hero-placeholder.svg';">
+    </section>
+
+    <section class="project-brief-container">
+        <div class="container">
+            <div data-component="project-info"></div>
+        </div>
+    </section>
+
+    <div class="project-content" data-layout="stacked">
+        <section class="content-section">
+            <h1 class="project-title">Claude Code ↔ Figma: Building an AI-Powered Portfolio Assistant</h1>
+        </section>
+
+        <!-- SYNC:CONTENT-START -->
+<section class="content-section">
+  <h2 class="section-title">Overview</h2>
+  <p class="content-text">A personal AI assistant embedded in my portfolio website (bottom-right chat) that helps hiring teams explore my work through conversation—then routes them to verifiable evidence (projects, artifacts, and pages).</p>
+  <ul class="content-text">
+    <li>Local Server: Python built-in HTTP Server (zero dependencies, no need for load balancer or complex infrastructure for local demo)</li>
+    <li>AI Model: OpenAI gpt-4o-mini (fast response, low cost, suitable for demo)</li>
+    <li>Frontend: Vanilla HTML / CSS / JS (no framework, lightweight, consistent with existing portfolio)</li>
+    <li>Security: API Key stored in local .env, proxied via Python server (prevents key exposure in frontend)</li>
+  </ul>
+</section>
+<section class="content-section">
+  <h2 class="section-title">The Problem</h2>
+  <p class="content-text">A portfolio is a one-way presentation. A hiring team can scroll through it, but they can't ask follow-up questions, dig into a specific decision, or understand the person behind the work — not without scheduling a call.</p>
+  <p class="content-text">I wanted to close that gap: let anyone visiting my portfolio have a real conversation with it, the same way they would with me.</p>
+</section>
+<section class="content-section">
+  <h2 class="section-title">The Approach</h2>
+  <p class="content-text"><strong>Scope</strong>: This was a fast, focused demo—built in 1 day to prove two independent things.</p>
+  <ul class="content-text">
+    <li><strong>AI-native workflow</strong> — that a Claude Code → Figma → Claude Code loop is a real, shippable way to work</li>
+    <li><strong>AI-native product design</strong> — that an assistant built for hiring teams needs guided discovery, not a blank chat box</li>
+  </ul>
+</section>
+<section class="content-section">
+  <h2 class="section-title">1. AI-native workflow: Claude Code → Figma → Claude Code</h2>
+  <p class="content-text">I used a Claude Code → Figma → Claude Code loop to go from idea to working demo in one day. The screen recording below shows how this works in practice.</p>
+  <img class="project-image-scaled" style="width: 70%; margin-bottom: var(--spacing-xs);" src="./public/mcp.gif" alt="mcp">
+  <p class="content-text">The key was the Figma MCP integration with Claude Code. Through MCP, code and design stay connected — and as a designer, I maintained proper design variables and tokens throughout the process, so the output isn't a rough sketch. It's a pixel-perfect Figma file, generated seamlessly from the working codebase.</p>
+  <p class="content-text">This workflow meant I could prototype in code, refine in design, and ship back to production without handoff delays.</p>
+</section>
+<section class="content-section">
+  <h2 class="section-title">2. AI-native product design: A Structured Self-Narrative System</h2>
+  <p class="content-text">I prototyped a working chatbot quickly — a general assistant scoped to my portfolio, where hiring teams could ask anything about my work.</p>
+  <img class="project-image-scaled" style="width: 70%; margin-bottom: var(--spacing-xs);" src="./public/texttoanswer.gif" alt="texttoanswer">
+  <p class="content-text">But a general chatbot — like ChatGPT or Gemini — is built for open-ended conversation. That works for broad tasks, but not here. In this specific scenario, the goal is much narrower: help a hiring team understand one person quickly.</p>
+  <p class="content-text">So beyond the free-form chat, I needed an <strong>information system</strong> — one designed around how I want to present myself, not just what someone happens to ask.</p>
+  <img class="project-image-scaled" style="width: 70%; margin-bottom: var(--spacing-xs);" src="./public/qucikbar.gif" alt="qucikbar">
+  <p class="content-text">For the interaction design, I started from the hiring team's perspective: what does someone actually do when they open this chatbot? They're trying to understand a person — their background, their experience, their work. So I structured the entry points around those three scenarios (Career Path / Projects / Design Thinking) rather than leaving the prompt fully open.</p>
+  <p class="content-text">Within that, Projects was the hardest to get right — and the most important to get right quickly. With many projects across different domains, the real question for a recruiter isn't "what kind of work did she do?" — it's "has she worked on something like mine?" Organising by job category (UX / Visual / Strategy) doesn't answer that. Organising by industry keyword does.</p>
+  <img class="project-image-scaled" style="width: 70%; margin-bottom: var(--spacing-xs);" src="./public/projectguide.gif" alt="projectguide">
+  <p class="content-text">So instead of job-type labels, I organised Projects around four industry keywords — B2B / Operations, AI &amp; Chatbot, Consumer App, and Content &amp; Growth — pulled directly from `gallery.json`, so there's no separate taxonomy to maintain.</p>
+</section>
+<section class="content-section">
+  <h2 class="section-title">Summary</h2>
+  <p class="content-text">This project started as a one-day concept: could I build a working AI assistant for my portfolio, and could the workflow itself demonstrate how I work?</p>
+  <p class="content-text">The answer was yes — on both counts. I prototyped an interactive AI assistant using a Claude Code → Figma → Claude Code loop, proving that code-first design iteration can go from idea to shippable product in a single session. At the same time, I designed a structured self-narrative system — guided entry points, industry-keyword navigation, and recruiter-first interaction patterns — that turns a portfolio from a static showcase into an evaluable conversation.</p>
+</section>
+<section class="content-section">
+  <h2 class="section-title">Design Reflection</h2>
+  <p class="content-text">We moved from designing rule-based conversational flows to designing LLM-powered behavior systems.</p>
+  <p class="content-text">Before: Input → Intent → Fixed response (deterministic, structured, manually maintained).</p>
+  <p class="content-text">Now: Input → Context → Language reasoning → Probabilistic generation (generative, adaptive, constraint-shaped).</p>
+  <img class="project-image-scaled" style="width: 70%; margin-bottom: var(--spacing-xs);" src="./public/difference.png" alt="difference">
+  <p class="content-text">So, what we design today?</p>
+  <img class="project-image-scaled" style="width: 70%" src="./public/llmbaseddesign.png" alt="llmbaseddesign">
+</section>
+<!-- SYNC:CONTENT-END -->
+    </div>
+
+    <div data-component="footer"></div>
+    <script src="../../components/component-loader.js"></script>
+    <script src="../../components/project-info.js"></script>
+    <script src="../../style/script.js"></script>
+</body>
+</html>

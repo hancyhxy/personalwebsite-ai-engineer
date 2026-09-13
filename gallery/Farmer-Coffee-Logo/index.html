@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farmer Coffee Logo Design - Xinyi Han</title>
+    <meta name="description" content="Identity linking rural roots with urban craft.">
+    <meta name="robots" content="index,follow">
+    <meta property="og:title" content="Farmer Coffee Logo Design">
+    <meta property="og:description" content="Identity linking rural roots with urban craft.">
+    <meta property="og:type" content="article">
+    <meta property="og:image" content="./public/cover.png">
+    <link rel="icon" type="image/x-icon" href="../../logo/favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="../../logo/favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../logo/favicon-32x32.png">
+    <link rel="stylesheet" href="../../style/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        .hero-image-container {
+            width: 100vw;
+            margin-left: calc(-50vw + 50%);
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .hero-image {
+            width: 100%;
+            aspect-ratio: 2/1;
+            object-fit: cover;
+            display: block;
+        }
+
+        .project-brief-container { padding: var(--spacing-sm) 0; border-bottom: 1px solid var(--border-color); background-color: #ffffff; }
+        .project-title { font-size: var(--font-size-2xl); font-weight: 600; margin-bottom: var(--spacing-sm); line-height: 1.2; }
+        .project-subtitle { font-size: var(--font-size-lg); color: var(--secondary-color); margin-bottom: var(--spacing-sm); }
+        .project-date { font-size: var(--font-size-base); color: var(--secondary-color); font-style: italic; }
+
+        .project-content { max-width: 1140px; margin: 180px auto 120px; padding: 0 clamp(16px, 3vw, 30px); }
+        .content-section { margin-bottom: var(--spacing-2xl); }
+        .section-title { font-size: var(--font-size-xl); font-weight: 600; margin-bottom: var(--spacing-md); border-bottom: 2px solid var(--primary-color); padding-bottom: var(--spacing-xs); }
+        .subsection-title { font-size: var(--font-size-lg); font-weight: 500; margin: var(--spacing-md) 0 var(--spacing-sm) 0; color: var(--primary-color); }
+        .content-text { font-size: var(--font-size-base); line-height: 1.7; color: var(--primary-color); margin-bottom: var(--spacing-md); }
+
+        .project-image { width: 100%; max-width: 100%; margin: var(--spacing-lg) 0; display: block; border-radius: var(--border-radius); box-shadow: none; }
+        .image-grid { display: grid; grid-template-columns: 1fr; gap: var(--spacing-lg); margin: var(--spacing-lg) 0; }
+
+        /* brief styles are centralized in global CSS */
+
+        @media (min-width: 1200px) { .project-content { max-width: 1140px; margin: 180px auto 120px; padding: 0 30px; } }
+        @media (min-width: 1600px) { .project-content { max-width: 1140px; margin: 180px auto 120px; padding: 0 30px; } }
+        @media (max-width: 1199px) and (min-width: 993px) { .project-content { max-width: 1000px; margin: 140px auto 110px; padding: 0 24px; } }
+        @media (max-width: 992px) and (min-width: 769px) { .project-content { max-width: 900px; margin: 120px auto 96px; padding: 0 20px; } .column-title { font-size: var(--font-size-xl); } }
+        @media (max-width: 768px) {
+            .hero-image-container { width: 100%; margin-left: 0; overflow: hidden; height: 50vw; }
+            .hero-image { aspect-ratio: 2/1; object-position: center center; }
+            .project-brief-container { padding: var(--spacing-sm) 0; }
+            /* brief styles are centralized in global CSS */
+            .project-title { font-size: var(--font-size-xl); }
+            .project-content { max-width: 100%; margin: 96px auto 80px; padding: 0 var(--spacing-sm); }
+        }
+        @media (max-width: 480px) { .project-content { margin: 72px auto 64px; padding: 0 var(--spacing-sm); } .hero-image { aspect-ratio: 2/1; object-position: center center; } }
+    </style>
+    </head>
+<body>
+    <div data-component="header"></div>
+
+    <section class="hero-image-container">
+        <img src="./public/cover.png" alt="Farmer Coffee Logo cover" class="hero-image">
+    </section>
+
+    <section class="project-brief-container">
+        <div class="container">
+            <div data-component="project-info"></div>
+        </div>
+    </section>
+
+    <div class="project-content">
+        <section class="content-section">
+            <h1 class="project-title">Farmer Coffee Logo Design</h1>
+
+            <h2 class="subsection-title">Overview</h2>
+            <p class="content-text">Farmer Coffee is a small café located in Shanghai, founded by a barista who proudly identifies as a farmer. Although he now works in a modern city, he sees no contradiction between his rural roots and urban lifestyle — instead, he takes pride in that identity. His philosophy is about craftsmanship, humility, and persistence, values that mirror how he makes coffee: patiently, manually, and with attention to every detail. My goal was to create a logo that visually connects this dual identity — a modern urban craftsman with a farmer's spirit.</p>
+
+            <h2 class="subsection-title">Concept</h2>
+            <p class="content-text">During our conversation, the founder said: <em>"I may live in the city now, but I'll always be a farmer — and I'm proud of it."</em> That sentence became the soul of the logo. I wanted to capture this tension between rural roots and urban rhythm.</p>
+            <img src="./public/concept.png" alt="concept" class="project-image">
+            <p class="content-text">The word "Farmer" feels grounded, honest, and earthy. But in Shanghai, this "Farmer" rides a bicycle to work every day, symbolizing freedom, motion, and sustainability. So I began exploring how the letter "F" could visually echo the form of a bicycle — a minimal, continuous line that carries a sense of movement, balance, and human touch. The "F" became not just a letterform, but a symbol of mobility and humility — a farmer pedaling through the city.</p>
+            <img src="./public/varable.png" alt="varable" class="project-image">
+
+            <h2 class="subsection-title">Design Process</h2>
+            <p class="content-text">Started from hand-drawn variations of "F" that could resemble a bicycle frame or handlebar. Explored the balance between readability and symbolism.</p>
+            <img src="./public/package1.png" alt="package1" class="project-image">
+            <img src="./public/package2.png" alt="package2" class="project-image">
+
+            <h2 class="subsection-title">Final Outcome</h2>
+            <p class="content-text">The final identity strikes a balance between urban simplicity and rural authenticity. It feels clean enough for a modern café in Shanghai, yet warm and human — just like the founder himself.</p>
+            <img src="./public/ending.png" alt="ending" class="project-image">
+        </section>
+    </div>
+
+    <div data-component="footer"></div>
+    <script src="../../components/component-loader.js"></script>
+    <script src="../../components/project-info.js"></script>
+    <script src="../../style/script.js"></script>
+</body>
+</html>

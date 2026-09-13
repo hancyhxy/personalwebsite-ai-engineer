@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rider Dispatch & Scheduling Platform - Xinyi Han</title>
+    <meta name="description" content="TikTok Local Life dispatch and scheduling platform for station operations: real-time rider assignment, route visualization, and efficiency optimization.">
+    <meta name="robots" content="index,follow">
+    <meta property="og:title" content="Rider Dispatch & Scheduling Platform">
+    <meta property="og:description" content="Operations platform for local delivery stations: assign riders, track in real-time, and visualize routes.">
+    <meta property="og:type" content="article">
+    <meta property="og:image" content="./public/cover.png">
+    <link rel="icon" type="image/x-icon" href="../../logo/favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="../../logo/favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../logo/favicon-32x32.png">
+    <link rel="stylesheet" href="../../style/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        .hero-image-container { width: 100vw; margin-left: calc(-50vw + 50%); padding: 0; display: flex; align-items: center; }
+        .hero-image { width: 100%; aspect-ratio: 2/1; object-fit: cover; display: block; }
+
+        .project-brief-container { padding: var(--spacing-sm) 0; border-bottom: 1px solid var(--border-color); background-color: #ffffff; }
+        .project-title { font-size: var(--font-size-2xl); font-weight: 600; margin-bottom: var(--spacing-sm); line-height: 1.2; }
+        .project-content { max-width: 1140px; margin: 180px auto 120px; padding: 0 clamp(16px, 3vw, 30px); }
+        .content-section { margin-bottom: var(--spacing-2xl); }
+        .subsection-title { font-size: var(--font-size-lg); font-weight: 500; margin: var(--spacing-md) 0 var(--spacing-sm) 0; color: var(--primary-color); }
+        .content-text { font-size: var(--font-size-base); line-height: 1.7; color: var(--primary-color); margin-bottom: 0; }
+        .project-image { width: 100%; height: auto; max-width: 100%; margin: var(--spacing-lg) 0; display: block; border-radius: var(--border-radius); box-shadow: none; }
+        .image-grid { display: grid; grid-template-columns: 1fr; gap: var(--spacing-lg); margin: var(--spacing-lg) 0; }
+        .image-grid img { width: 100%; height: auto; border-radius: var(--border-radius); box-shadow: none; }
+
+        .two-column-section { display: grid; grid-template-columns: minmax(200px, 240px) 1fr; gap: var(--spacing-2xl); margin-bottom: var(--spacing-2xl); align-items: flex-start; }
+        .column-title { font-size: var(--font-size-2xl); font-weight: 600; color: var(--primary-color); line-height: 1.2; position: sticky; top: var(--spacing-lg); }
+        .column-content { display: flex; flex-direction: column; gap: 0; }
+
+        /* Bullet point left alignment fix */
+        ul.content-text { padding-left: 1.2em; }
+
+        /* brief styles are centralized in global CSS */
+
+        /* Responsive */
+        @media (min-width: 1200px) { .project-content { max-width: 1140px; margin: 180px auto 120px; padding: 0 30px; } .two-column-section { gap: calc(var(--spacing-2xl) * 1.5); } .column-title { font-size: calc(var(--font-size-2xl) * 1.1); } }
+        @media (min-width: 1600px) { .project-content { max-width: 1140px; margin: 180px auto 120px; padding: 0 30px; } .two-column-section { grid-template-columns: minmax(260px, 300px) 1fr; gap: calc(var(--spacing-2xl) * 1.8); } }
+        @media (max-width: 1199px) and (min-width: 993px) { .project-content { max-width: 1000px; margin: 140px auto 110px; padding: 0 24px; } .two-column-section { grid-template-columns: minmax(180px, 220px) 1fr; gap: var(--spacing-xl); } }
+        @media (max-width: 992px) and (min-width: 769px) { .project-content { max-width: 900px; margin: 120px auto 96px; padding: 0 20px; } .two-column-section { grid-template-columns: minmax(160px, 200px) 1fr; gap: var(--spacing-lg); } .column-title { font-size: var(--font-size-xl); } }
+        @media (max-width: 768px) {
+            .hero-image-container { width: 100%; margin-left: 0; overflow: hidden; height: 50vw; }
+            .hero-image { aspect-ratio: 2/1; object-position: center center; }
+            .project-brief-container { padding: var(--spacing-sm) 0; }
+            /* brief styles are centralized in global CSS */
+            .project-title { font-size: var(--font-size-xl); }
+            .project-content { max-width: 100%; margin: 96px auto 80px; padding: 0 var(--spacing-sm); }
+            .image-grid { grid-template-columns: 1fr; }
+            .two-column-section { grid-template-columns: 1fr; gap: var(--spacing-md); }
+            .column-title { font-size: var(--font-size-xl); position: static; margin-bottom: var(--spacing-sm); }
+        }
+        @media (max-width: 480px) { .project-content { margin: 72px auto 64px; padding: 0 var(--spacing-sm); } .hero-image { aspect-ratio: 2/1; object-position: center center; } }
+    </style>
+    </head>
+<body>
+    <div data-component="header"></div>
+
+    <!-- Hero Image Section -->
+    <section class="hero-image-container">
+        <img src="./public/cover.png" alt="Rider Dispatch & Scheduling cover" class="hero-image">
+    </section>
+
+    <!-- Project Brief Section -->
+    <section class="project-brief-container">
+        <div class="container">
+            <div data-component="project-info"></div>
+        </div>
+    </section>
+
+    <!-- Project Content -->
+    <div class="project-content">
+        <!-- Project Title -->
+        <!-- SYNC:CONTENT-START -->
+<section class="two-column-section">
+  <div class="column-title">Overview</div>
+  <div class="column-content">
+    <p class="content-text">While TikTok’s front-end experience focused on users’ desire-driven orders, the backend needed an equally powerful delivery infrastructure. I led the design of a dispatch and scheduling platform for local delivery stations — helping managers assign riders efficiently, track orders in real-time, and visualize delivery routes. This platform empowered on-ground logistics, mirroring B2B systems like Zendesk or Salesforce Workspaces but tailored for TikTok's ecosystem.</p>
+  </div>
+</section>
+<section class="two-column-section">
+  <div class="column-title">Challenge</div>
+  <div class="column-content">
+    <img class="project-image" src="./public/personarider.png" alt="Rider persona">
+    <p class="content-text">TikTok's delivery network was expanding rapidly, yet local dispatch relied on manual coordination through chat groups or spreadsheets. This led to:</p>
+    <ul class="content-text">
+      <li>Slow response during peak hours</li>
+      <li>Imbalanced workloads among riders</li>
+      <li>Lack of visibility on route efficiency</li>
+    </ul>
+    <p class="content-text">The key problem:</p>
+    <p class="content-text">"How might we help delivery station managers schedule riders dynamically, balancing speed, cost, and fairness?"</p>
+  </div>
+</section>
+<section class="two-column-section">
+  <div class="column-title">Process</div>
+  <div class="column-content">
+    <h4 class="subsection-title">1. System Mapping</h4>
+    <p class="content-text">Interviewed station managers and riders to identify inefficiencies. Mapped the information flow from "order generation" → "rider assignment" → "delivery tracking."</p>
+    <h4 class="subsection-title">2. Platform Architecture</h4>
+    <ul class="content-text">
+      <li>Order Board: All pending orders by area/time window</li>
+      <li>Rider View: Real-time status, route, capacity</li>
+      <li>Smart Scheduling: Reassignment suggestions based on proximity and workload</li>
+    </ul>
+    <img class="project-image" src="./public/mvp.png" alt="mvp">
+    <h4 class="subsection-title">3. Interface &amp; Interaction Design</h4>
+    <p class="content-text">Adopted a "command-center" UI layout with priority color tags and drag-to-assign actions. Enabled real-time updates with minimal cognitive load for dispatchers.</p>
+  </div>
+</section>
+<section class="two-column-section">
+  <div class="column-title">Outcome</div>
+  <div class="column-content">
+    <img class="project-image" src="./public/outcome.png" alt="outcome">
+    <ul class="content-text">
+      <li>Reduced average dispatch time per order</li>
+      <li>Improved rider utilization and delivery punctuality</li>
+      <li>Provided a scalable template for other local service categories (laundry, beauty, grocery)</li>
+    </ul>
+  </div>
+</section>
+<section class="two-column-section">
+  <div class="column-title">Reflection</div>
+  <div class="column-content">
+    <p class="content-text">This project shifted my mindset from consumer UX to operational systems thinking — designing for speed, clarity, and decision support, not just aesthetic or emotion.</p>
+  </div>
+</section>
+<!-- SYNC:CONTENT-END -->
+    </div>
+
+    <div data-component="footer"></div>
+
+    <script src="../../components/component-loader.js"></script>
+    <script src="../../components/project-info.js"></script>
+    <script src="../../style/script.js"></script>
+</body>
+</html>

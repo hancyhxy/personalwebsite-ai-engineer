@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Design Museum Tour as a Game - Xinyi Han</title>
+    <link rel="icon" type="image/x-icon" href="../../logo/favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="../../logo/favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../logo/favicon-32x32.png">
+    <link rel="stylesheet" href="../../style/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        .hero-image-container { width: 100vw; margin-left: calc(-50vw + 50%); padding: 0; display: flex; align-items: center; }
+        .hero-image { width: 100%; aspect-ratio: 2/1; object-fit: cover; display: block; }
+        .project-brief-container { padding: var(--spacing-sm) 0; border-bottom: 1px solid var(--border-color); background-color: #ffffff; }
+        .project-title { font-size: var(--font-size-2xl); font-weight: 600; margin-bottom: var(--spacing-sm); line-height: 1.2; }
+        .project-content { max-width: 1140px; margin: 180px auto 120px; padding: 0 clamp(16px, 3vw, 30px); }
+        .content-section { margin-bottom: var(--spacing-2xl); }
+        .subsection-title { font-size: var(--font-size-lg); font-weight: 500; margin: var(--spacing-md) 0 var(--spacing-sm) 0; color: var(--primary-color); }
+        .content-text { font-size: var(--font-size-base); line-height: 1.7; color: var(--primary-color); margin-bottom: var(--spacing-md); }
+        /* Body images: fixed width, preserve aspect ratio, centered */
+        .project-image {
+            width: min(100%, 900px);
+            height: auto;
+            margin: var(--spacing-lg) auto;
+            display: block;
+            border-radius: var(--border-radius);
+            box-shadow: none;
+            object-fit: contain;
+            /* override global card styles */
+            background-color: transparent;
+            aspect-ratio: auto;
+            overflow: visible;
+            position: static;
+        }
+        /* Center images inside grid and avoid stretching */
+        .image-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: var(--spacing-lg);
+            margin: var(--spacing-lg) 0;
+            justify-items: center;
+        }
+        .image-grid { display: grid; grid-template-columns: 1fr; gap: var(--spacing-lg); margin: var(--spacing-lg) 0; }
+        .two-column-section { display: grid; grid-template-columns: minmax(200px, 240px) 1fr; gap: var(--spacing-2xl); margin-bottom: var(--spacing-2xl); align-items: flex-start; }
+        .column-title { font-size: var(--font-size-2xl); font-weight: 600; color: var(--primary-color); line-height: 1.2; position: sticky; top: var(--spacing-lg); }
+        .column-content { display: flex; flex-direction: column; gap: var(--spacing-lg); }
+        /* brief styles are centralized in global CSS */
+        .conversion-flow { background-color: var(--light-gray); padding: var(--spacing-md); border-radius: var(--border-radius); margin: var(--spacing-md) 0; text-align: center; }
+        .flow-arrow { font-size: var(--font-size-lg); margin: 0 var(--spacing-sm); }
+        @media (max-width: 768px) {
+            .hero-image-container { width: 100%; margin-left: 0; overflow: hidden; height: 50vw; }
+            .hero-image { aspect-ratio: 2/1; object-position: center center; }
+            .project-brief-container { padding: var(--spacing-sm) 0; }
+            /* brief styles are centralized in global CSS */
+            .project-title { font-size: var(--font-size-xl); }
+            .project-content { max-width: 100%; margin: 96px auto 80px; padding: 0 var(--spacing-sm); }
+            .image-grid { grid-template-columns: 1fr; }
+            .two-column-section { grid-template-columns: 1fr; gap: var(--spacing-md); }
+            .column-title { font-size: var(--font-size-xl); position: static; margin-bottom: var(--spacing-sm); }
+        }
+        @media (max-width: 480px) {
+            .project-content { margin: 72px auto 64px; padding: 0 var(--spacing-sm); }
+            .hero-image { aspect-ratio: 2/1; object-position: center center; }
+        }
+    </style>
+    <meta name="description" content="Reimagining Brooklyn Museum as a living game through spatial, interaction, and narrative design.">
+    <link rel="canonical" href="../../index.html">
+    <meta http-equiv="Cache-Control" content="no-store">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+</head>
+<body>
+    <div data-component="header"></div>
+
+    <section class="hero-image-container">
+        <img src="./public/album.png" alt="Brooklyn Museum project cover" class="hero-image">
+    </section>
+
+    <section class="project-brief-container">
+        <div class="container">
+            <div data-component="project-info"></div>
+        </div>
+    </section>
+
+    <div class="project-content">
+        <section class="content-section">
+            <h1 class="project-title">Design Museum Tour as a Game</h1>
+        </section>
+
+        <!-- Overview -->
+        <section class="two-column-section">
+            <div class="column-title">Overview</div>
+            <div class="column-content">
+                <div>
+                    <h4 class="subsection-title">Reimagining the Museum as a Living Game</h4>
+                    <p class="content-text">“Brooklyn Museum Redesign” explores how a museum visit can feel like playing a meaningful game. Instead of treating museum upgrades as isolated interface improvements, this project takes a holistic approach — rethinking the entire visiting journey as a game-based learning system.</p>
+                    <p class="content-text">By blending spatial design, interaction, and narrative, the museum becomes a living platform where visitors are not passive observers but active players, discovering meaning through play, emotion, and connection.</p>
+                </div>
+                <div class="image-grid">
+                    <img src="./public/valueintersect.png" alt="Value intersections across spatial, interaction, narrative" class="project-image">
+                </div>
+            </div>
+        </section>
+
+        <!-- Design Approach -->
+        <section class="two-column-section">
+            <div class="column-title">Design Approach</div>
+            <div class="column-content">
+                <div>
+                    <h4 class="subsection-title">From Observation to Participation</h4>
+                    <p class="content-text">As a passionate museum-goer who has visited dozens of institutions across New York, I was drawn to the Brooklyn Museum — not only for its art but for its role as a cultural connector within the Brooklyn community.</p>
+                    <p class="content-text">Rather than designing new digital touchpoints, this project treats the museum as a living ecosystem, where every space, interaction, and narrative layer forms part of a cohesive experience. By applying game design logic to spatial flow and visitor motivation, the project transforms the museum into a place of exploration, curiosity, and co-creation.</p>
+                </div>
+                <div class="image-grid">
+                    <img src="./public/interview.png" alt="Research and interviews collage" class="project-image">
+                </div>
+            </div>
+        </section>
+
+        <!-- Game System & Interaction Model -->
+        <section class="two-column-section">
+            <div class="column-title">Game System &amp; Interaction Model</div>
+            <div class="column-content">
+                <div>
+                    <h4 class="subsection-title">Turning Architecture into a Mission Map</h4>
+                    <p class="content-text">At the heart of the project lies a layered mission system inspired by the museum’s architecture. Each floor represents a chapter of play — visitors move upward through the building as they progress through different stages of interaction. Each level is marked by a checkpoint, encouraging reflection, discovery, and participation.</p>
+                    <p class="content-text">This structure transforms the museum into a narrative journey — from attention to embodiment, from creation to community. By the time visitors reach the top floor, they complete a loop between personal experience and collective meaning.</p>
+                </div>
+                <div class="image-grid">
+                    <img src="./public/workscene.png" alt="Mission system work scene" class="project-image">
+                </div>
+            </div>
+        </section>
+
+        <!-- System Overview: Journey Map -->
+        <section class="two-column-section">
+            <div class="column-title">System Overview: Journey Map</div>
+            <div class="column-content">
+                <div>
+                    <p class="content-text">The Brooklyn Museum Journey Map connects all five floors through integrated technologies — sensors, projectors, scanners — creating a seamless flow of interactive learning. Each level offers a unique mode of engagement tied to its collection and atmosphere.</p>
+                    <p class="content-text"><strong>Floors and modes</strong><br>
+                        1F–2F — Zoom In &amp; Out · Touchscreen, Scanner, Sensor · Educational, Self-Discovery<br>
+                        3F — Mimic Gesture · Projector, Camera, Sensor · Embodied Learning, Expression<br>
+                        4F — Build Your Room · 3D Model Game · Deep Exploration, Personalization<br>
+                        5F — Power of People · Object Recognition, Motion Effect · Social Interaction, Community
+                    </p>
+                </div>
+                <div class="image-grid">
+                    <img src="./public/floor.png" alt="Floor technology and themes overview" class="project-image">
+                    <img src="./public/journeymap.png" alt="Brooklyn Museum journey map" class="project-image">
+                    <img src="./public/experiencewhole.jpg" alt="Experience overview" class="project-image">
+                </div>
+            </div>
+        </section>
+
+        <!-- Layered Game Experiences -->
+        <section class="two-column-section">
+            <div class="column-title">Layered Game Experiences</div>
+            <div class="column-content">
+                <div></div>
+            </div>
+        </section>
+
+        <!-- Layered Game Experiences: Zoom In & Out -->
+        <section class="two-column-section">
+            <div class="column-title">1F–2F — “Zoom In &amp; Out”</div>
+            <div class="column-content">
+                <div>
+                    <h4 class="subsection-title">Concept</h4>
+                    <p class="content-text">Visitors start their journey by exploring the details of art and material. Inspired by the museum’s historical collections, this floor invites a slow and sensory start.</p>
+                    <h4 class="subsection-title">Interaction</h4>
+                    <p class="content-text">Touch screens and scanners let users zoom into artifacts and textures, revealing hidden details and stories.</p>
+                    <h4 class="subsection-title">Learning Value</h4>
+                    <p class="content-text">By observing closely, visitors practice mindful attention — transforming curiosity into understanding.</p>
+                    <p class="content-text">📸 Demo: short clip showing zoom interaction on screen</p>
+                </div>
+                <div class="image-grid">
+                    <img src="./public/zoominandout.png" alt="Zoom interaction demo" class="project-image">
+                    <img src="./public/zoom_inteface.png" alt="Zoom interface detail" class="project-image">
+                </div>
+            </div>
+        </section>
+
+        <!-- Layered Game Experiences: Mimic Gesture -->
+        <section class="two-column-section">
+            <div class="column-title">3F — “Mimic Gesture”</div>
+            <div class="column-content">
+                <div>
+                    <h4 class="subsection-title">Concept</h4>
+                    <p class="content-text">Body meets art. Inspired by portraits and performance pieces, this floor translates expression into movement.</p>
+                    <h4 class="subsection-title">Interaction</h4>
+                    <p class="content-text">Visitors mimic gestures captured by cameras; projectors respond by animating or illuminating matching artworks.</p>
+                    <h4 class="subsection-title">Learning Value</h4>
+                    <p class="content-text">Observation becomes embodiment — visitors connect emotion, body, and art through playful motion.</p>
+                </div>
+                <div class="image-grid">
+                    <img src="./public/mimicgame.png" alt="Mimic gesture interaction" class="project-image">
+                    <img src="./public/mimicgame2.png" alt="Mimic gesture screen" class="project-image">
+                </div>
+            </div>
+        </section>
+
+        <!-- Layered Game Experiences: Build Your Room -->
+        <section class="two-column-section">
+            <div class="column-title">4F — “Build Your Room”</div>
+            <div class="column-content">
+                <div>
+                    <h4 class="subsection-title">Concept</h4>
+                    <p class="content-text">Curate your own narrative. This level turns the museum into a creative playground where visitors design their own exhibition.</p>
+                    <h4 class="subsection-title">Interaction</h4>
+                    <p class="content-text">Through a 3D modeling interface, users drag and arrange digital artifacts to build a personal gallery. A soft time limit encourages intuitive decision-making.</p>
+                    <h4 class="subsection-title">Learning Value</h4>
+                    <p class="content-text">Visitors learn through creation — discovering meaning by shaping their own spatial story.</p>
+                </div>
+                <div class="image-grid">
+                    <img src="./public/buildyourroom.png" alt="Build your room interface" class="project-image">
+                </div>
+            </div>
+        </section>
+
+        <!-- Layered Game Experiences: Power of People -->
+        <section class="two-column-section">
+            <div class="column-title">5F — “Power of People”</div>
+            <div class="column-content">
+                <div>
+                    <h4 class="subsection-title">Concept</h4>
+                    <p class="content-text">The journey culminates in collective participation. Inspired by Brooklyn’s community spirit, this floor celebrates human connection.</p>
+                    <h4 class="subsection-title">Interaction</h4>
+                    <p class="content-text">Using motion and object recognition, visitors create collaborative projections — merging silhouettes, patterns, and data into shared visuals.</p>
+                    <h4 class="subsection-title">Learning Value</h4>
+                    <p class="content-text">This level highlights identity, empathy, and social belonging. Visitors see their presence contribute to a collective cultural landscape.</p>
+                </div>
+                <div class="image-grid">
+                    <img src="./public/powerofpeople.png" alt="Collaborative projection visuals" class="project-image">
+                </div>
+            </div>
+        </section>
+
+        <!-- End of Journey -->
+        <section class="two-column-section">
+            <div class="column-title">End of Journey — “Record &amp; Reflect”</div>
+            <div class="column-content">
+                <div>
+                    <p class="content-text">Before leaving, visitors bind their account and receive a personalized digital record — a timeline of their exploration and interactions. This transforms the museum visit into a meaningful digital memory — bridging physical experience with lasting reflection.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Reflection & Future Directions -->
+        <section class="two-column-section">
+            <div class="column-title">Reflection &amp; Future Directions</div>
+            <div class="column-content">
+                <div>
+                    <h4 class="subsection-title">From Playful Engagement to Cultural Systems</h4>
+                    <p class="content-text">The Brooklyn Museum Redesign demonstrates how game-based thinking can reshape cultural learning. By linking interaction, curiosity, and emotion, the project reframes museums as living ecosystems of participation.</p>
+                    <p class="content-text">Looking forward, this approach could evolve into a toolkit for future museums — adaptable to different institutions and communities. It invites designers, educators, and technologists to collaborate on new ways of connecting people and culture through play.</p>
+                    <p class="content-text"><strong>What if learning could be as engaging as play — and culture could be experienced as a living game?</strong></p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div data-component="footer"></div>
+
+    <script src="../../components/component-loader.js"></script>
+    <script src="../../components/project-info.js"></script>
+    <script src="../../style/script.js"></script>
+</body>
+</html>

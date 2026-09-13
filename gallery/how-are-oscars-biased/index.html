@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Are Oscars Biased? - Xinyi Han</title>
+    <meta name="description" content="Explores acting Oscar patterns that favor disability portrayals and uplifting liberal narratives.">
+    <meta name="robots" content="index,follow">
+    <meta property="og:title" content="How Are Oscars Biased?">
+    <meta property="og:description" content="Explores acting Oscar patterns that favor disability portrayals and uplifting liberal narratives.">
+    <meta property="og:type" content="article">
+    <meta property="og:image" content="./public/cover.png">
+    <link rel="icon" type="image/x-icon" href="../../logo/favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="../../logo/favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../logo/favicon-32x32.png">
+    <link rel="stylesheet" href="../../style/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        .hero-image-container {
+            width: 100vw;
+            margin-left: calc(-50vw + 50%);
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .hero-image {
+            width: 100%;
+            aspect-ratio: 2/1;
+            object-fit: cover;
+            display: block;
+        }
+        .hero-image-container.hero-fallback { min-height: 40vh; background: linear-gradient(135deg, #a8edea, #fed6e3); }
+
+        .project-brief-container {
+            padding: var(--spacing-sm) 0;
+            border-bottom: 1px solid var(--border-color);
+            background-color: #ffffff;
+        }
+        .project-title {
+            font-size: var(--font-size-2xl);
+            font-weight: 600;
+            margin-bottom: var(--spacing-sm);
+            line-height: 1.2;
+        }
+        .project-subtitle { font-size: var(--font-size-lg); color: var(--secondary-color); margin-bottom: var(--spacing-sm); }
+        .project-date { font-size: var(--font-size-base); color: var(--secondary-color); font-style: italic; }
+
+        .project-content {
+            max-width: 1140px;
+            margin: 180px auto 120px;
+            padding: 0 clamp(16px, 3vw, 30px);
+        }
+        .content-section { margin-bottom: var(--spacing-2xl); }
+        .section-title {
+            font-size: var(--font-size-xl);
+            font-weight: 600;
+            margin-bottom: var(--spacing-md);
+            padding-bottom: var(--spacing-xs);
+        }
+        .subsection-title { font-size: var(--font-size-lg); font-weight: 500; margin: var(--spacing-md) 0 var(--spacing-sm) 0; color: var(--primary-color); }
+        .content-text { font-size: var(--font-size-base); line-height: 1.7; color: var(--primary-color); margin-bottom: var(--spacing-md); }
+
+        .project-image { width: 100%; max-width: 100%; margin: var(--spacing-lg) 0; display: block; border-radius: var(--border-radius); box-shadow: none; }
+        .project-image-scaled { max-width: 100%; margin: var(--spacing-lg) auto; display: block; border-radius: var(--border-radius); box-shadow: none; }
+        .image-grid { display: grid; grid-template-columns: 1fr; gap: var(--spacing-lg); margin: var(--spacing-lg) 0; }
+
+        /* brief styles are centralized in global CSS */
+
+        /* Large screens */
+        @media (min-width: 1200px) {
+            .project-content { max-width: 1140px; margin: 180px auto 120px; padding: 0 30px; }
+        }
+        /* Extra large screens */
+        @media (min-width: 1600px) {
+            .project-content { max-width: 1140px; margin: 180px auto 120px; padding: 0 30px; }
+        }
+        /* Medium screens */
+        @media (max-width: 1199px) and (min-width: 993px) {
+            .project-content { max-width: 1000px; margin: 140px auto 110px; padding: 0 24px; }
+        }
+        /* Small desktop/large tablet */
+        @media (max-width: 992px) and (min-width: 769px) {
+            .project-content { max-width: 900px; margin: 120px auto 96px; padding: 0 20px; }
+        }
+        /* Tablet */
+        @media (max-width: 768px) {
+            .hero-image-container { width: 100%; margin-left: 0; overflow: hidden; height: 50vw; }
+            .hero-image { aspect-ratio: 2/1; object-position: center center; }
+            .project-brief-container { padding: var(--spacing-sm) 0; }
+            /* brief styles are centralized in global CSS */
+            .project-title { font-size: var(--font-size-xl); }
+            .project-content { max-width: 100%; margin: 96px auto 80px; padding: 0 var(--spacing-sm); }
+            .project-image-scaled { width: 100% !important; }
+        }
+        /* Mobile */
+        @media (max-width: 480px) {
+            .project-content { margin: 72px auto 64px; padding: 0 var(--spacing-sm); }
+            .hero-image { aspect-ratio: 2/1; object-position: center center; }
+        }
+    </style>
+    </head>
+<body>
+    <div data-component="header"></div>
+
+    <section class="hero-image-container">
+        <img src="./public/cover.png" alt="How Are Oscars Biased? cover" class="hero-image" onerror="this.onerror=null; this.src='../../logo/hero-placeholder.svg';">
+    </section>
+
+    <section class="project-brief-container">
+        <div class="container">
+            <div data-component="project-info"></div>
+        </div>
+    </section>
+
+    <div class="project-content" data-layout="stacked">
+        <section class="content-section">
+            <h1 class="project-title">How Are Oscars Biased?</h1>
+        </section>
+
+        <!-- SYNC:CONTENT-START -->
+<section class="content-section">
+  <h2 class="section-title">Overview</h2>
+  <p class="content-text">This project was one of my early experiments with data visualization—an attempt to use visual form to reveal patterns that are otherwise hard to articulate. Inspired by the idea that "a visualization becomes insightful when the structure itself speaks," I wanted to examine common assumptions about what types of performances tend to win acting Oscars.</p>
+</section>
+<section class="content-section">
+  <h2 class="section-title">Acting Roles That Showcase Difficulty</h2>
+  <p class="content-text"><strong>A Graphic Exploration of Patterns Behind Award-Winning Roles</strong></p>
+  <p class="content-text">If you want to win an acting Oscar, choose a role that foregrounds visible technical difficulty. Playing a character with a disability, for instance, has long been a reliable path: Christy Brown with cerebral palsy in <em>My Left Foot (1989)</em>, or Raymond Babbitt on the autism spectrum in <em>Rain Man (1988)</em>. These performances make the craft legible, signaling prestige to voters and shaping industry expectations of what "award-worthy" means.</p>
+  <p class="content-text"><strong>Reference</strong></p>
+  <img class="project-image-scaled" style="width: 50%" src="./public/reference.png" alt="Reference">
+  <p class="content-text">In this project, I treated reference not merely as a citation, but as a way to understand how visualizing data can expose the underlying structure of an idea. Much like wind maps that visualize real-time atmospheric flow—where the shape of the graphic itself naturally reveals geographic logic, monsoon patterns, and seasonal shifts—this project uses visualization to surface the implicit rules behind Oscar recognition.</p>
+  <p class="content-text">By simply laying out the data without commentary, the patterns begin to explain themselves: the kinds of roles that win, the narratives that get celebrated, and the gap between "critically beloved" and "Academy-approved." The visualization becomes an analytical lens, making visible the tendencies we often sense intuitively but rarely see articulated.</p>
+  <p class="content-text">Data from IMDB:</p>
+  <img class="project-image-scaled" style="width: 50%" src="./public/data.png" alt="Data from IMDB">
+</section>
+<section class="content-section">
+  <h2 class="section-title">Issue-Driven Narratives And The Oscar Voter</h2>
+  <p class="content-text">Oscar voters also reward films that tackle social issues from a liberal, uplifting angle. Compare <em>Driving Miss Daisy</em> and <em>Do the Right Thing</em>, both released in 1989. The former won four Oscars, including Best Picture, by presenting race relations in a gentle, conciliatory light. Spike Lee's sharper, more confrontational film secured only two nominations—Best Original Screenplay and Best Supporting Actor—despite its later recognition as a modern classic.</p>
+</section>
+<section class="content-section">
+  <h2 class="section-title">Practice</h2>
+  <p class="content-text">To explore Oscar bias through both structure and relationship, I visualized the same dataset using two complementary methods—one static and hierarchical, one interactive and relational. Together, they uncover different layers of insight that neither approach could fully express on its own.</p>
+  <p class="content-text"><strong>Approach 1 — Static Tree Poster (Macro-Structure)</strong></p>
+  <p class="content-text">The tree poster presents a top-down structural view of the patterns behind Oscar-winning films. By organizing the data into branching pathways—performance difficulty, disability roles, issue-driven narratives, and tonal framing—the visualization exposes the "award logic" at a glance. The form highlights how certain character types and storytelling strategies consistently align with recognition from the Academy.</p>
+  <img class="project-image" src="./public/black.png" alt="Black">
+  <p class="content-text"><strong>Approach 2 — Interactive Node Graph (Micro-Connections)</strong></p>
+  <p class="content-text">The interactive node.js force-directed graph provides a bottom-up, exploratory view. Each node represents a film, and hovering reveals its connections to others through shared award-winning traits. The network layout captures natural clustering: groups of films connected by similar role challenges, moral framing, or narrative positioning. This approach invites discovery, showing how individual titles relate to broader award tendencies.</p>
+  <img class="project-image" src="./public/cover1.png" alt="Node">
+  <img class="project-image" src="./public/cover2.png" alt="Node">
+  <p class="content-text"><a href="https://hancyhxy.github.io/new/" target="_blank" rel="noreferrer">Interactive Node Graph</a></p>
+</section>
+<!-- SYNC:CONTENT-END -->
+    </div>
+
+    <div data-component="footer"></div>
+    <script src="../../components/component-loader.js"></script>
+    <script src="../../components/project-info.js"></script>
+    <script src="../../style/script.js"></script>
+</body>
+</html>

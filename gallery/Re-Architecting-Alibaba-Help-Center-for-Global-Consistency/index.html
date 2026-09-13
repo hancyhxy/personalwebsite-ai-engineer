@@ -1,0 +1,515 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Re-Architecting Alibaba Help Center for Global Consistency - Xinyi Han</title>
+    <meta name="description" content="Rebuilt Alibaba Help Center IA and globalization strategy; resolution rate 52%→81%, search time −35%, adopted across 20+ localized sites.">
+    <meta name="robots" content="index,follow">
+    <meta property="og:title" content="Re-Architecting Alibaba Help Center for Global Consistency">
+    <meta property="og:description" content="Information architecture redesign and globalization strategy for a multilingual ecosystem.">
+    <meta property="og:type" content="article">
+    <meta property="og:image" content="./public/cover.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="icon" type="image/x-icon" href="../../logo/favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="../../logo/favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../logo/favicon-32x32.png">
+    <link rel="stylesheet" href="../../style/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        .hero-image-container {
+            width: 100vw;
+            margin-left: calc(-50vw + 50%);
+            padding: 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-image {
+            width: 100%;
+            aspect-ratio: 2/1;
+            object-fit: cover;
+            display: block;
+        }
+
+        .project-brief-container {
+            padding: var(--spacing-sm) 0;
+            border-bottom: 1px solid var(--border-color);
+            background-color: #ffffff;
+        }
+
+        .project-title {
+            font-size: var(--font-size-2xl);
+            font-weight: 600;
+            margin-bottom: var(--spacing-sm);
+            line-height: 1.2;
+        }
+
+        .project-subtitle {
+            font-size: var(--font-size-lg);
+            color: var(--secondary-color);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .project-date {
+            font-size: var(--font-size-base);
+            color: var(--secondary-color);
+            font-style: italic;
+        }
+
+        .project-content {
+            /* Content container: centered with predictable width */
+            max-width: 1140px;
+            margin: 180px auto 120px;
+            /* Follow the contentcontainer idea: fixed side padding */
+            padding: 0 clamp(16px, 3vw, 30px);
+        }
+
+        .content-section {
+            margin-bottom: var(--spacing-2xl);
+        }
+
+        .section-title {
+            font-size: var(--font-size-xl);
+            font-weight: 600;
+            margin-bottom: var(--spacing-md);
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: var(--spacing-xs);
+        }
+
+        .subsection-title {
+            font-size: var(--font-size-lg);
+            font-weight: 500;
+            margin: var(--spacing-md) 0 var(--spacing-sm) 0;
+            color: var(--primary-color);
+        }
+
+        .content-text {
+            font-size: var(--font-size-base);
+            line-height: 1.7;
+            color: var(--primary-color);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .project-image {
+            width: 100%;
+            max-width: 100%;
+            margin: var(--spacing-lg) 0;
+            display: block;
+            border-radius: var(--border-radius);
+            /* remove shadow for a cleaner look */
+            box-shadow: none;
+        }
+
+        .image-grid {
+            display: grid;
+            /* one image per row on this page */
+            grid-template-columns: 1fr;
+            gap: var(--spacing-lg);
+            margin: var(--spacing-lg) 0;
+        }
+
+        .image-grid img {
+            width: 100%;
+            height: auto;
+            border-radius: var(--border-radius);
+            /* remove shadow */
+            box-shadow: none;
+        }
+
+        /* Ensure all non-hero images keep aspect ratio by using width:100% and height:auto */
+        .project-content img {
+            width: 100%;
+            height: auto;
+            max-width: 100%;
+        }
+
+        /* Override global .project-image fixed aspect-ratio on this page */
+        .project-content img.project-image {
+            aspect-ratio: auto;
+        }
+
+        .highlight-text {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .conversion-flow {
+            background-color: var(--light-gray);
+            padding: var(--spacing-md);
+            border-radius: var(--border-radius);
+            margin: var(--spacing-md) 0;
+            text-align: center;
+        }
+
+        .flow-arrow {
+            font-size: var(--font-size-lg);
+            margin: 0 var(--spacing-sm);
+        }
+
+        /* Two-column layout styles */
+        .two-column-section {
+            display: grid;
+            grid-template-columns: minmax(200px, 240px) 1fr;
+            gap: var(--spacing-2xl);
+            margin-bottom: var(--spacing-2xl);
+            align-items: flex-start;
+        }
+
+        .column-title {
+            font-size: var(--font-size-2xl);
+            font-weight: 600;
+            color: var(--primary-color);
+            line-height: 1.2;
+            position: sticky;
+            top: var(--spacing-lg);
+        }
+
+        .column-content {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-lg);
+        }
+
+        .column-content .subsection-title {
+            margin-top: 0;
+        }
+
+
+        /* brief styles are centralized in global CSS */
+
+        /* Large screens: optimize content width and spacing */
+        @media (min-width: 1200px) {
+            .project-content {
+                max-width: 1140px;
+                margin: 180px auto 120px;
+                padding: 0 30px;
+            }
+
+            .two-column-section {
+                gap: calc(var(--spacing-2xl) * 1.5);
+            }
+
+            .column-title {
+                font-size: calc(var(--font-size-2xl) * 1.1);
+            }
+        }
+
+        /* Extra large screens: maintain readability while using space */
+        @media (min-width: 1600px) {
+            .project-content {
+                max-width: 1140px;
+                margin: 180px auto 120px;
+                padding: 0 30px;
+            }
+
+            .two-column-section {
+                grid-template-columns: minmax(260px, 300px) 1fr;
+                gap: calc(var(--spacing-2xl) * 1.8);
+            }
+        }
+
+        /* Medium screens: balanced layout */
+        @media (max-width: 1199px) and (min-width: 993px) {
+            .project-content {
+                max-width: 1000px;
+                margin: 140px auto 110px;
+                padding: 0 24px;
+            }
+
+            .two-column-section {
+                grid-template-columns: minmax(180px, 220px) 1fr;
+                gap: var(--spacing-xl);
+            }
+        }
+
+        /* Small desktop/large tablet screens */
+        @media (max-width: 992px) and (min-width: 769px) {
+            .project-content {
+                max-width: 900px;
+                margin: 120px auto 96px;
+                padding: 0 20px;
+            }
+
+            .two-column-section {
+                grid-template-columns: minmax(160px, 200px) 1fr;
+                gap: var(--spacing-lg);
+            }
+
+            .column-title {
+                font-size: var(--font-size-xl);
+            }
+        }
+
+        /* Tablet screens */
+        @media (max-width: 768px) {
+            /* Avoid horizontal overflow on mobile */
+            .hero-image-container {
+                width: 100%;
+                margin-left: 0;
+                overflow: hidden;
+                height: 50vw;
+            }
+
+            .hero-image {
+                /* Keep 2:1 aspect ratio on tablets */
+                aspect-ratio: 2/1;
+                /* Show more of the top area on mobile */
+                object-position: center center;
+            }
+
+            .project-brief-container {
+                padding: var(--spacing-sm) 0;
+            }
+
+            /* brief styles are centralized in global CSS */
+
+            .project-title {
+                font-size: var(--font-size-xl);
+            }
+
+            .project-content {
+                max-width: 100%;
+                margin: 96px auto 80px;
+                padding: 0 var(--spacing-sm);
+            }
+
+            .image-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .two-column-section {
+                grid-template-columns: 1fr;
+                gap: var(--spacing-md);
+            }
+
+            .column-title {
+                font-size: var(--font-size-xl);
+                position: static;
+                margin-bottom: var(--spacing-sm);
+            }
+        }
+
+        /* Mobile screens */
+        @media (max-width: 480px) {
+            .project-content {
+                margin: 72px auto 64px;
+                padding: 0 var(--spacing-sm);
+            }
+
+            .hero-image {
+                /* Keep 2:1 aspect ratio on mobile */
+                aspect-ratio: 2/1;
+                object-position: center center;
+            }
+
+            /* brief styles are centralized in global CSS */
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Header -->
+    <div data-component="header"></div>
+
+    <!-- Hero Image Section -->
+    <section class="hero-image-container">
+        <img src="./public/cover.png" alt="Alibaba Help Center cover" class="hero-image">
+    </section>
+
+    <!-- Project Brief Section -->
+    <section class="project-brief-container">
+        <div class="container">
+            <div data-component="project-info"></div>
+        </div>
+    </section>
+
+    <!-- Project Content -->
+    <div class="project-content">
+        <!-- Project Title Section -->
+        <section class="content-section">
+            <h1 class="project-title">Re-Architecting Alibaba Help Center for Global Consistency</h1>
+        </section>
+
+        <!-- Project Overview -->
+        <section class="two-column-section">
+            <div class="column-title">Project Overview</div>
+            <div class="column-content">
+                <div>
+                    <p class="content-text">Alibaba’s Help Center serves millions of merchants daily across Taobao, Tmall, and global marketplaces such as AliExpress and Lazada. However, years of product growth had left the information system fragmented, with inconsistent categories, duplicated content, and unclear pathways.</p>
+                    <p class="content-text">I led a year-long redesign to reconstruct the Help Center’s information architecture and develop a globalization strategy that could adapt across regions. The goal was to make information findable, understandable, and solvable — while ensuring consistency for a multilingual, multi-market ecosystem.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Problem Definition -->
+        <section class="two-column-section">
+            <div class="column-title">Problem Definition</div>
+            <div class="column-content">
+                <img src="./public/3step.png" alt="Problem definition steps" class="project-image">
+                <div>
+                    <h4 class="subsection-title">Domestic Site (China)</h4>
+                    <p class="content-text">The original Help Center had over 3,000 scattered articles, many of which were ambiguously classified. For example, “Shipping” could appear under both Orders and Logistics, and “Refund” was nested differently across departments. Users frequently got lost, lowering self-service rates and increasing support costs.</p>
+                </div>
+                <div>
+                    <h4 class="subsection-title">International Expansion</h4>
+                    <p class="content-text">When Alibaba began rolling out localized Help Centers, simple translation proved insufficient. Each region required different taxonomy, tone, and cultural framing — for instance, “Transaction” in English vs. “Trade” in Chinese, or payment methods differing by market. Visual alignment also became complex: languages like Thai or Spanish expanded text length by 30–50%, breaking layouts designed for Chinese.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Research & Insights -->
+        <section class="two-column-section">
+            <div class="column-title">Research &amp; Insights</div>
+            <div class="column-content">
+                <div>
+                    <h4 class="subsection-title">Mixed-Method Study</h4>
+                    <p class="content-text">To rebuild from a user perspective, I conducted a hybrid card sorting + interview study with 16 Taobao merchants across varying experience levels. Participants were asked to categorize help topics and explain their reasoning, revealing where copywriting and structure failed to match mental models.</p>
+                </div>
+                <div>
+                    <h4 class="subsection-title">Findings:</h4>
+                    <ul class="content-text">
+                        <li>Merchants categorize help topics by goal, not internal platform structure.</li>
+                        <li>Ambiguous labels (“market,” “industry,” “promotion”) caused hesitation and misinterpretation.</li>
+                        <li>Certain topics required dual classification (e.g., “Live Streaming” belongs to both Content and Marketing).</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="subsection-title">Structural Insight</h4>
+                    <p class="content-text">The Help Center is not an isolated product; it mirrors the merchant service journey. By mapping merchant tasks (listing, transaction, fulfillment, after-sales), we derived a top-level structure consistent with real business workflows.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Information Architecture Redesign -->
+        <section class="two-column-section">
+            <div class="column-title">Information Architecture Redesign</div>
+            <div class="column-content">
+                <div>
+                    <h4 class="subsection-title">Process</h4>
+                    <ul class="content-text">
+                        <li>Inventory &amp; Audit — Identified redundant and misaligned topics.</li>
+                        <li>Main Thread Extraction — Rebuilt taxonomy around core merchant events.</li>
+                        <li>Prototype IA — Created visual maps of category relationships to align product and content teams.</li>
+                        <li>Validation — Conducted tree tests to verify navigation logic and comprehension.</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="subsection-title">Solution</h4>
+                    <ul class="content-text">
+                        <li>Reorganized Help Center into four main domains: Listing, Orders &amp; Delivery, Payments, Policy &amp; Disputes.</li>
+                        <li>Introduced semantic tagging to handle cross-linked content (e.g., “Shipping” dynamically linked to both Order and Logistics).</li>
+                        <li>Simplified navigation depth from 5 to 3 levels, increasing findability by 40%.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Validation Metrics: Measuring IA Health -->
+        <section class="two-column-section">
+            <div class="column-title">Validation Metrics: Measuring IA Health</div>
+            <div class="column-content">
+                <p class="content-text">Beyond presenting the new taxonomy, I also established a quantitative evaluation framework to continuously monitor the system’s usability and content health.</p>
+                <img src="./public/metrics.png" alt="IA validation metrics" class="project-image">
+                <div>
+                    <h4 class="subsection-title">Three key indicators were defined:</h4>
+                    <ul class="content-text">
+                        <li>Categorization Accuracy – the percentage of correctly matched topics during user tests.</li>
+                        <li>Comprehension Clarity – time and confidence score when users identified the correct category.</li>
+                        <li>Copy Readability &amp; Label Precision – semantic clarity score derived from hesitation and misclassification patterns.</li>
+                    </ul>
+                    <p class="content-text">Each metric was tracked through periodic card-sorting validation and A/B monitoring in production. This allowed the product team to detect weak or ambiguous nodes early and iteratively refine taxonomy and labeling rules.</p>
+                </div>
+                <div>
+                    <h4 class="subsection-title">Example:</h4>
+                    <ul class="content-text">
+                        <li>“Marketing” renamed to “Marketing / Promotion” to avoid overlap with “Traffic”.</li>
+                        <li>“Industry Market” replaced with “Supply Market”.</li>
+                        <li>“Warehouse &amp; Logistics” separated from “Orders / After-Sales”.</li>
+                    </ul>
+                    <p class="content-text">The metrics became a long-term governance mechanism, ensuring the IA could evolve as new product modules and business categories emerged.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Globalization Strategy -->
+        <section class="two-column-section">
+            <div class="column-title">Globalization Strategy</div>
+            <div class="column-content">
+                <div>
+                    <img src="./public/international.png" alt="International rollout" class="project-image">
+                    <p class="content-text">With the domestic IA stabilized, we scaled it for international markets through a global–local design framework.</p>
+                </div>
+                <div>
+                    <h4 class="subsection-title">Key Challenges</h4>
+                    <ul class="content-text">
+                        <li>Semantic equivalence: Terms carried different meanings across languages.</li>
+                        <li>Cultural adaptation: Some help content was irrelevant outside China (e.g., local tax rules, refund regulations).</li>
+                        <li>Visual elasticity: UI spacing, truncation, and typographic rhythm needed flexible adaptation.</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="subsection-title">Strategy</h4>
+                    <img src="./public/keyvariable.png" alt="Key variables for localization" class="project-image">
+                    <p class="content-text"><strong>Global Core, Local Extensions</strong></p>
+                    <ul class="content-text">
+                        <li>Standardized the first two levels of navigation globally.</li>
+                        <li>Allowed regions to add localized subcategories for tax, payment, and logistics.</li>
+                    </ul>
+                    <p class="content-text"><strong>Semantic Localization, not Literal Translation</strong></p>
+                    <ul class="content-text">
+                        <li>Developed bilingual mapping tables to preserve meaning, not word-for-word translation.</li>
+                        <li>Example: “Supply Market” → “Vendor Sourcing” to align with Western terminology.</li>
+                    </ul>
+                    <h4 class="subsection-title">Visual and Layout Guidelines</h4>
+                    <div class="image-grid">
+                        <img src="./public/adaptive-layout.png" alt="Adaptive layout rules" class="project-image">
+                        <img src="./public/frontendinternational.png" alt="Frontend internationalization" class="project-image">
+                    </div>
+                    <ul class="content-text">
+                        <li>Defined rules for multilingual typography, spacing, and truncation.</li>
+                        <li>Integrated these behaviors into the design system for automatic scaling.</li>
+                    </ul>
+                    <p class="content-text"><strong>Collaborative Governance</strong></p>
+                    <img src="./public/configuration.png" alt="Configuration and governance" class="project-image">
+                    <ul class="content-text">
+                        <li>Worked with PMs, translators, and regional designers to unify tone and UX consistency.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Validation & Outcomes -->
+        <section class="two-column-section">
+            <div class="column-title">Validation &amp; Outcomes</div>
+            <div class="column-content">
+                <ul class="content-text">
+                    <li>Resolution rate increased from 52% → 81%</li>
+                    <li>Search-to-answer time reduced by 35%</li>
+                    <li>Framework adopted by 20+ localized sites (AliExpress, Lazada, Trendyol, etc.)</li>
+                    <li>Reduced content maintenance redundancy by 40%</li>
+                    <li>Recognized internally as a benchmark project within Alibaba’s merchant experience system</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Reflection -->
+        <section class="two-column-section">
+            <div class="column-title">Reflection</div>
+            <div class="column-content">
+                <p class="content-text">This project taught me that information architecture is the backbone of self-service UX, and globalization is not about translation — it’s about meaning and empathy. The same concept can look, sound, and feel different across cultures, yet still belong to one consistent system.</p>
+                <p class="content-text">Designing for scalability and cultural nuance helped me understand how clarity builds trust, and flexibility builds connection.</p>
+            </div>
+        </section>
+    </div>
+
+    <!-- Contact Section -->
+    <div data-component="footer"></div>
+
+    <script src="../../components/component-loader.js"></script>
+    <script src="../../components/project-info.js"></script>
+    <script src="../../style/script.js"></script>
+</body>
+</html>

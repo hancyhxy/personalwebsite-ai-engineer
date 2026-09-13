@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Museum Kit — Reframing Art through Interaction - Xinyi Han</title>
+    <meta name="description" content="An interactive viewing kit that reframes museum art through tangible exploration, encouraging slow looking, curiosity, and emotional resonance.">
+    <meta name="robots" content="index,follow">
+    <meta property="og:title" content="The Museum Kit — Reframing Art through Interaction">
+    <meta property="og:description" content="An interactive viewing kit that reframes museum art through tangible exploration, encouraging slow looking, curiosity, and emotional resonance.">
+    <meta property="og:type" content="article">
+    <meta property="og:image" content="./public/cover.png">
+    <link rel="icon" type="image/x-icon" href="../../logo/favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="../../logo/favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../logo/favicon-32x32.png">
+    <link rel="stylesheet" href="../../style/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        .hero-image-container { width: 100vw; margin-left: calc(-50vw + 50%); padding: 0; display: flex; align-items: center; }
+        /* Standardize hero at 2:1 ratio across pages */
+        .hero-image { width: 100%; aspect-ratio: 2/1; object-fit: cover; display: block; }
+        .hero-image-container.hero-fallback { min-height: 40vh; background: linear-gradient(135deg, #a8edea, #fed6e3); }
+
+        .project-brief-container { padding: var(--spacing-sm) 0; border-bottom: 1px solid var(--border-color); background-color: #ffffff; }
+        .project-title { font-size: var(--font-size-2xl); font-weight: 600; margin-bottom: var(--spacing-sm); line-height: 1.2; }
+        .project-content { max-width: 1140px; margin: 180px auto 120px; padding: 0 clamp(16px, 3vw, 30px); }
+        .content-section { margin-bottom: var(--spacing-2xl); }
+        .subsection-title { font-size: var(--font-size-lg); font-weight: 500; margin: var(--spacing-md) 0 var(--spacing-sm) 0; color: var(--primary-color); }
+        .content-text { font-size: var(--font-size-base); line-height: 1.7; color: var(--primary-color); margin-bottom: var(--spacing-md); }
+        .project-image { width: 100%; height: auto; max-width: 100%; margin: var(--spacing-lg) 0; display: block; border-radius: var(--border-radius); box-shadow: none; }
+        .image-grid { display: grid; grid-template-columns: 1fr; gap: var(--spacing-lg); margin: var(--spacing-lg) 0; }
+        .image-grid img { width: 100%; height: auto; border-radius: var(--border-radius); box-shadow: none; }
+
+        .two-column-section { display: grid; grid-template-columns: minmax(200px, 240px) 1fr; gap: var(--spacing-2xl); margin-bottom: var(--spacing-2xl); align-items: flex-start; }
+        .column-title { font-size: var(--font-size-2xl); font-weight: 600; color: var(--primary-color); line-height: 1.2; position: sticky; top: var(--spacing-lg); }
+        .column-content { display: flex; flex-direction: column; gap: var(--spacing-lg); }
+
+        /* brief styles are centralized in global CSS */
+
+        /* Responsive */
+        @media (min-width: 1200px) { .project-content { max-width: 1140px; margin: 180px auto 120px; padding: 0 30px; } .two-column-section { gap: calc(var(--spacing-2xl) * 1.5); } .column-title { font-size: calc(var(--font-size-2xl) * 1.1); } }
+        @media (min-width: 1600px) { .project-content { max-width: 1140px; margin: 180px auto 120px; padding: 0 30px; } .two-column-section { grid-template-columns: minmax(260px, 300px) 1fr; gap: calc(var(--spacing-2xl) * 1.8); } }
+        @media (max-width: 1199px) and (min-width: 993px) { .project-content { max-width: 1000px; margin: 140px auto 110px; padding: 0 24px; } .two-column-section { grid-template-columns: minmax(180px, 220px) 1fr; gap: var(--spacing-xl); } }
+        @media (max-width: 992px) and (min-width: 769px) { .project-content { max-width: 900px; margin: 120px auto 96px; padding: 0 20px; } .two-column-section { grid-template-columns: minmax(160px, 200px) 1fr; gap: var(--spacing-lg); } .column-title { font-size: var(--font-size-xl); } }
+        @media (max-width: 768px) { .hero-image-container { width: 100%; margin-left: 0; overflow: hidden; height: 50vw; } .hero-image { aspect-ratio: 2/1; object-position: center center; } .project-brief-container { padding: var(--spacing-sm) 0; } .project-title { font-size: var(--font-size-xl); } .project-content { max-width: 100%; margin: 96px auto 80px; padding: 0 var(--spacing-sm); } .two-column-section { grid-template-columns: 1fr; gap: var(--spacing-md); } .column-title { font-size: var(--font-size-xl); position: static; margin-bottom: var(--spacing-sm); } }
+        @media (max-width: 480px) { .project-content { margin: 72px auto 64px; padding: 0 var(--spacing-sm); } }
+    </style>
+    </head>
+<body>
+    <div data-component="header"></div>
+
+    <section class="hero-image-container">
+        <img src="./public/cover.png" alt="The Museum Kit — Reframing Art through Interaction cover" class="hero-image" onerror="this.onerror=null; this.src='../../logo/hero-placeholder.svg';">
+    </section>
+
+    <section class="project-brief-container">
+        <div class="container">
+            <div data-component="project-info"></div>
+        </div>
+    </section>
+
+    <div class="project-content" data-layout="two-column">
+        <section class="content-section">
+            <h1 class="project-title">The Museum Kit — Reframing Art through Interaction</h1>
+        </section>
+
+        <!-- SYNC:CONTENT-START -->
+<section class="two-column-section">
+  <div class="column-title">Overview</div>
+  <div class="column-content">
+    <p class="content-text">This project reimagines how people engage with museum artworks.</p>
+    <p class="content-text">Instead of passively viewing paintings from a distance, visitors are invited to observe, question, and discover — using a small interactive viewing kit that reveals details through physical manipulation.</p>
+    <p class="content-text">The kit consists of a paper cube with a peephole, paired with a set of insertable black cards labeled with keywords such as “Night”, “Swing”, or “Brain.” Each card corresponds to a specific perspective, lighting, or emotion found within a painting. By inserting a card and peering into the box, users uncover new layers of meaning — encouraging slow looking, curiosity, and emotional resonance.</p>
+  </div>
+</section>
+<section class="two-column-section">
+  <div class="column-title">Background</div>
+  <div class="column-content">
+    <p class="content-text">Museums are spaces of knowledge and memory — places that help people access history through experience.</p>
+    <img class="project-image" src="./public/tech.png" alt="tech">
+    <p class="content-text">However, modern visitors face three common issues:</p>
+    <ul class="content-text">
+      <li>Fragmented attention: seeing too many exhibits dilutes memory and emotion.</li>
+      <li>Limited interpretation: static text labels can’t convey the narrative depth behind artworks.</li>
+      <li>Overuse of technology: excessive screens or effects can distract from the authenticity of real artifacts.</li>
+    </ul>
+    <p class="content-text">The challenge is to balance tradition and technology, creating tools that enhance rather than overshadow the original works.</p>
+  </div>
+</section>
+<section class="two-column-section">
+  <div class="column-title">Design Insight</div>
+  <div class="column-content">
+    <p class="content-text">Research into visitor motivations and takeaways revealed that memorable experiences often share four traits:</p>
+    <ul class="content-text">
+      <li>They match the visitor’s personal interest or curiosity.</li>
+      <li>They present something novel or unexpected.</li>
+      <li>They evoke strong emotion.</li>
+      <li>They connect to later experiences or reflection.</li>
+    </ul>
+    <p class="content-text">The Museum Kit responds to these findings by providing personalized, tangible engagement — a quiet, focused exploration where each inserted card changes what the user perceives.</p>
+  </div>
+</section>
+<section class="two-column-section">
+  <div class="column-title">Examples</div>
+  <div class="column-content">
+    <h4 class="subsection-title">Example 1</h4>
+    <img class="project-image" src="./public/example1.png" alt="example1">
+    <img class="project-image" src="./public/example1-2.png" alt="example1-2">
+    <p class="content-text">Example 1 – Edward Hopper, Nighthawks (1942) The scene depicts a diner glowing in the quiet city night. Through the “Night” card, the viewer’s gaze narrows to a red-haired woman at the bar — her bright hair and reflective pose invite speculation about loneliness and desire. Another card highlights a shadowed man whose suit folds form an eagle-like silhouette — subtle details that shift the story from isolation to mystery.</p>
+    <h4 class="subsection-title">Example 2</h4>
+    <p class="content-text">Example 2 – Jan Steen, Celebrating the Birth</p>
+    <img class="project-image" src="./public/example2.png" alt="example2">
+    <img class="project-image" src="./public/example2-2.png" alt="example2-2">
+    <p class="content-text">At first glance, the painting shows joyous family celebration. Yet through the “Swing” or “Brain” cards, the viewer notices hidden gestures — a man’s knowing smile, a pair of scissors above a baby’s head, and symbolic “horns” hinting at betrayal and irony. The kit transforms the viewing from simple observation to investigative storytelling.</p>
+  </div>
+</section>
+<section class="two-column-section">
+  <div class="column-title">Takeaway</div>
+  <div class="column-content">
+    <p class="content-text">The Museum Kit transforms art appreciation into a hands-on act of interpretation. By merging physical craft, sensory focus, and storytelling, it helps visitors form deeper emotional and cognitive connections with art — reminding us that museums are not just places to look, but places to see differently.</p>
+  </div>
+</section>
+<!-- SYNC:CONTENT-END -->
+    </div>
+
+    <div data-component="footer"></div>
+    <script src="../../components/component-loader.js"></script>
+    <script src="../../components/project-info.js"></script>
+    <script src="../../style/script.js"></script>
+</body>
+</html>

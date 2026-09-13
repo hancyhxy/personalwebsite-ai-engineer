@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FriendUp Map-based Social App - Xinyi Han</title>
+    <meta name="description" content="A map-based social wellbeing app designed for international students to overcome challenges in maintaining friendships in a new environment">
+    <meta name="robots" content="index,follow">
+    <meta property="og:title" content="FriendUp Map-based Social App">
+    <meta property="og:description" content="A map-based social wellbeing app designed for international students to overcome challenges in maintaining friendships in a new environment">
+    <meta property="og:type" content="article">
+    <meta property="og:image" content="./public/cover.png">
+    <link rel="icon" type="image/x-icon" href="../../logo/favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="../../logo/favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../logo/favicon-32x32.png">
+    <link rel="stylesheet" href="../../style/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        .hero-image-container { width: 100vw; margin-left: calc(-50vw + 50%); padding: 0; display: flex; align-items: center; }
+        /* Standardize hero at 2:1 ratio across pages */
+        .hero-image { width: 100%; aspect-ratio: 2/1; object-fit: cover; display: block; }
+        .hero-image-container.hero-fallback { min-height: 40vh; background: linear-gradient(135deg, #a8edea, #fed6e3); }
+
+        .project-brief-container { padding: var(--spacing-sm) 0; border-bottom: 1px solid var(--border-color); background-color: #ffffff; }
+        .project-title { font-size: var(--font-size-2xl); font-weight: 600; margin-bottom: var(--spacing-sm); line-height: 1.2; }
+        .project-content { max-width: 1140px; margin: 180px auto 120px; padding: 0 clamp(16px, 3vw, 30px); }
+        .content-section { margin-bottom: var(--spacing-2xl); }
+        .subsection-title { font-size: var(--font-size-lg); font-weight: 500; margin: var(--spacing-md) 0 var(--spacing-sm) 0; color: var(--primary-color); }
+        .content-text { font-size: var(--font-size-base); line-height: 1.7; color: var(--primary-color); margin-bottom: 0; }
+        .project-image { width: 100%; height: auto; max-width: 100%; margin: var(--spacing-lg) 0; display: block; border-radius: var(--border-radius); box-shadow: none; }
+        .image-grid { display: grid; grid-template-columns: 1fr; gap: var(--spacing-lg); margin: var(--spacing-lg) 0; }
+        .image-grid img { width: 100%; height: auto; border-radius: var(--border-radius); box-shadow: none; }
+
+        /* Video embed styles */
+        .video-embed {
+            position: relative;
+            padding-top: 56.25%; /* 16:9 aspect ratio */
+            margin: var(--spacing-lg) 0;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+        }
+        .video-embed iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        .two-column-section { display: grid; grid-template-columns: minmax(200px, 240px) 1fr; gap: var(--spacing-2xl); margin-bottom: var(--spacing-2xl); align-items: flex-start; }
+        .column-title { font-size: var(--font-size-2xl); font-weight: 600; color: var(--primary-color); line-height: 1.2; position: sticky; top: var(--spacing-lg); }
+        .column-content { display: flex; flex-direction: column; gap: 0; }
+
+        /* Bullet point left alignment fix */
+        ul.content-text {
+            padding-left: 1.2em;
+            margin-bottom: 0;
+        }
+
+        /* brief styles are centralized in global CSS */
+
+        /* Responsive */
+        @media (min-width: 1200px) { .project-content { max-width: 1140px; margin: 180px auto 120px; padding: 0 30px; } .two-column-section { gap: calc(var(--spacing-2xl) * 1.5); } .column-title { font-size: calc(var(--font-size-2xl) * 1.1); } }
+        @media (min-width: 1600px) { .project-content { max-width: 1140px; margin: 180px auto 120px; padding: 0 30px; } .two-column-section { grid-template-columns: minmax(260px, 300px) 1fr; gap: calc(var(--spacing-2xl) * 1.8); } }
+        @media (max-width: 1199px) and (min-width: 993px) { .project-content { max-width: 1000px; margin: 140px auto 110px; padding: 0 24px; } .two-column-section { grid-template-columns: minmax(180px, 220px) 1fr; gap: var(--spacing-xl); } }
+        @media (max-width: 992px) and (min-width: 769px) { .project-content { max-width: 900px; margin: 120px auto 96px; padding: 0 20px; } .two-column-section { grid-template-columns: minmax(160px, 200px) 1fr; gap: var(--spacing-lg); } .column-title { font-size: var(--font-size-xl); } }
+        @media (max-width: 768px) { .hero-image-container { width: 100%; margin-left: 0; overflow: hidden; } .project-brief-container { padding: var(--spacing-sm) 0; } .project-title { font-size: var(--font-size-xl); } .project-content { max-width: 100%; margin: 96px auto 80px; padding: 0 var(--spacing-sm); } .two-column-section { grid-template-columns: 1fr; gap: var(--spacing-md); } .column-title { font-size: var(--font-size-xl); position: static; margin-bottom: var(--spacing-sm); } }
+        @media (max-width: 480px) { .project-content { margin: 72px auto 64px; padding: 0 var(--spacing-sm); } }
+    </style>
+    </head>
+<body>
+    <div data-component="header"></div>
+
+    <section class="hero-image-container">
+        <img src="./public/cover.png" alt="FriendUp Map-based Social App cover" class="hero-image" onerror="this.onerror=null; this.src='../../logo/hero-placeholder.svg';">
+    </section>
+
+    <section class="project-brief-container">
+        <div class="container">
+            <div data-component="project-info"></div>
+        </div>
+    </section>
+
+    <div class="project-content" data-layout="two-column">
+        <section class="content-section">
+            <h1 class="project-title">FriendUp Map-based Social App</h1>
+        </section>
+
+        <!-- SYNC:CONTENT-START -->
+<section class="two-column-section">
+  <div class="column-title">Introduction</div>
+  <div class="column-content">
+    <div>
+      <p class="content-text">FriendUp is a social wellbeing app designed for international students to overcome the challenges they face in maintaining friendships in a new environment. Through comprehensive research and official interviews, we identified real-world problems international students encounter when making and sustaining meaningful relationships.</p>
+      <p class="content-text">The research revealed five main concepts: difficulties in keeping friends, worries about trust and privacy, sense of loneliness, the impact of academic and professional demands on social life, and the significance of food and hobbies in forming relationships.</p>
+    </div>
+    <div>
+      <h4 class="subsection-title">Group</h4>
+    </div>
+    <img class="project-image" src="./public/team.png" alt="Team">
+  </div>
+</section>
+<section class="two-column-section">
+  <div class="column-title">Research Insights</div>
+  <div class="column-content">
+    <div>
+      <p class="content-text">Students face significant challenges in sustaining meaningful friendships beyond classroom interactions. While most students can initiate conversations during class or projects, these relationships often fade due to tight schedules or social anxiety.</p>
+    </div>
+    <div>
+      <h4 class="subsection-title">Key findings from our research:</h4>
+      <ul class="content-text">
+        <li><strong>Privacy Concerns</strong>: Students prefer to connect in protected settings rather than engaging on mainstream social media platforms like Instagram or WeChat, demonstrating the need for a platform where users control information disclosure</li>
+        <li><strong>Social Isolation</strong>: Many introverted students suffer from loneliness and isolation, with traditional coping strategies like calling family proving insufficient</li>
+        <li><strong>Time Constraints</strong>: Students struggle to balance social life with employment and academic commitments, leaving little time or energy for socializing</li>
+        <li><strong>Interest-Based Connection</strong>: Students expressed interest in productive social activities such as study groups or co-working sessions to build lasting relationships</li>
+      </ul>
+    </div>
+  </div>
+</section>
+<section class="two-column-section">
+  <div class="column-title">Persona</div>
+  <div class="column-content">
+    <img class="project-image" src="./public/Persona.png" alt="Persona">
+    <div>
+      <p class="content-text">Mei-Lin, a 27-year-old international student pursuing her Master's degree in Archive Communication in Sydney, represents our target user. She spends days studying alone or attending small seminars in formal settings. While she wants to make friends, she is concerned about safety and privacy and lacks confidence in starting and maintaining conversations.</p>
+    </div>
+  </div>
+</section>
+<section class="two-column-section">
+  <div class="column-title">Problem Scenario</div>
+  <div class="column-content">
+    <div>
+      <p class="content-text">Mei-Lin's daily life reflects the challenges our research uncovered. During group discussions, she becomes quiet, worried about saying the wrong thing or not being understood, especially on unfamiliar topics. After such encounters, she returns home feeling drained, replaying conversations and wishing she could connect more easily.</p>
+      <p class="content-text">Evenings feel exceptionally long as she scrolls through Instagram seeing others with lively social lives while isolated in her room. Being away from family with no friends to share moments with, she feels emotionally hurt and disconnected. Over time, this pattern has led to anxiety and loss of motivation to join social activities.</p>
+      <p class="content-text">What Mei-Lin lacks is not opportunity but confidence and safe space for interaction. She needs gentle, gradual ways to meet people who share her interests such as cooking or language exchange, with low social pressure and privacy protection.</p>
+    </div>
+  </div>
+</section>
+<section class="two-column-section">
+  <div class="column-title">Solution:</div>
+  <div class="column-content">
+    <div>
+      <h4 class="subsection-title">Future Use Scenario</h4>
+      <p class="content-text">One evening, Mei-Lin receives a notification from FriendUp about a new virtual cooking event. The app shows clear event details, safety ratings, and participant profiles, helping her feel confident to join.</p>
+      <p class="content-text">Before joining, Mei-Lin selects her avatar "Luna" to represent herself in the session. Using the avatar makes her feel relaxed because she can participate without showing her real identity at first. During the cooking class, she follows instructions, chats with other participants, and gradually becomes comfortable interacting online. By the end, she exchanges friendly messages with others.</p>
+      <p class="content-text">After joining more activities through the app, Mei-Lin gains confidence and becomes more active socially. Eventually, she joins an in-person tennis event as herself instead of using the avatar. She feels proud of this growth and plans to organize her own event through FriendUp to help other students connect.</p>
+    </div>
+  </div>
+</section>
+<section class="two-column-section">
+  <div class="column-title">Storyboard</div>
+  <div class="column-content">
+    <img class="project-image" src="./public/storyboard.png" alt="Storyboard">
+    <div>
+      <p class="content-text">The storyboard illustrates Mei-Lin's journey from isolation to connection through FriendUp, showing how the app facilitates gradual confidence building through avatar-based virtual interactions leading to real-world connections.</p>
+    </div>
+  </div>
+</section>
+<section class="two-column-section">
+  <div class="column-title">Key Insights &amp; Features</div>
+  <div class="column-content">
+    <div>
+      <h4 class="subsection-title">Insights</h4>
+      <p class="content-text">FriendUp promotes sociability that extends beyond simply "meeting new people." It emphasizes meaningful relationships through:</p>
+      <ul class="content-text">
+        <li>Natural interaction around common interests</li>
+        <li>Privacy-respecting connection building</li>
+        <li>Low-pressure social environments</li>
+        <li>Support for both virtual and in-person engagement</li>
+        <li>Gradual confidence building for introverted users</li>
+      </ul>
+      <p class="content-text">The design ultimately enables international students to create and sustain friendships that respect their time, privacy, and individuality in a friendly and encouraging way.</p>
+    </div>
+    <div>
+      <h4 class="subsection-title">Features</h4>
+      <ul class="content-text">
+        <li><strong>Mood Check-In System</strong>: Daily emotional tracking to understand user wellbeing</li>
+        <li><strong>Interest-Based Events</strong>: Virtual and in-person activities around shared interests (food, study, sports, hobbies)</li>
+        <li><strong>Avatar System</strong>: Privacy-first representation allowing gradual identity disclosure</li>
+        <li><strong>Safety Ratings</strong>: Transparent event and participant information for confident participation</li>
+        <li><strong>Local Event Alerts</strong>: Real-time notifications for nearby social opportunities</li>
+        <li><strong>Multilingual Support</strong>: Translation tools to support international student conversations</li>
+      </ul>
+    </div>
+  </div>
+</section>
+<section class="two-column-section">
+  <div class="column-title">Prototype</div>
+  <div class="column-content">
+    <div>
+      <h4 class="subsection-title">Paper Prototype</h4>
+    </div>
+    <img class="project-image" src="./public/prototype.png" alt="Prototype">
+    <div>
+      <h4 class="subsection-title">Usability Test</h4>
+      <p class="content-text"><strong>LINK_0</strong></p>
+    </div>
+    <div>
+      <h4 class="subsection-title">Usability Report</h4>
+    </div>
+    <img class="project-image" src="./public/report.png" alt="Report">
+    <div>
+      <h4 class="subsection-title">High Fidelity Prototype</h4>
+    </div>
+    <img class="project-image" src="./public/app.png" alt="App">
+  </div>
+</section>
+<section class="two-column-section">
+  <div class="column-title">Final Design</div>
+  <div class="column-content">
+    <img class="project-image" src="./public/digital.png" alt="Digital">
+  </div>
+</section>
+<section class="two-column-section">
+  <div class="column-title">Scenario Video</div>
+  <div class="column-content">
+    <div>
+      <p class="content-text"><strong>LINK_0</strong></p>
+    </div>
+  </div>
+</section>
+<!-- SYNC:CONTENT-END -->
+    </div>
+
+    <div data-component="footer"></div>
+    <script src="../../components/component-loader.js"></script>
+    <script src="../../components/project-info.js"></script>
+    <script src="../../style/script.js"></script>
+</body>
+</html>

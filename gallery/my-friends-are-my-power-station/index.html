@@ -1,0 +1,350 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My friends are my power station - Xinyi Han</title>
+    <link rel="icon" type="image/x-icon" href="../../logo/favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="../../logo/favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../logo/favicon-32x32.png">
+    <link rel="stylesheet" href="../../style/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        .hero-image-container {
+            width: 100vw;
+            margin-left: calc(-50vw + 50%);
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero-image {
+            width: 100%;
+            aspect-ratio: 2/1;
+            object-fit: cover;
+            display: block;
+        }
+
+        .project-brief-container {
+            padding: var(--spacing-sm) 0;
+            border-bottom: 1px solid var(--border-color);
+            background-color: #ffffff;
+        }
+
+        .project-title {
+            font-size: var(--font-size-2xl);
+            font-weight: 600;
+            margin-bottom: var(--spacing-sm);
+            line-height: 1.2;
+        }
+
+        .project-subtitle {
+            font-size: var(--font-size-lg);
+            color: var(--secondary-color);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .project-date {
+            font-size: var(--font-size-base);
+            color: var(--secondary-color);
+            font-style: italic;
+        }
+
+        .project-content {
+            /* Content container: centered with predictable width */
+            max-width: 1140px;
+            margin: 180px auto 120px;
+            /* Follow the contentcontainer idea: fixed side padding */
+            padding: 0 clamp(16px, 3vw, 30px);
+        }
+
+        .content-section {
+            margin-bottom: var(--spacing-2xl);
+        }
+
+        .section-title {
+            font-size: var(--font-size-xl);
+            font-weight: 600;
+            margin-bottom: var(--spacing-md);
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: var(--spacing-xs);
+        }
+
+        .subsection-title {
+            font-size: var(--font-size-lg);
+            font-weight: 500;
+            margin: var(--spacing-md) 0 var(--spacing-sm) 0;
+            color: var(--primary-color);
+        }
+
+        .content-text {
+            font-size: var(--font-size-base);
+            line-height: 1.7;
+            color: var(--primary-color);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .project-image {
+            width: 100%;
+            max-width: 100%;
+            margin: var(--spacing-lg) 0;
+            display: block;
+            border-radius: var(--border-radius);
+            /* remove shadow for a cleaner look */
+            box-shadow: none;
+        }
+
+        /* Single-column image stack within content padding */
+        .image-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: var(--spacing-lg);
+            margin: var(--spacing-lg) 0;
+        }
+
+        .video-embed {
+            position: relative;
+            padding-top: 56.25%;
+            margin: var(--spacing-lg) 0;
+        }
+
+        .video-embed iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        .highlight-text {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .conversion-flow {
+            background-color: var(--light-gray);
+            padding: var(--spacing-md);
+            border-radius: var(--border-radius);
+            margin: var(--spacing-md) 0;
+            text-align: center;
+        }
+
+        .flow-arrow {
+            font-size: var(--font-size-lg);
+            margin: 0 var(--spacing-sm);
+        }
+
+        /* Two-column layout styles */
+        .two-column-section {
+            display: grid;
+            grid-template-columns: minmax(200px, 240px) 1fr;
+            gap: var(--spacing-2xl);
+            margin-bottom: var(--spacing-2xl);
+            align-items: flex-start;
+        }
+
+        .column-title {
+            font-size: var(--font-size-2xl);
+            font-weight: 600;
+            color: var(--primary-color);
+            line-height: 1.2;
+            position: sticky;
+            top: var(--spacing-lg);
+        }
+
+        .column-content {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-lg);
+        }
+
+        .column-content .subsection-title {
+            margin-top: 0;
+        }
+
+        /* brief styles are centralized in global CSS */
+
+        /* Large screens: optimize content width and spacing */
+        @media (min-width: 1200px) {
+            .project-content {
+                max-width: 1140px;
+                margin: 180px auto 120px;
+                padding: 0 30px;
+            }
+
+            .two-column-section {
+                gap: calc(var(--spacing-2xl) * 1.5);
+            }
+
+            .column-title {
+                font-size: calc(var(--font-size-2xl) * 1.1);
+            }
+        }
+
+        /* Extra large screens: maintain readability while using space */
+        @media (min-width: 1600px) {
+            .project-content {
+                max-width: 1140px;
+                margin: 180px auto 120px;
+                padding: 0 30px;
+            }
+
+            .two-column-section {
+                grid-template-columns: minmax(260px, 300px) 1fr;
+                gap: calc(var(--spacing-2xl) * 1.8);
+            }
+        }
+
+        /* Medium screens: balanced layout */
+        @media (max-width: 1199px) and (min-width: 993px) {
+            .project-content {
+                max-width: 1000px;
+                margin: 140px auto 110px;
+                padding: 0 24px;
+            }
+
+            .two-column-section {
+                grid-template-columns: minmax(180px, 220px) 1fr;
+                gap: var(--spacing-xl);
+            }
+        }
+
+        /* Small desktop/large tablet screens */
+        @media (max-width: 992px) and (min-width: 769px) {
+            .project-content {
+                max-width: 900px;
+                margin: 120px auto 96px;
+                padding: 0 20px;
+            }
+
+            .two-column-section {
+                grid-template-columns: minmax(160px, 200px) 1fr;
+                gap: var(--spacing-lg);
+            }
+
+            .column-title {
+                font-size: var(--font-size-xl);
+            }
+        }
+
+        /* Tablet screens */
+        @media (max-width: 768px) {
+            /* Avoid horizontal overflow on mobile */
+            .hero-image-container {
+                width: 100%;
+                margin-left: 0;
+                overflow: hidden;
+                height: 50vw;
+            }
+
+            .hero-image {
+                /* Keep 2:1 aspect ratio on tablets */
+                aspect-ratio: 2/1;
+                /* Show more of the top area on mobile */
+                object-position: center center;
+            }
+
+            .project-brief-container { padding: var(--spacing-sm) 0; }
+            /* brief styles are centralized in global CSS */
+
+            .project-title {
+                font-size: var(--font-size-xl);
+            }
+
+            .project-content {
+                max-width: 100%;
+                margin: 96px auto 80px;
+                padding: 0 var(--spacing-sm);
+            }
+
+            .image-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .two-column-section {
+                grid-template-columns: 1fr;
+                gap: var(--spacing-md);
+            }
+
+            .column-title {
+                font-size: var(--font-size-xl);
+                position: static;
+                margin-bottom: var(--spacing-sm);
+            }
+        }
+
+        /* Mobile screens */
+        @media (max-width: 480px) {
+            .project-content {
+                margin: 72px auto 64px;
+                padding: 0 var(--spacing-sm);
+            }
+
+            .hero-image {
+                /* Keep 2:1 aspect ratio on mobile */
+                aspect-ratio: 2/1;
+                object-position: center center;
+            }
+
+            /* brief styles are centralized in global CSS */
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Header -->
+    <div data-component="header"></div>
+
+    <!-- Hero Image Section -->
+    <section class="hero-image-container">
+        <img src="./public/thesis_wholeview.png" alt="thesis" class="hero-image">
+    </section>
+
+    <!-- Project Brief Section -->
+    <section class="project-brief-container">
+        <div class="container">
+            <div data-component="project-info"></div>
+        </div>
+    </section>
+
+    <!-- Project Content -->
+    <div class="project-content">
+        <!-- Vertical content: title, paragraph, images (padded), body paragraphs -->
+        <section class="content-section">
+            <h1 class="project-title">My friends are my power station</h1>
+            <p class="content-text">
+                My friends are my power station. It is​ an installation about loneliness in big cities. This installation employs a large number of units of spinning wire, with statements about intimate relationships projected onto the spinning surfaces. These words, and the battery units that propel them, form a poetic, subtle, and interactive understanding of loneliness and transience. By making loneliness more visible, and shared in a public platform, this work also aims to send a central message to viewers: you are not alone.
+            </p>
+
+            <p class="content-text"><a href="https://vimeo.com/417398448?fl=pl&fe=sh" target="_blank" rel="noreferrer noopener"></a></p>
+
+            <div class="image-grid">
+                <img src="./public/thesis_wholeview2.png" alt="thesis_wholeview2" class="project-image">
+                <img src="./public/thesis_overlay.png" alt="thesis_overlay" class="project-image">
+                <img src="./public/thesis_meandwork.png" alt="thesis_meandwork" class="project-image">
+            </div>
+
+            <p class="content-text">
+                The title "My friends are my power station" is the story of my friend Yu Tian. When she went through a recent heartbreak, she would take a 2-hour train ride to her best friend's home, talking with her on her sofa all night. After spending this time with her friend, she felt better and more energetic.
+            </p>
+            <p class="content-text">
+                I selected key quotes from their stories and projected the sentences on a flat paper surface attached to the spinning battery structures. The result was that a single word appeared each time the structure would spin. Upon first glance, this installation may look separated and undecipherable because different words appear and change each second. However, once viewers focus on one rotating unit, waiting for the changing words to converge as sentences, the lonely message spelled out in these words becomes clear.
+            </p>
+            <p class="content-text">
+                This work pairs traditional mechanical materials with digital live stream projection tools to provide an intimate feeling of reading other people's loneliness. It creates a delicate contrast between flashing spinning moments and continuous stories, a single unit encompassed within a large number making up the whole, the singularity of each story set against the industrial rhythm of the structure's rotating movement. When loneliness can be visible and intimated, you are less alone. Through these juxtapositions, I hope that the viewer might relate and feel less alone
+            </p>
+        </section>
+    </div>
+
+    <!-- Contact Section -->
+    <div data-component="footer"></div>
+
+    <script src="../../components/component-loader.js"></script>
+    <script src="../../components/project-info.js"></script>
+    <script src="../../style/script.js"></script>
+</body>
+</html>
