@@ -38,7 +38,7 @@ Read this file before changing `index-badge.html`, the immersive project field, 
 6. Images disperse and fade away, revealing a badge-only first screen; no three-project satellite layout remains.
 7. Position and proportional size share the same eased dispersal progress; no separate post-arrival enlargement occurs.
 8. The identity badge is revealed as the sole first-screen subject. The 11 projects reappear only when scrolling into Selected Work.
-9. The opening plays only on the first fresh, top-level homepage arrival in a tab session. Reloads (including hard reload), restored scroll positions, history traversal, detail returns, hash/deep links, reduced motion and failure paths skip it without moving the user or leaving an overlay.
+9. The opening plays on the first fresh, top-level homepage arrival in a tab session and on a normal or hard reload whose browser-restored position remains at the top. A reload restored below the top, repeat in-tab navigation, history traversal, detail return, hash/deep link, reduced-motion or failure path skips it without moving the user or leaving an overlay. The overlay stays hidden and non-blocking until post-`pageshow` scroll restoration confirms the top position.
 
 ### Visual contract
 

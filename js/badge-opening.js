@@ -14,16 +14,23 @@
   opening.className = "portfolio-opening";
   opening.innerHTML = '<p class="opening-name">Xinyi Han</p><p class="opening-role opening-role-left">AI</p><p class="opening-role opening-role-right">Engineer</p><button class="opening-skip" type="button">Skip intro ↗</button>';
   body.append(opening);
-  body.classList.add("opening-active");
-  var blocked = Array.from(document.querySelectorAll('.mast,main,.site-footer,#agent-fab')).map(function (el) { var original = el.inert; el.inert = true; return { el: el, inert: original }; });
+  opening.hidden = true;
+  var blocked = [], activated = false;
   var name = opening.querySelector(".opening-name");
   var roles = opening.querySelectorAll(".opening-role");
   var skip = opening.querySelector(".opening-skip");
   var oldOverflow = body.style.overflow;
-  if (window.BadgeScene && BadgeScene.scroll) BadgeScene.scroll.lock(true);
-  else body.style.overflow = "hidden";
   var done = false;
   var timeline;
+  function activate() {
+    if (activated || done) return;
+    activated = true;
+    opening.hidden = false;
+    body.classList.add("opening-active");
+    blocked = Array.from(document.querySelectorAll('.mast,main,.site-footer,#agent-fab')).map(function (el) { var original = el.inert; el.inert = true; return { el: el, inert: original }; });
+    if (window.BadgeScene && BadgeScene.scroll) BadgeScene.scroll.lock(true);
+    else body.style.overflow = "hidden";
+  }
   /* HAND-TUNABLE TIMING (seconds). Override with window.BADGE_OPENING_TIMING
      before this script if a visual pass needs different pacing. */
   var timing = Object.assign({ stackReveal: .24, waveStart: .4, waveDuration: 1.3, settleDuration: .28, roleStart: .82, holdDuration: 1.35, gatherDuration: .55, gatherHold: .08, landDuration: 1.55 }, window.BADGE_OPENING_TIMING || {});
@@ -112,6 +119,7 @@
   Promise.all([restorationReady, Promise.race([Promise.all([window.BADGE_SCENE.texturesReady, document.fonts.ready]), new Promise(function (resolve) { setTimeout(resolve, 1100); })])]).then(function () {
     if (done) return;
     if (scrollY > 2) { finish(true); return; }
+    activate();
     layoutComposition();
     document.fonts.ready.then(function () { if (!done) layoutComposition(); });
     var target = document.querySelector(".mast > a").getBoundingClientRect();
