@@ -124,6 +124,45 @@ body.scc-detail-page {
 .scc-detail-page .scc-detail-content figure img { display: block; width: 100%; height: auto; }
 .scc-detail-page .scc-detail-content figcaption { margin-top: 10px; color: var(--scc-ink-soft); font-size: 11px; }
 
+.scc-detail-page .scc-detail-content .scc-project-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 1.4em 0 2.2em;
+  font-size: 0;
+}
+.scc-detail-page .scc-project-links > a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 42px;
+  padding: 0 16px;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  color: var(--scc-ink);
+  font: 500 12px/1 var(--scc-sans);
+  text-decoration: none;
+}
+.scc-detail-page .scc-project-links > a:hover,
+.scc-detail-page .scc-project-links > a:focus-visible {
+  background: var(--scc-ink);
+  color: var(--scc-bg);
+}
+.scc-detail-page .scc-detail-content .scc-showcase-gallery {
+  width: min(1100px, 88vw);
+  margin: 5vh 50% 10vh;
+  columns: 2 320px;
+  column-gap: 14px;
+  transform: translateX(-50%);
+}
+.scc-detail-page .scc-detail-content .scc-showcase-gallery figure,
+.scc-detail-page .scc-detail-content .scc-showcase-gallery figure.is-narrow {
+  width: 100%;
+  margin: 0 0 14px;
+  break-inside: avoid;
+  transform: none;
+}
+.scc-detail-page .scc-showcase-gallery figure img { background: #efeee9; }
+
 .scc-detail-page .scc-detail-content[data-layout="two-column"] {
   width: min(1160px, calc(100% - 48px));
 }
@@ -166,6 +205,7 @@ body.scc-detail-page {
   .scc-detail-page .scc-detail-content { font-size: 15px; }
   .scc-detail-page .scc-detail-content h2 { font-size: 36px; }
   .scc-detail-page .scc-detail-content h3 { font-size: 27px; }
+  .scc-detail-page .scc-detail-content .scc-showcase-gallery { width: 100%; margin: 4vh 0 9vh; columns: 1; transform: none; }
   .scc-detail-page .scc-detail-content[data-layout="two-column"] { width: calc(100% - 36px); }
   .scc-detail-page .scc-detail-content[data-layout="two-column"] .scc-detail-block { display: block; padding: 5vh 0; }
   .scc-detail-page .scc-detail-content[data-layout="two-column"] .scc-detail-block > h2,

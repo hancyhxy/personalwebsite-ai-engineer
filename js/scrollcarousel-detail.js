@@ -31,6 +31,33 @@
       .replace(/`([^`]+)`/g, "$1");
   }
 
+  function appendInline(element, text) {
+    var pattern = /(\*\*([^*]+)\*\*|`([^`]+)`|\[([^\]]+)\]\((https?:\/\/[^)\s]+)\))/g;
+    var cursor = 0;
+    var match;
+    while ((match = pattern.exec(text))) {
+      if (match.index > cursor) element.appendChild(document.createTextNode(text.slice(cursor, match.index)));
+      if (match[2]) {
+        var strong = document.createElement("strong");
+        strong.textContent = match[2];
+        element.appendChild(strong);
+      } else if (match[3]) {
+        var code = document.createElement("code");
+        code.textContent = match[3];
+        element.appendChild(code);
+      } else {
+        var anchor = document.createElement("a");
+        anchor.href = match[5];
+        anchor.textContent = match[4];
+        anchor.target = "_blank";
+        anchor.rel = "noopener noreferrer";
+        element.appendChild(anchor);
+      }
+      cursor = pattern.lastIndex;
+    }
+    if (cursor < text.length) element.appendChild(document.createTextNode(text.slice(cursor)));
+  }
+
   function imagePath(relative) {
     var filename = relative.replace(/^\.\/public\//, "").replace(/^public\//, "");
     return "./assets/images/" + slug + "/" + filename;
@@ -40,6 +67,7 @@
     content.replaceChildren();
     var lines = markdown.split(/\r?\n/);
     var list = null;
+    var showcaseGallery = null;
     var skippedCover = false;
     var skippedTitle = false;
 
@@ -64,7 +92,17 @@
           caption.textContent = image[2];
           figure.appendChild(caption);
         }
-        content.appendChild(figure);
+        if (/\/(?:on-site)\//.test(image[3])) {
+          if (!showcaseGallery) {
+            showcaseGallery = document.createElement("div");
+            showcaseGallery.className = "scc-showcase-gallery";
+            content.appendChild(showcaseGallery);
+          }
+          showcaseGallery.appendChild(figure);
+        } else {
+          showcaseGallery = null;
+          content.appendChild(figure);
+        }
         return;
       }
 
@@ -77,6 +115,7 @@
       var heading = line.match(/^(#{1,4})\s+(.*)$/);
       if (heading) {
         endList();
+        showcaseGallery = null;
         if (heading[1].length === 1 && !skippedTitle) { skippedTitle = true; return; }
         var level = Math.min(4, Math.max(2, heading[1].length));
         var headingElement = document.createElement("h" + level);
@@ -92,14 +131,17 @@
           content.appendChild(list);
         }
         var item = document.createElement("li");
-        item.textContent = plainInline(bullet[1]);
+        appendInline(item, bullet[1]);
         list.appendChild(item);
         return;
       }
 
       endList();
       var paragraph = document.createElement("p");
-      paragraph.textContent = plainInline(line);
+      if (/^(?:\[[^\]]+\]\(https?:\/\/[^)]+\))(?:\s*·\s*\[[^\]]+\]\(https?:\/\/[^)]+\))*$/.test(line)) {
+        paragraph.className = "scc-project-links";
+      }
+      appendInline(paragraph, line);
       content.appendChild(paragraph);
     });
 
