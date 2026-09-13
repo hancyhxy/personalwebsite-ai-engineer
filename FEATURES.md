@@ -42,7 +42,7 @@ Read this file before changing `index-badge.html`, the immersive project field, 
 
 ### Visual contract
 
-- Opening uses the 11 curated project images exactly once, with solid color and full opacity. The five archive-only projects are excluded from the ribbon and scene, not deleted from the site.
+- Opening uses the 11 curated project images exactly once, with solid color and full opacity. The six archive-only projects are excluded from the ribbon and scene, not deleted from the site.
 - Opening images have square corners.
 - Images remain horizontal or vertical rather than arbitrarily tilted.
 - The sine ribbon is compact; it must not spread into a sparse full-screen diagonal.
@@ -82,11 +82,11 @@ Read this file before changing `index-badge.html`, the immersive project field, 
 
 The desktop narrative contains exactly three chapter overviews, in this order. Each chapter is one composition: its title, keywords, substantive chapter summary and selected projects appear together. No separate introduction screen, visible `01 / 03`, compact-title fold or automatic per-project slideshow. Omit the repeated “Selected Work” eyebrow above chapter titles. Render each chapter keyword as a separate identity-badge-style tag: monospace type, thin neutral outline, 2px corners and a restrained offset shadow; retain the same keywords and use wrapping tags in the HTML fallback too. Tags are descriptive text, not buttons.
 
-1. **Independent Work** — AI Prototyping · Interactive Products · Content Practice. Four projects surround the summary of design, implementation and content practice. Newest first: Claude Code ↔ Figma, Drum Kit, FriendUp, KOL. Do not invent employment or results.
+1. **Independent Work** — AI Prototyping · Interactive Products · Content Practice. Four projects surround the summary of design, implementation and content practice. Newest first: Tech Fest | AI Showcase, Claude Code ↔ Figma, Drum Kit, FriendUp. The Showcase is a concise record of Linkaroo and Anonymous Connection as exhibited working prototypes; do not invent employment or results.
 2. **UX Designer** — Platform Systems · Complex Workflows · Global Experiences. Four projects surround the summary of platform/UX practice, with ByteDance (2023) before Alibaba (2022, 2021); Dispatch is not the sole central subject.
 3. **Experimental Practice** — Space · Objects · Play. Exactly three projects: **My Friends Are My Power Station** (larger upper-center visual), **Design Museum Tour as a Game**, **The Museum Kit**. Museum Tour is explicitly described as a concept proposal, not a deployed museum system. Parsons remains truthful project/education context, not the chapter title.
 
-Project membership and `sceneFeatured: false` archive exclusions are declared in canonical project data. Keep all 16 entries and their detail indices intact. Food Memory, How Are Oscars Biased?, Solar System Relationships, Farmer Coffee Logo and Global 1M Audition are archive-only, not removed. Preserve old `#work-parsons` links as an alias for `#work-experimental`.
+Project membership and `sceneFeatured: false` archive exclusions are declared in canonical project data. Keep all 17 entries intact, preserve the original 16 detail indices, and append new detail identities rather than renumbering old ones. KOL Growth Strategy, Food Memory, How Are Oscars Biased?, Solar System Relationships, Farmer Coffee Logo and Global 1M Audition are archive-only, not removed. Preserve old `#work-parsons` links as an alias for `#work-experimental`.
 
 ### Locked focus behavior
 
@@ -105,7 +105,7 @@ Project membership and `sceneFeatured: false` archive exclusions are declared in
 
 At each chapter's overview center, all four UX / four Independent / three Experimental images and their labels fit in the desktop viewport without overlapping the chapter copy or one another. Experimental gives Power Station greater visual weight. Keep approximately 8–16 visible decorative rectangles and faint/edge-cropped neighboring works to imply a larger field.
 
-There are 11 curated scene images, not 16 repeated reading stops. Preserve 16 canonical detail identities and all archive routes. Never duplicate clickable projects to manufacture density. Mobile art direction is being validated one chapter at a time; retain native touch wiring and full static/fallback access.
+There are 11 curated scene images, not 17 repeated reading stops. Preserve 17 canonical detail identities, all 16 legacy gallery routes and every archive route. Never duplicate clickable projects to manufacture density. Mobile art direction is being validated one chapter at a time; retain native touch wiring and full static/fallback access.
 
 ### Mobile pilot — Independent Work (≤700px)
 
@@ -141,8 +141,8 @@ There are 11 curated scene images, not 16 repeated reading stops. Preserve 16 ca
 - The upper-right, 44px hamburger fades in with the stationary upper-left name. It is hidden on the resting hero and during the opening; invisible controls are not focusable. Expose correct `aria-controls`, accessible name and `aria-expanded` state.
 - The menu contains the three Selected Work chapter links, All Projects, Résumé and Contact. Chapter links preserve canonical anchors and reduced-motion/HTML fallback behavior. Résumé invokes the existing Learn More/printer entry, not a new printer implementation.
 - Use a native modal with an explicit Tab/Shift-Tab cycle, visible focus and an accessible close button. Escape and close restore focus and the original main-page scroll, and always release the menu's scroll lock. Only the directory pane scrolls while open; opening it never lengthens the main page. No animation may lock normal page scrolling.
-- All Projects opens the complete, quiet 16-project directory, including the five archive-only projects. No thumbnail entrance flights. Match canonical entries to local `project-scrollcarousel.html?project=N` routes; preserve each case's index and template.
-- Retain By Topic and My Journey. My Journey orders Independent & Study → ByteDance → Alibaba → Foundations, with descending dates inside each group. The index is keyboard-accessible and available on mobile/reduced motion; failed gallery fetching retains the server-authored 16 local detail links. Legacy `#work-next` opens the directory.
+- All Projects opens the complete, quiet 17-project directory, including the six archive-only projects. No thumbnail entrance flights. Match canonical entries to local `project-scrollcarousel.html?project=N` routes; preserve each case's index and template.
+- Retain By Topic and My Journey. My Journey orders Independent & Study → ByteDance → Alibaba → Foundations, with descending dates inside each group. The index is keyboard-accessible and available on mobile/reduced motion; failed gallery fetching retains the server-authored 17 local detail links. Legacy `#work-next` opens the directory.
 
 ## 04 — Résumé
 
@@ -215,7 +215,7 @@ Shared detail elements—Hero, project metadata, navigation, and footer—may us
 
 - Test at least one `stacked` and one `two-column` project from card click through full detail rendering.
 - Verify one activation runs the Flip + Zoom and reaches the real detail URL without a preview step, stretched imagery, second arrival animation or measurement iframe. Verify reverse close, deep-detail close, menu return and reduced-motion/direct-navigation fallback.
-- Verify all 16 detail Heroes load their declared full-resolution local sources.
+- Verify all 17 detail Heroes load their declared full-resolution local sources.
 - Verify each project uses its declared template on desktop and preserves reading order on mobile.
 
 ## Global — Ask AI
@@ -243,7 +243,7 @@ Perplexity is not part of the current provider set.
 
 ## Cross-cutting acceptance
 
-- Preserve all 16 real-project links and project-specific content.
+- Preserve all 17 real-project links and project-specific content, including all 16 legacy gallery URLs.
 - Interactive UI remains above the WebGL hit area and receives its own clicks.
 - Desktop, mobile, keyboard, and reduced-motion paths reach equivalent content.
 - No opening, field, or transition animation leaves scrolling locked after completion or interruption.

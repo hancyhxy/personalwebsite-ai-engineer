@@ -1,5 +1,14 @@
 [
   {
+    "date": "2026-06-18",
+    "project name": "Tech Fest | AI Showcase",
+    "tag": "AI-assisted Development, SwiftUI, Physical Computing",
+    "classification": "Experiential",
+    "coverImageUrl": "gallery/tech-fest-ai-showcase/public/cover.jpg",
+    "projectUrl": "gallery/tech-fest-ai-showcase/index.html",
+    "company": "UTS"
+  },
+  {
     "date": "2026-02-28",
     "project name": "Claude Code ↔ Figma: Building an AI-Powered Portfolio Assistant",
     "tag": "AI, MCP, Product Design",

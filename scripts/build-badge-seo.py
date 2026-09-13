@@ -40,7 +40,7 @@ else:
     old = '<div id="work-collection" aria-label="Project collection"></div>'
     assert old in source
     source = source.replace(old, '<div id="work-collection" aria-label="Project collection">' + static + '</div>')
-source = source.replace('Loading the collection…', f'{len(projects)} projects / Selected work')
+source = re.sub(r'\d+ projects / Selected work|Loading the collection…', f'{len(projects)} projects / Selected work', source)
 page.write_text(source)
 ET.register_namespace('', 'http://www.sitemaps.org/schemas/sitemap/0.9')
 urlset = ET.Element('{http://www.sitemaps.org/schemas/sitemap/0.9}urlset')

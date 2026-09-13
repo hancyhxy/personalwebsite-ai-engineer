@@ -1,4 +1,4 @@
-/* Verify the 16 legacy /gallery routes before custom-domain cutover. */
+/* Verify the 16 legacy routes plus the current /gallery case before custom-domain cutover. */
 const assert = require('node:assert/strict');
 const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
 const base = (process.env.BASE_URL || 'http://127.0.0.1:8765').replace(/\/$/, '');
@@ -18,7 +18,8 @@ const slugs = [
   'the-museum-kit',
   'solar-system-relationship',
   'Farmer-Coffee-Logo',
-  'musically-1m-audition'
+  'musically-1m-audition',
+  'tech-fest-ai-showcase'
 ];
 
 (async () => {
@@ -55,7 +56,7 @@ const slugs = [
         }
       }
       await page.close();
-      console.log(`PASS ${viewport.width}px: 16 gallery routes, shared components, Heroes and homepage returns`);
+      console.log(`PASS ${viewport.width}px: 17 gallery routes, shared components, Heroes and homepage returns`);
     }
     assert.deepEqual(failures, []);
   } finally {

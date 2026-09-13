@@ -82,6 +82,7 @@ const SCROLLCAROUSEL_PROJECTS = [
   {
     title: "KOL Growth Strategy",
     section: "independent",
+    sceneFeatured: false,
     detailLayout: "two-column",
     year: 2021,
     category: "content",
@@ -204,5 +205,17 @@ const SCROLLCAROUSEL_PROJECTS = [
     thumb: "./assets/images/thumbs/musically-1m-audition-thumb.jpg",
     hero: "./assets/images/musically-1m-audition/cover.png",
     url: "./gallery/musically-1m-audition/index.html"
+  },
+  {
+    title: "Tech Fest | AI Showcase",
+    section: "independent",
+    detailLayout: "stacked",
+    year: 2026,
+    category: "experiential",
+    company: "UTS",
+    summary: "Two exhibited prototypes spanning an AI-assisted SwiftUI product and a web-connected physical interaction.",
+    thumb: "./assets/images/thumbs/tech-fest-ai-showcase-thumb.jpg",
+    hero: "./assets/images/tech-fest-ai-showcase/cover.jpg",
+    url: "./gallery/tech-fest-ai-showcase/index.html"
   }
 ];

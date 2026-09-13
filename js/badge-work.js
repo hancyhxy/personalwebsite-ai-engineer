@@ -18,7 +18,7 @@ window.BADGE_WORK_READY = (async () => {
   ];
   let projects = [], mode = 'topic';
   section.dataset.layout = mode;
-  // Keep the server-authored 16 links usable even if gallery.json cannot load.
+  // Keep the server-authored complete index usable even if gallery.json cannot load.
   root.querySelectorAll('a.work-item').forEach(a => {
     const i = SCROLLCAROUSEL_PROJECTS.findIndex(p => new URL(p.url, 'https://xyhan.com/').pathname === new URL(a.href).pathname);
     if (i >= 0) a.href = './project-scrollcarousel.html?project=' + i;
@@ -61,7 +61,7 @@ window.BADGE_WORK_READY = (async () => {
     const data = await response.json();
     projects = data.map((p, i) => {
       const slug = p.projectUrl.split('/')[1], company = p.company || '';
-      const topic = /chatbot|help-center/i.test(slug) ? 'conversation' : /Delivery|Dispatch/i.test(slug) ? 'commerce' : /portfolio-ai|friendup|drum-kit/i.test(slug) ? 'build' : /KOL|audition/i.test(slug) ? 'content' : 'experience';
+      const topic = /chatbot|help-center/i.test(slug) ? 'conversation' : /Delivery|Dispatch/i.test(slug) ? 'commerce' : /portfolio-ai|friendup|drum-kit|tech-fest/i.test(slug) ? 'build' : /KOL|audition/i.test(slug) ? 'content' : 'experience';
       const chapter = /Alibaba/i.test(company) ? 'alibaba' : /TikTok/i.test(company) ? 'bytedance' : /Personal|UTS|Red Note/i.test(company) ? 'independent' : 'early';
       const localIndex = SCROLLCAROUSEL_PROJECTS.findIndex(project => project.url.replace(/^\.\//, '') === p.projectUrl.replace(/^\.\//, ''));
       const el = document.createElement('a'); el.className = 'work-item'; el.dataset.projectId = slug;

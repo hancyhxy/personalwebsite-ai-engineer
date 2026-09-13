@@ -28,8 +28,8 @@ function overlap(a,b) { return a.left < b.left+b.width && a.left+a.width > b.lef
     const centers=await page.evaluate(()=>BadgeScene.groups.map(g=>({id:g.id,at:g.center,count:g.projects.length})));
     await page.mouse.move(720,500);await go(centers[0].at);await page.waitForTimeout(500);
     const contract=await page.evaluate(()=>({type:BadgeScene.runtime.rig.camera.type,total:BadgeScene.projects.length,groups:BadgeScene.groups.map(g=>g.projects.length),featured:BadgeScene.featured,archived:BadgeScene.archived,duration:BadgeScene.duration,heroOverlap:BadgeScene.timing.heroOverlap,physicalHeight:document.querySelector('#work-story').getBoundingClientRect().height/innerHeight,blanks:BadgeScene.runtime.background.mesh.isInstancedMesh,old:[...document.scripts].some(s=>/badge-webgl|badge-scroll-stage/.test(s.src))}));
-    assert.equal(contract.type,'PerspectiveCamera');assert.equal(contract.total,16);assert.deepEqual(contract.groups,[4,4,3]);assert.equal(contract.featured.length,11);assert.deepEqual(contract.archived,[10,11,13,14,15]);assert.equal(contract.old,false);assert.equal(contract.blanks,true);assert.ok(contract.duration<=4);assert.ok(Math.abs(contract.physicalHeight+contract.heroOverlap-contract.duration)<.002);
-    pass('Three overview chapters, 11 featured / 5 archived, <=4 viewport travel; no legacy driver');
+    assert.equal(contract.type,'PerspectiveCamera');assert.equal(contract.total,17);assert.deepEqual(contract.groups,[4,4,3]);assert.equal(contract.featured.length,11);assert.deepEqual(contract.archived,[6,10,11,13,14,15]);assert.equal(contract.old,false);assert.equal(contract.blanks,true);assert.ok(contract.duration<=4);assert.ok(Math.abs(contract.physicalHeight+contract.heroOverlap-contract.duration)<.002);
+    pass('Three overview chapters, 11 featured / 6 archived, <=4 viewport travel; no legacy driver');
     const snapshot=()=>page.evaluate(()=>{
       const r=BadgeScene.runtime;
       return {focus:r.state.focused,group:r.state.group.id,header:r.reading.headers.find(h=>h.group===r.state.group).el.getBoundingClientRect().toJSON(),items:r.field.items.filter(i=>i.group===r.state.group).map(i=>({index:i.index,rect:i.rect,neutral:r.rig.rect(i.mesh,true),dom:BadgeScene.interaction.links[i.index].getBoundingClientRect().toJSON(),label:BadgeScene.interaction.links[i.index].querySelector('span').getBoundingClientRect().toJSON(),alpha:i.opacity,color:i.mesh.material.color.getHex(),owner:i.owner,visible:i.mesh.visible})),hiddenArchive:BadgeScene.archived.every(i=>!r.field.items[i].mesh.visible&&BadgeScene.interaction.links[i].hidden&&!r.field.items[i].mesh.material.map)};
@@ -106,14 +106,14 @@ function overlap(a,b) { return a.left < b.left+b.width && a.left+a.width > b.lef
     await go(contract.duration);
     assert.equal(await page.locator('#portfolio-menu').evaluate(e=>e.open),false);
     await page.locator('#portfolio-menu-toggle').click();await page.locator('.portfolio-menu-all').click();
-    assert.equal(await page.locator('#work-collection .work-item').count(),16);
+    assert.equal(await page.locator('#work-collection .work-item').count(),17);
     for(const i of contract.archived)assert.equal(await page.locator('#work-collection .work-item[href$="project='+i+'"]').count(),1);
     await page.locator('#work-collection .work-item[href$="project=13"]').click();
     await page.waitForURL(url=>url.searchParams.get('project')==='13');
     await page.locator('#scc-detail-hero-image').evaluate(img=>img.decode());
     await page.locator('.scc-detail-close').click();await page.waitForURL(url=>url.pathname.endsWith('/'+entry));
     await page.waitForFunction(()=>document.querySelector('#portfolio-menu')?.open);
-    pass('Menu archive retains 16 links; archive-only detail returns to the open directory');
+    pass('Menu archive retains 17 links; archive-only detail returns to the open directory');
     await page.locator('.portfolio-menu-close').click();
     await page.locator('#agent-fab').click();assert.equal(await page.locator('#agent-panel').isVisible(),true);assert.equal(await page.locator('.agent-providers a').count(),3);const askHref=await page.locator('[data-provider="chatgpt"]').getAttribute('href');assert.ok(new URL(askHref).searchParams.get('q').includes('https://hancyhxy.github.io/personalwebsite-ai-engineer/'));await page.keyboard.press('Escape');
     pass('Ask AI panel and all three providers preserved');
@@ -143,14 +143,14 @@ function overlap(a,b) { return a.left < b.left+b.width && a.left+a.width > b.lef
     pass('Non-top reload preserves position without overlap; top reload deliberately replays the opening');await intro.close();
     // Mobile art direction is deferred: only functional/static access is asserted here.
     const mobile=await browser.newPage({viewport:{width:390,height:844},isMobile:true,hasTouch:true});watch(mobile);await mobile.goto(base+'/'+entry+'#work-ux');await mobile.waitForFunction(()=>window.BadgeScene?.runtime?.state);
-    assert.equal(await mobile.evaluate(()=>BadgeScene.scroll.lenis.options.syncTouch),false);assert.equal(await mobile.locator('.scene-fallback a').count(),16);await mobile.close();
+    assert.equal(await mobile.evaluate(()=>BadgeScene.scroll.lenis.options.syncTouch),false);assert.equal(await mobile.locator('.scene-fallback a').count(),17);await mobile.close();
     pass('Mobile native touch wiring and complete fallback content retained; no mobile visual acceptance claimed');
     const fallback=await browser.newPage({viewport:{width:390,height:844},reducedMotion:'reduce'});watch(fallback);await fallback.goto(base+'/'+entry);await fallback.waitForSelector('.scene-fallback a');
-    assert.equal(await fallback.locator('.scene-fallback a').count(),16);assert.equal(await fallback.locator('#fallback-experimental a').count(),3);assert.equal(await fallback.locator('#fallback-archive a').count(),5);assert.equal(await fallback.locator('.badge-scene-canvas').count(),0);assert.notEqual(await fallback.evaluate(()=>getComputedStyle(document.body).overflow),'hidden');
-    pass('Reduced-motion fallback exposes 11 selections plus 5 archive entries without locking scroll');await fallback.close();
+    assert.equal(await fallback.locator('.scene-fallback a').count(),17);assert.equal(await fallback.locator('#fallback-experimental a').count(),3);assert.equal(await fallback.locator('#fallback-archive a').count(),6);assert.equal(await fallback.locator('.badge-scene-canvas').count(),0);assert.notEqual(await fallback.evaluate(()=>getComputedStyle(document.body).overflow),'hidden');
+    pass('Reduced-motion fallback exposes 11 selections plus 6 archive entries without locking scroll');await fallback.close();
     await page.evaluate(()=>BadgeScene.runtime.renderer.getContext().getExtension('WEBGL_lose_context').loseContext());await page.waitForSelector('.scene-fallback-mode');assert.equal(await page.locator('.scene-fallback').isVisible(),true);
     pass('WebGL context loss fails open to complete HTML content');
-    const missing=await browser.newPage();watch(missing);await missing.route('**/assets/images/thumbs/Rider-Dispatch-Scheduling-Platform-thumb.jpg',r=>r.abort());await missing.goto(base+'/'+entry);await missing.waitForSelector('.scene-fallback-mode');assert.equal(await missing.locator('.scene-fallback a').count(),16);assert.notEqual(await missing.evaluate(()=>getComputedStyle(document.body).overflow),'hidden');await missing.close();
+    const missing=await browser.newPage();watch(missing);await missing.route('**/assets/images/thumbs/Rider-Dispatch-Scheduling-Platform-thumb.jpg',r=>r.abort());await missing.goto(base+'/'+entry);await missing.waitForSelector('.scene-fallback-mode');assert.equal(await missing.locator('.scene-fallback a').count(),17);assert.notEqual(await missing.evaluate(()=>getComputedStyle(document.body).overflow),'hidden');await missing.close();
     pass('Texture failure preserves all project routes and unlocks scrolling');
     assert.deepEqual(errors,[]);pass('No uncaught browser exceptions');
     if(out)fs.writeFileSync(path.join(out,'checks.json'),JSON.stringify({checks,errors,contract},null,2));

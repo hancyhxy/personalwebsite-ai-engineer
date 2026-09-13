@@ -3,10 +3,10 @@
 ## Implemented locally (not deployed)
 
 - `index-badge.html`: descriptive title/meta description, canonical `https://xyhan.com/`, Open Graph/Twitter cards, `Person` + `ProfilePage` + 16-item `ItemList` JSON-LD.
-- All 16 project links and tags are present in the initial HTML, not just JavaScript. Interactive topic/journey rendering replaces them after successful data loading. They remain usable with JavaScript disabled or gallery fetch failure.
+- All 17 project links and tags are present in the initial HTML, not just JavaScript. Interactive topic/journey rendering replaces them after successful data loading. They remain usable with JavaScript disabled or gallery fetch failure.
 - `assets/images/og-badge.png`: 1200×630 social preview, made from the local public portrait and confirmed identity copy. No private résumé content.
 - `robots.txt`: permits crawling and declares the sitemap.
-- `sitemap.xml`: homepage + 16 canonical public project pages. No invented last-modified dates and no preview/demo URLs. All 16 project URLs returned HTTP 200 in the pre-publication check.
+- `sitemap.xml`: homepage + 17 canonical public project pages. No invented last-modified dates and no preview/demo URLs. All 17 project URLs—including the 16 legacy routes—returned HTTP 200 in the pre-publication check.
 - `llms.txt`: public profile summary and project index. This is optional AI discovery guidance, not a recognized ranking factor or guarantee an assistant can browse the site. No private correspondence or résumé text.
 
 Regenerate metadata and project indexes after changing `content/gallery.json`:

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tech Fest | AI Showcase — Xinyi Han</title>
+  <meta name="description" content="Linkaroo and Anonymous Connection, two working prototypes presented by Xinyi Han at Tech Fest | AI Showcase.">
+  <meta name="robots" content="index,follow">
+  <meta property="og:title" content="Tech Fest | AI Showcase">
+  <meta property="og:description" content="A runnable iOS product and a web-and-hardware social installation presented at Tech Fest | AI Showcase.">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="./public/cover.jpg">
+  <link rel="icon" type="image/x-icon" href="../../logo/favicon.ico">
+  <link rel="icon" type="image/svg+xml" href="../../logo/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="../../logo/favicon-32x32.png">
+  <link rel="stylesheet" href="../../style/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    .hero-image-container { width: 100vw; margin-left: calc(-50vw + 50%); display: flex; background: #121212; }
+    .hero-image { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; display: block; }
+    .project-brief-container { padding: var(--spacing-sm) 0; border-bottom: 1px solid var(--border-color); background: #fff; }
+    .project-content { max-width: 1040px; margin: 140px auto 110px; padding: 0 clamp(16px, 3vw, 30px); }
+    .content-section { margin-bottom: var(--spacing-2xl); }
+    .project-title { font-size: var(--font-size-2xl); font-weight: 600; line-height: 1.2; }
+    .section-title { font-size: var(--font-size-xl); font-weight: 600; margin-bottom: var(--spacing-md); }
+    .content-text { max-width: 720px; font-size: var(--font-size-base); line-height: 1.7; color: var(--primary-color); }
+    .project-image { width: 100%; margin: var(--spacing-lg) 0 var(--spacing-2xl); display: block; }
+    @media (max-width: 768px) {
+      .hero-image-container { width: 100%; margin-left: 0; }
+      .project-content { margin: 84px auto 64px; padding: 0 var(--spacing-sm); }
+      .project-title { font-size: var(--font-size-xl); }
+    }
+  </style>
+</head>
+<body>
+  <div data-component="header"></div>
+  <section class="hero-image-container">
+    <img src="./public/cover.jpg" alt="Linkaroo and Anonymous Connection presented at Tech Fest AI Showcase" class="hero-image" onerror="this.onerror=null; this.src='../../logo/hero-placeholder.svg';">
+  </section>
+  <section class="project-brief-container"><div class="container"><div data-component="project-info"></div></div></section>
+  <main class="project-content" data-layout="stacked">
+    <section class="content-section"><h1 class="project-title">Tech Fest | AI Showcase</h1></section>
+    <section class="content-section">
+      <h2 class="section-title">Two projects, one showcase</h2>
+      <p class="content-text">At Tech Fest | AI Showcase, I presented two working prototypes that move from interaction design into implementation: Linkaroo, a runnable iOS product, and Anonymous Connection, a web-and-hardware social installation.</p>
+    </section>
+    <section class="content-section">
+      <h2 class="section-title">Linkaroo</h2>
+      <p class="content-text">Linkaroo helps newcomers to Australia find context-aware community information and one-to-one volunteer support. I used an AI-assisted, spec-driven workflow to move from product concept and interface system to a runnable SwiftUI prototype.</p>
+      <img class="project-image" src="./public/linkaroo.jpg" alt="Linkaroo iOS prototype screens">
+    </section>
+    <section class="content-section">
+      <h2 class="section-title">Anonymous Connection</h2>
+      <p class="content-text">Anonymous Connection explores a lower-pressure way for strangers to meet. Participants create an avatar from their current mood and interests; the browser experience, collective wall and ESP32 screen turn those signals into a shared physical interaction.</p>
+      <img class="project-image" src="./public/anonymous-connection.jpg" alt="Anonymous Connection collective avatar wall">
+    </section>
+  </main>
+  <div data-component="footer"></div>
+  <script src="../../components/component-loader.js"></script>
+  <script src="../../components/project-info.js"></script>
+  <script src="../../style/script.js"></script>
+</body>
+</html>
