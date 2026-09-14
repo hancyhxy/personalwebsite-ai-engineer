@@ -1,0 +1,8 @@
+/* Quiet, opt-in sensor controls stay with the mobile badge, never above the story. */
+.badge-page .badge-tilt-controls{margin:18px auto 0;max-width:345px;text-align:center}
+.badge-page .badge-tilt-actions{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
+.badge-page .badge-tilt-actions button{min-height:44px;padding:10px 14px;border:1px solid #d9dcd3;border-radius:99px;background:transparent;font:12px/1.4 Inter,sans-serif;color:var(--ink)}
+.badge-page .badge-tilt-actions button[aria-pressed="true"]{background:#eeefe9}
+.badge-page .badge-tilt-actions button:disabled{cursor:default;color:var(--muted)}
+.badge-page .badge-tilt-controls p{margin:8px 0 0;font:11px/1.5 Inter,sans-serif;color:#73786c;text-wrap:balance}
+@media(min-width:701px),(pointer:fine){.badge-page .badge-tilt-controls{display:none}}

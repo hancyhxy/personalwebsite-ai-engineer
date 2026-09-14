@@ -36,5 +36,16 @@
 .badge-page .agent-panel textarea{background:#fbfaf6;border:1px solid #d5d9cd;font-size:11px;padding:10px;line-height:1.6;border-radius:6px;min-height:150px;max-height:240px;width:100%}
 .badge-page .agent-details p{font-size:9px;line-height:1.6;color:#7f8577;margin:10px 0}.badge-page .agent-status{font-size:10px;line-height:1.5;color:#526244;margin:0}.badge-page .agent-status:empty{display:none}.badge-page footer{padding-bottom:110px}
 @keyframes agent-arrive{from{opacity:0;transform:translateY(9px) scale(.98)}to{opacity:1;transform:none}}
-@media(max-width:600px){.badge-page .agent-fab{right:15px;bottom:calc(14px + env(safe-area-inset-bottom));min-height:54px}.badge-page .agent-orb{width:42px;height:42px}.badge-page.mobile-resume-active .agent-fab{right:10px;bottom:calc(10px + env(safe-area-inset-bottom));width:48px;min-width:48px;min-height:48px;height:48px;gap:0;padding:3px;border-radius:50%}.badge-page.mobile-resume-active .agent-fab>span:first-child{display:none}.badge-page.mobile-resume-active .agent-orb{width:40px;height:40px}.badge-page .agent-panel{right:15px;bottom:calc(80px + env(safe-area-inset-bottom));width:340px;max-height:calc(100dvh - 100px)}.badge-page.mobile-resume-active .agent-panel{right:10px;bottom:calc(66px + env(safe-area-inset-bottom));max-width:calc(100vw - 20px)}.badge-page .agent-providers small{font-size:9px}.badge-page .agent-details summary{min-height:44px}}
+/* Mobile: one quiet icon throughout; the launcher yields to the bottom axis. */
+@media(max-width:700px){
+ .badge-page{--agent-mobile-bottom:calc(10px + env(safe-area-inset-bottom))}
+ .badge-page.mobile-work-axis-active{--agent-mobile-bottom:calc(68px + env(safe-area-inset-bottom))}
+ .badge-page .agent-fab{right:10px;bottom:var(--agent-mobile-bottom);width:48px;min-width:48px;min-height:48px;height:48px;gap:0;padding:3px;border-radius:50%}
+ .badge-page .agent-fab>span:first-child{display:none}
+ .badge-page .agent-orb{width:40px;height:40px}
+ .badge-page .agent-dog svg,.badge-page .dog-gaze,.badge-page .agent-fab .dog-ear,.badge-page .dog-eyes ellipse{animation:none!important}
+ .badge-page .agent-panel{right:10px;bottom:calc(var(--agent-mobile-bottom) + 56px);width:340px;max-width:calc(100vw - 20px);max-height:calc(100dvh - var(--agent-mobile-bottom) - 76px)}
+ .badge-page .agent-providers small{font-size:9px}
+ .badge-page .agent-details summary{min-height:44px}
+}
 @media(prefers-reduced-motion:reduce){.badge-page .agent-panel{animation:none}.badge-page .agent-orb,.badge-page .agent-providers a,.badge-page .agent-dog svg,.badge-page .dog-ear,.badge-page .dog-eyes{transition:none}.badge-page .agent-dog svg,.badge-page .dog-gaze,.badge-page .agent-fab .dog-ear,.badge-page .dog-eyes ellipse{animation:none!important}.badge-page .agent-orb,.badge-page .agent-dog svg,.badge-page .dog-ear,.badge-page .dog-eyes{transform:none!important}}

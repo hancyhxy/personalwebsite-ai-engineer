@@ -1,38 +1,31 @@
-# Independent Work — mobile pilot
+# Mobile reading layout and tilt interaction
 
-## Scope
+The Independent Work-only pilot is superseded by the native layout for all three chapters (≤700px). `FEATURES.md` is the active behavior contract. The historical `badge-mobile-pilot-check.cjs` filename remains the mobile regression entry point.
 
-At ≤700px, Independent Work has a separately authored vertical composition. Desktop, the opening, UX Designer and Experimental Practice retain their layouts. The latter two mobile chapters are intentionally not visually accepted in this pass.
+## Reading layout
 
-- Full chapter copy and wrapping tags precede four original-color, 16:9 artworks.
-- At 390px, artwork width is approximately 296px rather than the previous 90–100px. Narrow phones reserve extra navigation clearance.
-- Images alternate subtly left/right; every image and caption becomes fully visible through native scrolling. No timed advance, extraction, snap or additional smoother.
-- Measured copy height protects the first image on short screens. Real images avoid the right progress rail.
-- The first chapter occupies 3.6 viewport heights; total scene travel is 6.35. Other chapter durations remain 1.2. The mobile pilot trades simultaneous overview density for readable image sizes.
-- The first chapter uses constant image scale and shared linear .70px/px translation. Desktop retains overview zoom and the eased reading beat.
-- Decorative opacity is reduced continuously while Independent Work is active.
-- The growing hero is horizontally clipped on mobile, preventing invisible overflow from widening the layout viewport and corrupting scroll coordinates.
-- Chapter-relative return snapshots preserve chapter identity when the viewport class changes. Existing snapshots remain readable.
+- Reuse the existing semantic HTML project links for 4 Independent / 4 UX / 3 Experimental selections, rather than generating another project list.
+- Left-aligned chapter title, tags and summary; consistent full-width 16:9 images and captions. Minimum 20px side margins, 32px introduction clearance, 36px project gaps, 64px chapter gaps, and 88px chapter-anchor/header clearance.
+- Content determines section height. No mobile perspective layout, chapter zoom, slow reading beat, Lenis or artificial multi-viewport spacer. After the opening, the canvas is hidden and continuous rendering stops; event-driven bookkeeping remains.
+- Height-only resizing never calls the scene driver's scrollTo. Native browser anchoring may adjust document scrollY to keep content visually stationary when preceding content changes size. Width-class changes preserve chapter-relative position and restore desktop compositions.
+- The mobile header has an opaque backing so preceding chapter captions cannot overlap the name. The right floating rail is hidden; menu chapter navigation remains. The bottom axis stays near the safe area and the 48px dog-only launcher yields upward while it is visible.
+- All 18 project links remain in the complete directory. The normal mobile story shows 11; reduced-motion/WebGL failure fallback shows all 18. Concept-proposal labeling remains visible for Museum Tour.
 
-## Changed files
+## Opt-in phone tilt
 
-- `js/badge-scene-config.js`: mobile chapter timing and pilot-only transform.
-- `js/badge-scene-scroll.js`: updated anchors/timeline and breakpoint progress restoration.
-- `js/badge-scene-reading.js`: measured mobile copy clearance.
-- `js/badge-scene-field.js`: authored mobile image lanes and sizes.
-- `js/badge-scene-background.js`: quieter mobile first-chapter decoration.
-- `js/badge-scene-interaction.js`: chapter identity on projected links.
-- `js/badge-navigation.js`: chapter-relative detail return snapshots.
-- `style/badge-scene.css`: scoped pilot typography, labels and hero overflow protection.
-- `scripts/badge-mobile-pilot-check.cjs`: new mobile regression coverage.
-- `FEATURES.md`: explicit mobile pilot contract and desktop-only duration qualification.
+- `js/badge-tilt.js` owns permission, calibration and sensor lifecycle; `BadgePortrait` in `js/badge-hero.js` reuses the nine existing portrait images, spring, shadow and glare pipeline.
+- Touch gestures no longer rotate/drag the badge; native scrolling owns them. PC mouse and keyboard input remain available.
+- On a coarse-pointer phone, Enable tilt interaction invokes DeviceOrientationEvent.requestPermission directly from a click where that API is required. No automatic request, storage of enabled state, network transmission or compass input.
+- First valid beta/gamma sample establishes a comfortable-grip baseline. Screen orientation remaps axes; a 3-degree dead zone and bounded input limit movement. Recenter and Turn off tilt remain available.
+- Offscreen/hidden/unfocused states remove the sensor listener, return to neutral, and recalibrate on resumption. Reduced motion disables the feature. Permission denial/errors, insecure or unsupported devices, and missing orientation data leave normal browsing intact with an explanatory status.
 
 ## Validation
 
-Passed sequentially with local headless Chrome and software WebGL:
+Passed locally with headless Chromium, software WebGL and synthetic orientation input:
 
-- `scripts/badge-mobile-pilot-check.cjs`: 390×844, 375×667, 320×568, 700×600. Copy/image clearance, image sizes, navigation clearance, complete image/caption visibility, projected hit bounds, four direct touch-to-detail entries and returns, native touch configuration, reverse scrolling, height/breakpoint resize, next-chapter navigation, final exit. The subsequent Flip + Zoom replaces the original preview step; see `FLIP-ZOOM-NOTES.md`.
-- `scripts/badge-scene-check.cjs`: desktop 4/4/3 compositions, spatial rhythm, pointer spring, reverse/resize, keyboard navigation, both detail templates, complete directory return, Ask AI, résumé printing/download/replay, opening geometry, reduced motion, WebGL context loss and texture-failure fallback.
-- JavaScript syntax and `git diff --check`.
+- `scripts/badge-mobile-pilot-check.cjs`: 390×844, 375×667, 320×568, 700×700; consistent geometry, exact native 1:1 displacement, chapter navigation, three touch detail/return paths, native resize anchoring, desktop/mobile restoration, reduced motion and WebGL loss.
+- `scripts/badge-mobile-agent-check.cjs`: mobile/desktop boundaries, icon sizing, panel opening/closing and viewport fit, axis avoidance, reverse scroll and reduced motion.
+- `scripts/badge-tilt-check.cjs`: click-only permission, all nine directions, dead zone, bounded spring response, calibration, screen rotation, pause/resume, explicit disable, denial/rejection, reduced motion, missing data, unsupported and insecure contexts.
+- `scripts/badge-scene-check.cjs`: desktop compositions/rhythm/pointer, keyboard, detail templates/return, complete directory, Ask AI, printer reading/drag/print/download/replay, opening and reload behavior, failure fallbacks.
 
-These are browser-emulation checks, not iPhone Safari or real-device performance acceptance. Review the pilot on a phone before extending the composition to UX Designer and Experimental Practice. In particular, verify browser-toolbar resizing and the perceived amount of vertical whitespace.
+These are not real-device Safari performance or physical sensor acceptance. Verify on an HTTPS iPhone preview before publishing: permission dialog, comfortable neutral grip, tilt direction/sign, Safari toolbar movement, touch scrolling over the badge, and return from a project. No deployment was performed.

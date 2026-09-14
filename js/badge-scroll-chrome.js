@@ -42,7 +42,6 @@
     var resumeTop = document.getElementById('resume-section').getBoundingClientRect().top;
     var mobileResume = innerWidth <= 700 && resumeTop < h * .92;
     rail.hidden = opening || mobileResume;
-    document.body.classList.toggle('mobile-resume-active', innerWidth <= 600 && resumeTop < h * .92);
     // Two stationary names crossfade; no logo travels across the screen.
     var centerAlpha = reduced.matches ? (y > 24 ? 0 : 1) : 1 - B.smooth(0, h * .18, y);
     var dockAlpha = reduced.matches ? (y > 24 ? 1 : 0) : B.smooth(h * .08, h * .24, y);
@@ -54,10 +53,11 @@
       el.tabIndex = available ? 0 : -1; el.setAttribute('aria-hidden', String(!available));
       el.style.pointerEvents = available ? 'auto' : 'none';
     });
+    var nativeHero = reduced.matches || B.nativeMobile;
     var push = B.easeOut(0, h * .80, y);
-    var fade = reduced.matches ? 0 : B.smooth(h * .12, h * .82, y);
+    var fade = nativeHero ? 0 : B.smooth(h * .12, h * .82, y);
     // A shallow forward/upward arc: grow gently while rising, never shrink away.
-    stage.style.transform = reduced.matches ? '' : 'translate3d(0,' + (Math.min(y, h) * .20 - h * .06 * push * push) + 'px,0) scale(' + (1 + push * .14) + ')';
+    stage.style.transform = nativeHero ? '' : 'translate3d(0,' + (Math.min(y, h) * .20 - h * .06 * push * push) + 'px,0) scale(' + (1 + push * .14) + ')';
     stage.style.opacity = 1 - fade;
     stage.inert = fade > .96;
     cue.style.opacity = 1 - fade; cue.inert = fade > .96;
@@ -70,7 +70,8 @@
       var state = B.sample(B.clamp(travel, 0, B.duration));
       showing = !opening && travel >= -.12 && travel < B.duration;
       active = showing ? state.group : null;
-      workProgress = B.clamp(travel / B.groups[B.groups.length - 1].center, 0, 1);
+      var progressEnd = B.nativeMobile ? (document.getElementById('fallback-experimental').getBoundingClientRect().bottom + y - h - B.scroll.start) / h : B.groups[B.groups.length - 1].center;
+      workProgress = B.clamp(travel / Math.max(.01, progressEnd), 0, 1);
     } else {
       B.groups.forEach(function (g) {
         var el = document.getElementById('fallback-' + g.id), rect = el.getBoundingClientRect();
@@ -84,6 +85,7 @@
     // Finish at the last overview, then retire before the incoming résumé reaches the axis.
     showing = showing && resumeTop > h * .91;
     timeline.hidden = !showing;
+    document.body.classList.toggle('mobile-work-axis-active', innerWidth <= 700 && showing);
     timeline.style.opacity = reduced.matches ? 1 : B.smooth(h * .91, h * .98, resumeTop);
     track.style.setProperty('--chapter-progress', workProgress); value(track, workProgress);
     track.setAttribute('aria-valuetext', 'Selected Work ' + newest + '–' + oldest + ', ' + Math.round(workProgress * 100) + '%');

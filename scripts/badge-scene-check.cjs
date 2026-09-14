@@ -141,10 +141,10 @@ function overlap(a,b) { return a.left < b.left+b.width && a.left+a.width > b.lef
     assert.equal(await intro.evaluate(()=>performance.getEntriesByType('navigation')[0]?.type),'reload');assert.ok(await intro.evaluate(()=>scrollY>innerHeight));assert.equal(await intro.locator('.portfolio-opening').count(),0);assert.equal(await intro.evaluate(()=>document.documentElement.classList.contains('opening-pending')||document.body.classList.contains('opening-active')),false);
     await intro.evaluate(()=>scrollTo(0,0));navigation=intro.waitForNavigation({waitUntil:'load'});await cdp.send('Page.reload',{ignoreCache:true});await navigation;await intro.locator('.opening-skip').waitFor({state:'visible',timeout:5000});assert.equal(await intro.evaluate(()=>scrollY),0);await intro.locator('.opening-skip').click();
     pass('Non-top reload preserves position without overlap; top reload deliberately replays the opening');await intro.close();
-    // Mobile art direction is deferred: only functional/static access is asserted here.
+    // Detailed native mobile geometry is covered by badge-mobile-pilot-check.cjs.
     const mobile=await browser.newPage({viewport:{width:390,height:844},isMobile:true,hasTouch:true});watch(mobile);await mobile.goto(base+'/'+entry+'#work-ux');await mobile.waitForFunction(()=>window.BadgeScene?.runtime?.state);
-    assert.equal(await mobile.evaluate(()=>BadgeScene.scroll.lenis.options.syncTouch),false);assert.equal(await mobile.locator('.scene-fallback a').count(),18);await mobile.close();
-    pass('Mobile native touch wiring and complete fallback content retained; no mobile visual acceptance claimed');
+    assert.equal(await mobile.evaluate(()=>BadgeScene.scroll.lenis),null);assert.equal(await mobile.locator('.scene-fallback a:visible').count(),11);assert.equal(await mobile.locator('.scene-fallback a').count(),18);await mobile.close();
+    pass('Mobile native reading exposes 11 selected links without a scroll smoother; complete fallback retained');
     const fallback=await browser.newPage({viewport:{width:390,height:844},reducedMotion:'reduce'});watch(fallback);await fallback.goto(base+'/'+entry);await fallback.waitForSelector('.scene-fallback a');
     assert.equal(await fallback.locator('.scene-fallback a').count(),18);assert.equal(await fallback.locator('#fallback-experimental a').count(),3);assert.equal(await fallback.locator('#fallback-archive a').count(),7);assert.equal(await fallback.locator('.badge-scene-canvas').count(),0);assert.notEqual(await fallback.evaluate(()=>getComputedStyle(document.body).overflow),'hidden');
     pass('Reduced-motion fallback exposes 11 selections plus 7 archive entries without locking scroll');await fallback.close();

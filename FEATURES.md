@@ -60,6 +60,9 @@ Read this file before changing `index-badge.html`, the immersive project field, 
 - Pointer percentage is shared by tilt, directional shadow, restrained glare, and portrait direction.
 - The portrait changes among nine directional images according to pointer position.
 - Keyboard direction controls remain available.
+- On touch phones at ≤700px, an explicit `Enable tilt interaction` button offers local-only device-orientation input. Request iOS motion permission only from that click and only in a secure context; never auto-prompt or upload sensor values. Touch dragging no longer drives the portrait or captures native scrolling.
+- Calibrate beta/gamma against the first valid sample at the current comfortable grip. Apply screen-orientation-aware axes, a 3° dead zone, bounded input and the existing portrait/spring pipeline; ignore alpha/compass heading. Keep nine-direction portrait images and subtle rotation targets (bounded at 4.5° X / 6.75° Y with default tokens, with restrained spring settling).
+- Expose Turn off tilt and Recenter controls. Pause/remove sensor listeners while the badge is offscreen, the page is hidden or unfocused; re-entry recalibrates. Rotation changes also recalibrate. Reduced motion disables opt-in interaction; denial, unsupported/insecure devices and missing sensor data leave a neutral card with a readable status and normal browsing. No persisted auto-enable.
 - Pointer exit from the viewport, window blur, or scrolling the badge offscreen returns the portrait and badge smoothly to neutral. Leaving the card itself does not reset the gaze.
 - Alibaba and ByteDance project entries remain usable.
 - `Learn more about me` scrolls to the résumé section and starts the existing printer flow.
@@ -90,7 +93,7 @@ Project membership and `sceneFeatured: false` archive exclusions are declared in
 
 ### Locked focus behavior
 
-- On desktop, a single reversible timeline moves between three overview compositions (4 UX / 4 Independent / 3 Experimental), with approximately 3–4 viewport heights of total travel including exit. The mobile pilot below extends only Independent Work. Do not add an empty extra viewport after the scene.
+- On desktop, a single reversible timeline moves between three overview compositions (4 UX / 4 Independent / 3 Experimental), with approximately 3–4 viewport heights of total travel including exit. Mobile uses the native reading layout below. Do not add an empty extra viewport after the scene.
 - All selected works in the current group appear simultaneously in original color and full opacity at the overview center. Neighboring groups remain at lower opacity and blend continuously through boundaries. Stable original indices are retained; sort within chapters by descending project year, preserving the canonical order for ties. Chapters may overlap in dates; this is not a fabricated employment timeline.
 - Images stay in the collage; none is automatically extracted and enlarged into a per-project reading frame. Chapter summaries remain central; small project labels appear beneath the images. Individual case summaries stay in detail/static views.
 - Active chapter imagery and text share one strictly monotone spatial rhythm: faster entry/exit at boundaries, a slow reading beat around each overview center. Average travel remains .70 CSS px per physical scroll px; instantaneous movement is about .10 at the reading center and 1.30 at a boundary. There is no scroll snap, timed pause, automatic chapter advance or second smoothing loop.
@@ -105,17 +108,18 @@ Project membership and `sceneFeatured: false` archive exclusions are declared in
 
 At each chapter's overview center, all four UX / four Independent / three Experimental images and their labels fit in the desktop viewport without overlapping the chapter copy or one another. Experimental gives Power Station greater visual weight. Keep approximately 8–16 visible decorative rectangles and faint/edge-cropped neighboring works to imply a larger field.
 
-There are 11 curated scene images, not 18 repeated reading stops. Preserve 18 canonical detail identities, all 16 legacy gallery routes and every archive route. Never duplicate clickable projects to manufacture density. Mobile art direction is being validated one chapter at a time; retain native touch wiring and full static/fallback access.
+There are 11 curated scene images, not 18 repeated reading stops. Preserve 18 canonical detail identities, all 16 legacy gallery routes and every archive route. Never duplicate clickable projects to manufacture density. Mobile presents the same 11 selections as native HTML links; all 18 remain in the complete directory and failure fallback.
 
-### Mobile pilot — Independent Work (≤700px)
+### Mobile native reading layout (≤700px)
 
-- Only Independent Work receives the new mobile composition; desktop and the other two chapters retain their authored layouts. Opening art direction is unchanged.
-- Keep the existing title, wrapping descriptive tags and full chapter summary above four large, vertically staggered 16:9 images. Each image and its caption must become fully visible and tappable through native scrolling, with no automatic extraction, slideshow, snap or timed advance.
-- The first chapter uses 3.6 viewport heights of travel instead of 1.2; total mobile scene travel is 6.35 including exit. Its entry anchor stays at .6. Later chapter anchors and both progress guides follow the extended physical travel; no extra trailing spacer is added.
-- During this pilot, Independent Work uses constant-size images and a shared linear .70 CSS-pixel-per-scroll-pixel translation for images and copy, rather than desktop's overview zoom/reading beat. Original color, unique project identities and reversible placement remain intact.
-- Measure chapter copy to reserve image clearance on short phones. Keep real image bounds clear of the right navigation rail; decorative planes remain quiet and noninteractive. Clip the growing hero's horizontal overflow so it cannot widen the mobile layout viewport.
-- Card → detail → return preserves the mobile scene position without replaying the opening. New return snapshots use chapter-relative progress so changing viewport class in detail does not return to a different chapter.
-- Validate 390×844, 375×667, 320×568 and the 700px boundary, desktop breakpoint restoration, native touch, keyboard, reduced motion and failure fallback before extending the pilot to other chapters.
+- All three chapters share one content-sized HTML column: left-aligned title, wrapping tags, full chapter summary, then 4/4/3 large 16:9 project images with left-aligned titles beneath. No staggered lanes, four-corner collages or project-summary paragraphs in this compact mobile list. Desktop and opening art direction remain unchanged.
+- Keep 20px minimum side margins, 32px from summary to first image, 36px between projects and 64px between chapters. Header anchors have 88px clearance. No viewport-height chapter spacers or trailing empty screens.
+- Scrolling is native and 1:1, without Lenis, chapter zoom, depth motion, reading-beat remapping or animated badge exit on mobile. After the opening, the WebGL scene is hidden and its continuous rendering stops; do not destroy it merely for a width breakpoint change.
+- Hide the right floating chapter rail on mobile so it cannot cover full-width project images; chapter navigation remains available through the menu. The bottom 2026→2018 axis follows physical reading progress, completes when the final project's bottom is reached, and retires before the résumé. The dog-only Ask AI launcher avoids the axis.
+- Browser-toolbar height changes must not programmatically reposition mobile scrolling. Actual desktop/mobile width changes preserve the current chapter-relative position; returning to desktop restores its original compositions.
+- Card → detail → return preserves mobile position without replaying the opening. Preserve native modifier clicks, keyboard links, direct chapter hashes (including the Parsons alias), menu navigation, printer and complete directory access.
+- Keep the 11 curated projects in normal mobile flow; archive-only works stay in All Projects. Reduced motion or WebGL failure retains all 18 fallback links.
+- Validate 390×844, 375×667, 320×568, 700px/701px breakpoint restoration, exact native scroll displacement, card/detail return, keyboard, reduced motion and failure fallback. Real iPhone Safari remains a separate acceptance check.
 
 ### Background-plane contract
 
@@ -130,7 +134,7 @@ There are 11 curated scene images, not 18 repeated reading stops. Preserve 18 ca
 
 ### Scroll guidance
 
-- The fixed right-hand capsule indicates whole-page scroll progress and provides keyboard-accessible links to the three chapters in narrative order. At widths ≤700px it retires as the résumé enters, so it cannot cover the printer or footer; scrolling back restores it.
+- On desktop, the fixed right-hand capsule indicates whole-page scroll progress and provides keyboard-accessible links to the three chapters in narrative order. At widths ≤700px it is hidden throughout; the menu retains chapter navigation.
 - A single bottom axis spans all of Selected Work: fixed endpoints **2026 → 2018**, derived from the featured projects' overall year range. Its fill uses physical travel, reaching 100% at the final overview center, and never resets at chapter boundaries. It fades away as the résumé enters the bottom 9% of the viewport and must not overlay the printer. Year labels describe the collection's date coverage, not a fabricated current year or employment timeline; Independent Work remains first even where chapter dates overlap.
 - Both guides use physical scroll position, reverse without replay and stay hidden during the opening. No second scroll smoother or scroll hijacking.
 - Reduced-motion/WebGL fallback retains chapter navigation and progress over real HTML sections, with no animated badge scaling or fading.
@@ -228,8 +232,8 @@ Ask AI remains globally available and contains exactly three providers:
 
 ### Locked behavior
 
-- Fixed bottom-right launcher; at widths ≤600px it collapses to an accessible 48px dog-only button through the résumé and footer, avoiding content overlap while preserving access
-- restrained dog idle motion
+- Fixed bottom-right launcher; at widths ≤700px it is an accessible 48px dog-only button throughout the page, with no visible Ask AI text. Desktop retains the labeled launcher. When the Selected Work bottom axis is visible, the button and its panel move above it; the axis stays 12px above the bottom safe area. Leaving Selected Work restores the button's 10px bottom offset. Preserve the accessible name and click-to-open provider panel; no separate Ask AI section.
+- restrained dog idle motion on desktop; no repeating dog idle animation on mobile
 - eyes follow pointer
 - hover/focus previews the panel
 - click pins the panel

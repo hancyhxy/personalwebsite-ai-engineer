@@ -15,9 +15,9 @@ function paint(active=true){const px=50+tx*50,py=50+ty*50,distance=Math.min(1,Ma
 function point(e){const r=badge.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;tx=Math.max(-1,Math.min(1,(e.clientX-cx)/(r.width*.8)));ty=Math.max(-1,Math.min(1,(e.clientY-cy)/(r.height*.65)));paint();wake()}
 function reset(){tx=ty=0;badge.classList.remove('is-interacting');badge.style.setProperty('--pointer-x','50%');badge.style.setProperty('--pointer-y','50%');badge.style.setProperty('--glare-opacity','0');badge.style.removeProperty('--badge-shadow');wake()}
 function endDrag(){const old=drag;drag=null;badge.classList.remove('is-dragging');if(old){if(old.moved)suppressClickUntil=performance.now()+300;if(badge.hasPointerCapture(old.id))badge.releasePointerCapture(old.id)}targetTiltX=targetTiltY=0;reset()}
-// No visible controls: mouse drags freely; touch horizontal drags rotate,
-// while touch-action: pan-y reserves vertical gestures for native page scrolling.
-badge.addEventListener('pointerdown',e=>{if(drag||!e.isPrimary||e.button!==0||e.target.closest('button,a'))return;const pending=e.pointerType!=='mouse';drag={id:e.pointerId,x:e.clientX,y:e.clientY,moved:false,pending};if(!pending){badge.setPointerCapture(e.pointerId);badge.classList.add('is-dragging')}});
+// Mouse dragging stays available. Touch gestures belong to native page scrolling;
+// opt-in device orientation is owned by badge-tilt.js.
+badge.addEventListener('pointerdown',e=>{if(e.pointerType!=='mouse'||drag||!e.isPrimary||e.button!==0||e.target.closest('button,a'))return;const pending=e.pointerType!=='mouse';drag={id:e.pointerId,x:e.clientX,y:e.clientY,moved:false,pending};if(!pending){badge.setPointerCapture(e.pointerId);badge.classList.add('is-dragging')}});
 badge.addEventListener('pointermove',e=>{if(!drag||drag.id!==e.pointerId)return;const dx=e.clientX-drag.x,dy=e.clientY-drag.y;if(drag.pending){if(Math.max(Math.abs(dx),Math.abs(dy))<8)return;if(Math.abs(dy)>=Math.abs(dx)){endDrag();return}drag.pending=false;badge.setPointerCapture(e.pointerId);badge.classList.add('is-dragging')}drag.moved ||= Math.hypot(dx,dy)>5;targetTiltY=Math.max(-dragLimitY,Math.min(dragLimitY,dx*.07));targetTiltX=Math.max(-dragLimitX,Math.min(dragLimitX,-dy*.06));tx=targetTiltY/dragLimitY;ty=-targetTiltX/dragLimitX;paint();wake()});
 badge.addEventListener('pointerup',e=>{if(drag&&drag.id===e.pointerId)endDrag()});badge.addEventListener('pointercancel',endDrag);badge.addEventListener('lostpointercapture',e=>{if(drag&&e.target===badge&&e.pointerId===drag.id)endDrag()});
 badge.addEventListener('click',e=>{if(performance.now()<suppressClickUntil){e.preventDefault();e.stopImmediatePropagation()}},true);
@@ -29,8 +29,14 @@ function badgeVisible(){const r=badge.getBoundingClientRect();return r.bottom>0&
 window.addEventListener('pointermove',e=>{if(!drag&&e.pointerType==='mouse'&&badgeVisible())point(e)},{passive:true});
 document.documentElement.addEventListener('pointerleave',()=>{if(!drag)reset()});
 window.addEventListener('scroll',()=>{if(!drag&&!badgeVisible()&&(tx||ty))reset()},{passive:true});
-portrait.addEventListener('pointerdown',point,{passive:true});portrait.addEventListener('pointerup',e=>{if(e.pointerType!=='mouse')reset()});portrait.addEventListener('pointercancel',reset);window.addEventListener('blur',reset);motion.addEventListener('change',reset);
+portrait.addEventListener('pointerdown',e=>{if(e.pointerType==='mouse')point(e)},{passive:true});portrait.addEventListener('pointerup',e=>{if(e.pointerType!=='mouse')reset()});portrait.addEventListener('pointercancel',reset);window.addEventListener('blur',reset);motion.addEventListener('change',reset);
 portrait.addEventListener('keydown',e=>{const dirs={ArrowLeft:[-1,0],ArrowRight:[1,0],ArrowUp:[0,-1],ArrowDown:[0,1],Home:[0,0],Escape:[0,0]};if(dirs[e.key]){e.preventDefault();[tx,ty]=dirs[e.key];paint(e.key!=='Home'&&e.key!=='Escape');wake()}});
+// Shared local input adapter: sensors reuse the portrait, spring, shadow and glare pipeline.
+window.BadgePortrait = {
+  visible: badgeVisible,
+  setTilt: (horizontal,vertical)=>{if(motion.matches||!badgeVisible())return;tx=Math.max(-.75,Math.min(.75,horizontal));ty=Math.max(-.75,Math.min(.75,vertical));targetTiltX=targetTiltY=0;paint();wake()},
+  reset: endDrag
+};
 // Experience rows are plain case-study links; no hover preview or entrance side effects.
 const section=$('resume-section'),frame=$('resume-frame');let printerLoaded=false;
 let printerSizeObserver,primaryQueued=false,hasPrinted=false;

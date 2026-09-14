@@ -54,7 +54,9 @@
         state.flipKeyboard = source.matches(':focus-visible');
         state.flipSource = source.classList.contains('scene-project-hit') ? 'scene' : source.closest('#work-collection') ? 'directory' : source.closest('.scene-fallback') ? 'fallback' : null;
       }
-      // Chapter-relative snapshots survive the mobile pilot's longer first chapter.
+      // Native mobile snapshots use physical position, not a possibly idle renderer frame.
+      if (state.travel !== null && B.nativeMobile) state.travel = (scrollY - B.scroll.start) / innerHeight;
+      // Chapter-relative snapshots survive desktop/native-mobile breakpoint changes.
       if (state.travel !== null) {
         var group = B.sample(state.travel).group;
         state.scenePosition = { group: group.id, fraction: (state.travel - group.start) / (group.end - group.start) };

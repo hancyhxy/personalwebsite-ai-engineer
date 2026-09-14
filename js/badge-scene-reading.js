@@ -58,8 +58,9 @@
       g.projects.forEach(function (i) {
         var project = B.projects[i], a = document.createElement('a'); a.href = './project-scrollcarousel.html?project=' + i;
         var image = document.createElement('img'); image.src = project.thumb; image.alt = ''; image.loading = 'lazy'; image.width = 800; image.height = 450;
-        var title = document.createElement('h3'); title.textContent = project.title;
-        var description = document.createElement('p'); description.textContent = project.summary + (project.sceneNote ? ' ' + project.sceneNote : '');
+        var title = document.createElement('h3'); title.textContent = project.title + (/^Concept proposal/.test(project.sceneNote || '') ? ' · Concept' : '');
+        var description = document.createElement('p'); description.className = 'scene-card-description'; description.textContent = project.summary + (project.sceneNote ? ' ' + project.sceneNote : '');
+        a.dataset.group = g.id; a.dataset.project = i;
         a.append(image, title, description); group.append(a);
       });
       fallback.append(group);

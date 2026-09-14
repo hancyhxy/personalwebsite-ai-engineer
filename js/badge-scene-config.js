@@ -35,14 +35,16 @@
   B.featured = B.groups.reduce(function (ids, g) { return ids.concat(g.projects); }, []);
   B.archived = B.projects.map(function (_, i) { return i; }).filter(function (i) { return B.featured.indexOf(i) < 0; });
   B.duration = B.groups.length * B.timing.group + B.timing.exit;
-  // Mobile pilot: a longer, vertically authored first chapter; canonical identities stay intact.
+  // Mobile uses the semantic HTML chapters; desktop keeps the perspective compositions.
   B.configureViewport = function () {
-    var mobile = innerWidth <= 700, changed = B.mobilePilot !== mobile;
-    B.mobilePilot = mobile;
+    var mobile = innerWidth <= 700, changed = B.nativeMobile !== mobile;
+    B.nativeMobile = mobile;
+    B.mobilePilot = false;
+    document.body.classList.toggle('scene-native-mobile', mobile);
     var start = 0;
     B.groups.forEach(function (g, i) {
       g.start = start;
-      g.end = start + (mobile && i === 0 ? 3.6 : B.timing.group);
+      g.end = start + B.timing.group;
       g.center = start + B.timing.group / 2;
       start = g.end;
     });

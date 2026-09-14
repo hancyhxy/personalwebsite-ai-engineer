@@ -29,6 +29,7 @@
     dispatchEvent(new CustomEvent('badge-scene-fallback'));
   }
   runtime.failOpen = failOpen;
+  addEventListener('resize', function () { if (runtime.failed) B.configureViewport(); }, { passive: true });
   if (reduced.matches || !window.THREE || !window.gsap || !window.ScrollTrigger) { failOpen(); return; }
   try {
     runtime.canvasRoot = document.createElement('div'); runtime.canvasRoot.className = 'badge-scene-canvas'; runtime.canvasRoot.setAttribute('aria-hidden', 'true'); document.body.prepend(runtime.canvasRoot);
@@ -48,9 +49,10 @@
   document.body.classList.add('scene-ready');
   function resize() {
     if (runtime.failed) return;
-    runtime.rig.resize(); runtime.reading.resize();
+    B.scroll.resize(); runtime.rig.resize(); runtime.reading.resize();
     runtime.renderer.setPixelRatio(Math.min(devicePixelRatio || 1, innerWidth < 700 ? 1.4 : 1.75));
-    runtime.renderer.setSize(innerWidth, innerHeight, false); B.scroll.resize();
+    runtime.renderer.setSize(innerWidth, innerHeight, false);
+    wake();
   }
   function tick(now) {
     if (runtime.failed || document.hidden) return;
@@ -64,6 +66,14 @@
     var travel = B.scroll.tick(now), state = B.sample(travel), opening = runtime.field.opening;
     var work = opening.active ? 0 : B.scroll.work;
     runtime.state = state;
+    if (B.nativeMobile && !opening.active) {
+      // Native cards need no canvas frames, projection, raycasting or DOM animation.
+      runtime.canvasRoot.style.visibility = 'hidden';
+      runtime.overlay.style.visibility = 'hidden';
+      if (!runtime.nativeHeld) B.interaction.update(runtime.field.items, false);
+      runtime.nativeHeld = true; runtime.frame = 0; return;
+    }
+    runtime.nativeHeld = false; runtime.canvasRoot.style.visibility = '';
     runtime.opacity = 1 - state.exit;
     if (work === 0) runtime.opacity = 1;
     runtime.overlay.style.opacity = runtime.opacity;
@@ -91,8 +101,15 @@
     finishOpening: function () { Object.assign(runtime.field.opening, { active: false, wave: 1, gather: 1, land: 1, size: 1, alpha: 1 }); B.scroll.lock(false); },
     openProject: function (index) { B.interaction.open(index); }
   };
+  function wake() { if (!runtime.frame && !runtime.failed && !document.hidden) runtime.frame = requestAnimationFrame(tick); }
+  addEventListener('scroll', function () { if (B.nativeMobile) wake(); }, { passive: true });
   addEventListener('resize', resize, { passive: true });
   document.fonts.ready.then(resize);
+  if (window.ResizeObserver) {
+    var nativeSize = new ResizeObserver(function () { if (B.nativeMobile && !runtime.failed) resize(); });
+    nativeSize.observe(document.querySelector('.hero'));
+    nativeSize.observe(section.querySelector('.scene-fallback'));
+  }
   reduced.addEventListener('change', function () { if (reduced.matches) failOpen(); });
   document.addEventListener('visibilitychange', function () { cancelAnimationFrame(runtime.frame); runtime.last = 0; if (!document.hidden && !runtime.failed) runtime.frame = requestAnimationFrame(tick); });
   addEventListener('pageshow', function (e) {
@@ -102,7 +119,7 @@
       resize();
     }
   });
-  resize(); runtime.frame = requestAnimationFrame(tick);
+  resize(); wake();
   if (location.hash.indexOf('#work-') === 0) {
     var group = B.groups.find(function (g) { return '#work-' + g.id === location.hash || g.legacyHash === location.hash; });
     if (group && !window.BADGE_RETURN_STATE) document.fonts.ready.then(function () { B.scroll.go(group.center, true); });
