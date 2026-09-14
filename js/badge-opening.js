@@ -39,8 +39,45 @@
   addEventListener('badge-opening-timeout', failOpen);
   addEventListener('badge-scene-fallback', failOpen);
 
+  // Equal arc-length sampling works for either orientation without duplicating artworks.
+  function curvePoints(span, amplitude) {
+    var samples = [{ t: 0, length: 0 }], length = 0, previousY = 0;
+    for (var i = 1; i <= 400; i++) {
+      var t = i / 400, y = Math.sin(t * Math.PI * 2) * amplitude;
+      length += Math.hypot(span / 400, y - previousY);
+      samples.push({ t: t, length: length }); previousY = y;
+    }
+    var points = [], cursor = 1, count = window.BadgeScene.featured.length;
+    for (var n = 0; n < count; n++) {
+      var at = length * n / (count - 1);
+      while (cursor < samples.length - 1 && samples[cursor].length < at) cursor++;
+      var a = samples[cursor - 1], b = samples[cursor];
+      points.push(a.t + (b.t - a.t) * (at - a.length) / (b.length - a.length));
+    }
+    return points;
+  }
+  function mobileComposition(width, height) {
+    var fontSize = Math.min(58, width * .145, height * .077);
+    roles.forEach(function (role) { role.style.fontSize = fontSize + 'px'; });
+    var titleHeight = Math.max(roles[0].getBoundingClientRect().height, roles[1].getBoundingClientRect().height);
+    var header = document.querySelector('.mast > a').getBoundingClientRect();
+    var top = Math.max(height * .17, header.bottom + 24 + titleHeight / 2);
+    var bottom = Math.min(height * .82, skip.getBoundingClientRect().top - 24 - titleHeight / 2);
+    roles.forEach(function (role, index) {
+      role.style.left = (width - role.getBoundingClientRect().width) / 2 + 'px';
+      role.style.right = 'auto'; role.style.top = (index ? bottom : top) + 'px';
+    });
+    var thumb = Math.min(112, width * .23), gap = Math.min(24, height * .035);
+    var start = top + titleHeight / 2 + gap + thumb * 9 / 32;
+    var end = bottom - titleHeight / 2 - gap - thumb * 9 / 32;
+    var span = Math.max(1, end - start), amplitude = Math.min(width * .14, span * .22);
+    window.BADGE_SCENE.setOpeningLayout({ vertical: true, span: span / height, amplitude: amplitude / width,
+      offset: (.5 - (start + end) / 2 / height), center: 0, thumb: thumb,
+      points: curvePoints(span, amplitude), stackSpan: .09, stackAmplitude: .035 });
+  }
   function layoutComposition() {
     var width = innerWidth, height = innerHeight;
+    if (width <= 700) { mobileComposition(width, height); return; }
     var budget = Math.min(width * .9, 1280), gap = Math.min(28, width * .022);
     var style = getComputedStyle(body);
     var token = function (name, fallback) { var value = parseFloat(style.getPropertyValue(name)); return Number.isFinite(value) ? value : fallback; };
@@ -67,21 +104,7 @@
     roles[1].style.right = 'auto';
     var offset = token('--opening-wave-offset', .04);
     roles.forEach(function (role) { role.style.top = (height * (.5 - offset)) + 'px'; });
-    // Equal arc-length sampling avoids a pile-up at the crest and gaps on the slopes.
-    var samples = [{ t: 0, length: 0 }], length = 0, previousY = 0;
-    for (var i = 1; i <= 400; i++) {
-      var t = i / 400, y = Math.sin(t * Math.PI * 2) * amplitude;
-      length += Math.hypot(span / 400, y - previousY);
-      samples.push({ t: t, length: length }); previousY = y;
-    }
-    var points = [], cursor = 1, count = window.BadgeScene.featured.length;
-    for (var n = 0; n < count; n++) {
-      var at = length * n / (count - 1);
-      while (cursor < samples.length - 1 && samples[cursor].length < at) cursor++;
-      var a = samples[cursor - 1], b = samples[cursor];
-      points.push(a.t + (b.t - a.t) * (at - a.length) / (b.length - a.length));
-    }
-    if (window.BADGE_SCENE.setOpeningLayout) window.BADGE_SCENE.setOpeningLayout({ span: span / width, center: (leftWidth - rightWidth) / 2 / width, thumb: thumbWidth, points: points, stackSpan: token('--opening-stack-span', .09), stackAmplitude: token('--opening-stack-amplitude', .035), amplitude: amplitude / height, offset: offset });
+    if (window.BADGE_SCENE.setOpeningLayout) window.BADGE_SCENE.setOpeningLayout({ vertical: false, span: span / width, center: (leftWidth - rightWidth) / 2 / width, thumb: thumbWidth, points: curvePoints(span, amplitude), stackSpan: token('--opening-stack-span', .09), stackAmplitude: token('--opening-stack-amplitude', .035), amplitude: amplitude / height, offset: offset });
   }
   function onResize() { if (!done) finish(true); }
   addEventListener("resize", onResize);

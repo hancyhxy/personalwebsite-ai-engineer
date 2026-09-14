@@ -62,8 +62,9 @@
         var order = B.featured.indexOf(item.index), t = order / (B.featured.length - 1);
         var stackX = (t - .5) * Math.min(w * layout.stackSpan, 130), stackY = Math.sin(t * Math.PI * 2) * h * layout.stackAmplitude + h * .04;
         var waveT = layout.points ? layout.points[order] : t;
-        var waveX = (waveT - .5) * w * layout.span + w * layout.center;
-        var waveY = Math.sin(waveT * Math.PI * 2) * h * layout.amplitude + h * layout.offset;
+        // Rotate the curve's travel axis on phones, not the image planes themselves.
+        var waveX = layout.vertical ? -Math.sin(waveT * Math.PI * 2) * w * layout.amplitude : (waveT - .5) * w * layout.span + w * layout.center;
+        var waveY = layout.vertical ? (.5 - waveT) * h * layout.span + h * layout.offset : Math.sin(waveT * Math.PI * 2) * h * layout.amplitude + h * layout.offset;
         var x = B.mix(stackX, waveX, o.wave), y = B.mix(stackY, waveY, o.wave);
         var radius = Math.sqrt(t) * Math.min(w * .105, h * .14), angle = order * 2.399963;
         x = B.mix(x, Math.cos(angle) * radius, o.gather); y = B.mix(y, Math.sin(angle) * radius * .72 + h * .04, o.gather);

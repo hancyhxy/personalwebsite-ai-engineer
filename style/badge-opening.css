@@ -17,5 +17,6 @@
 .badge-page.opening-reveal .badge-perspective{animation:badge-card-reveal .9s cubic-bezier(.22,.7,.2,1) both}
 @keyframes badge-header-reveal{from{opacity:0}to{opacity:1}}
 @keyframes badge-card-reveal{from{opacity:0;transform:translateY(25px) scale(.97)}to{opacity:1;transform:none}}
-@media(max-width:700px){.badge-page .opening-role{top:46%;font-size:clamp(24px,6.6vw,46px)}.badge-page .opening-role-left{left:4%}.badge-page .opening-role-right{right:3%}}
+/* JS measures the two centered titles and fits a vertical S ribbon between them. */
+@media(max-width:700px){.badge-page .opening-role{font-size:clamp(32px,14.5vw,58px)}.badge-page .opening-role-left{top:17%}.badge-page .opening-role-right{top:82%}}
 @media(prefers-reduced-motion:reduce){.opening-pending .badge-page .hero,.opening-pending .badge-page .mast{opacity:1}.badge-page .portfolio-opening{display:none}.badge-page.opening-reveal .mast,.badge-page.opening-reveal .badge-perspective{animation:none}}

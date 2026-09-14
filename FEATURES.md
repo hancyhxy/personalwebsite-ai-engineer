@@ -26,7 +26,7 @@ Read this file before changing `index-badge.html`, the immersive project field, 
 - No loading screen, loading percentage, or progress bar.
 - One small centered line: `Xinyi Han`.
 - No `Portfolio · Sydney` line.
-- Opening title is split as `AI` on the left and `Engineer` on the right.
+- On desktop (>700px), the opening title is split as `AI` on the left and `Engineer` on the right. On mobile (≤700px), `AI` is centered above a vertical S-shaped image ribbon and `Engineer` is centered below it.
 
 ### Locked motion
 
@@ -34,7 +34,7 @@ Read this file before changing `index-badge.html`, the immersive project field, 
 2. Solid project images form a compact central stack.
 3. Images expand into a compact sine-wave ribbon while `Xinyi Han` moves to the exact centered first-scene/header position.
 4. The completed sine ribbon settles elastically and holds with `AI / Engineer` fully visible before any dispersal begins; the name is already at the header and stays there.
-5. `AI`, the ribbon, and `Engineer` form one horizontally centered composition. The ribbon fits between the measured words with clear gaps, rather than being independently centered in the viewport.
+5. On desktop, `AI`, the ribbon, and `Engineer` form one horizontally centered composition. The ribbon fits between the measured words with clear gaps. On mobile, title heights, header and skip-button clearance determine the vertical ribbon's available travel; the two titles and curve are centered on the viewport. Keep the image planes upright and 16:9—rotate the curve's travel axis, not the images. The same 11 unique artworks form the curve; never duplicate cards to mimic the reference's larger collection.
 6. Images disperse and fade away, revealing a badge-only first screen; no three-project satellite layout remains.
 7. Position and proportional size share the same eased dispersal progress; no separate post-arrival enlargement occurs.
 8. The identity badge is revealed as the sole first-screen subject. The 11 projects reappear only when scrolling into Selected Work.
@@ -112,7 +112,7 @@ There are 11 curated scene images, not 18 repeated reading stops. Preserve 18 ca
 
 ### Mobile native reading layout (≤700px)
 
-- All three chapters share one content-sized HTML column: left-aligned title, wrapping tags, full chapter summary, then 4/4/3 large 16:9 project images with left-aligned titles beneath. No staggered lanes, four-corner collages or project-summary paragraphs in this compact mobile list. Desktop and opening art direction remain unchanged.
+- All three chapters share one content-sized HTML column: left-aligned title, wrapping tags, full chapter summary, then 4/4/3 large 16:9 project images with left-aligned titles beneath. No staggered lanes, four-corner collages or project-summary paragraphs in this compact mobile list. Desktop remains unchanged; the mobile opening follows its separate vertical composition above.
 - Keep 20px minimum side margins, 32px from summary to first image, 36px between projects and 64px between chapters. Header anchors have 88px clearance. No viewport-height chapter spacers or trailing empty screens.
 - Scrolling is native and 1:1, without Lenis, chapter zoom, depth motion, reading-beat remapping or animated badge exit on mobile. After the opening, the WebGL scene is hidden and its continuous rendering stops; do not destroy it merely for a width breakpoint change.
 - Hide the right floating chapter rail on mobile so it cannot cover full-width project images; chapter navigation remains available through the menu. The bottom 2026→2018 axis follows physical reading progress, completes when the final project's bottom is reached, and retires before the résumé. The dog-only Ask AI launcher avoids the axis.
@@ -164,6 +164,7 @@ There are 11 curated scene images, not 18 repeated reading stops. Preserve 18 ca
 - Its typography keeps the previously established restrained Selected Work statement scale (17–24px desktop, 15px mobile), not the new large chapter-title or project-description scale.
 - The embedded printer has no independent scrollbar; the parent page owns vertical scrolling and fits the iframe to its rendered content.
 - Intersection only preloads the embedded printer. The embedded homepage printer never auto-prints on iframe/image load.
+- At widths ≤700px, the parent printer control uses text-only labels in print, download and replay states; hide decorative Unicode arrows so iOS cannot substitute emoji. Desktop keeps its existing arrows.
 - One parent control owns the complete sequence: `Print my résumé` starts the visible paper feed, then becomes `Download résumé` only after printing finishes. Download tears off the paper and saves the canonical PDF; after completion the same control becomes `Print another copy`. No competing replay or direct-download control appears beside it.
 - The embedded printer body is visual-only on the homepage and cannot independently start printing. The printed paper remains interactive for reading and dragging.
 - `Learn more about me` only scrolls to this section; the visibility trigger owns the identity animation and the user owns printer playback.
