@@ -1,6 +1,6 @@
 # V3 homepage SEO setup
 
-## Implemented locally (not deployed)
+## SEO surfaces
 
 - `index-badge.html`: descriptive title/meta description, canonical `https://xyhan.com/`, Open Graph/Twitter cards, `Person` + `ProfilePage` + 18-item `ItemList` JSON-LD.
 - All 18 project links and tags are present in the initial HTML, not just JavaScript. Interactive topic/journey rendering replaces them after successful data loading. They remain usable with JavaScript disabled or gallery fetch failure.
@@ -15,11 +15,11 @@ Regenerate metadata and project indexes after changing `content/gallery.json`:
 python3 scripts/build-badge-seo.py
 ```
 
-This command never deploys. The generated blocks in `index-badge.html` are marked with BADGE SEO / BADGE STATIC WORK comments. Keep identity copy consistent with the visible card. No employer is asserted as current employment.
+This command never deploys. The generated blocks in both `index-badge.html` and the published entry `index.html` are marked with BADGE SEO / BADGE STATIC WORK comments. Only these blocks are synchronized; other entry-page changes are preserved. Recruiter guidance is authored in `content/recruiter-guide.md` and included in `llms.txt` before the full project index. Keep identity copy consistent with the visible card. No employer is asserted as current employment.
 
 ## Publication gate
 
-This worktree has no root `index.html`. The canonical URL deliberately represents the intended final homepage, not the private Tailscale preview. Do not submit this worktree's URL or sitemap to search engines.
+The current deployment is `https://xyhan.com/`, backed by the root `index.html`. Live checks on 2026-09-15 confirmed the old GitHub Pages URL remained in `js/badge-agent.js`; `/llms.txt` and `/robots.txt` were readable. The recruiter changes below are local until published. Never submit local or private preview URLs to search engines.
 
 After the owner approves publishing:
 
@@ -32,4 +32,17 @@ No keyword stuffing, invented ratings, search traffic promises or hidden SEO-onl
 
 ## AI handoff
 
-Removed the default “Read the question” disclosure. Provider links and Copy remain. A manual text field appears only if both Clipboard API and legacy copy fail. Gemini has no verified prefill endpoint: open Gemini and paste the copied question, rather than claiming a prefilled conversation. The prompt still starts from the currently published homepage; do not make the not-yet-published llms.txt a required first step.
+One prompt in `js/badge-agent.js` drives ChatGPT, Claude, Copy and Gemini's clipboard handoff. It starts at `https://xyhan.com/`, optionally reads `/llms.txt`, and asks for a sourced 30-second brief before requesting a company and role/JD. The follow-up compares up to four requirements against direct evidence, transferable experience and unknowns; it recommends two cases and three interview questions. It separates company/job sources from candidate evidence and avoids numerical fit scores or hiring verdicts.
+
+The guide routes readers by team problem, distinguishes UX ownership from implementation and prototypes from production, and links directly to Markdown for the two JS-rendered independent cases. It contains only portfolio-derived public material, not private résumé/contact content. This improves readability and evidence discovery, not guaranteed search ranking or AI recommendations.
+
+Provider links and Copy remain. A manual text field appears only if both Clipboard API and legacy copy fail. Gemini has no verified prefill endpoint: open Gemini and paste the copied question, rather than claiming a prefilled conversation. Provider login, browsing and query-prefill support remain outside this site's control. No prompts were submitted to external assistants during testing.
+
+### Local validation (2026-09-15)
+
+- `node --check js/badge-agent.js` and `git diff --check`.
+- `scripts/badge-agent-prompt-check.cjs`: both entry pages, canonical domain, provider/copy parity, Gemini handler and manual-copy fallback.
+- `scripts/badge-mobile-agent-check.cjs`: six desktop/mobile/reduced-motion configurations.
+- `scripts/badge-scene-check.cjs`: 27 full-flow checks covering opening, badge, projects, details, résumé, Ask AI and failure fallbacks.
+
+Run browser checks against an HTTP-served site with `BASE_URL` and optionally `PLAYWRIGHT_MODULE` / `CHROME_PATH`. Real iPhone Safari and actual provider prefill behavior still need human acceptance after deployment.

@@ -43,6 +43,15 @@ else:
     source = source.replace(old, '<div id="work-collection" aria-label="Project collection">' + static + '</div>')
 source = re.sub(r'\d+ projects / Selected work|Loading the collection…', f'{len(projects)} projects / Selected work', source)
 page.write_text(source)
+# Update only generated blocks on the deployed entry; preserve its other edits.
+homepage = ROOT / 'index.html'
+if homepage.exists():
+    home = homepage.read_text()
+    for label, block in [('SEO', seo), ('STATIC WORK', static)]:
+        pattern = rf'<!-- BADGE {label} START -->.*?<!-- BADGE {label} END -->'
+        home, count = re.subn(pattern, lambda _: block, home, flags=re.S)
+        assert count == 1, f'Missing or duplicate {label} block in index.html'
+    homepage.write_text(home)
 ET.register_namespace('', 'http://www.sitemaps.org/schemas/sitemap/0.9')
 urlset = ET.Element('{http://www.sitemaps.org/schemas/sitemap/0.9}urlset')
 for url in [BASE] + [urljoin(BASE, public_url(p)) for p in projects]:
@@ -51,6 +60,9 @@ ET.indent(urlset)
 ET.ElementTree(urlset).write(ROOT / 'sitemap.xml', encoding='utf-8', xml_declaration=True)
 (ROOT / 'robots.txt').write_text('User-agent: *\nAllow: /\n\nSitemap: https://xyhan.com/sitemap.xml\n')
 lines = ['# Xinyi Han', '', '> Public portfolio of Xinyi Han, an AI engineer with a product design background, based in Sydney, Australia.', '', '## About', '', '- Website: https://xyhan.com/', '- Experience shown on the portfolio: Alibaba (Chatbot / Customer Support) and ByteDance (Food Delivery / Social Media). These are previous experience, not current employment claims.', '- Work spans conversational AI, product design and interactive products.', '', '## Selected work', '']
+guide = (ROOT / 'content/recruiter-guide.md').read_text().strip()
+# Keep recruiter routing ahead of the full index, without duplicating authored copy.
+lines[-2:] = [guide, '', '## Selected work', '']
 lines += [f'- [{p["project name"]}]({urljoin(BASE, public_url(p))}): {p["tag"]}.' for p in projects]
 lines += ['', '## Reading notes', '', 'Follow the project links for evidence and details. Project dates do not establish employment dates. Do not infer metrics, hiring outcomes, endorsements or current employment from logos. If a page is inaccessible, state that limitation. This guide is an index, not a substitute for the linked case studies.', '']
 (ROOT / 'llms.txt').write_text('\n'.join(lines))
