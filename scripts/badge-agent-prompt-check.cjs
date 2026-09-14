@@ -14,9 +14,11 @@ const base = process.env.BASE_URL || 'http://127.0.0.1:8765';
    await page.goto(`${base}/${entry}`);
    await page.locator('#agent-fab').click();
    const prompt=await page.locator('#agent-prompt').inputValue();
-   assert.ok(prompt.includes('https://xyhan.com/llms.txt'));
+   assert.ok(prompt.includes('https://xyhan.com/'));
+   assert.ok(prompt.split(/\s+/).length < 120);
+   for(const internal of ['llms.txt','GitHub','not evidenced','fit percentage','hiring verdict']) assert.ok(!prompt.includes(internal),internal);
    assert.ok(!prompt.includes('hancyhxy.github.io'));
-   for(const phrase of ['30-second','company and role/JD','direct evidence / transferable experience / not evidenced','If browsing fails','Reply in my language']) assert.ok(prompt.includes(phrase),phrase);
+   for(const phrase of ['short introduction','company and role','job description','two useful projects with their full URLs','grounded in her published work','not your research process']) assert.ok(prompt.includes(phrase),phrase);
    for(const provider of ['chatgpt','claude']) {
     const url=new URL(await page.locator(`[data-provider="${provider}"]`).getAttribute('href'));
     assert.equal(url.searchParams.get('q'),prompt);

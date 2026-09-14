@@ -32,11 +32,13 @@ No keyword stuffing, invented ratings, search traffic promises or hidden SEO-onl
 
 ## AI handoff
 
-One prompt in `js/badge-agent.js` drives ChatGPT, Claude, Copy and Gemini's clipboard handoff. It starts at `https://xyhan.com/`, optionally reads `/llms.txt`, and asks for a sourced 30-second brief before requesting a company and role/JD. The follow-up compares up to four requirements against direct evidence, transferable experience and unknowns; it recommends two cases and three interview questions. It separates company/job sources from candidate evidence and avoids numerical fit scores or hiring verdicts.
+One short prompt in `js/badge-agent.js` drives ChatGPT, Claude, Copy and Gemini's clipboard handoff. It asks for a natural introduction grounded in `https://xyhan.com/`: background, what Xinyi builds, her distinctive approach, and a couple of project links. Then it asks for the recruiter's company and role. After a JD is supplied, it connects her experience to the team's needs and recommends two cases. It explicitly leads with the introduction rather than research narration. Internal crawling terms and audit-style instructions are not part of the recruiter-facing prompt.
+
+The earlier long prompt was rejected after a real user screenshot showed an overly procedural introduction. Link and clipboard regression tests verify transport, not the quality of an assistant's response. Real ChatGPT testing was subsequently completed in fresh signed-out visible Chrome sessions, without bypassing the initial headless browser's human-verification gate. Four prompt variants were tested. The final 113-word variant produced an approximately 183-word introduction followed by a 165-word response to a synthetic AI Product Designer JD, connecting both UX and independent AI implementation and supplying two complete project URLs. See `scripts/fixtures/ask-ai-recruiter-conversation.md` for the fixture, observed results and limitations.
 
 The guide routes readers by team problem, distinguishes UX ownership from implementation and prototypes from production, and links directly to Markdown for the two JS-rendered independent cases. It contains only portfolio-derived public material, not private résumé/contact content. This improves readability and evidence discovery, not guaranteed search ranking or AI recommendations.
 
-Provider links and Copy remain. A manual text field appears only if both Clipboard API and legacy copy fail. Gemini has no verified prefill endpoint: open Gemini and paste the copied question, rather than claiming a prefilled conversation. Provider login, browsing and query-prefill support remain outside this site's control. No prompts were submitted to external assistants during testing.
+Provider links and Copy remain. A manual text field appears only if both Clipboard API and legacy copy fail. Gemini has no verified prefill endpoint: open Gemini and paste the copied question, rather than claiming a prefilled conversation. Provider login, browsing and query-prefill support remain outside this site's control. Only the public portfolio prompt and an explicitly fictional JD were submitted to ChatGPT for conversation acceptance; no private career documents or real confidential hiring material were shared.
 
 ### Local validation (2026-09-15)
 
@@ -45,4 +47,4 @@ Provider links and Copy remain. A manual text field appears only if both Clipboa
 - `scripts/badge-mobile-agent-check.cjs`: six desktop/mobile/reduced-motion configurations.
 - `scripts/badge-scene-check.cjs`: 27 full-flow checks covering opening, badge, projects, details, résumé, Ask AI and failure fallbacks.
 
-Run browser checks against an HTTP-served site with `BASE_URL` and optionally `PLAYWRIGHT_MODULE` / `CHROME_PATH`. Real iPhone Safari and actual provider prefill behavior still need human acceptance after deployment.
+Run browser checks against an HTTP-served site with `BASE_URL` and optionally `PLAYWRIGHT_MODULE` / `CHROME_PATH`. Real iPhone Safari and signed-in/provider-specific behavior remain separate acceptance checks. ChatGPT's signed-out query handoff and two-turn replies were tested; Claude/Gemini answer quality was not. AI responses and link rendering remain provider-dependent.
