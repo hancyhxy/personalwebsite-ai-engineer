@@ -3,17 +3,19 @@
 import html
 import json
 import re
+import subprocess
 from pathlib import Path
 from urllib.parse import urljoin
 from xml.etree import ElementTree as ET
 
 ROOT = Path(__file__).resolve().parents[1]
 BASE = 'https://xyhan.com/'
+subprocess.run(['node', str(ROOT / 'scripts/build-project-routes.cjs')], check=True)
 projects = json.loads((ROOT / 'content/gallery.json').read_text())
 title = 'Xinyi Han — AI Engineer & Product Designer in Sydney'
 description = 'Explore Xinyi Han’s AI engineering and product design portfolio: conversational AI, customer support, food delivery and interactive products, with experience at Alibaba and ByteDance.'
 escape = lambda s: html.escape(s, quote=True)
-public_url = lambda p: p.get('publicUrl', p['projectUrl'])
+public_url = lambda p: p['publicUrl']
 person = {'@type': 'Person', '@id': BASE + '#person', 'name': 'Xinyi Han', 'url': BASE, 'jobTitle': 'AI Engineer', 'description': description, 'image': BASE + 'assets/hero-portrait/center.webp', 'homeLocation': {'@type': 'Place', 'name': 'Sydney, Australia'}, 'knowsAbout': ['Conversational AI', 'Product Design', 'Customer Support', 'Interactive Prototyping'], 'sameAs': ['https://www.linkedin.com/in/xinyi-han-601968166/']}
 schema = {'@context': 'https://schema.org', '@graph': [person, {'@type': 'ProfilePage', '@id': BASE + '#profile', 'url': BASE, 'name': title, 'description': description, 'inLanguage': 'en', 'mainEntity': {'@id': BASE + '#person'}}, {'@type': 'ItemList', '@id': BASE + '#selected-work', 'name': 'Selected work', 'numberOfItems': len(projects), 'itemListElement': [{'@type': 'ListItem', 'position': i + 1, 'name': p['project name'], 'url': urljoin(BASE, public_url(p))} for i, p in enumerate(projects)]}]}
 tags = [f'<title>{escape(title)}</title>', f'<meta name="description" content="{escape(description)}">', '<meta name="author" content="Xinyi Han">', '<meta name="robots" content="index,follow,max-image-preview:large">', f'<link rel="canonical" href="{BASE}">', '<meta name="theme-color" content="#fafaf8">']
@@ -52,6 +54,17 @@ if homepage.exists():
         home, count = re.subn(pattern, lambda _: block, home, flags=re.S)
         assert count == 1, f'Missing or duplicate {label} block in index.html'
     homepage.write_text(home)
+# Canonical detail URLs still offer readable case texts when JavaScript is unavailable.
+detail_page = ROOT / 'project-scrollcarousel.html'
+detail_source = detail_page.read_text()
+text_links = ''.join(f'<li><a href="./content/projects/{escape(p["projectUrl"].split("/")[1])}/text.md">{escape(p["project name"])}</a></li>' for p in projects)
+text_block = '<!-- CURRENT CASE TEXT START --><noscript><section aria-label="Case study text editions"><h2>Read the case studies</h2><p>The interactive detail needs JavaScript. All project texts are available below.</p><ul>' + text_links + '</ul></section></noscript><!-- CURRENT CASE TEXT END -->'
+if '<!-- CURRENT CASE TEXT START -->' in detail_source:
+    detail_source = re.sub(r'<!-- CURRENT CASE TEXT START -->.*?<!-- CURRENT CASE TEXT END -->', lambda _: text_block, detail_source, flags=re.S)
+else:
+    assert '</main>' in detail_source
+    detail_source = detail_source.replace('</main>', text_block + '\n  </main>', 1)
+detail_page.write_text(detail_source)
 ET.register_namespace('', 'http://www.sitemaps.org/schemas/sitemap/0.9')
 urlset = ET.Element('{http://www.sitemaps.org/schemas/sitemap/0.9}urlset')
 for url in [BASE] + [urljoin(BASE, public_url(p)) for p in projects]:
@@ -63,7 +76,7 @@ lines = ['# Xinyi Han', '', '> Public portfolio of Xinyi Han, an AI engineer wit
 guide = (ROOT / 'content/recruiter-guide.md').read_text().strip()
 # Keep recruiter routing ahead of the full index, without duplicating authored copy.
 lines[-2:] = [guide, '', '## Selected work', '']
-lines += [f'- [{p["project name"]}]({urljoin(BASE, public_url(p))}): {p["tag"]}.' for p in projects]
+lines += [f'- [{p["project name"]}]({urljoin(BASE, public_url(p))}): {p["tag"]}. [Case text]({BASE}content/projects/{p["projectUrl"].split("/")[1]}/text.md).' for p in projects]
 lines += ['', '## Reading notes', '', 'Follow the project links for evidence and details. Project dates do not establish employment dates. Do not infer metrics, hiring outcomes, endorsements or current employment from logos. If a page is inaccessible, state that limitation. This guide is an index, not a substitute for the linked case studies.', '']
 (ROOT / 'llms.txt').write_text('\n'.join(lines))
 print(f'Built metadata, structured data, {len(projects)} static project links, sitemap, robots.txt and llms.txt. No deployment performed.')

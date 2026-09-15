@@ -16,6 +16,7 @@
     "classification": "UX/Product",
     "coverImageUrl": "gallery/portfolio-ai-assistant/public/cover.png",
     "projectUrl": "gallery/portfolio-ai-assistant/index.html",
+    "publicUrl": "project-scrollcarousel.html?project=0",
     "company": "Personal"
   },
   {
@@ -25,6 +26,7 @@
     "classification": "Experiential",
     "coverImageUrl": "gallery/interactive-virtual-drum-kit/public/cover.png",
     "projectUrl": "gallery/interactive-virtual-drum-kit/index.html",
+    "publicUrl": "project-scrollcarousel.html?project=1",
     "company": "UTS"
   },
   {
@@ -34,6 +36,7 @@
     "classification": "UX/Product",
     "coverImageUrl": "gallery/friendup-social-app/public/cover.png",
     "projectUrl": "gallery/friendup-social-app/index.html",
+    "publicUrl": "project-scrollcarousel.html?project=2",
     "company": "UTS"
   },
   {
@@ -43,6 +46,7 @@
     "classification": "UX/Product",
     "coverImageUrl": "gallery/Rider-Dispatch-Scheduling-Platform/public/cover.png",
     "projectUrl": "gallery/Rider-Dispatch-Scheduling-Platform/index.html",
+    "publicUrl": "project-scrollcarousel.html?project=3",
     "company": "TikTok, Local Life"
   },
   {
@@ -52,6 +56,7 @@
     "classification": "UX/Product",
     "coverImageUrl": "gallery/Content-Driven-Food-Delivery-Experience/public/cover.png",
     "projectUrl": "gallery/Content-Driven-Food-Delivery-Experience/index.html",
+    "publicUrl": "project-scrollcarousel.html?project=4",
     "company": "TikTok, Local Life"
   },
   {
@@ -61,6 +66,7 @@
     "classification": "UX/Product",
     "coverImageUrl": "gallery/Re-Architecting-Alibaba-Help-Center-for-Global-Consistency/public/cover.png",
     "projectUrl": "gallery/Re-Architecting-Alibaba-Help-Center-for-Global-Consistency/index.html",
+    "publicUrl": "project-scrollcarousel.html?project=5",
     "company": "Alibaba, Taobao"
   },
   {
@@ -70,6 +76,7 @@
     "classification": "Content",
     "coverImageUrl": "gallery/KOL-Growth-Strategy/public/album.png",
     "projectUrl": "gallery/KOL-Growth-Strategy/index.html",
+    "publicUrl": "project-scrollcarousel.html?project=6",
     "company": "Red Note"
   },
   {
@@ -79,6 +86,7 @@
     "classification": "UX/Product",
     "coverImageUrl": "gallery/customer-service-workspace-chatbot/public/cover.png",
     "projectUrl": "gallery/customer-service-workspace-chatbot/index.html",
+    "publicUrl": "project-scrollcarousel.html?project=7",
     "company": "Alibaba"
   },
   {
@@ -88,6 +96,7 @@
     "classification": "Experiential",
     "coverImageUrl": "gallery/my-friends-are-my-power-station/public/thesis_wholeview.png",
     "projectUrl": "gallery/my-friends-are-my-power-station/index.html",
+    "publicUrl": "project-scrollcarousel.html?project=8",
     "company": "Parsons School of Design"
   },
   {
@@ -97,6 +106,7 @@
     "classification": "Experiential",
     "coverImageUrl": "gallery/gamify-museum-experience/public/album.png",
     "projectUrl": "gallery/gamify-museum-experience/index.html",
+    "publicUrl": "project-scrollcarousel.html?project=9",
     "company": "Brooklyn Museum, Parsons"
   },
   {
@@ -106,6 +116,7 @@
     "classification": "Experiential",
     "coverImageUrl": "gallery/food-memory/public/cover.png",
     "projectUrl": "gallery/food-memory/index.html",
+    "publicUrl": "project-scrollcarousel.html?project=10",
     "company": "Parsons School of Design"
   },
   {
@@ -115,6 +126,7 @@
     "classification": "Visual",
     "coverImageUrl": "gallery/how-are-oscars-biased/public/cover.png",
     "projectUrl": "gallery/how-are-oscars-biased/index.html",
+    "publicUrl": "project-scrollcarousel.html?project=11",
     "company": "-"
   },
   {
@@ -124,6 +136,7 @@
     "classification": "Experiential",
     "coverImageUrl": "gallery/the-museum-kit/public/cover.png",
     "projectUrl": "gallery/the-museum-kit/index.html",
+    "publicUrl": "project-scrollcarousel.html?project=12",
     "company": "-"
   },
   {
@@ -133,6 +146,7 @@
     "classification": "Visual",
     "coverImageUrl": "gallery/solar-system-relationship/public/cover.png",
     "projectUrl": "gallery/solar-system-relationship/index.html",
+    "publicUrl": "project-scrollcarousel.html?project=13",
     "company": "-"
   },
   {
@@ -142,6 +156,7 @@
     "classification": "Visual",
     "coverImageUrl": "gallery/Farmer-Coffee-Logo/public/cover.png",
     "projectUrl": "gallery/Farmer-Coffee-Logo/index.html",
+    "publicUrl": "project-scrollcarousel.html?project=14",
     "company": "Farmer Coffee Company"
   },
   {
@@ -151,6 +166,7 @@
     "classification": "Visual",
     "coverImageUrl": "gallery/musically-1m-audition/public/cover.png",
     "projectUrl": "gallery/musically-1m-audition/index.html",
+    "publicUrl": "project-scrollcarousel.html?project=15",
     "company": "musical.ly"
   },
   {

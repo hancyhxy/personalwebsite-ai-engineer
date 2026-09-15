@@ -6,7 +6,7 @@
 - All 18 project links and tags are present in the initial HTML, not just JavaScript. Interactive topic/journey rendering replaces them after successful data loading. They remain usable with JavaScript disabled or gallery fetch failure.
 - `assets/images/og-badge.png`: 1200×630 social preview, made from the local public portrait and confirmed identity copy. No private résumé content.
 - `robots.txt`: permits crawling and declares the sitemap.
-- `sitemap.xml`: homepage + 18 canonical public project pages. No invented last-modified dates and no preview/demo URLs. All 18 project URLs—including the 16 legacy routes—returned HTTP 200 in the pre-publication check.
+- `sitemap.xml`: homepage + 18 current `project-scrollcarousel.html?project=N` routes. Stable IDs come from `js/scrollcarousel-data.js`; `content/gallery.json` declares each matching `publicUrl`. No invented last-modified dates or preview/demo URLs.
 - `llms.txt`: public profile summary and project index. This is optional AI discovery guidance, not a recognized ranking factor or guarantee an assistant can browse the site. No private correspondence or résumé text.
 
 Regenerate metadata and project indexes after changing `content/gallery.json`:
@@ -15,7 +15,7 @@ Regenerate metadata and project indexes after changing `content/gallery.json`:
 python3 scripts/build-badge-seo.py
 ```
 
-This command never deploys. The generated blocks in both `index-badge.html` and the published entry `index.html` are marked with BADGE SEO / BADGE STATIC WORK comments. Only these blocks are synchronized; other entry-page changes are preserved. Recruiter guidance is authored in `content/recruiter-guide.md` and included in `llms.txt` before the full project index. Keep identity copy consistent with the visible card. No employer is asserted as current employment.
+This command never deploys. It first runs `scripts/build-project-routes.cjs` to validate all 18 stable identities and update legacy browser routes without deleting case bodies or assets. Node.js and Python 3 are required. The generated blocks in both `index-badge.html` and the published entry `index.html` are marked with BADGE SEO / BADGE STATIC WORK comments. Only these blocks are synchronized; other entry-page changes are preserved. Recruiter guidance is authored in `content/recruiter-guide.md` and included in `llms.txt` before the full project index. Keep identity copy consistent with the visible card. No employer is asserted as current employment.
 
 ## Publication gate
 
@@ -29,6 +29,16 @@ After the owner approves publishing:
 4. Verify ownership in Google Search Console and Bing Webmaster Tools, then submit `https://xyhan.com/sitemap.xml`. Owner account/DNS approval is required; no account verification or submission has been performed.
 
 No keyword stuffing, invented ratings, search traffic promises or hidden SEO-only prose. Existing individual project metadata has not been rewritten; this task covers the V3 homepage and crawl entry points.
+
+## Current case routes (2026-09-15)
+
+The previous checks verified successful HTTP responses but missed that `/gallery/...` still rendered the old design. These links are now browser aliases for the corresponding current details. `js/gallery-current-route.js` uses `location.replace`, preserves tracking/return/hash parameters, and rejects query parameters that try to override the path's project ID. GitHub Pages does not supply server-side redirects here: the migration is client-side, not an HTTP 301. Legacy HTML remains readable without JavaScript, and canonical detail pages offer all 18 Markdown case texts as a no-JavaScript fallback.
+
+Ask AI, the public gallery metadata, homepage static index/JSON-LD, recruiter guide and sitemap now recommend current detail URLs. `llms.txt` also exposes each case's Markdown source for readers that cannot render the detail JavaScript. Existing conversations may continue to cite old URLs; those aliases now land on the correct new interface in a browser.
+
+The detail return handler accepts `/`, `/index.html`, and `/index-badge.html` snapshots instead of losing the published homepage's return position. Direct entries return to `/index.html#work-independent`. The Help Center case had one broken image reference (`configuration.pairings.png`); it now uses the existing `configuration.png` asset.
+
+Validation: `scripts/gallery-compat-check.cjs` visits all 18 canonical cases at 1280px and 390px, tests directory/index/slashless legacy aliases with ChatGPT tracking and a conflicting project parameter, checks correct title/template/content/Hero, decodes body images locally (HEAD checks live), checks video asset responses, mobile overflow, Next/Close links, Back history, three homepage return identities, and JavaScript-disabled fallback access. Desktop/mobile contact sheets are local task artifacts, not public site content. The standard scene regression also passed. The additional historical flip script passes desktop but its mobile phase invokes hidden WebGL links and did not complete; the current native mobile navigation suite is the relevant mobile acceptance check.
 
 ## AI handoff
 

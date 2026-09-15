@@ -15,6 +15,18 @@
   document.body.dataset.detailLayout = detailLayout;
 
   document.title = project.title + " — Xinyi Han";
+  var canonical = document.createElement('link');
+  canonical.rel = 'canonical';
+  canonical.href = 'https://xyhan.com/project-scrollcarousel.html?project=' + index;
+  var description = document.createElement('meta');
+  description.name = 'description';
+  description.content = project.summary;
+  var textEdition = document.createElement('link');
+  textEdition.rel = 'alternate';
+  textEdition.type = 'text/markdown';
+  textEdition.href = new URL('./content/projects/' + slug + '/text.md', location.href).href;
+  textEdition.title = 'Case study text';
+  document.head.append(canonical, description, textEdition);
   ProjectDetailHero.render(document, index);
 
   var nextIndex = (index + 1) % SCROLLCAROUSEL_PROJECTS.length;
@@ -201,7 +213,7 @@
     }
   }
 
-  fetch("./content/projects/" + slug + "/text.md")
+  fetch("./content/projects/" + slug + "/text.md?v=current-routes-2")
     .then(function (response) {
       if (!response.ok) throw new Error("Case study not found");
       return response.text();

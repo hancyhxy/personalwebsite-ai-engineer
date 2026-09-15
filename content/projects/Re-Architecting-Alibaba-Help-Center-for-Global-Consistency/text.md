@@ -140,7 +140,7 @@ Integrated these behaviors into the design system for automatic scaling.
 
 #### Collaborative Governance
 
-![configuration.pairings](./public/configuration.pairings.png)
+![configuration](./public/configuration.png)
 
 Worked with PMs, translators, and regional designers to unify tone and UX consistency.
 

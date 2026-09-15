@@ -9,10 +9,11 @@
     addEventListener('DOMContentLoaded', function () {
       if (params.has('measure')) return;
       var id = params.get('return'), state = id && read(id);
-      var home = new URL('./index-badge.html#work-independent', location.href);
+      var home = new URL('./index.html#work-independent', location.href);
       if (state) {
         var source = new URL(state.url, location.href);
-        if (source.origin === location.origin && /index-badge\.html$/.test(source.pathname)) {
+        var rootPath = new URL('./', location.href).pathname;
+        if (source.origin === location.origin && [rootPath, rootPath + 'index.html', rootPath + 'index-badge.html'].includes(source.pathname)) {
           home = source; home.searchParams.set('restore', id);
         }
       }

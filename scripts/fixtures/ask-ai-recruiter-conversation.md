@@ -14,6 +14,10 @@ Final observed results:
 
 Exact prompts, full replies and screenshots remain in local task artifacts at `~/.pi/tmp/2026-09-15/ask-ai-conversation/` (`prompt-final.txt`, `acceptance-turn-1.txt`, `acceptance-turn-2.txt`, `acceptance-chatgpt-jd.png`). This is one synthetic role tested against real ChatGPT, not evidence of consistent behavior across all roles, models, accounts or browsing conditions.
 
+### Subsequent route correction
+
+The conversation tests above used the old `/gallery/...` URLs, which returned the right content but the wrong visual template. The prompt now uses `https://xyhan.com/project-scrollcarousel.html?project=0`; old citations are browser-redirected to the matching current case. The 18-case route suite verifies the landing interface and content, not a fresh model response. Conversation excerpts above remain historical test evidence, not a claim that the new route was used in those runs.
+
 ## Turn 1: real homepage handoff
 
 Open Ask AI in the local revised homepage and follow the ChatGPT provider link. Check that the entire short prompt arrives intact. If the provider only prefills, submit it. Capture the final response, not just its transient browsing status.

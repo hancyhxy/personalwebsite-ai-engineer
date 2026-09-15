@@ -10,14 +10,16 @@
 
 ## Recruiter quick read
 
+Project links open the current portfolio detail pages. If your reader cannot render JavaScript, use the corresponding **Case text** links in the project index below, and cite the current project URL when recommending a case.
+
 Xinyi Han presents herself as an AI engineer with a product design background, based in Sydney. Her portfolio combines previous UX work at Alibaba and ByteDance with independent AI-assisted building and interactive experiments. These are different kinds of evidence: employer case studies describe design contributions; independent projects demonstrate prototyping and implementation, not employment as an AI engineer at those companies.
 
 ### Start with your team's problem
 
-- **AI product experiences / conversational interfaces:** [Portfolio Assistant](https://xyhan.com/gallery/portfolio-ai-assistant/index.html) documents a one-day demo using Claude Code, Figma MCP, vanilla HTML/CSS/JS and a Python proxy for an LLM API. It explores guided recruiter discovery and evidence-linked answers. Useful for discussing design-to-code iteration and scoped AI interactions; not evidence of model training or production-scale LLM operations. The historical embedded-chat demo is distinct from the current external-provider Ask AI handoff.
-- **Customer support / B2B workflows:** [Alibaba Customer Service Workspace & Chatbot](https://xyhan.com/gallery/customer-service-workspace-chatbot/index.html) describes ownership of merchant self-service conversation architecture and help-center IA, plus selected agent-workspace modules. Useful for complex workflows and human–AI interaction. This is UX ownership, not a claim that she engineered the underlying models. Reported inquiry volume is platform context, not her personal impact metric.
-- **Consumer commerce / conversion journeys:** [ByteDance Food Delivery Experience](https://xyhan.com/gallery/Content-Driven-Food-Delivery-Experience/index.html) is the starting point for short-video commerce and end-to-end consumer UX; [Rider Dispatch](https://xyhan.com/gallery/Rider-Dispatch-Scheduling-Platform/index.html) covers the operations side. Read the cases before asserting scope or outcomes.
-- **Global platforms / information architecture:** [Alibaba Help Center](https://xyhan.com/gallery/Re-Architecting-Alibaba-Help-Center-for-Global-Consistency/index.html) covers localization strategy and cross-market consistency. Relevant to platform design questions, not proof of a particular employer's current needs.
+- **AI product experiences / conversational interfaces:** [Portfolio Assistant](https://xyhan.com/project-scrollcarousel.html?project=0) documents a one-day demo using Claude Code, Figma MCP, vanilla HTML/CSS/JS and a Python proxy for an LLM API. It explores guided recruiter discovery and evidence-linked answers. Useful for discussing design-to-code iteration and scoped AI interactions; not evidence of model training or production-scale LLM operations. The historical embedded-chat demo is distinct from the current external-provider Ask AI handoff.
+- **Customer support / B2B workflows:** [Alibaba Customer Service Workspace & Chatbot](https://xyhan.com/project-scrollcarousel.html?project=7) describes ownership of merchant self-service conversation architecture and help-center IA, plus selected agent-workspace modules. Useful for complex workflows and human–AI interaction. This is UX ownership, not a claim that she engineered the underlying models. Reported inquiry volume is platform context, not her personal impact metric.
+- **Consumer commerce / conversion journeys:** [ByteDance Food Delivery Experience](https://xyhan.com/project-scrollcarousel.html?project=4) is the starting point for short-video commerce and end-to-end consumer UX; [Rider Dispatch](https://xyhan.com/project-scrollcarousel.html?project=3) covers the operations side. Read the cases before asserting scope or outcomes.
+- **Global platforms / information architecture:** [Alibaba Help Center](https://xyhan.com/project-scrollcarousel.html?project=5) covers localization strategy and cross-market consistency. Relevant to platform design questions, not proof of a particular employer's current needs.
 - **AI-assisted implementation / human review:** [Tech Fest AI Showcase](https://xyhan.com/project-scrollcarousel.html?project=16) presents exhibited working prototypes; [AI-Assisted Video Editing](https://xyhan.com/project-scrollcarousel.html?project=17) documents a human-directed production workflow. For readers without JavaScript, use the [Showcase text](https://xyhan.com/content/projects/tech-fest-ai-showcase/text.md) and [Editing workflow text](https://xyhan.com/content/projects/ai-assisted-video-editing/text.md). Independent work should not be recast as enterprise engineering employment.
 
 ### Where her experience connects
@@ -32,24 +34,24 @@ This is an owner-authored navigation guide, not an independent assessment. Verif
 
 ## Selected work
 
-- [Tech Fest | AI Showcase](https://xyhan.com/project-scrollcarousel.html?project=16): AI-assisted Development, SwiftUI, Physical Computing.
-- [Claude Code ↔ Figma: Building an AI-Powered Portfolio Assistant](https://xyhan.com/gallery/portfolio-ai-assistant/index.html): AI, MCP, Product Design.
-- [Interactive Virtual Drum Kit](https://xyhan.com/gallery/interactive-virtual-drum-kit/index.html): Media pipe, HTML/CSS, P5js, Interactive Music.
-- [FriendUp Map-based Social App](https://xyhan.com/gallery/friendup-social-app/index.html): UX Design, Social Wellbeing, Usability Testing.
-- [Rider Dispatch & Scheduling Platform](https://xyhan.com/gallery/Rider-Dispatch-Scheduling-Platform/index.html): B2B Platform, Operations Design, Efficiency Optimization.
-- [Content-Driven Food Delivery Experience](https://xyhan.com/gallery/Content-Driven-Food-Delivery-Experience/index.html): Short-Video Commerce, End-to-End, Low-Friction Usability.
-- [Re-Architecting Alibaba Help Center for Global Consistency](https://xyhan.com/gallery/Re-Architecting-Alibaba-Help-Center-for-Global-Consistency/index.html): Web Design, Localization Strategy, Information Architecture.
-- [KOL Growth Strategy](https://xyhan.com/gallery/KOL-Growth-Strategy/index.html): Social Media, User Growth, Content Strategy, Brand Collaboration.
-- [Customer Service Workspace & AI Chatbot](https://xyhan.com/gallery/customer-service-workspace-chatbot/index.html): UX Design, AI Chatbot, Customer Service.
-- [My friends are my power station](https://xyhan.com/gallery/my-friends-are-my-power-station/index.html): Installation, Projection Mapping, Urban Culture.
-- [Design Museum Tour as a Game](https://xyhan.com/gallery/gamify-museum-experience/index.html): Experience Design, Museum Interaction.
-- [Food Memory](https://xyhan.com/gallery/food-memory/index.html): speculative design, food design, sci-fi movie.
-- [How Are Oscars Biased?](https://xyhan.com/gallery/how-are-oscars-biased/index.html): Data Visualization, Poster Design, Node.js.
-- [The Museum Kit — Reframing Art through Interaction](https://xyhan.com/gallery/the-museum-kit/index.html): Interaction Design, Museum, Experience Design.
-- [Relationship of the Eight Planets in Solar System](https://xyhan.com/gallery/solar-system-relationship/index.html): Data Visualization, Poster.
-- [Farmer Coffee Logo](https://xyhan.com/gallery/Farmer-Coffee-Logo/index.html): Visual Identity Design.
-- [Global 1 Million AUDITION](https://xyhan.com/gallery/musically-1m-audition/index.html): Content Strategy, Social Media, Campaign.
-- [AI-Assisted Video Editing Workflow](https://xyhan.com/project-scrollcarousel.html?project=17): AI Workflow, Semantic Media, Human-in-the-loop Editing.
+- [Tech Fest | AI Showcase](https://xyhan.com/project-scrollcarousel.html?project=16): AI-assisted Development, SwiftUI, Physical Computing. [Case text](https://xyhan.com/content/projects/tech-fest-ai-showcase/text.md).
+- [Claude Code ↔ Figma: Building an AI-Powered Portfolio Assistant](https://xyhan.com/project-scrollcarousel.html?project=0): AI, MCP, Product Design. [Case text](https://xyhan.com/content/projects/portfolio-ai-assistant/text.md).
+- [Interactive Virtual Drum Kit](https://xyhan.com/project-scrollcarousel.html?project=1): Media pipe, HTML/CSS, P5js, Interactive Music. [Case text](https://xyhan.com/content/projects/interactive-virtual-drum-kit/text.md).
+- [FriendUp Map-based Social App](https://xyhan.com/project-scrollcarousel.html?project=2): UX Design, Social Wellbeing, Usability Testing. [Case text](https://xyhan.com/content/projects/friendup-social-app/text.md).
+- [Rider Dispatch & Scheduling Platform](https://xyhan.com/project-scrollcarousel.html?project=3): B2B Platform, Operations Design, Efficiency Optimization. [Case text](https://xyhan.com/content/projects/Rider-Dispatch-Scheduling-Platform/text.md).
+- [Content-Driven Food Delivery Experience](https://xyhan.com/project-scrollcarousel.html?project=4): Short-Video Commerce, End-to-End, Low-Friction Usability. [Case text](https://xyhan.com/content/projects/Content-Driven-Food-Delivery-Experience/text.md).
+- [Re-Architecting Alibaba Help Center for Global Consistency](https://xyhan.com/project-scrollcarousel.html?project=5): Web Design, Localization Strategy, Information Architecture. [Case text](https://xyhan.com/content/projects/Re-Architecting-Alibaba-Help-Center-for-Global-Consistency/text.md).
+- [KOL Growth Strategy](https://xyhan.com/project-scrollcarousel.html?project=6): Social Media, User Growth, Content Strategy, Brand Collaboration. [Case text](https://xyhan.com/content/projects/KOL-Growth-Strategy/text.md).
+- [Customer Service Workspace & AI Chatbot](https://xyhan.com/project-scrollcarousel.html?project=7): UX Design, AI Chatbot, Customer Service. [Case text](https://xyhan.com/content/projects/customer-service-workspace-chatbot/text.md).
+- [My friends are my power station](https://xyhan.com/project-scrollcarousel.html?project=8): Installation, Projection Mapping, Urban Culture. [Case text](https://xyhan.com/content/projects/my-friends-are-my-power-station/text.md).
+- [Design Museum Tour as a Game](https://xyhan.com/project-scrollcarousel.html?project=9): Experience Design, Museum Interaction. [Case text](https://xyhan.com/content/projects/gamify-museum-experience/text.md).
+- [Food Memory](https://xyhan.com/project-scrollcarousel.html?project=10): speculative design, food design, sci-fi movie. [Case text](https://xyhan.com/content/projects/food-memory/text.md).
+- [How Are Oscars Biased?](https://xyhan.com/project-scrollcarousel.html?project=11): Data Visualization, Poster Design, Node.js. [Case text](https://xyhan.com/content/projects/how-are-oscars-biased/text.md).
+- [The Museum Kit — Reframing Art through Interaction](https://xyhan.com/project-scrollcarousel.html?project=12): Interaction Design, Museum, Experience Design. [Case text](https://xyhan.com/content/projects/the-museum-kit/text.md).
+- [Relationship of the Eight Planets in Solar System](https://xyhan.com/project-scrollcarousel.html?project=13): Data Visualization, Poster. [Case text](https://xyhan.com/content/projects/solar-system-relationship/text.md).
+- [Farmer Coffee Logo](https://xyhan.com/project-scrollcarousel.html?project=14): Visual Identity Design. [Case text](https://xyhan.com/content/projects/Farmer-Coffee-Logo/text.md).
+- [Global 1 Million AUDITION](https://xyhan.com/project-scrollcarousel.html?project=15): Content Strategy, Social Media, Campaign. [Case text](https://xyhan.com/content/projects/musically-1m-audition/text.md).
+- [AI-Assisted Video Editing Workflow](https://xyhan.com/project-scrollcarousel.html?project=17): AI Workflow, Semantic Media, Human-in-the-loop Editing. [Case text](https://xyhan.com/content/projects/ai-assisted-video-editing/text.md).
 
 ## Reading notes
 
