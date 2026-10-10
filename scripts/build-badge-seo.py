@@ -12,16 +12,16 @@ ROOT = Path(__file__).resolve().parents[1]
 BASE = 'https://xyhan.com/'
 subprocess.run(['node', str(ROOT / 'scripts/build-project-routes.cjs')], check=True)
 projects = json.loads((ROOT / 'content/gallery.json').read_text())
-title = 'Xinyi Han — AI Engineer & Product Designer in Sydney'
-description = 'Explore Xinyi Han’s AI engineering and product design portfolio: conversational AI, customer support, food delivery and interactive products, with experience at Alibaba and ByteDance.'
+title = 'Xinyi Han — AI-Native UX Engineer & Product Designer in Sydney'
+description = 'Explore Xinyi Han’s UX and product design portfolio, prototyped with AI and code: conversational AI, customer support, food delivery and interactive products, with experience at Alibaba and ByteDance.'
 escape = lambda s: html.escape(s, quote=True)
 public_url = lambda p: p['publicUrl']
-person = {'@type': 'Person', '@id': BASE + '#person', 'name': 'Xinyi Han', 'url': BASE, 'jobTitle': 'AI Engineer', 'description': description, 'image': BASE + 'assets/hero-portrait/center.webp', 'homeLocation': {'@type': 'Place', 'name': 'Sydney, Australia'}, 'knowsAbout': ['Conversational AI', 'Product Design', 'Customer Support', 'Interactive Prototyping'], 'sameAs': ['https://www.linkedin.com/in/xinyi-han-601968166/']}
+person = {'@type': 'Person', '@id': BASE + '#person', 'name': 'Xinyi Han', 'url': BASE, 'jobTitle': 'AI-Native UX Engineer', 'description': description, 'image': BASE + 'assets/hero-portrait/center.webp', 'homeLocation': {'@type': 'Place', 'name': 'Sydney, Australia'}, 'knowsAbout': ['Conversational AI', 'Product Design', 'Customer Support', 'Interactive Prototyping'], 'sameAs': ['https://www.linkedin.com/in/xinyi-han-601968166/']}
 schema = {'@context': 'https://schema.org', '@graph': [person, {'@type': 'ProfilePage', '@id': BASE + '#profile', 'url': BASE, 'name': title, 'description': description, 'inLanguage': 'en', 'mainEntity': {'@id': BASE + '#person'}}, {'@type': 'ItemList', '@id': BASE + '#selected-work', 'name': 'Selected work', 'numberOfItems': len(projects), 'itemListElement': [{'@type': 'ListItem', 'position': i + 1, 'name': p['project name'], 'url': urljoin(BASE, public_url(p))} for i, p in enumerate(projects)]}]}
 tags = [f'<title>{escape(title)}</title>', f'<meta name="description" content="{escape(description)}">', '<meta name="author" content="Xinyi Han">', '<meta name="robots" content="index,follow,max-image-preview:large">', f'<link rel="canonical" href="{BASE}">', '<meta name="theme-color" content="#fafaf8">']
-for prop, value in {'og:type': 'profile', 'og:title': title, 'og:description': description, 'og:url': BASE, 'og:site_name': 'Xinyi Han', 'og:locale': 'en_AU', 'og:image': BASE + 'assets/images/og-badge.png', 'og:image:width': '1200', 'og:image:height': '630', 'og:image:alt': 'Xinyi Han — AI Engineer. Sydney, Australia.'}.items():
+for prop, value in {'og:type': 'profile', 'og:title': title, 'og:description': description, 'og:url': BASE, 'og:site_name': 'Xinyi Han', 'og:locale': 'en_AU', 'og:image': BASE + 'assets/images/og-badge.png', 'og:image:width': '1200', 'og:image:height': '630', 'og:image:alt': 'Xinyi Han — AI-Native UX Engineer. Sydney, Australia.'}.items():
     tags.append(f'<meta property="{prop}" content="{escape(value)}">')
-for name, value in {'twitter:card': 'summary_large_image', 'twitter:title': title, 'twitter:description': description, 'twitter:image': BASE + 'assets/images/og-badge.png', 'twitter:image:alt': 'Xinyi Han — AI Engineer. Sydney, Australia.'}.items():
+for name, value in {'twitter:card': 'summary_large_image', 'twitter:title': title, 'twitter:description': description, 'twitter:image': BASE + 'assets/images/og-badge.png', 'twitter:image:alt': 'Xinyi Han — AI-Native UX Engineer. Sydney, Australia.'}.items():
     tags.append(f'<meta name="{name}" content="{escape(value)}">')
 tags += ['<link rel="alternate" type="text/plain" href="/llms.txt" title="Portfolio guide for AI assistants">', '<script type="application/ld+json">' + json.dumps(schema, ensure_ascii=False).replace('<', '\\u003c') + '</script>']
 page = ROOT / 'index-badge.html'
@@ -72,7 +72,7 @@ for url in [BASE] + [urljoin(BASE, public_url(p)) for p in projects]:
 ET.indent(urlset)
 ET.ElementTree(urlset).write(ROOT / 'sitemap.xml', encoding='utf-8', xml_declaration=True)
 (ROOT / 'robots.txt').write_text('User-agent: *\nAllow: /\n\nSitemap: https://xyhan.com/sitemap.xml\n')
-lines = ['# Xinyi Han', '', '> Public portfolio of Xinyi Han, an AI engineer with a product design background, based in Sydney, Australia.', '', '## About', '', '- Website: https://xyhan.com/', '- Experience shown on the portfolio: Alibaba (Chatbot / Customer Support) and ByteDance (Food Delivery / Social Media). These are previous experience, not current employment claims.', '- Work spans conversational AI, product design and interactive products.', '', '## Selected work', '']
+lines = ['# Xinyi Han', '', '> Public portfolio of Xinyi Han, an AI-native UX engineer — a product designer who prototypes with AI and code — based in Sydney, Australia.', '', '## About', '', '- Website: https://xyhan.com/', '- Experience shown on the portfolio: Alibaba (Chatbot / Customer Support) and ByteDance (Food Delivery / Social Media). These are previous experience, not current employment claims.', '- Work spans conversational AI, product design and interactive products.', '', '## Selected work', '']
 guide = (ROOT / 'content/recruiter-guide.md').read_text().strip()
 # Keep recruiter routing ahead of the full index, without duplicating authored copy.
 lines[-2:] = [guide, '', '## Selected work', '']

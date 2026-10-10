@@ -26,15 +26,15 @@ Read this file before changing `index-badge.html`, the immersive project field, 
 - No loading screen, loading percentage, or progress bar.
 - One small centered line: `Xinyi Han`.
 - No `Portfolio · Sydney` line.
-- On desktop (>700px), the opening title is split as `AI` on the left and `Engineer` on the right. On mobile (≤700px), `AI` is centered above a vertical S-shaped image ribbon and `Engineer` is centered below it.
+- On desktop (>700px), the opening title is split as `AI-Native` on the left and `UX Engineer` on the right. On mobile (≤700px), `AI-Native` is centered above a vertical S-shaped image ribbon and `UX Engineer` is centered below it. The badge role line, SEO title/jobTitle, share image and llms.txt use the same identity: `AI-Native UX Engineer` (product designer who prototypes with AI and code).
 
 ### Locked motion
 
 1. `Xinyi Han` starts small and centered.
 2. Solid project images form a compact central stack.
 3. Images expand into a compact sine-wave ribbon while `Xinyi Han` moves to the exact centered first-scene/header position.
-4. The completed sine ribbon settles elastically and holds with `AI / Engineer` fully visible before any dispersal begins; the name is already at the header and stays there.
-5. On desktop, `AI`, the ribbon, and `Engineer` form one horizontally centered composition. The ribbon fits between the measured words with clear gaps. On mobile, title heights, header and skip-button clearance determine the vertical ribbon's available travel; the two titles and curve are centered on the viewport. Keep the image planes upright and 16:9—rotate the curve's travel axis, not the images. The same 11 unique artworks form the curve; never duplicate cards to mimic the reference's larger collection.
+4. The completed sine ribbon settles elastically and holds with `AI-Native / UX Engineer` fully visible before any dispersal begins; the name is already at the header and stays there.
+5. On desktop, `AI-Native`, the ribbon, and `UX Engineer` form one horizontally centered composition. The ribbon fits between the measured words with clear gaps. On mobile, title heights, header and skip-button clearance determine the vertical ribbon's available travel; the two titles and curve are centered on the viewport. Keep the image planes upright and 16:9—rotate the curve's travel axis, not the images. The same 11 unique artworks form the curve; never duplicate cards to mimic the reference's larger collection.
 6. Images disperse and fade away, revealing a badge-only first screen; no three-project satellite layout remains.
 7. Position and proportional size share the same eased dispersal progress; no separate post-arrival enlargement occurs.
 8. The identity badge is revealed as the sole first-screen subject. The 11 projects reappear only when scrolling into Selected Work.
@@ -47,7 +47,7 @@ Read this file before changing `index-badge.html`, the immersive project field, 
 - Images remain horizontal or vertical rather than arbitrarily tilted.
 - The sine ribbon is compact; it must not spread into a sparse full-screen diagonal.
 - Every opening image uses one shared 16:9 rectangle through stack, wave, hold, and dispersal, matching the Selected Work project planes. The simultaneous dispersal-and-size transition scales these images proportionally without changing their aspect ratio or crop; texture UVs use cover cropping rather than stretching. Decorative background planes retain their varied ratios.
-- The fully formed `AI / Engineer` composition holds for at least 1.3 seconds before dispersal.
+- The fully formed `AI-Native / UX Engineer` composition holds for at least 1.3 seconds before dispersal.
 - The transition into the badge scene is continuous rather than a flash cut.
 - Skip and reduced-motion paths land in the same final state.
 

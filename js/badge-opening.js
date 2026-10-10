@@ -12,7 +12,7 @@
 
   var opening = document.createElement("div");
   opening.className = "portfolio-opening";
-  opening.innerHTML = '<p class="opening-name">Xinyi Han</p><p class="opening-role opening-role-left">AI</p><p class="opening-role opening-role-right">Engineer</p><button class="opening-skip" type="button">Skip intro ↗</button>';
+  opening.innerHTML = '<p class="opening-name">Xinyi Han</p><p class="opening-role opening-role-left">AI-Native</p><p class="opening-role opening-role-right">UX Engineer</p><button class="opening-skip" type="button">Skip intro ↗</button>';
   body.append(opening);
   opening.hidden = true;
   var blocked = [], activated = false;

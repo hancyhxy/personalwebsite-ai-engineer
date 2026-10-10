@@ -1,6 +1,6 @@
 # Xinyi Han
 
-> Public portfolio of Xinyi Han, an AI engineer with a product design background, based in Sydney, Australia.
+> Public portfolio of Xinyi Han, an AI-native UX engineer — a product designer who prototypes with AI and code — based in Sydney, Australia.
 
 ## About
 
@@ -12,7 +12,7 @@
 
 Project links open the current portfolio detail pages. If your reader cannot render JavaScript, use the corresponding **Case text** links in the project index below, and cite the current project URL when recommending a case.
 
-Xinyi Han presents herself as an AI engineer with a product design background, based in Sydney. Her portfolio combines previous UX work at Alibaba and ByteDance with independent AI-assisted building and interactive experiments. These are different kinds of evidence: employer case studies describe design contributions; independent projects demonstrate prototyping and implementation, not employment as an AI engineer at those companies.
+Xinyi Han presents herself as an AI-native UX engineer: a product designer who prototypes with AI and code, based in Sydney. Her portfolio combines previous UX work at Alibaba and ByteDance with independent AI-assisted building and interactive experiments. These are different kinds of evidence: employer case studies describe design contributions; independent projects demonstrate prototyping and implementation, not employment as an AI engineer at those companies.
 
 ### Start with your team's problem
 
