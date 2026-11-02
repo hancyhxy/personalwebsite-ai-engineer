@@ -182,26 +182,6 @@
       </section>
 
       <section class="scc-detail-block">
-        <h3>Hands-on at the delivery stations</h3>
-        <div class="scc-detail-block-body">
-          <p>TikTok was building its own delivery network in high-volume cities: Shanghai, Beijing and Shenzhen. With the product managers I went on site and mapped who does what. A station covers about 5 km and runs on a station manager, a dispatcher and 50–100 riders. Dispatch happened in chat groups and spreadsheets.</p>
-          <ul>
-            <li>Peak hours: slow response, some riders overloaded while others waited.</li>
-            <li>No view of route efficiency.</li>
-            <li>New stations: inexperienced riders and spiky demand from live streams.</li>
-          </ul>
-          <figure><img src="img/bd-meituan-rider.webp" width="1600" height="1067" decoding="async" alt="A Meituan Zhuansong rider in a yellow uniform waits at a restaurant counter beside packed takeaway orders, with markers 1 to 3"><figcaption>Reference from the market leader we studied, Meituan: the station-based rider model. Photo: <a href="https://commons.wikimedia.org/wiki/File:SZ_%E6%B7%B1%E5%9C%B3_Shenzhen_%E8%9B%87%E5%8F%A3_Shekou_shop_restaurant_%E7%BE%8E%E5%9C%98_Meituan_food_delivery_worker_uniform_yellow_August_2018_IX2.jpg" rel="noopener">Capwiuejooh</a>, Shenzhen 2018, <a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="noopener">CC BY-SA 4.0</a>, via Wikimedia Commons; numbered markers added.</figcaption></figure>
-          <ol>
-            <li><b>Station-based rider.</b> “美团专送” (Meituan Zhuansong) riders belong to a delivery station; the station manager and dispatcher assign their orders.</li>
-            <li><b>The hand-off.</b> Packed orders wait at the counter. Every minute here is dispatch time we wanted to cut.</li>
-            <li><b>Merchant prep time.</b> When the kitchen finishes decides when a rider should arrive, so dispatch has to see merchant status too.</li>
-          </ol>
-          <figure><img src="img/bd-field.webp" width="1600" height="900" decoding="async" alt="Personas: station manager, dispatcher, experienced rider, new rider"><figcaption>Roles we met at the stations: station manager, dispatcher, experienced and new riders.</figcaption></figure>
-          <figure><img src="img/bd-competitors.webp" width="1600" height="917" decoding="async" alt="Comparison of Ele.me, Meituan and TikTok dispatch: rider, order and map focus"><figcaption>Learning from Ele.me and Meituan: what each dispatch tool prioritises (rider, order, map), and what TikTok’s first version needed.</figcaption></figure>
-        </div>
-      </section>
-
-      <section class="scc-detail-block">
         <h3>Merchant side</h3>
         <div class="scc-detail-block-body">
           <ul>
@@ -214,11 +194,47 @@
       </section>
 
       <section class="scc-detail-block">
-        <h3>Rider and dispatch side</h3>
+        <h3>Rider side: getting dispatch right, fast</h3>
+        <div class="scc-detail-block-body">
+          <p>Dispatch was new to all of us, and the first stations had to open within months. So we went to the stations first, learned from the most mature players, then set our own strategy.</p>
+          <h4>01 · Go to the stations</h4>
+          <p>TikTok was building its own delivery network in high-volume cities: Shanghai, Beijing and Shenzhen. With the product managers I went on site and mapped who does what. A station covers about 5 km and runs on a station manager, a dispatcher and 50–100 riders. Dispatch happened in chat groups and spreadsheets.</p>
+          <ul>
+            <li>Peak hours: slow response, some riders overloaded while others waited.</li>
+            <li>No view of route efficiency.</li>
+            <li>New stations: inexperienced riders and spiky demand from live streams.</li>
+          </ul>
+          <figure><img src="img/bd-meituan-rider.webp" width="1600" height="1067" decoding="async" alt="A Meituan Zhuansong rider in a yellow uniform waits at a restaurant counter beside packed takeaway orders, with markers 1 to 3"><figcaption>Reference from the market leader we studied, Meituan: the station-based rider model. Photo: <a href="https://commons.wikimedia.org/wiki/File:SZ_%E6%B7%B1%E5%9C%B3_Shenzhen_%E8%9B%87%E5%8F%A3_Shekou_shop_restaurant_%E7%BE%8E%E5%9C%98_Meituan_food_delivery_worker_uniform_yellow_August_2018_IX2.jpg" rel="noopener">Capwiuejooh</a>, Shenzhen 2018, <a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="noopener">CC BY-SA 4.0</a>, via Wikimedia Commons; numbered markers added.</figcaption></figure>
+          <ol>
+            <li><b>Station-based rider.</b> “美团专送” (Meituan Zhuansong) riders belong to a delivery station; the station manager and dispatcher assign their orders.</li>
+            <li><b>The hand-off.</b> Packed orders wait at the counter. Every minute here is dispatch time we wanted to cut.</li>
+            <li><b>Merchant prep time.</b> When the kitchen finishes decides when a rider should arrive, so dispatch has to see merchant status too.</li>
+          </ol>
+          <figure><img src="img/bd-field.webp" width="1600" height="900" decoding="async" alt="Personas: station manager, dispatcher, experienced rider, new rider"><figcaption>Who we met at the stations. An experienced rider carries 3–5 orders at once (100+ a day); a new rider carries 2–3 (about 80 a day) and struggles at peak.</figcaption></figure>
+          <h4>02 · Learn from the most mature players</h4>
+          <p>We studied the two leaders, Meituan and Ele.me. Each dispatch tool fits its riders:</p>
+          <ul>
+            <li><b>Ele.me leans on the rider.</b> It watches how orders and riders match up, with an eye on growing new riders.</li>
+            <li><b>Meituan leans on the order.</b> Its riders are mostly experienced, so the tool keeps orders flowing and steps in only on exceptions.</li>
+          </ul>
+          <figure><img src="img/bd-competitors.webp" width="1600" height="917" decoding="async" alt="Comparison of Ele.me, Meituan and TikTok dispatch: rider, order and map focus"><figcaption>What each dispatch tool prioritises: rider, order or map.</figcaption></figure>
+          <h4>03 · Set our own strategy</h4>
+          <p>Our stations were new: inexperienced riders, and order spikes whenever a live stream sold vouchers. Neither model fit as it was, so the first version balances order, rider and map.</p>
+          <ul>
+            <li><b>Dispatch by rider load.</b> The console shows how many orders each rider is carrying against what they can handle (3–5 at once for an experienced rider, 2–3 for a new one) and assigns by load and distance.</li>
+            <li><b>Two ways in.</b> Start from an order and find a rider on the map, or start from a rider and see their route.</li>
+            <li><b>People stay in charge.</b> AI suggests the assignment; the station manager approves or overrides.</li>
+          </ul>
+          <figure><img src="img/bd-console-demo.webp" width="1200" height="680" decoding="async" alt="Dispatch console demo: orders by status on the left, pick-up and drop-off routes on a map, and each rider's current orders on the right"><figcaption>Console structure, shown as a demo (the real interface is confidential): orders by status on the left, routes on the map, each rider’s current orders on the right.</figcaption></figure>
+        </div>
+      </section>
+
+      <section class="scc-detail-block">
+        <h3>From pain points to the console</h3>
         <div class="scc-detail-block-body">
           <ul>
             <li><b>Dispatch by chat group</b> → a command-centre console: order board by area and time window.</li>
-            <li><b>No view of riders</b> → a live rider view: status, route, capacity.</li>
+            <li><b>No view of riders</b> → a live rider view: status, route, current orders.</li>
             <li><b>Uneven workload</b> → AI suggestions by distance and load; the manager approves or overrides.</li>
             <li><b>Peak-hour pressure</b> → priority colour tags, drag-to-assign, as few clicks as possible.</li>
             <li><b>No efficiency data</b> → a dashboard for delivery time and rider utilisation.</li>
