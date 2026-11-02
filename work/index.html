@@ -1,0 +1,424 @@
+<!doctype html>
+<!-- work/index.html: one-link portfolio for software / front-end roles (Alibaba → ByteDance → Hey Atu).
+     Standalone page: does not use the badge homepage, component-loader or project-detail templates.
+     Source copy: planning/career/jobsearch/portfolio/2026-11-02_three-case-studies.md -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ivy Han — Selected work for software roles</title>
+<meta name="description" content="From designing the systems behind Alibaba and TikTok to building and shipping my own product. Three case studies.">
+<meta property="og:title" content="Ivy Han — Selected work for software roles">
+<meta property="og:description" content="Alibaba chatbot · TikTok Order First, Then Delivery · Hey Atu">
+<meta property="og:image" content="https://xyhan.com/work/img/atu-home.webp">
+<link rel="icon" type="image/svg+xml" href="/logo/favicon.svg">
+<style>
+/* Self-hosted latin subsets (variable fonts) so the page has no external requests. */
+@font-face{font-family:'Inter';font-style:normal;font-weight:400 600;font-display:swap;src:url(fonts/inter-latin.woff2) format('woff2')}
+@font-face{font-family:'Newsreader';font-style:normal;font-weight:400 500;font-display:swap;src:url(fonts/newsreader-latin.woff2) format('woff2')}
+@font-face{font-family:'Newsreader';font-style:italic;font-weight:400;font-display:swap;src:url(fonts/newsreader-italic-latin.woff2) format('woff2')}
+*,*::before,*::after{box-sizing:border-box}
+:root{--bg:#f7f3ec;--card:#fffdf9;--ink:#1d1a17;--mute:#6b645c;--line:#1d1a1720;--accent:#3d3bf3;--warm:#d9773a;
+  --serif:"Newsreader",Georgia,"Times New Roman",serif;--sans:Inter,-apple-system,"Helvetica Neue",Arial,sans-serif;--mono:ui-monospace,"SF Mono",Menlo,monospace}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 var(--sans);-webkit-text-size-adjust:100%}
+a{color:inherit}
+img{max-width:100%;height:auto;display:block}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+.col{max-width:760px}
+/* top bar */
+.bar{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.bar .wrap{display:flex;align-items:center;gap:16px;min-height:56px;flex-wrap:wrap}
+.bar .me{font-weight:600;text-decoration:none;margin-right:auto}
+.bar nav{display:flex;gap:4px;flex-wrap:wrap}
+.bar nav a{font-size:14px;text-decoration:none;padding:6px 10px;border-radius:999px;color:var(--mute)}
+.bar nav a:hover,.bar nav a:focus-visible{background:#1d1a170d;color:var(--ink)}
+/* type */
+.k{font:600 12px/1.4 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+h1{font:400 clamp(36px,6.4vw,68px)/1.04 var(--serif);letter-spacing:-.01em;margin:14px 0 22px}
+h1 em,h2 em{font-style:italic;color:var(--accent)}
+h2{font:400 clamp(30px,4.6vw,48px)/1.08 var(--serif);margin:10px 0 18px}
+h3{font:600 20px/1.3 var(--sans);margin:56px 0 12px;letter-spacing:-.01em}
+h4{font:600 16px/1.35 var(--sans);margin:0 0 6px}
+p{margin:0 0 14px}
+.lead{font-size:clamp(18px,2.2vw,21px);line-height:1.55;color:#3a352f}
+.mute{color:var(--mute)}
+ul.list{padding-left:1.15em;margin:0 0 14px}
+ul.list li{margin-bottom:6px}
+/* hero */
+.hero{padding:64px 0 24px}
+.journey{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:36px 0 8px}
+.journey a{display:block;text-decoration:none;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 18px 16px;min-width:0;transition:border-color .2s,transform .2s}
+.journey a:hover,.journey a:focus-visible{border-color:var(--accent);transform:translateY(-2px)}
+.journey .yr{font:500 12px var(--mono);color:var(--mute)}
+.journey b{display:block;font:500 22px/1.2 var(--serif);margin:8px 0 6px}
+.journey span{display:block;font-size:14px;color:var(--mute)}
+.journey i{font-style:normal;color:var(--accent);font-weight:600}
+.arrow{font:400 15px var(--serif);font-style:italic;color:var(--mute);margin-top:6px}
+/* chapters */
+.chapter{padding:72px 0 24px;border-top:1px solid var(--line);margin-top:48px;scroll-margin-top:56px}
+.metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:28px 0 8px}
+.metrics div{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 14px 12px;min-width:0}
+.metrics b{display:block;font:500 clamp(22px,3vw,30px)/1.1 var(--serif)}
+.metrics span{display:block;font-size:13px;color:var(--mute);margin-top:4px}
+figure{margin:28px 0}
+figure img{width:100%;border-radius:14px;border:1px solid var(--line);background:#fff}
+figcaption{font-size:13px;color:var(--mute);margin-top:8px}
+.duo{display:grid;grid-template-columns:minmax(0,2.2fr) minmax(0,1fr);gap:14px;align-items:start}
+.duo figure{margin:0}
+figure.narrow{max-width:640px}
+.annot .pic{position:relative}
+.annot .pin{position:absolute;transform:translate(-50%,-50%);width:30px;height:30px;border-radius:50%;background:var(--accent);color:#fff;font:600 14px/30px var(--sans);text-align:center;box-shadow:0 0 0 3px #fff,0 4px 12px rgba(0,0,0,.35)}
+.annot .legend{margin:14px 0 0;padding-left:1.4em;font-size:15px}
+.annot .legend li{margin-bottom:6px}
+.annot .legend li::marker{color:var(--accent);font-weight:600}
+@media (max-width:640px){.annot .pin{width:24px;height:24px;font-size:12px;line-height:24px;box-shadow:0 0 0 2px #fff,0 3px 8px rgba(0,0,0,.35)}}
+/* cards */
+.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:18px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;min-width:0}
+.card .n{font:600 12px var(--mono);color:var(--accent);letter-spacing:.06em}
+.card p{font-size:15px;margin:0 0 8px}
+.card p:last-child{margin:0}
+.card .tag{font:600 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--mute);display:block;margin-bottom:2px}
+/* pain → design rows */
+.pairs{border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--card);margin:16px 0}
+.pairs .row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.35fr);border-top:1px solid var(--line)}
+.pairs .row:first-child{border-top:0}
+.pairs .row>div{padding:12px 16px;font-size:15px;min-width:0}
+.pairs .row>div:first-child{color:var(--mute)}
+.pairs .head>div{font:600 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--mute);padding-top:10px;padding-bottom:10px;background:#1d1a1706}
+.pairs .me{font-weight:600;color:var(--accent)}
+/* flow chips */
+.flow{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:18px 0}
+.flow span{background:var(--card);border:1px solid var(--line);border-radius:999px;padding:7px 13px;font-size:14px}
+.flow span.hl{border-color:var(--accent);color:var(--accent);font-weight:600}
+.flow i{font-style:normal;color:var(--mute)}
+/* architecture */
+.arch{background:#15130f;color:#f3eee6;border-radius:18px;padding:22px;margin:24px 0;display:grid;gap:12px}
+.arch .lane{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1.1fr) auto minmax(0,1fr);gap:10px;align-items:center}
+.arch .node{border:1px solid #f3eee633;border-radius:12px;padding:10px 12px;min-width:0}
+.arch .node b{display:block;font-size:14px}
+.arch .node span{display:block;font:12px/1.4 var(--mono);color:#f3eee6a6;margin-top:2px}
+.arch .node.core{border-color:#8f8dff;background:#3d3bf31f}
+.arch .wire{font:12px var(--mono);color:#f3eee699;text-align:center;white-space:nowrap}
+.arch .note{font:12px/1.5 var(--mono);color:#f3eee699;border-top:1px dashed #f3eee633;padding-top:10px}
+.stack{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:12px 0}
+.stack div{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;min-width:0}
+.stack b{display:block;font-size:14px}
+.stack span{display:block;font-size:13px;color:var(--mute)}
+.more{display:flex;flex-wrap:wrap;gap:10px;margin:28px 0 0}
+.more a{font-size:14px;text-decoration:none;border:1px solid var(--line);border-radius:999px;padding:8px 14px;background:var(--card)}
+.more a:hover,.more a:focus-visible{border-color:var(--accent);color:var(--accent)}
+.note-small{font-size:12px;color:var(--mute);margin-top:18px}
+/* footer */
+footer{border-top:1px solid var(--line);margin-top:72px;padding:40px 0 56px}
+.ct{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+.ct a{padding:10px 18px;border-radius:999px;text-decoration:none;font-weight:600;font-size:15px;border:1.5px solid #1d1a1744}
+.ct a.pri{background:var(--accent);border-color:var(--accent);color:#fff}
+@media (max-width:820px){
+  .metrics{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .stack{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .arch .lane{grid-template-columns:minmax(0,1fr)}
+  .arch .wire{text-align:left;padding-left:12px}
+  .arch .wire::before{content:"↓ "}
+  .arch .wire .r{display:none}
+}
+@media (max-width:640px){
+  .wrap{padding:0 16px}
+  .hero{padding:40px 0 12px}
+  .journey,.cards,.duo{grid-template-columns:minmax(0,1fr)}
+  .pairs .row{grid-template-columns:minmax(0,1fr)}
+  .pairs .row>div:first-child{padding-bottom:2px}
+  .pairs .row>div:last-child{padding-top:2px}
+  .pairs .head{display:none}
+  .chapter{padding-top:48px;margin-top:32px}
+  h3{margin-top:44px}
+  .bar nav a{padding:6px 8px;font-size:13px}
+  .arch{padding:16px}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.journey a{transition:none}.journey a:hover{transform:none}}
+</style>
+</head>
+<body>
+
+<header class="bar"><div class="wrap">
+  <a class="me" href="/">Ivy Han</a>
+  <nav aria-label="Case studies">
+    <a href="#alibaba">Alibaba</a><a href="#bytedance">ByteDance</a><a href="#hey-atu">Hey Atu</a><a href="#contact">Contact</a>
+  </nav>
+</div></header>
+
+<main class="wrap">
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="k">Selected work · for software roles</div>
+  <h1>I designed the systems behind Alibaba and TikTok. Now I <em>build and ship my own.</em></h1>
+  <div class="col">
+    <p class="lead">Four years on large platforms taught me how real systems work: support at Taobao’s scale, and a two-sided delivery business at TikTok. Today I build and ship Hey Atu, a live AI product, as full-stack + UX. Three projects, one path.</p>
+  </div>
+  <div class="journey">
+    <a href="#alibaba"><span class="yr">01 · Alibaba · 2020–2022</span><b>Merchant chatbot</b><span>How a support system gets problems solved · <i>80%+ resolution</i></span></a>
+    <a href="#bytedance"><span class="yr">02 · ByteDance · 2022–2023</span><b>Order First, Then Delivery</b><span>Launching a new business fast, hands-on · <i>+300% orders</i></span></a>
+    <a href="#hey-atu"><span class="yr">03 · Hey Atu · 2026–now</span><b>A complete product</b><span>Web, payments, Mac and iOS · <i>live, paid plans</i></span></a>
+  </div>
+  <p class="arrow">Designer at scale → product builder → developer.</p>
+</section>
+
+<!-- ============ 01 ALIBABA ============ -->
+<section class="chapter" id="alibaba" aria-labelledby="ali-title">
+  <div class="k">01 · Alibaba · Taobao Customer Service Platform · 2020–2022</div>
+  <h2 id="ali-title">A merchant chatbot that <em>solves</em> the problem, not just answers it</h2>
+  <div class="col">
+    <p class="lead">Taobao merchants send 200,000 support questions a day: orders, fulfilment, promotions, platform rules. I was the sole designer of the merchant chatbot and Help Center, and owned the ticket, escalation and permission modules of the agent workspace. Engineers built it. This was before LLMs: decision trees and good content.</p>
+  </div>
+  <div class="metrics">
+    <div><b>200K</b><span>inquiries a day</span></div>
+    <div><b>80%+</b><span>solved without a human</span></div>
+    <div><b>52→81%</b><span>Help Center resolution</span></div>
+    <div><b>20+</b><span>localised sites reuse the framework</span></div>
+  </div>
+  <figure><img src="img/ali-overview.webp" width="1600" height="900" decoding="async" alt="Help Center and chatbot on web and app, resolving 80% of customer questions"><figcaption>One system across Help Center and chatbot, web and app.</figcaption></figure>
+
+  <h3>How the resolution rate went up: four levers</h3>
+  <div class="cards">
+    <div class="card"><div class="n">01 · SOLUTION-FIRST ANSWERS</div><p><span class="tag">Problem</span>The bot replied with an article; the merchant still had to find the fix.</p><p><span class="tag">Change</span>Every branch of the tree ends in an action: a button, form or shortcut that does the fix.</p></div>
+    <div class="card"><div class="n">02 · TASK-BASED TREE</div><p><span class="tag">Problem</span>Questions were sorted by internal department, not by what the merchant was trying to do.</p><p><span class="tag">Change</span>A tree built on merchant tasks: listing → order → fulfilment → after-sales. Guided questions narrow the case in a few taps.</p></div>
+    <div class="card"><div class="n">03 · FIX THE CONTENT BEHIND IT</div><p><span class="tag">Problem</span>The bot is only as good as its content: 3,000+ articles, 5 levels deep, duplicated topics.</p><p><span class="tag">Change</span>Card sorting with 16 merchants → 4 domains, 3 levels, semantic tags. Intents link straight to articles. Resolution 52% → 81%, search-to-answer −35%.</p></div>
+    <div class="card"><div class="n">04 · HAND-OFF WITH CONTEXT</div><p><span class="tag">Problem</span>When the bot failed, merchants repeated everything to a human.</p><p><span class="tag">Change</span>The conversation and diagnosis go to the agent, who gets AI reply suggestions in one panel. Failure is cheap, so the bot can stay strict.</p></div>
+  </div>
+  <p class="mute">Measured per node: categorisation accuracy, comprehension time and label clarity. Weak nodes were renamed and re-tested.</p>
+
+  <h3>How the conversation was designed</h3>
+  <div class="col">
+    <ul class="list">
+      <li><b>Progressive disclosure:</b> one decision per turn; the merchant never sees the whole tree.</li>
+      <li><b>Guided questions first,</b> free text as the fallback.</li>
+      <li><b>Quick actions inside the chat:</b> reply buttons and shortcuts into seller tools.</li>
+      <li><b>One taxonomy, three surfaces:</b> chatbot, Help Center and agent workspace share it, so a case keeps its shape as it moves.</li>
+    </ul>
+  </div>
+  <figure><img src="img/ali-sop.webp" width="1600" height="900" decoding="async" alt="Problem-solving procedure: find, select, read"><figcaption>The problem-solving procedure behind the tree: find → select → read.</figcaption></figure>
+  <figure><img src="img/ali-structure.webp" width="1600" height="900" decoding="async" alt="Card sorting study with 16 merchants"><figcaption>Letting merchants decide where things belong: card sorting with 16 merchants.</figcaption></figure>
+  <figure><img src="img/ali-handoff.webp" width="1600" height="900" decoding="async" alt="Self-service to human hand-off across Help Center, chatbot and human support"><figcaption>Seamless hand-off: Help Center → chatbot → human support.</figcaption></figure>
+
+  <h3>What still holds for AI products</h3>
+  <div class="col">
+    <ul class="list">
+      <li>Design the outcome, not the reply: a conversation should end in a finished task.</li>
+      <li>Content and structure are still the product. An LLM is only as good as what it retrieves.</li>
+      <li>Hand-off is a feature: know when to stop, and pass the context on.</li>
+      <li>Measure per intent and fix the weak nodes.</li>
+    </ul>
+    <p><b>If I built it today with an LLM:</b> the tree becomes the guard-rails, not the interface; quick actions become tool calls with a confirmation step; the Help Center becomes the retrieval source, so the information architecture matters more, not less.</p>
+  </div>
+  <div class="more">
+    <a href="/project-scrollcarousel.html?project=7">Full case: Chatbot &amp; agent workspace →</a>
+    <a href="/project-scrollcarousel.html?project=5">Full case: Help Center redesign →</a>
+  </div>
+</section>
+
+<!-- ============ 02 BYTEDANCE ============ -->
+<section class="chapter" id="bytedance" aria-labelledby="bd-title">
+  <div class="k">02 · ByteDance · TikTok Local Life · 2022–2023</div>
+  <h2 id="bd-title">Order First, Then Delivery: <em>launching a new business fast</em></h2>
+  <div class="col">
+    <p class="lead">On Douyin (TikTok China), people get hungry watching food videos, but not right now. TikTok Local Life let them buy a meal voucher in the moment and schedule the delivery later. A consumer team owned the traffic and the shopper flow. I designed the merchant side and the rider side, starting on site at the delivery stations.</p>
+  </div>
+  <div class="metrics">
+    <div><b>+300%</b><span>order volume</span></div>
+    <div><b>−20%</b><span>average delivery time</span></div>
+    <div><b>1 week</b><span>on-site research</span></div>
+    <div><b>1 month</b><span>to launch the dispatch MVP</span></div>
+  </div>
+
+  <h3>Why it was new</h3>
+  <div class="flow" aria-label="Order First, Then Delivery flow">
+    <span>Watch a video</span><i>→</i><span>“Looks great”</span><i>→</i><span class="hl">Buy a voucher (refundable)</span><i>→</i><span>Voucher waits in the wallet</span><i>→</i><span>Reminder when hungry</span><i>→</i><span class="hl">Schedule delivery</span><i>→</i><span>Rider delivers</span>
+  </div>
+  <div class="col"><p>Content creates desire before hunger. Classic delivery apps only catch hunger. The voucher stores the intent; delivery turns it into an order later.</p></div>
+  <figure><img src="img/bd-orderfirst.webp" width="1600" height="900" decoding="async" alt="Traditional on-demand ordering compared with TikTok's order first, schedule delivery later"><figcaption>Traditional mode vs. TikTok’s mode: impulse first, delivery when you want it.</figcaption></figure>
+
+  <h3>Who did what</h3>
+  <div class="pairs">
+    <div class="row head"><div>Part</div><div>Owner</div></div>
+    <div class="row"><div>Consumer side: traffic from videos and live streams, voucher purchase, reminders</div><div>Consumer (C-end) team</div></div>
+    <div class="row"><div>Merchant side: delivery menu, settings, order handling</div><div class="me">Me</div></div>
+    <div class="row"><div>Rider side: station dispatch console, rider flow, data dashboard</div><div class="me">Me: led design across product, engineering and operations</div></div>
+  </div>
+
+  <h3>How to start a new business fast</h3>
+  <div class="cards">
+    <div class="card"><div class="n">01 · REUSE BEFORE YOU BUILD</div><p>Merchants already had dine-in menus and voucher tools. One click copies a dine-in menu into a delivery menu; only price, stock and packaging differ.</p></div>
+    <div class="card"><div class="n">02 · GO TO THE FIELD FIRST</div><p>One week on site at delivery stations before designing anything, to see how dispatch really worked.</p></div>
+    <div class="card"><div class="n">03 · SHIP THE SMALLEST LOOP</div><p>Dispatch MVP in one month: an order board and drag-to-assign. Then AI scheduling suggestions that the manager approves or overrides.</p></div>
+    <div class="card"><div class="n">04 · MEASURE, THEN SCALE</div><p>A data dashboard from day one. The same model was later reused for other local services.</p></div>
+  </div>
+  <figure><img src="img/bd-roadmap.webp" width="1600" height="900" decoding="async" alt="Six-month roadmap: consumption, merchant service, logistics"><figcaption>Six-month plan: consumer mechanism → merchant service → our own delivery hubs.</figcaption></figure>
+
+  <h3>Hands-on: on site at the delivery stations</h3>
+  <div class="col">
+    <p>TikTok was building its own delivery network in high-volume cities: Shanghai, Beijing and Shenzhen. With the product managers I went on site and mapped who does what. A station covers about 5 km and runs on a station manager, a dispatcher and 50–100 riders. Dispatch happened in chat groups and spreadsheets.</p>
+    <ul class="list">
+      <li>Peak hours: slow response, some riders overloaded while others waited.</li>
+      <li>No view of route efficiency.</li>
+      <li>New stations: inexperienced riders and spiky demand from live streams.</li>
+    </ul>
+  </div>
+  <figure class="annot">
+    <div class="pic">
+      <img src="img/bd-meituan-rider.webp" width="1600" height="1067" decoding="async" alt="A Meituan Zhuansong rider in a yellow uniform waits at a restaurant counter beside packed takeaway orders">
+      <span class="pin" style="left:69%;top:60%" aria-hidden="true">1</span>
+      <span class="pin" style="left:43%;top:74%" aria-hidden="true">2</span>
+      <span class="pin" style="left:52%;top:17%" aria-hidden="true">3</span>
+    </div>
+    <ol class="legend">
+      <li><b>Station-based rider.</b> “美团专送” (Meituan Zhuansong) riders belong to a delivery station; the station manager and dispatcher assign their orders.</li>
+      <li><b>The hand-off.</b> Packed orders wait at the counter. Every minute here is dispatch time we wanted to cut.</li>
+      <li><b>Merchant prep time.</b> When the kitchen finishes decides when a rider should arrive, so dispatch has to see merchant status too.</li>
+    </ol>
+    <figcaption>Reference from the market leader we studied, Meituan: the station-based rider model. Photo: <a href="https://commons.wikimedia.org/wiki/File:SZ_%E6%B7%B1%E5%9C%B3_Shenzhen_%E8%9B%87%E5%8F%A3_Shekou_shop_restaurant_%E7%BE%8E%E5%9C%98_Meituan_food_delivery_worker_uniform_yellow_August_2018_IX2.jpg" rel="noopener">Capwiuejooh</a>, Shenzhen 2018, <a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="noopener">CC BY-SA 4.0</a>, via Wikimedia Commons; numbered markers added.</figcaption>
+  </figure>
+  <figure><img src="img/bd-field.webp" width="1600" height="900" decoding="async" alt="Personas: station manager, dispatcher, experienced rider, new rider"><figcaption>Roles we met at the stations: station manager, dispatcher, experienced and new riders.</figcaption></figure>
+  <figure><img src="img/bd-competitors.webp" width="1600" height="917" decoding="async" alt="Comparison of Ele.me, Meituan and TikTok dispatch: rider, order and map focus"><figcaption>Learning from Ele.me and Meituan: what each dispatch tool prioritises (rider, order, map), and what TikTok’s first version needed.</figcaption></figure>
+
+  <h3>Merchant side</h3>
+  <div class="pairs">
+    <div class="row head"><div>Pain point</div><div>Design</div></div>
+    <div class="row"><div>Building a delivery menu from zero</div><div>One-click copy from the dine-in menu; edit only delivery fields</div></div>
+    <div class="row"><div>A new model, no time to learn it</div><div>Same structure and patterns as the merchant tools they already use</div></div>
+    <div class="row"><div>Ongoing maintenance</div><div>One shared menu, a small set of delivery differences</div></div>
+  </div>
+  <figure class="narrow"><img src="img/bd-merchant.webp" width="1400" height="1575" decoding="async" alt="Merchant service platform"><figcaption>Merchant-side service platform.</figcaption></figure>
+
+  <h3>Rider and dispatch side</h3>
+  <div class="pairs">
+    <div class="row head"><div>Pain point</div><div>Design</div></div>
+    <div class="row"><div>Dispatch by chat group</div><div>Command-centre console: order board by area and time window</div></div>
+    <div class="row"><div>No view of riders</div><div>Live rider view: status, route, capacity</div></div>
+    <div class="row"><div>Uneven workload</div><div>AI suggestions by distance and load; the manager approves or overrides</div></div>
+    <div class="row"><div>Peak-hour pressure</div><div>Priority colour tags, drag-to-assign, as few clicks as possible</div></div>
+    <div class="row"><div>No efficiency data</div><div>Dashboard for delivery time and rider utilisation</div></div>
+  </div>
+  <figure><img src="img/bd-mvp.webp" width="1600" height="900" decoding="async" alt="MVP feature map of the delivery hub system"><figcaption>MVP: the delivery-hub system, launched in one month.</figcaption></figure>
+  <div class="col"><p><b>Why it matters for engineering:</b> a real-time operations UI, a person overriding an algorithm, and a two-sided system where one change has to work for merchants, riders and users.</p></div>
+  <div class="more">
+    <a href="/project-scrollcarousel.html?project=4">Full case: Order First, Then Delivery →</a>
+    <a href="/project-scrollcarousel.html?project=3">Full case: Rider dispatch platform →</a>
+  </div>
+</section>
+
+<!-- ============ 03 HEY ATU ============ -->
+<section class="chapter" id="hey-atu" aria-labelledby="atu-title">
+  <div class="k">03 · Hey Atu · 2026–now · heyatu.com</div>
+  <h2 id="atu-title">Hey Atu: <em>shipping a complete product</em></h2>
+  <div class="col">
+    <p class="lead">Hey Atu lets Claude and ChatGPT use your own computer, so you can ask from your phone and the work runs at home. It is live at heyatu.com with paid plans. This is where I moved from designer to full-stack + UX: I own the product, the UX and the front end I write; my engineering partner builds the agent, relay and app; we ship together.</p>
+  </div>
+  <div class="metrics">
+    <div><b>Live</b><span>paid plans since Oct 2026</span></div>
+    <div><b>4</b><span>surfaces: web, payments, Mac/Linux, iOS</span></div>
+    <div><b>MCP</b><span>works inside Claude and ChatGPT</span></div>
+    <div><b>~1,500</b><span>lines of front end I wrote</span></div>
+  </div>
+  <figure><img src="img/atu-home.webp" width="1600" height="1000" decoding="async" alt="heyatu.com home page"><figcaption>heyatu.com home page: I designed and built it (HTML, CSS, JS).</figcaption></figure>
+
+  <h3>Product</h3>
+  <div class="col">
+    <p><b>Problem:</b> your AI agent and your files live on your computer, and you are not always at it.</p>
+    <ul class="list">
+      <li><b>Files stay home.</b> Execution stays on the user’s computer; the relay cannot read phone messages.</li>
+      <li><b>Two trust steps.</b> Link a computer, then allow each AI app. One command revokes everything.</li>
+      <li><b>MCP first, iOS next.</b> It works inside Claude and ChatGPT today, without waiting for App Store review.</li>
+      <li><b>One account, one plan</b> across MCP and iOS: Stripe subscription with a 7-day trial.</li>
+    </ul>
+  </div>
+  <figure><img src="img/atu-setup-flow.webp" width="1600" height="867" decoding="async" alt="Three steps: add the connector, sign in with Google, allow on your Mac"><figcaption>Set up once: add the connector, pick the Google account, allow on the computer.</figcaption></figure>
+
+  <h3>Architecture</h3>
+  <div class="arch" role="img" aria-label="Architecture: iPhone app and AI apps connect through a Cloudflare relay to the agent on the user's computer">
+    <div class="lane">
+      <div class="node"><b>iPhone app</b><span>Swift · SwiftUI</span></div>
+      <div class="wire">end-to-end encrypted <span class="r">→</span></div>
+      <div class="node core"><b>Relay</b><span>Cloudflare Workers · Durable Objects · pairing, auth, routing</span></div>
+      <div class="wire">outbound only <span class="r">←</span></div>
+      <div class="node"><b>Agent on Mac / Linux</b><span>Node.js 22 · launchd / systemd · menu bar app</span></div>
+    </div>
+    <div class="lane">
+      <div class="node"><b>Claude · ChatGPT</b><span>custom MCP connector</span></div>
+      <div class="wire">MCP over TLS + OAuth <span class="r">→</span></div>
+      <div class="node core"><b>heyatu.com/mcp</b><span>same Worker · per-app approval</span></div>
+      <div class="wire">forwarded, not stored <span class="r">→</span></div>
+      <div class="node"><b>Local AI agent</b><span>files and commands stay on the computer</span></div>
+    </div>
+    <div class="note">Same Worker serves the public site, Google sign-in, accounts and Stripe billing. The computer needs no open inbound port.</div>
+  </div>
+  <div class="stack">
+    <div><b>Web</b><span>HTML · CSS · JS, 8 languages</span></div>
+    <div><b>Payments</b><span>Stripe subscriptions, 7-day trial</span></div>
+    <div><b>Auth</b><span>Google OAuth · QR pairing · Keychain</span></div>
+    <div><b>Desktop</b><span>Node.js agent, auto-update with rollback</span></div>
+    <div><b>Mobile</b><span>Swift / SwiftUI + shared web renderer</span></div>
+    <div><b>Process</b><span>22 architecture decision records, tests, device acceptance runs</span></div>
+  </div>
+
+  <h3>Who did what</h3>
+  <div class="pairs">
+    <div class="row head"><div>Part</div><div>Owner</div></div>
+    <div class="row"><div>Product, UX, pairing and approval flows, iOS screens, brand and mascot</div><div class="me">Me</div></div>
+    <div class="row"><div>Home page and setup guide code (~1,500 lines: animated hero, dark/light, reduced motion, English/Chinese)</div><div class="me">Me</div></div>
+    <div class="row"><div>Business: Australian business name, Stripe, App Store record</div><div class="me">Me</div></div>
+    <div class="row"><div>Acceptance criteria; testing every release on real devices</div><div class="me">Me</div></div>
+    <div class="row"><div>Agent, relay, iOS app, accounts, pricing page, translations</div><div>Engineering partner</div></div>
+  </div>
+
+  <h3>How we ship</h3>
+  <div class="cards">
+    <div class="card"><div class="n">01 · DEFINE</div><p>Product principle → design → written acceptance criteria.</p></div>
+    <div class="card"><div class="n">02 · BUILD</div><p>Built with AI coding tools; every change is reviewed before it merges.</p></div>
+    <div class="card"><div class="n">03 · ACCEPT</div><p>Acceptance runs on real devices before release, with results recorded.</p></div>
+    <div class="card"><div class="n">04 · RELEASE</div><p>Test → production channels; the app and the desktop agent release independently.</p></div>
+  </div>
+  <div class="duo">
+    <figure><img src="img/atu-guide.webp" width="1600" height="1000" decoding="async" alt="Setup guide on desktop"><figcaption>Setup guide I built: each step shows the screen you will see and the one thing to click.</figcaption></figure>
+    <figure><img src="img/atu-guide-mobile.webp" width="780" height="1688" decoding="async" alt="Setup guide on a phone with collapsible steps"><figcaption>Same guide on a phone: collapsible steps.</figcaption></figure>
+  </div>
+  <figure><img src="img/atu-iphone.webp" width="1600" height="1549" decoding="async" alt="Hey Atu iPhone app screens: Updates, Chats, Todo"><figcaption>iPhone app (in development): I designed the screens; my partner builds the app.</figcaption></figure>
+
+  <h3>What moving into full-stack taught me</h3>
+  <div class="col">
+    <ul class="list">
+      <li>Architecture choices are product choices: end-to-end encryption decides what the app can show.</li>
+      <li>Writing acceptance criteria made me think in states and failure cases, and read the code that handles them.</li>
+    </ul>
+  </div>
+
+  <h3>How I work with AI tools</h3>
+  <div class="cards">
+    <div class="card"><div class="n">01 · START FROM THE USE CASE</div><p>I come at engineering from UX, so I don't always know the architecture underneath. I describe the concrete use case and what the person should see, then have AI tools explain each option, check each other's answers, and spell out what each choice costs. Then I decide.</p></div>
+    <div class="card"><div class="n">02 · DEPLOYMENT: KNOW THE TRADE-OFFS</div><p>My creator-business app runs on a home computer and had to be reachable from my phone. I didn't know the hosting options, so I had AI compare a VPS, fully hosted Cloudflare (Workers, R2, D1) and a Cloudflare Tunnel, and recompute the free-tier limits from our real data.</p><p><span class="tag">Choice</span>The Tunnel: no open ports, no VPN app on the phone. The trade-off: the app is down when that computer is off.</p></div>
+    <div class="card"><div class="n">03 · A PLAUSIBLE PAGE IS CHEAP; THE STORY ISN'T</div><p>AI produces a convincing landing page in minutes. The Hey Atu story took many rounds: the one-line hero, which scenario leads, and showing what it can do before teaching how to pair.</p><p>AI also hid the waitlist email field behind a button. I kept a plain input box, because signing up is the one thing the page must do.</p></div>
+    <div class="card"><div class="n">04 · "FIXED" MEANS FIXED ON THE PHONE</div><p><span class="tag">Bug</span>On iPhone, page content showed through above the sticky nav. The AI fixed it twice, checking only in desktop browsers; on my phone it was still broken.</p><p><span class="tag">Cause</span>I had it reproduce the bug in iOS Safari instead of guessing. iOS 26 Safari reads the top bar's colour once, at page load: our nav was transparent at load, and a grain overlay sat on top of it.</p><p><span class="tag">Fix</span>A solid nav from the first frame, with the overlay moved underneath. Same pattern with the mascot: its transparent video left ghost trails on iPhone, so we baked it onto the tile colour, one video per theme.</p></div>
+  </div>
+  <div class="more">
+    <a href="https://heyatu.com" rel="noopener">Visit heyatu.com →</a>
+    <a href="https://heyatu.com/setup-guide" rel="noopener">See the setup guide →</a>
+  </div>
+  <p class="note-small">Alibaba and ByteDance details are simplified to respect confidentiality.</p>
+</section>
+
+</main>
+
+<footer id="contact"><div class="wrap">
+  <div class="k">Contact</div>
+  <h2>Let’s talk.</h2>
+  <p class="mute col">Ivy Han · Sydney · Master of Interaction Design, UTS (2027). Available for internships over Dec 2026 – Feb 2027 and part-time roles during semester.</p>
+  <div class="ct">
+    <a class="pri" href="mailto:xinyi.han0816@outlook.com">xinyi.han0816@outlook.com</a>
+    <a href="/assets/docs/CV_XinyiHan_2026.pdf">CV</a>
+    <a href="/">xyhan.com</a>
+  </div>
+</div></footer>
+
+</body>
+</html>
