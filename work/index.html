@@ -24,7 +24,9 @@
     .scc-detail-page .wk-label { margin: 0 0 14px; color: var(--scc-ink-soft); font: 400 10px/1.4 var(--scc-sans); letter-spacing: .14em; text-transform: uppercase; }
     .scc-detail-page .scc-detail-heading .scc-project-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 30px; }
     .scc-detail-page .scc-detail-block-intro h2 { margin: 0 0 .5em; }
-    .scc-detail-page .scc-detail-content[data-layout="two-column"] .scc-showcase-gallery { width: 100%; margin: 4vh 0; transform: none; }
+    .scc-detail-page .scc-detail-content[data-layout="two-column"] .scc-showcase-gallery { display: grid; grid-template-columns: 1fr 1fr; align-items: start; gap: 14px; width: 100%; margin: 4vh 0; columns: auto; transform: none; }
+    .scc-detail-page .scc-detail-content[data-layout="two-column"] .scc-showcase-gallery figure { width: 100%; margin: 0; }
+    @media (max-width: 700px) { .scc-detail-page .scc-detail-content[data-layout="two-column"] .scc-showcase-gallery { grid-template-columns: 1fr; } }
     .scc-detail-page .scc-detail-block-intro .wk-lead { max-width: 62ch; color: var(--scc-ink-soft); }
     .scc-detail-page .scc-detail-content h4 { margin-top: 1.6em; }
     .scc-detail-page .scc-detail-content .scc-detail-block-body > h4:first-child { margin-top: 0; }
@@ -204,12 +206,25 @@
             <li>No view of route efficiency.</li>
             <li>New stations: inexperienced riders and spiky demand from live streams.</li>
           </ul>
-          <figure><img src="img/bd-meituan-rider.webp" width="1600" height="1067" decoding="async" alt="A Meituan Zhuansong rider in a yellow uniform waits at a restaurant counter beside packed takeaway orders, with markers 1 to 3"><figcaption>Reference from the market leader we studied, Meituan: the station-based rider model. Photo: <a href="https://commons.wikimedia.org/wiki/File:SZ_%E6%B7%B1%E5%9C%B3_Shenzhen_%E8%9B%87%E5%8F%A3_Shekou_shop_restaurant_%E7%BE%8E%E5%9C%98_Meituan_food_delivery_worker_uniform_yellow_August_2018_IX2.jpg" rel="noopener">Capwiuejooh</a>, Shenzhen 2018, <a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="noopener">CC BY-SA 4.0</a>, via Wikimedia Commons; numbered markers added.</figcaption></figure>
+          <p>To see what a station really needs, we studied how Meituan, the most mature player, runs one.</p>
+          <figure><img src="img/bd-station-meeting.webp" width="1024" height="768" decoding="async" alt="Seen from above, a station manager stands in front of about forty Meituan riders lined up beside their delivery boxes for the morning meeting, with markers 1 to 3"><figcaption>A Meituan station’s morning meeting, Shanghai 2019. Photo: <a href="https://www.sinosplice.com/life/archives/2019/04/04/meituan-morning-meeting" rel="noopener">John Pasden, Sinosplice</a>; numbered markers added.</figcaption></figure>
           <ol>
-            <li><b>Station-based rider.</b> “美团专送” (Meituan Zhuansong) riders belong to a delivery station; the station manager and dispatcher assign their orders.</li>
-            <li><b>The hand-off.</b> Packed orders wait at the counter. Every minute here is dispatch time we wanted to cut.</li>
-            <li><b>Merchant prep time.</b> When the kitchen finishes decides when a rider should arrive, so dispatch has to see merchant status too.</li>
+            <li><b>The station manager</b> runs the morning meeting: yesterday’s numbers, today’s plan, safety.</li>
+            <li><b>One station’s riders,</b> about forty here. Large stations run 100 or more.</li>
+            <li><b>Delivery boxes,</b> helmets and uniforms are checked before everyone heads out.</li>
           </ol>
+          <div class="scc-showcase-gallery">
+            <figure><img src="img/bd-station-office.webp" width="960" height="640" decoding="async" alt="Inside a station office: shift schedule and rider data pinned on the wall, a staff member on the phone, crates of paper folders on the desk, markers 4 to 6"><figcaption>The station office.</figcaption></figure>
+            <figure><img src="img/bd-station-board.webp" width="960" height="639" decoding="async" alt="A station manager writes the day’s station numbers on a whiteboard by hand, marker 7"><figcaption>The station data board.</figcaption></figure>
+          </div>
+          <ol start="4">
+            <li><b>Shift schedule and rider data,</b> on paper on the wall.</li>
+            <li><b>Dispatch by phone call.</b></li>
+            <li><b>Paper records</b> in crates on the desk.</li>
+            <li><b>The station’s numbers,</b> written by hand each day: on-time rate, delivered rate, one-star rate, complaints.</li>
+          </ol>
+          <p><small>Office and data board: a Meituan station in Jinan. Photos: Meituan, published on <a href="https://www.logclub.com/articleInfo/MTYyNzU=" rel="noopener">LogClub</a>, 2020; numbered markers added.</small></p>
+          <p>Even at the market leader, a station ran on whiteboards, phone calls and paper. Our console had to put the same things on one screen: who is on shift, what each rider is carrying, and the station’s numbers.</p>
           <figure><img src="img/bd-field.webp" width="1600" height="900" decoding="async" alt="Personas: station manager, dispatcher, experienced rider, new rider"><figcaption>Who we met at the stations. An experienced rider carries 3–5 orders at once (100+ a day); a new rider carries 2–3 (about 80 a day) and struggles at peak.</figcaption></figure>
           <h4>02 · Learn from the most mature players</h4>
           <p>We studied the two leaders, Meituan and Ele.me. Each dispatch tool fits its riders:</p>
