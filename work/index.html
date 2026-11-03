@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<!-- work/index.html: one-link portfolio for software / front-end roles (Alibaba → ByteDance → Hey Atu).
+<!-- work/index.html: one-link portfolio for software / front-end roles (Alibaba → ByteDance → Hey Atu), one tab per case.
      Uses the site's project-detail template: style/scrollcarousel-tokens.css + style/scrollcarousel-detail.css,
-     the same header, two-column blocks and footer. Only small layout glue is added below, using the same tokens.
+     the same header, two-column blocks and footer. Tabs and the diagram components below use the same tokens.
      Source copy: planning/career/jobsearch/portfolio/2026-11-02_three-case-studies.md;
      ByteDance facts and sources: planning/career/jobsearch/portfolio/2026-11-04_bytedance-recall.md -->
 <html lang="en">
@@ -20,10 +20,10 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/style/scrollcarousel-tokens.css">
   <link rel="stylesheet" href="/style/scrollcarousel-detail.css">
+  <script>document.documentElement.classList.add('wk-js');</script>
   <style>
-    /* Layout glue only, on the detail template's tokens. */
+    /* Layout glue on the detail template's tokens. */
     .scc-detail-page .wk-label { margin: 0 0 14px; color: var(--scc-ink-soft); font: 400 10px/1.4 var(--scc-sans); letter-spacing: .14em; text-transform: uppercase; }
-    .scc-detail-page .scc-detail-heading .scc-project-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 30px; }
     .scc-detail-page .scc-detail-block-intro h2 { margin: 0 0 .5em; }
     .scc-detail-page .scc-detail-content[data-layout="two-column"] .scc-showcase-gallery { display: grid; grid-template-columns: 1fr 1fr; align-items: start; gap: 14px; width: 100%; margin: 4vh 0; columns: auto; transform: none; }
     .scc-detail-page .scc-detail-content[data-layout="two-column"] .scc-showcase-gallery figure { width: 100%; margin: 0; }
@@ -32,65 +32,246 @@
     .scc-detail-page .scc-detail-content h4 { margin-top: 1.6em; }
     .scc-detail-page .scc-detail-content .scc-detail-block-body > h4:first-child { margin-top: 0; }
     .scc-detail-page .scc-detail-content small { color: var(--scc-ink-soft); font-size: 12px; }
-    /* ByteDance: section kickers, tables, ownership tags, order steps, system map. */
-    .scc-detail-page .scc-detail-content .wk-kicker { display: block; margin-bottom: .6em; color: var(--scc-ink-soft); font: 500 10px/1.4 var(--scc-sans); letter-spacing: .14em; text-transform: uppercase; }
-    .scc-detail-page .scc-detail-content .wk-table-wrap { max-width: 100%; margin: 0 0 1.6em; overflow-x: auto; }
-    .scc-detail-page .scc-detail-content .wk-table { width: 100%; min-width: 300px; border-collapse: collapse; font-size: 14px; line-height: 1.5; }
-    .scc-detail-page .scc-detail-content .wk-table th,
-    .scc-detail-page .scc-detail-content .wk-table td { padding: 10px 12px 10px 0; border-bottom: 1px solid var(--scc-hairline); text-align: left; vertical-align: top; }
-    .scc-detail-page .scc-detail-content .wk-table thead th { color: var(--scc-ink-soft); font-size: 12px; font-weight: 500; }
-    .scc-detail-page .scc-detail-content .wk-table tbody th { width: 26%; font-weight: 600; }
-    .scc-detail-page .scc-detail-content .wk-owner { display: inline-block; padding: 1px 9px; border: 1px dashed var(--scc-ink-soft); border-radius: 999px; color: var(--scc-ink-soft); font: 500 11px/1.6 var(--scc-sans); white-space: nowrap; vertical-align: middle; }
-    .scc-detail-page .scc-detail-content .wk-owner.is-team { border: 1px solid var(--scc-ink); color: var(--scc-ink); }
-    .scc-detail-page .scc-detail-content .wk-owner.is-me { border: 1px solid var(--scc-ink); background: var(--scc-ink); color: var(--scc-bg); }
-    .scc-detail-page .scc-detail-content h4 .wk-owner { margin-left: 6px; }
-    .scc-detail-page .scc-detail-content .wk-steps { margin: 0 0 1.6em; padding: 0; list-style: none; counter-reset: wk-step; }
-    .scc-detail-page .scc-detail-content .wk-steps li { position: relative; margin: 0; padding: 14px 0 14px 46px; border-top: 1px solid var(--scc-hairline); }
-    .scc-detail-page .scc-detail-content .wk-steps li::before { counter-increment: wk-step; content: counter(wk-step, decimal-leading-zero); position: absolute; top: 13px; left: 0; font: 480 22px/1.1 var(--scc-serif); }
-    .scc-detail-page .scc-detail-content .wk-step-head { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; }
-    .scc-detail-page .scc-detail-content .wk-steps p { margin: 4px 0 0; color: var(--scc-ink-soft); font-size: 15px; line-height: 1.55; }
-    .scc-detail-page .scc-detail-content .wk-insight { margin: 0 0 1.6em; padding-left: 16px; border-left: 2px solid var(--scc-ink); }
-    .scc-detail-page .scc-detail-content .wk-insight h4 { margin-top: 0; }
-    .scc-detail-page .scc-detail-content .wk-insight p { margin-bottom: 0; }
-    .scc-detail-page .scc-detail-content figure.wk-map svg { display: block; width: 100%; max-width: 560px; height: auto; }
-    .wk-map-node { fill: var(--scc-bg); stroke: var(--scc-ink); stroke-width: 1.2; }
-    .wk-map-node.is-ours { stroke-width: 2.2; }
-    .wk-map-node.is-other { stroke: var(--scc-ink-soft); stroke-dasharray: 4 3; }
-    .wk-map-edge { fill: none; stroke: var(--scc-ink); stroke-width: 1.2; }
-    .wk-map-edge.is-dashed { stroke-dasharray: 4 3; }
-    .wk-map-head { fill: var(--scc-ink); }
-    .wk-map-title { fill: var(--scc-ink); font: 600 14px var(--scc-sans); }
-    .wk-map-title.is-small { font-size: 13px; }
-    .wk-map-sub { fill: var(--scc-ink-soft); font: 400 11.5px var(--scc-sans); }
-    .wk-map-label { fill: var(--scc-ink-soft); font: italic 400 11.5px var(--scc-sans); }
+    #wk.scc-detail-content[data-layout="two-column"] .scc-detail-block > h3 { top: 96px; }
+    #wk { padding-top: 6vh; }
     html { scroll-behavior: smooth; }
     @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+    /* Diagram palette: matches the original ByteDance slides (purple demand, green merchants, amber delivery). */
+    .scc-detail-page { --wk-violet: #6a4fd6; --wk-violet-soft: #f2eefd; --wk-green: #2b8a57; --wk-green-soft: #e8f4ed; --wk-amber: #b7740b; --wk-amber-soft: #fcf2e0; --wk-card: #fff; --wk-warm: #f5f1ea; }
+
+    /* Hero: shorter, so the tabs show on the first screen. */
+    .scc-detail-page .wk-hero { min-height: 0; padding: 9vh 5vw 6vh; }
+    .scc-detail-page .wk-hero h1 { font-size: clamp(40px, 6.4vw, 88px); }
+
+    /* Tabs: one case per tab. Without JavaScript, all cases show in order. */
+    .wk-tabs { display: none; position: sticky; top: 0; z-index: 2; background: var(--scc-bg); border-bottom: 1px solid var(--scc-hairline); }
+    .wk-js .wk-tabs { display: block; }
+    .wk-tabs-inner { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; width: min(1160px, calc(100% - 48px)); margin: 0 auto; box-sizing: border-box; }
+    .wk-tab { margin: 0 0 -1px; padding: 16px 0 14px; border: 0; border-bottom: 2px solid transparent; background: none; color: var(--scc-ink-soft); font: inherit; text-align: left; cursor: pointer; }
+    .wk-tab small { display: block; font: 500 10px/1.4 var(--scc-sans); letter-spacing: .14em; }
+    .wk-tab b { display: block; margin-top: 2px; font: 480 24px/1.1 var(--scc-serif); }
+    .wk-tab span { display: block; margin-top: 3px; font: 400 12px/1.35 var(--scc-sans); }
+    .wk-tab:hover, .wk-tab[aria-selected="true"] { color: var(--scc-ink); }
+    .wk-tab[aria-selected="true"] { border-bottom-color: var(--scc-ink); }
+    .wk-tab:focus-visible { outline: 2px solid var(--scc-ink); outline-offset: 2px; }
+    .wk-js .wk-panel:not(.is-active) { display: none; }
+    @media (max-width: 1280px) { .wk-tabs-inner { padding-right: 60px; } }
+    @media (max-width: 700px) { .wk-tabs-inner { width: calc(100% - 36px); gap: 10px; } .wk-tab b { font-size: 19px; } .wk-tab span { display: none; } }
+
+    /* Shared pieces. */
+    .wk-i { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+    .wk-arrow { width: 48px; height: 12px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+    #wk .wk-kicker { display: block; margin: 0 0 .7em; color: var(--scc-ink-soft); font: 500 10px/1.4 var(--scc-sans); letter-spacing: .14em; text-transform: uppercase; }
+    #wk .wk-wide h3 { margin: 0 0 .4em; }
+    #wk .wk-intro { max-width: 66ch; margin: 0 0 2em; color: var(--scc-ink-soft); }
+    #wk .wk-note { margin: 14px 0 0; color: var(--scc-ink-soft); font-size: 14px; }
+    #wk .wk-owner { display: inline-block; padding: 1px 9px; border: 1px dashed var(--scc-ink-soft); border-radius: 999px; color: var(--scc-ink-soft); font: 500 11px/1.6 var(--scc-sans); white-space: nowrap; vertical-align: middle; }
+    #wk .wk-owner.is-team { border: 1px solid var(--scc-ink); color: var(--scc-ink); }
+    #wk .wk-owner.is-me { border: 1px solid var(--scc-ink); background: var(--scc-ink); color: var(--scc-bg); }
+    #wk h4 .wk-owner { margin-left: 6px; }
+    #wk .wk-legend { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; margin: 0 0 18px; color: var(--scc-ink-soft); font-size: 12px; }
+    #wk .wk-legend span { display: inline-flex; align-items: center; gap: 6px; }
+
+    /* Stat cards. */
+    #wk .wk-stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin: 0; padding: 0; list-style: none; }
+    #wk .wk-stats li { margin: 0; padding: 20px 20px 18px; border: 1px solid var(--scc-hairline); border-radius: 14px; background: var(--wk-card); }
+    #wk .wk-stats b { display: block; font: 470 42px/1 var(--scc-serif); }
+    #wk .wk-stats span { display: block; margin-top: 10px; color: var(--scc-ink-soft); font-size: 13px; line-height: 1.45; }
+
+    /* Plain cards in two columns (levers, product decisions). */
+    #wk .wk-cards2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin: 0 0 1.6em; }
+    #wk .wk-card { padding: 20px 22px; border: 1px solid var(--scc-hairline); border-radius: 16px; background: var(--wk-card); }
+    #wk .wk-card-num { margin: 0; color: var(--scc-ink-soft); font: 500 10px/1.4 var(--scc-sans); letter-spacing: .14em; }
+    #wk .wk-card h4 { margin: 8px 0 10px; font-size: 21px; }
+    #wk .wk-card p { margin: 0 0 .5em; font-size: 14.5px; line-height: 1.5; }
+    #wk .wk-card p:last-child { margin-bottom: 0; }
+    @media (max-width: 700px) { #wk .wk-cards2 { grid-template-columns: 1fr; } }
+
+    /* Search vs. interest. */
+    #wk .wk-vs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+    #wk .wk-vs-card { padding: 22px 24px 8px; border: 1px solid var(--scc-hairline); border-radius: 18px; background: var(--wk-card); }
+    #wk .wk-vs-card.is-interest { border-color: rgba(106, 79, 214, .3); background: var(--wk-violet-soft); }
+    #wk .wk-vs-head { display: flex; align-items: center; gap: 12px; margin: 0 0 14px; font: 480 24px/1.15 var(--scc-serif); }
+    #wk .wk-vs-head small { display: block; margin-top: 2px; color: var(--scc-ink-soft); font: 400 12px/1.4 var(--scc-sans); }
+    #wk .wk-badge { display: grid; place-items: center; width: 40px; height: 40px; flex: none; border-radius: 12px; background: rgba(23, 20, 16, .06); }
+    #wk .is-interest .wk-badge { background: var(--wk-violet); color: #fff; }
+    #wk .wk-vs dl { margin: 0; }
+    #wk .wk-vs dl div { padding: 12px 0 14px; border-top: 1px solid var(--scc-hairline); }
+    #wk .wk-vs dt { color: var(--scc-ink-soft); font: 500 10px/1.4 var(--scc-sans); letter-spacing: .12em; text-transform: uppercase; }
+    #wk .wk-vs dd { margin: 4px 0 0; font-size: 16px; line-height: 1.45; }
+    #wk .wk-story { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); gap: 28px; margin: 18px 0 0; padding: 26px 28px; border-radius: 18px; background: var(--wk-warm); }
+    #wk .wk-story h4 { margin: .25em 0 .6em; }
+    #wk .wk-story p { margin: 0 0 .8em; font-size: 15px; line-height: 1.6; }
+    #wk .wk-story .wk-story-point { margin: 0; font: italic 400 20px/1.4 var(--scc-serif); }
+    #wk .wk-chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; list-style: none; }
+    #wk .wk-chips li { margin: 0; padding: 5px 12px; border: 1px solid var(--scc-hairline); border-radius: 999px; background: var(--wk-card); font-size: 13px; line-height: 1.4; }
+    @media (max-width: 700px) { #wk .wk-vs, #wk .wk-story { grid-template-columns: 1fr; } #wk .wk-story { gap: 14px; padding: 22px; } }
+
+    /* System map. */
+    #wk .wk-eco-row { display: grid; grid-template-columns: minmax(0, 1fr) 72px minmax(0, 1fr) 72px minmax(0, 1fr); align-items: stretch; }
+    #wk .wk-eco-col { display: flex; flex-direction: column; overflow: hidden; border: 1px solid var(--scc-hairline); border-radius: 18px; background: var(--wk-card); }
+    #wk .wk-eco-col > header { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; padding: 13px 18px; font: 600 11px/1.3 var(--scc-sans); letter-spacing: .14em; text-transform: uppercase; }
+    #wk .wk-eco-col > header small { font: 400 11px/1.3 var(--scc-sans); letter-spacing: 0; text-transform: none; opacity: .8; }
+    #wk .is-demand > header { background: var(--wk-violet-soft); color: var(--wk-violet); }
+    #wk .is-supply > header { background: var(--wk-green-soft); color: var(--wk-green); }
+    #wk .is-delivery > header { background: var(--wk-amber-soft); color: var(--wk-amber); }
+    #wk .wk-actor { display: flex; gap: 12px; padding: 14px 18px; border-top: 1px solid var(--scc-hairline); }
+    #wk .wk-eco-col > header + .wk-actor { border-top: 0; }
+    #wk .wk-ico { display: grid; place-items: center; width: 38px; height: 38px; flex: none; border-radius: 12px; background: rgba(23, 20, 16, .06); }
+    #wk .is-demand .wk-ico { background: var(--wk-violet-soft); color: var(--wk-violet); }
+    #wk .is-supply .wk-ico { background: var(--wk-green-soft); color: var(--wk-green); }
+    #wk .is-delivery .wk-ico { background: var(--wk-amber-soft); color: var(--wk-amber); }
+    #wk .wk-actor b { display: block; font-size: 15px; line-height: 1.3; }
+    #wk .wk-actor span { display: block; margin-top: 3px; color: var(--scc-ink-soft); font-size: 13px; line-height: 1.45; }
+    #wk .wk-eco-col > footer { display: grid; gap: 7px; margin-top: auto; padding: 12px 18px 14px; border-top: 1px dashed var(--scc-hairline); background: #faf8f4; font-size: 12.5px; line-height: 1.4; }
+    #wk .wk-eco-col > footer p { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: baseline; gap: 8px; margin: 0; }
+    #wk .wk-eco-link { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; padding: 0 4px; color: var(--scc-ink-soft); font: italic 400 12px/1.3 var(--scc-sans); text-align: center; }
+    #wk .wk-eco-return { position: relative; height: 30px; margin: 0 calc((100% - 144px) / 6) 26px; border: 1.5px solid var(--scc-ink-soft); border-top: 0; border-radius: 0 0 16px 16px; }
+    #wk .wk-eco-return::before { content: ""; position: absolute; top: -1px; left: -6.5px; border: 5.5px solid transparent; border-top: 0; border-bottom: 8px solid var(--scc-ink-soft); }
+    #wk .wk-eco-return span { position: absolute; bottom: -9px; left: 50%; padding: 0 10px; background: var(--scc-bg); color: var(--scc-ink-soft); font: italic 400 12px/1.4 var(--scc-sans); white-space: nowrap; transform: translateX(-50%); }
+    @media (max-width: 900px) {
+      #wk .wk-eco-row { grid-template-columns: 1fr; }
+      #wk .wk-eco-link { flex-direction: row; padding: 10px 0; }
+      #wk .wk-eco-link .wk-arrow { width: 26px; transform: rotate(90deg); }
+      #wk .wk-eco-return { height: auto; margin: 14px 0 26px; border: 0; text-align: center; }
+      #wk .wk-eco-return::before { display: none; }
+      #wk .wk-eco-return span { position: static; padding: 0; transform: none; white-space: normal; }
+    }
+
+    /* One order, end to end. */
+    #wk .wk-journey { position: relative; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 16px; margin: 0 0 8px; padding: 0; list-style: none; }
+    #wk .wk-journey::before { content: ""; position: absolute; top: 22px; left: 22px; right: 22px; height: 1.5px; background: var(--scc-hairline); }
+    #wk .wk-journey li { position: relative; display: flex; flex-direction: column; align-items: flex-start; margin: 0; }
+    #wk .wk-journey .wk-ico { width: 44px; height: 44px; border-radius: 50%; box-shadow: 0 0 0 6px var(--scc-bg); }
+    #wk .wk-j-num { margin: 14px 0 2px; color: var(--scc-ink-soft); font: 500 10px/1.4 var(--scc-sans); letter-spacing: .14em; }
+    #wk .wk-journey b { font-size: 15px; line-height: 1.3; }
+    #wk .wk-journey p { margin: 6px 0 12px; color: var(--scc-ink-soft); font-size: 13px; line-height: 1.45; }
+    #wk .wk-journey .wk-owner { margin-top: auto; }
+    @media (max-width: 900px) {
+      #wk .wk-journey { grid-template-columns: 1fr; gap: 0; }
+      #wk .wk-journey::before { top: 22px; bottom: 30px; left: 21px; right: auto; width: 1.5px; height: auto; }
+      #wk .wk-journey li { display: grid; grid-template-columns: 44px minmax(0, 1fr); column-gap: 16px; padding-bottom: 20px; }
+      #wk .wk-journey li > * { grid-column: 2; }
+      #wk .wk-journey .wk-ico { grid-column: 1; grid-row: 1 / span 4; }
+      #wk .wk-j-num { margin-top: 2px; }
+      #wk .wk-journey .wk-owner { justify-self: start; }
+    }
+
+    /* Who did what. */
+    #wk .wk-scope { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.3fr); gap: 14px; }
+    #wk .wk-scope.is-two { grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); }
+    #wk .wk-scope-card { padding: 20px 22px 12px; border: 1px dashed var(--scc-ink-soft); border-radius: 18px; }
+    #wk .wk-scope-card.is-team { border: 1px solid var(--scc-ink); background: var(--wk-card); }
+    #wk .wk-scope-card.is-me { border: 1px solid var(--scc-ink); background: var(--scc-ink); color: var(--scc-bg); }
+    #wk .wk-scope-tag { margin: 0 0 8px; font: 600 11px/1.3 var(--scc-sans); letter-spacing: .14em; text-transform: uppercase; opacity: .75; }
+    #wk .wk-scope-card ul { margin: 0; padding: 0; list-style: none; }
+    #wk .wk-scope-card li { margin: 0; padding: 10px 0; border-top: 1px solid rgba(23, 20, 16, .12); font-size: 14.5px; line-height: 1.45; }
+    #wk .wk-scope-card.is-me li { border-top-color: rgba(252, 251, 249, .2); }
+    @media (max-width: 900px) { #wk .wk-scope, #wk .wk-scope.is-two { grid-template-columns: 1fr; } }
+
+    /* Design strategy cards. */
+    #wk .wk-cards3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+    #wk .wk-icard { display: flex; flex-direction: column; padding: 22px 22px 18px; border: 1px solid var(--scc-hairline); border-radius: 18px; background: var(--wk-card); }
+    #wk .wk-icard-num { margin: 0; font: 470 44px/1 var(--scc-serif); }
+    #wk .wk-icard h4 { margin: 14px 0 8px; font-size: 22px; }
+    #wk .wk-icard-k { margin: 12px 0 3px; color: var(--scc-ink-soft); font: 600 10px/1.4 var(--scc-sans); letter-spacing: .14em; text-transform: uppercase; }
+    #wk .wk-icard p.wk-icard-t { margin: 0; font-size: 14.5px; line-height: 1.5; }
+    #wk .wk-icard .wk-owner { align-self: flex-start; margin-top: 18px; }
+    @media (max-width: 900px) { #wk .wk-cards3 { grid-template-columns: 1fr; } }
+
+    /* Delivery sets: copy, then adjust. */
+    #wk .wk-sets { display: grid; grid-template-columns: minmax(0, 1fr) 72px minmax(0, 1fr); align-items: center; margin: 18px 0 12px; }
+    #wk .wk-set { padding: 18px 18px 16px; border: 1px solid var(--scc-hairline); border-radius: 16px; background: var(--wk-card); }
+    #wk .wk-set.is-delivery { border-color: rgba(43, 138, 87, .35); background: var(--wk-green-soft); }
+    #wk .wk-set-tag { margin: 0; color: var(--scc-ink-soft); font: 600 10px/1.4 var(--scc-sans); letter-spacing: .14em; text-transform: uppercase; }
+    #wk .wk-set-name { margin: 6px 0 12px; font: 480 20px/1.2 var(--scc-serif); }
+    #wk .wk-set .wk-chips li.is-changed { border-color: var(--wk-green); color: var(--wk-green); font-weight: 600; }
+    #wk .wk-set-foot { margin: 12px 0 0; color: var(--scc-ink-soft); font-size: 12.5px; line-height: 1.45; }
+    #wk .wk-only { display: flex; align-items: center; gap: 12px; margin: 0 0 8px; padding: 14px 18px; border: 1px dashed var(--wk-green); border-radius: 14px; font-size: 14px; line-height: 1.45; }
+    #wk .wk-only .wk-ico { background: var(--wk-green-soft); color: var(--wk-green); }
+    @media (max-width: 700px) { #wk .wk-sets { grid-template-columns: 1fr; } #wk .wk-sets .wk-eco-link .wk-arrow { width: 26px; transform: rotate(90deg); } #wk .wk-sets .wk-eco-link { flex-direction: row; padding: 10px 0; } }
+
+    /* Numbered step chain. */
+    #wk .wk-chain { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin: 14px 0 18px; padding: 0; list-style: none; counter-reset: wkc; }
+    #wk .wk-chain li { margin: 0; padding: 14px 16px; border: 1px solid var(--scc-hairline); border-radius: 14px; background: var(--wk-card); color: var(--scc-ink-soft); font-size: 13px; line-height: 1.45; }
+    #wk .wk-chain li::before { counter-increment: wkc; content: counter(wkc, decimal-leading-zero); display: block; margin-bottom: 8px; font: 500 10px/1 var(--scc-sans); letter-spacing: .14em; }
+    #wk .wk-chain li b { display: block; margin-bottom: 4px; color: var(--scc-ink); font-size: 15px; }
+
+    /* Before → after. */
+    #wk .wk-ba { margin: 0 0 1.6em; padding: 0; list-style: none; }
+    #wk .wk-ba li { display: grid; grid-template-columns: minmax(0, .85fr) 40px minmax(0, 1.25fr); align-items: center; gap: 8px; margin: 0; padding: 13px 0; border-top: 1px solid var(--scc-hairline); }
+    #wk .wk-ba li.is-head { padding: 0 0 8px; border-top: 0; color: var(--scc-ink-soft); font: 600 10px/1.4 var(--scc-sans); letter-spacing: .14em; text-transform: uppercase; }
+    #wk .wk-ba-before { color: var(--scc-ink-soft); font-size: 14px; line-height: 1.45; }
+    #wk .wk-ba .wk-arrow { width: 28px; color: var(--scc-ink-soft); }
+    #wk .wk-ba-after { font-size: 15px; line-height: 1.45; }
+    @media (max-width: 560px) { #wk .wk-ba li { grid-template-columns: 1fr; gap: 2px; } #wk .wk-ba .wk-arrow, #wk .wk-ba li.is-head { display: none; } }
+
+    /* Architecture flows (Hey Atu). */
+    #wk .wk-arch-label { margin: 0 0 10px; color: var(--scc-ink-soft); font: 600 10px/1.4 var(--scc-sans); letter-spacing: .14em; text-transform: uppercase; }
+    #wk .wk-flow { display: grid; grid-template-columns: minmax(0, 1fr) 92px minmax(0, 1fr) 92px minmax(0, 1fr); align-items: center; margin: 0 0 26px; }
+    #wk .wk-node { padding: 14px; border: 1px solid var(--scc-hairline); border-radius: 14px; background: var(--wk-card); text-align: center; }
+    #wk .wk-node.is-hub { border-color: var(--scc-ink); }
+    #wk .wk-node b { display: block; font-size: 14.5px; line-height: 1.3; }
+    #wk .wk-node span { display: block; margin-top: 4px; color: var(--scc-ink-soft); font-size: 12px; line-height: 1.4; }
+    #wk .wk-edge { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 0 6px; color: var(--scc-ink-soft); font: italic 400 11px/1.3 var(--scc-sans); text-align: center; }
+    #wk .wk-edge.is-back .wk-arrow { transform: scaleX(-1); }
+    #wk .wk-stack { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin: 0; padding: 0; list-style: none; }
+    #wk .wk-stack li { margin: 0; padding: 12px 14px; border-radius: 12px; background: var(--wk-warm); font-size: 13px; line-height: 1.45; }
+    #wk .wk-stack li b { display: block; margin-bottom: 2px; color: var(--scc-ink-soft); font-size: 10px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; }
+    @media (max-width: 700px) {
+      #wk .wk-flow { grid-template-columns: 1fr; }
+      #wk .wk-edge { flex-direction: row; justify-content: center; padding: 8px 0; }
+      #wk .wk-edge .wk-arrow { width: 26px; transform: rotate(90deg); }
+      #wk .wk-edge.is-back .wk-arrow { transform: rotate(-90deg); }
+      #wk .wk-stack { grid-template-columns: 1fr 1fr; }
+    }
   </style>
 </head>
 <body class="scrollcarousel-page scc-detail-page">
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M10 9.2v5.6l4.8-2.8z"/></symbol>
+    <symbol id="i-ticket" viewBox="0 0 24 24"><path d="M3 7h18v3a2 2 0 0 0 0 4v3H3v-3a2 2 0 0 0 0-4z"/><path d="M14.5 7v10" stroke-dasharray="2 2.2"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4M8 14h3"/></symbol>
+    <symbol id="i-store" viewBox="0 0 24 24"><path d="M4 10v10h16V10"/><path d="M3 10l2-6h14l2 6"/><path d="M3 10a3 3 0 0 0 6 0 3 3 0 0 0 6 0 3 3 0 0 0 6 0"/><path d="M10 20v-5h4v5"/></symbol>
+    <symbol id="i-briefcase" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M3 13h18"/></symbol>
+    <symbol id="i-pot" viewBox="0 0 24 24"><path d="M4 11h16v3a6 6 0 0 1-6 6h-4a6 6 0 0 1-6-6z"/><path d="M2 11h20M9 7.5c0-1.2 1-1.3 1-2.5M14 7.5c0-1.2 1-1.3 1-2.5"/></symbol>
+    <symbol id="i-console" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/><path d="M7 12l3-3 3 2 4-4"/></symbol>
+    <symbol id="i-scooter" viewBox="0 0 24 24"><circle cx="6" cy="17" r="2.6"/><circle cx="18" cy="17" r="2.6"/><path d="M8.6 17h6.8l2.6-7h-3.5M14 5h2.5l1.5 5"/><path d="M3.5 14.5 6 11h5"/></symbol>
+    <symbol id="i-station" viewBox="0 0 24 24"><path d="M3 21h18M5 21V9l7-5 7 5v12"/><path d="M9.5 21v-5.5h5V21M9 11h6"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></symbol>
+    <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.3a4.3 4.3 0 0 1 7.5 2.5C19.5 15.4 12 20 12 20z"/></symbol>
+    <symbol id="i-flame" viewBox="0 0 24 24"><path d="M12 21c-3.9 0-7-2.8-7-6.6 0-3.4 2.4-5.1 3.6-8.4.7 1.7 1.8 2.6 2.9 3C12 6.4 13 4.4 14.8 3c.2 3.6 4.2 5.6 4.2 11.4 0 3.8-3.1 6.6-7 6.6z"/></symbol>
+  </svg>
+
   <header class="scc-detail-header">
     <a href="/">Ivy Han</a>
     <a class="scc-detail-close" href="/" aria-label="Close and go to the portfolio home">×</a>
   </header>
 
   <main>
-    <section class="scc-detail-hero">
+    <section class="scc-detail-hero wk-hero">
       <div class="scc-detail-heading">
         <p id="scc-detail-number">Selected work · for software roles</p>
         <h1 id="scc-detail-title">From Alibaba and TikTok to my own product</h1>
         <p id="scc-detail-meta">2020 – now · Alibaba · ByteDance · Hey Atu</p>
         <p id="scc-detail-summary">Four years on large platforms taught me how real systems work: support at Taobao’s scale, and a two-sided delivery business at TikTok. Today I build and ship Hey Atu, a live AI product, as full-stack + UX. Three projects, one path: designer at scale → product builder → developer.</p>
-        <nav class="scc-project-links" aria-label="Case studies">
-          <a href="#alibaba">01 · Alibaba merchant chatbot</a>
-          <a href="#bytedance">02 · Order First, Then Delivery</a>
-          <a href="#hey-atu">03 · Hey Atu</a>
-        </nav>
       </div>
     </section>
 
-    <article class="scc-detail-content" data-layout="two-column">
+    <nav class="wk-tabs" aria-label="Case studies">
+      <div class="wk-tabs-inner" role="tablist">
+        <button class="wk-tab" type="button" role="tab" id="tab-alibaba" aria-controls="case-alibaba" aria-selected="true" data-case="alibaba"><small>01</small><b>Alibaba</b><span>Merchant chatbot</span></button>
+        <button class="wk-tab" type="button" role="tab" id="tab-bytedance" aria-controls="case-bytedance" aria-selected="false" tabindex="-1" data-case="bytedance"><small>02</small><b>ByteDance</b><span>Order First, Then Delivery</span></button>
+        <button class="wk-tab" type="button" role="tab" id="tab-hey-atu" aria-controls="case-hey-atu" aria-selected="false" tabindex="-1" data-case="hey-atu"><small>03</small><b>Hey Atu</b><span>A complete product, shipped</span></button>
+      </div>
+    </nav>
+
+    <article class="scc-detail-content" id="wk" data-layout="two-column">
 
       <!-- ============ 01 ALIBABA ============ -->
+      <div class="wk-panel is-active" id="case-alibaba" role="tabpanel" aria-labelledby="tab-alibaba">
       <section class="scc-detail-block scc-detail-block-intro" id="alibaba">
         <div class="scc-detail-block-body">
           <p class="wk-label">01 · Alibaba · Taobao Customer Service Platform · 2020–2022</p>
@@ -103,11 +284,11 @@
       <section class="scc-detail-block">
         <h3>Results</h3>
         <div class="scc-detail-block-body">
-          <ul>
-            <li><b>200K</b> inquiries a day</li>
-            <li><b>80%+</b> solved without a human</li>
-            <li><b>52% → 81%</b> Help Center resolution</li>
-            <li><b>20+</b> localised sites reuse the framework</li>
+          <ul class="wk-stats">
+            <li><b>200K</b><span>inquiries a day</span></li>
+            <li><b>80%+</b><span>solved without a human</span></li>
+            <li><b>52% → 81%</b><span>Help Center resolution</span></li>
+            <li><b>20+</b><span>localised sites reuse the framework</span></li>
           </ul>
         </div>
       </section>
@@ -115,14 +296,12 @@
       <section class="scc-detail-block">
         <h3>How the resolution rate went up</h3>
         <div class="scc-detail-block-body">
-          <h4>01 · Solution-first answers</h4>
-          <p><b>Problem.</b> The bot replied with an article; the merchant still had to find the fix.<br><b>Change.</b> Every branch of the tree ends in an action: a button, form or shortcut that does the fix.</p>
-          <h4>02 · Task-based tree</h4>
-          <p><b>Problem.</b> Questions were sorted by internal department, not by what the merchant was trying to do.<br><b>Change.</b> A tree built on merchant tasks: listing → order → fulfilment → after-sales. Guided questions narrow the case in a few taps.</p>
-          <h4>03 · Fix the content behind it</h4>
-          <p><b>Problem.</b> The bot is only as good as its content: 3,000+ articles, 5 levels deep, duplicated topics.<br><b>Change.</b> Card sorting with 16 merchants → 4 domains, 3 levels, semantic tags. Intents link straight to articles. Resolution 52% → 81%, search-to-answer −35%.</p>
-          <h4>04 · Hand-off with context</h4>
-          <p><b>Problem.</b> When the bot failed, merchants repeated everything to a human.<br><b>Change.</b> The conversation and diagnosis go to the agent, who gets AI reply suggestions in one panel. Failure is cheap, so the bot can stay strict.</p>
+          <div class="wk-cards2">
+            <div class="wk-card"><p class="wk-card-num">01</p><h4>Solution-first answers</h4><p><b>Problem.</b> The bot replied with an article; the merchant still had to find the fix.</p><p><b>Change.</b> Every branch of the tree ends in an action: a button, form or shortcut that does the fix.</p></div>
+            <div class="wk-card"><p class="wk-card-num">02</p><h4>Task-based tree</h4><p><b>Problem.</b> Questions were sorted by internal department, not by what the merchant was trying to do.</p><p><b>Change.</b> A tree built on merchant tasks: listing → order → fulfilment → after-sales. Guided questions narrow the case in a few taps.</p></div>
+            <div class="wk-card"><p class="wk-card-num">03</p><h4>Fix the content behind it</h4><p><b>Problem.</b> The bot is only as good as its content: 3,000+ articles, 5 levels deep, duplicated topics.</p><p><b>Change.</b> Card sorting with 16 merchants → 4 domains, 3 levels, semantic tags. Intents link straight to articles. Resolution 52% → 81%, search-to-answer −35%.</p></div>
+            <div class="wk-card"><p class="wk-card-num">04</p><h4>Hand-off with context</h4><p><b>Problem.</b> When the bot failed, merchants repeated everything to a human.</p><p><b>Change.</b> The conversation and diagnosis go to the agent, who gets AI reply suggestions in one panel. Failure is cheap, so the bot can stay strict.</p></div>
+          </div>
           <p><small>Measured per node: categorisation accuracy, comprehension time and label clarity. Weak nodes were renamed and re-tested.</small></p>
         </div>
       </section>
@@ -152,19 +331,17 @@
             <li>Measure per intent and fix the weak nodes.</li>
           </ul>
           <p><b>If I built it today with an LLM:</b> the tree becomes the guard-rails, not the interface; quick actions become tool calls with a confirmation step; the Help Center becomes the retrieval source, so the information architecture matters more, not less.</p>
-          <div class="scc-project-links">
-            <a href="/project-scrollcarousel.html?project=7">Full case: Chatbot &amp; agent workspace</a>
-            <a href="/project-scrollcarousel.html?project=5">Full case: Help Center redesign</a>
-          </div>
         </div>
       </section>
+      </div>
 
       <!-- ============ 02 BYTEDANCE ============ -->
+      <div class="wk-panel" id="case-bytedance" role="tabpanel" aria-labelledby="tab-bytedance">
       <section class="scc-detail-block scc-detail-block-intro" id="bytedance">
         <div class="scc-detail-block-body">
           <p class="wk-label">02 · ByteDance · TikTok Local Life · 2022–2023</p>
           <h2>Order First, Then Delivery: building the business side of a new delivery model</h2>
-          <p class="wk-lead">Meituan waits for hunger. Douyin (TikTok China) creates the craving: people see a dish in a video, buy it as a voucher, and schedule delivery when they want to eat. A consumer team made people want the food. My team built what happens next: the order flow, the merchant side and the delivery stations. My own part was the dispatch console for our new stations, and how merchants turn on delivery and handle reserved orders. It started on site, at the stations.</p>
+          <p class="wk-lead">Meituan waits for hunger. Douyin (TikTok China) creates the craving: people see a dish in a video, buy it as a voucher and schedule delivery later. A consumer team made people want the food; my team built what happens next. My own part: the dispatch console for our new delivery stations, and the merchant tools for turning on delivery and handling reserved orders. It started on site, at the stations.</p>
           <figure><img src="img/bd-orderfirst.webp" width="1600" height="900" decoding="async" alt="Traditional on-demand ordering compared with TikTok's order first, schedule delivery later"><figcaption>Traditional mode vs. TikTok’s mode: impulse first, delivery when you want it.</figcaption></figure>
         </div>
       </section>
@@ -172,164 +349,161 @@
       <section class="scc-detail-block">
         <h3>Results</h3>
         <div class="scc-detail-block-body">
-          <ul>
-            <li><b>+300%</b> order volume for the new model, business-wide</li>
-            <li><b>−20%</b> average delivery time, from the dispatch console</li>
-            <li><b>1 week</b> of on-site research</li>
-            <li><b>1 month</b> to launch the dispatch MVP</li>
+          <ul class="wk-stats">
+            <li><b>+300%</b><span>order volume for the new model, business-wide</span></li>
+            <li><b>−20%</b><span>average delivery time, from the dispatch console</span></li>
+            <li><b>1 week</b><span>on site at delivery stations</span></li>
+            <li><b>1 month</b><span>to launch the dispatch MVP</span></li>
           </ul>
-          <p><small>Below: first the business (what was different, who is involved, how one order flows), then my part.</small></p>
         </div>
       </section>
 
-      <section class="scc-detail-block">
-        <h3><span class="wk-kicker">The business · 1</span>Search vs. interest</h3>
+      <section class="scc-detail-block scc-detail-block-intro wk-wide">
         <div class="scc-detail-block-body">
-          <p>Douyin’s home ground was in-store group buying: a short video makes a dish look great, people buy the same set menu as a voucher and redeem it at the restaurant. Food delivery started during COVID on top of that business and copied the habit: <b>order first, then delivery.</b></p>
-          <div class="wk-table-wrap" role="region" aria-label="Search-driven compared with interest-driven delivery" tabindex="0">
-            <table class="wk-table">
-              <thead><tr><th scope="col"></th><th scope="col">Search-driven<br>Meituan, Uber Eats</th><th scope="col">Interest-driven<br>Douyin</th></tr></thead>
-              <tbody>
-                <tr><th scope="row">Demand starts</th><td>You are hungry and search</td><td>You see a dish in a video and want it</td></tr>
-                <tr><th scope="row">A shop gets found by</th><td>Rankings and reviews</td><td>Its videos and live streams; a dish can sell out overnight</td></tr>
-                <tr><th scope="row">People buy</th><td>Single dishes, delivered now</td><td>Set menus as vouchers, stocked up, delivered later</td></tr>
-                <tr><th scope="row">Orders arrive</th><td>At mealtimes, fairly steady</td><td>Prepaid, scheduled, in spikes after a live stream</td></tr>
-              </tbody>
-            </table>
+          <p class="wk-kicker">The business · 1</p>
+          <h3>Search vs. interest</h3>
+          <p class="wk-intro">Douyin’s home ground was in-store group buying: a short video makes a dish look great, people buy the same set menu as a voucher and redeem it at the restaurant. Food delivery started during COVID on top of that business and copied the habit: order first, then delivery.</p>
+          <div class="wk-vs">
+            <div class="wk-vs-card is-search">
+              <p class="wk-vs-head"><span class="wk-badge"><svg class="wk-i" aria-hidden="true"><use href="#i-search"/></svg></span><span>Search-driven<small>Meituan, Uber Eats</small></span></p>
+              <dl>
+                <div><dt>Demand starts</dt><dd>You are hungry and search</dd></div>
+                <div><dt>A shop gets found by</dt><dd>Climbing rankings, collecting reviews</dd></div>
+                <div><dt>People buy</dt><dd>Single dishes, delivered now</dd></div>
+                <div><dt>Orders arrive</dt><dd>At mealtimes, fairly steady</dd></div>
+              </dl>
+            </div>
+            <div class="wk-vs-card is-interest">
+              <p class="wk-vs-head"><span class="wk-badge"><svg class="wk-i" aria-hidden="true"><use href="#i-heart"/></svg></span><span>Interest-driven<small>Douyin</small></span></p>
+              <dl>
+                <div><dt>Demand starts</dt><dd>You see a dish in a video and want it</dd></div>
+                <div><dt>A shop gets found by</dt><dd>Its videos and live streams; a dish can sell out overnight</dd></div>
+                <div><dt>People buy</dt><dd>Set menus as vouchers, stocked up, delivered later</dd></div>
+                <div><dt>Orders arrive</dt><dd>Prepaid, scheduled, in spikes after a live stream</dd></div>
+              </dl>
+            </div>
           </div>
-          <p><b>Content can even create the product.</b> When camping was the trend, barbecue shops sold spring camping sets: meat marinated and portioned, sides included, sometimes a grill to rent. Their videos and live streams were staged as a campsite, so the set came with the mood. Order it, and it arrives ready for the trip: no supermarket run, no skewering. Drink shops did the same with new flavours, like an ice-cream drink with yogurt chunks. In an app where people search when they are hungry, products like these are hard to sell. On Douyin they sell because people see them.</p>
-          <p>For merchants, that is the offer: <b>exposure.</b> On Meituan a shop waits to be found. On Douyin it can go out and be seen.</p>
+          <div class="wk-story">
+            <div>
+              <p class="wk-kicker">Content can create the product</p>
+              <h4>A spring camping set</h4>
+              <ul class="wk-chips">
+                <li>Meat marinated and portioned</li>
+                <li>Sides included</li>
+                <li>A grill to rent</li>
+                <li>Live stream staged as a campsite</li>
+              </ul>
+            </div>
+            <div>
+              <p>When camping was the trend, barbecue shops sold ready-to-grill camping sets through videos and live streams. Order it, and it arrives ready for the trip: no supermarket run, no skewering. Drink shops did the same with new flavours, like an ice-cream drink with yogurt chunks.</p>
+              <p class="wk-story-point">On a search app nobody looks for these. On Douyin they sell because people see them. For merchants, that is the offer: exposure.</p>
+            </div>
+          </div>
         </div>
       </section>
 
-      <section class="scc-detail-block">
-        <h3><span class="wk-kicker">The business · 2</span>Who is in the system</h3>
+      <section class="scc-detail-block scc-detail-block-intro wk-wide">
         <div class="scc-detail-block-body">
-          <figure class="wk-map">
-            <svg viewBox="0 0 400 520" role="img" aria-labelledby="bd-map-title bd-map-desc">
-              <title id="bd-map-title">Who is involved in Order First, Then Delivery</title>
-              <desc id="bd-map-desc">Douyin Local Life sits in the middle. Its consumer team sends videos and live streams to shoppers; shoppers buy a voucher and schedule delivery through the order flow built by my team. The platform sends reserved orders to merchants and gives delivery stations a dispatch console. Merchants call a rider from the station when the meal is ready. Service providers sign up small shops and run their live streams and operations, and join and settle through the platform. Delivery first ran on Ele.me's network, then on TikTok's own stations, each with a manager, a dispatcher and 50 to 100 riders covering about 5 km. The rider delivers to the shopper.</desc>
-              <defs>
-                <marker id="bd-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" class="wk-map-head"/></marker>
-              </defs>
-              <!-- edges -->
-              <path class="wk-map-edge" d="M165 128 V64" marker-end="url(#bd-arrow)"/>
-              <text class="wk-map-label" x="157" y="92" text-anchor="end">videos &amp;</text>
-              <text class="wk-map-label" x="157" y="106" text-anchor="end">live streams</text>
-              <path class="wk-map-edge" d="M235 62 V126" marker-end="url(#bd-arrow)"/>
-              <text class="wk-map-label" x="243" y="92">buy a voucher,</text>
-              <text class="wk-map-label" x="243" y="106">schedule delivery</text>
-              <path class="wk-map-edge" d="M98 236 V296" marker-end="url(#bd-arrow)"/>
-              <text class="wk-map-label" x="106" y="262">reserved orders,</text>
-              <text class="wk-map-label" x="106" y="276">merchant tools</text>
-              <path class="wk-map-edge" d="M302 236 V296" marker-end="url(#bd-arrow)"/>
-              <text class="wk-map-label" x="310" y="262">dispatch</text>
-              <text class="wk-map-label" x="310" y="276">console</text>
-              <path class="wk-map-edge" d="M170 344 H228" marker-end="url(#bd-arrow)"/>
-              <text class="wk-map-label" x="199" y="324" text-anchor="middle">call a</text>
-              <text class="wk-map-label" x="199" y="337" text-anchor="middle">rider</text>
-              <path class="wk-map-edge" d="M98 438 V378" marker-end="url(#bd-arrow)"/>
-              <text class="wk-map-label" x="106" y="404">sign up,</text>
-              <text class="wk-map-label" x="106" y="418">operate</text>
-              <path class="wk-map-edge is-dashed" d="M28 472 H12 V182 H26" marker-end="url(#bd-arrow)"/>
-              <text class="wk-map-label" x="24" y="330" text-anchor="middle" transform="rotate(-90 24 330)">join · settle</text>
-              <path class="wk-map-edge" d="M372 380 H388 V36 H274" marker-end="url(#bd-arrow)"/>
-              <text class="wk-map-label" x="384" y="200" text-anchor="middle" transform="rotate(-90 384 200)">rider delivers</text>
-              <!-- nodes -->
-              <rect class="wk-map-node" x="130" y="12" width="140" height="48" rx="8"/>
-              <text class="wk-map-title" x="200" y="33" text-anchor="middle">Shoppers</text>
-              <text class="wk-map-sub" x="200" y="50" text-anchor="middle">see it · buy · schedule</text>
-              <rect class="wk-map-node" x="28" y="130" width="344" height="104" rx="10"/>
-              <text class="wk-map-title" x="200" y="151" text-anchor="middle">Douyin Local Life</text>
-              <rect class="wk-map-node is-other" x="40" y="162" width="154" height="62" rx="6"/>
-              <text class="wk-map-title is-small" x="117" y="182" text-anchor="middle">Consumer team</text>
-              <text class="wk-map-sub" x="117" y="198" text-anchor="middle">content and</text>
-              <text class="wk-map-sub" x="117" y="212" text-anchor="middle">entry points</text>
-              <rect class="wk-map-node is-ours" x="206" y="162" width="154" height="62" rx="6"/>
-              <text class="wk-map-title is-small" x="283" y="182" text-anchor="middle">My team</text>
-              <text class="wk-map-sub" x="283" y="198" text-anchor="middle">order flow, merchant</text>
-              <text class="wk-map-sub" x="283" y="212" text-anchor="middle">and station tools</text>
-              <rect class="wk-map-node" x="28" y="300" width="142" height="76" rx="8"/>
-              <text class="wk-map-title" x="99" y="322" text-anchor="middle">Merchants</text>
-              <text class="wk-map-sub" x="99" y="340" text-anchor="middle">sell in-store sets</text>
-              <text class="wk-map-sub" x="99" y="354" text-anchor="middle">on Douyin; know</text>
-              <text class="wk-map-sub" x="99" y="368" text-anchor="middle">Meituan delivery</text>
-              <rect class="wk-map-node" x="230" y="300" width="142" height="124" rx="8"/>
-              <text class="wk-map-title" x="301" y="322" text-anchor="middle">Delivery</text>
-              <text class="wk-map-sub" x="301" y="340" text-anchor="middle">Ele.me network first,</text>
-              <text class="wk-map-sub" x="301" y="354" text-anchor="middle">then our own stations.</text>
-              <text class="wk-map-sub" x="301" y="374" text-anchor="middle">Each: a manager,</text>
-              <text class="wk-map-sub" x="301" y="388" text-anchor="middle">a dispatcher,</text>
-              <text class="wk-map-sub" x="301" y="402" text-anchor="middle">50–100 riders, ~5 km</text>
-              <rect class="wk-map-node" x="28" y="440" width="142" height="64" rx="8"/>
-              <text class="wk-map-title is-small" x="99" y="461" text-anchor="middle">Service providers</text>
-              <text class="wk-map-sub" x="99" y="478" text-anchor="middle">sign up small shops,</text>
-              <text class="wk-map-sub" x="99" y="492" text-anchor="middle">run their live streams</text>
-            </svg>
-            <figcaption>Who is involved, and what passes between them. Solid outline inside Douyin: my team; dashed: the consumer team.</figcaption>
-          </figure>
-          <ul>
-            <li><b>Shoppers</b> see a dish, buy a voucher, and schedule delivery when they want it.</li>
-            <li><b>Merchants</b> are mostly restaurants already selling in-store sets on Douyin. They know delivery from Meituan; what Douyin adds is exposure. Shops already doing well on Meituan joined too, but they were not the main target.</li>
-            <li><b>Service providers</b> sign up small shops with no time or TikTok know-how, and run their live streams and operations. They join and settle through the platform.</li>
-            <li><b>Delivery</b> first ran on Ele.me’s network. As orders grew, TikTok opened its own stations in Shanghai, Beijing and Shenzhen.</li>
-            <li><b>Douyin’s teams:</b> the consumer team owns content and entry points; my team owns the order flow and the tools for merchants and stations.</li>
-          </ul>
-          <p>The goal was to double order volume, merchant partners and city coverage in six months, in three steps:</p>
+          <p class="wk-kicker">The business · 2</p>
+          <h3>Who is in the system</h3>
+          <p class="wk-intro">Three groups, linked by one order. Douyin builds the tools each of them uses; the footer of each column shows who built which tool.</p>
+          <p class="wk-legend"><span><span class="wk-owner">Consumer team</span></span><span><span class="wk-owner is-team">My team</span></span><span><span class="wk-owner is-me">Me</span></span></p>
+          <div class="wk-eco">
+            <div class="wk-eco-row">
+              <div class="wk-eco-col is-demand">
+                <header>Demand <small>shoppers</small></header>
+                <div class="wk-actor"><span class="wk-ico"><svg class="wk-i" aria-hidden="true"><use href="#i-user"/></svg></span><div><b>Shoppers</b><span>See a dish, buy a voucher, schedule delivery when they want it</span></div></div>
+                <div class="wk-actor"><span class="wk-ico"><svg class="wk-i" aria-hidden="true"><use href="#i-play"/></svg></span><div><b>Videos and live streams</b><span>Made by merchants and service providers</span></div></div>
+                <footer><p><span class="wk-owner">Consumer team</span>content, entry points</p><p><span class="wk-owner is-team">My team</span>order and schedule-delivery pages</p></footer>
+              </div>
+              <div class="wk-eco-link"><span>reserved order</span><svg class="wk-arrow" viewBox="0 0 48 12" aria-hidden="true"><path d="M2 6h42M38 1.5 44 6l-6 4.5"/></svg></div>
+              <div class="wk-eco-col is-supply">
+                <header>Supply <small>merchants</small></header>
+                <div class="wk-actor"><span class="wk-ico"><svg class="wk-i" aria-hidden="true"><use href="#i-store"/></svg></span><div><b>Restaurants</b><span>Already sell in-store sets on Douyin; know delivery from Meituan</span></div></div>
+                <div class="wk-actor"><span class="wk-ico"><svg class="wk-i" aria-hidden="true"><use href="#i-briefcase"/></svg></span><div><b>Service providers</b><span>Sign up small shops and run their live streams; join and settle through Douyin</span></div></div>
+                <footer><p><span class="wk-owner is-team">My team</span>merchant tools, service-provider platform</p><p><span class="wk-owner is-me">Me</span>turn-on flow, delivery settings, reserved orders</p></footer>
+              </div>
+              <div class="wk-eco-link"><span>call a rider</span><svg class="wk-arrow" viewBox="0 0 48 12" aria-hidden="true"><path d="M2 6h42M38 1.5 44 6l-6 4.5"/></svg></div>
+              <div class="wk-eco-col is-delivery">
+                <header>Delivery <small>riders</small></header>
+                <div class="wk-actor"><span class="wk-ico"><svg class="wk-i" aria-hidden="true"><use href="#i-scooter"/></svg></span><div><b>Delivery network</b><span>Ele.me’s at first; then TikTok’s own stations in Shanghai, Beijing and Shenzhen</span></div></div>
+                <div class="wk-actor"><span class="wk-ico"><svg class="wk-i" aria-hidden="true"><use href="#i-station"/></svg></span><div><b>One station</b><span>A manager, a dispatcher and 50–100 riders, covering about 5 km</span></div></div>
+                <footer><p><span class="wk-owner is-team">My team</span>station tools</p><p><span class="wk-owner is-me">Me</span>dispatch console</p></footer>
+              </div>
+            </div>
+            <div class="wk-eco-return"><span>the rider delivers to the shopper</span></div>
+          </div>
+          <p class="wk-intro">The goal: double order volume, merchant partners and city coverage in six months, in three steps.</p>
           <figure><img src="img/bd-roadmap.webp" width="1600" height="900" decoding="async" alt="Six-month roadmap: consumption, merchant service, logistics"><figcaption>The six-month plan: order first, then delivery → service for merchants → our own delivery stations.</figcaption></figure>
         </div>
       </section>
 
-      <section class="scc-detail-block">
-        <h3><span class="wk-kicker">The business · 3</span>One order, end to end</h3>
+      <section class="scc-detail-block scc-detail-block-intro wk-wide">
         <div class="scc-detail-block-body">
-          <ol class="wk-steps">
-            <li><div class="wk-step-head"><b>See it</b><span class="wk-owner">Consumer team</span></div><p>A merchant’s video or live stream makes a dish look great.</p></li>
-            <li><div class="wk-step-head"><b>Buy a voucher</b><span class="wk-owner is-team">My team</span></div><p>“Stock up, schedule later” or “deliver now”. The voucher is refundable.</p></li>
-            <li><div class="wk-step-head"><b>Schedule delivery</b><span class="wk-owner is-team">My team</span></div><p>Address, a delivery time up to 7 days ahead, notes, cutlery and the delivery fee.</p></li>
-            <li><div class="wk-step-head"><b>The merchant prepares</b><span class="wk-owner is-me">Me</span></div><p>A reserved order shows when it is due. At that time it becomes meal prep, then a rider call.</p></li>
-            <li><div class="wk-step-head"><b>The station dispatches</b><span class="wk-owner is-me">Me</span></div><p>The dispatcher assigns by rider load and distance. AI suggests; the station manager confirms.</p></li>
-            <li><div class="wk-step-head"><b>A rider delivers</b><span class="wk-owner">Station</span></div><p>From one of TikTok’s own stations, or Ele.me’s network at first.</p></li>
+          <p class="wk-kicker">The business · 3</p>
+          <h3>One order, end to end</h3>
+          <p class="wk-intro">Colour shows who acts at each step; the tag shows who built it.</p>
+          <ol class="wk-journey">
+            <li class="is-demand"><span class="wk-ico"><svg class="wk-i" aria-hidden="true"><use href="#i-play"/></svg></span><p class="wk-j-num">01</p><b>See it</b><p>A merchant’s video or live stream makes a dish look great.</p><span class="wk-owner">Consumer team</span></li>
+            <li class="is-demand"><span class="wk-ico"><svg class="wk-i" aria-hidden="true"><use href="#i-ticket"/></svg></span><p class="wk-j-num">02</p><b>Buy a voucher</b><p>“Stock up, schedule later” or “deliver now”. Refundable.</p><span class="wk-owner is-team">My team</span></li>
+            <li class="is-demand"><span class="wk-ico"><svg class="wk-i" aria-hidden="true"><use href="#i-calendar"/></svg></span><p class="wk-j-num">03</p><b>Schedule delivery</b><p>Address, a time up to 7 days ahead, notes, cutlery, fee.</p><span class="wk-owner is-team">My team</span></li>
+            <li class="is-supply"><span class="wk-ico"><svg class="wk-i" aria-hidden="true"><use href="#i-pot"/></svg></span><p class="wk-j-num">04</p><b>The merchant prepares</b><p>The reserved order shows when it is due; then prep and a rider call.</p><span class="wk-owner is-me">Me</span></li>
+            <li class="is-delivery"><span class="wk-ico"><svg class="wk-i" aria-hidden="true"><use href="#i-console"/></svg></span><p class="wk-j-num">05</p><b>The station dispatches</b><p>By rider load and distance. AI suggests; the station manager confirms.</p><span class="wk-owner is-me">Me</span></li>
+            <li class="is-delivery"><span class="wk-ico"><svg class="wk-i" aria-hidden="true"><use href="#i-scooter"/></svg></span><p class="wk-j-num">06</p><b>A rider delivers</b><p>From one of TikTok’s own stations, or Ele.me’s network at first.</p><span class="wk-owner">Station</span></li>
           </ol>
-          <figure class="is-narrow"><img src="img/bd-orderflow.webp" width="1400" height="1575" decoding="async" alt="User flow from discover to order to delivery, in three lanes for consumer, merchant and rider, with the app screens for each step"><figcaption>The real flow across consumer, merchant and rider. The entry points on the left came from the consumer team; from order to delivery was ours.</figcaption></figure>
+          <figure class="is-narrow"><img src="img/bd-orderflow.webp" width="1400" height="1575" decoding="async" alt="User flow from discover to order to delivery, in three lanes for consumer, merchant and rider, with the app screens for each step"><figcaption>The real flow and screens across consumer, merchant and rider. The entry points on the left came from the consumer team; from order to delivery was ours.</figcaption></figure>
         </div>
       </section>
 
-      <section class="scc-detail-block">
-        <h3><span class="wk-kicker">My part · 1</span>Who did what</h3>
+      <section class="scc-detail-block scc-detail-block-intro wk-wide">
         <div class="scc-detail-block-body">
-          <div class="wk-table-wrap" role="region" aria-label="Who did what" tabindex="0">
-            <table class="wk-table">
-              <thead><tr><th scope="col">Area</th><th scope="col">Who</th></tr></thead>
-              <tbody>
-                <tr><td>Content, the “I want that” moment, entry points from videos and live streams</td><td><span class="wk-owner">Consumer team</span></td></tr>
-                <tr><td>Order and schedule-delivery pages: new fields and flow for delivery</td><td><span class="wk-owner is-team">My team</span></td></tr>
-                <tr><td>Delivery sets in the merchant backend (copy, then adjust)</td><td><span class="wk-owner is-team">A teammate</span></td></tr>
-                <tr><td>Service-provider platform</td><td><span class="wk-owner is-team">My team</span></td></tr>
-                <tr><td>Merchant turn-on flow, delivery settings, reserved-order handling</td><td><span class="wk-owner is-me">Me</span></td></tr>
-                <tr><td>Delivery stations: field research, dispatch console, station tools, on-site testing</td><td><span class="wk-owner is-me">Me</span> leading design across product, engineering and operations</td></tr>
-              </tbody>
-            </table>
+          <p class="wk-kicker">My part · 1</p>
+          <h3>Who did what</h3>
+          <div class="wk-scope">
+            <div class="wk-scope-card">
+              <p class="wk-scope-tag">Consumer team</p>
+              <ul><li>Content and the “I want that” moment</li><li>Entry points from videos and live streams</li></ul>
+            </div>
+            <div class="wk-scope-card is-team">
+              <p class="wk-scope-tag">My team</p>
+              <ul><li>Order and schedule-delivery pages: new fields and flow</li><li>Service-provider platform</li><li>Delivery sets in the merchant backend (a teammate)</li></ul>
+            </div>
+            <div class="wk-scope-card is-me">
+              <p class="wk-scope-tag">Me</p>
+              <ul><li><b>Dispatch console</b> for our new stations: field research, design and on-site testing, leading across product, engineering and operations</li><li><b>Merchant delivery tools:</b> turn-on flow, delivery settings and reserved-order handling</li></ul>
+            </div>
           </div>
-          <p>I was one of three food-delivery designers, working with six product managers; engineers built it. In short: the consumer team made people want the food, and we made the order go through, from merchant to rider.</p>
+          <p class="wk-note">I was one of three food-delivery designers, working with six product managers; engineers built it.</p>
         </div>
       </section>
 
-      <section class="scc-detail-block">
-        <h3><span class="wk-kicker">My part · 2</span>My design strategy: design only what is new</h3>
+      <section class="scc-detail-block scc-detail-block-intro wk-wide">
         <div class="scc-detail-block-body">
-          <p>Everyone in this system already knew delivery: shoppers and merchants from Meituan, station staff from the industry. What was new was the shape of demand: bought ahead as a set, delivered at a chosen time, and arriving in spikes when a video or live stream took off. So I reused what people already knew and designed only for that difference.</p>
-          <div class="wk-insight">
-            <h4>01 · Make delivery a switch, not a new tool</h4>
-            <p><b>Insight.</b> Merchants already sold sets on Douyin and already ran delivery on Meituan. Learning another tool was the real cost.<br><b>Decision.</b> Turning on delivery starts from their Douyin store and sets, in the same structure as the tools they used. A reserved order carries its due time and turns into prep and a rider call when it is due.</p>
-          </div>
-          <div class="wk-insight">
-            <h4>02 · Design for the spike, not the average</h4>
-            <p><b>Insight.</b> A hit dish or a live stream floods a shop and its station at once, and our riders were new. At peak, some riders were overloaded while others waited.<br><b>Decision.</b> Dispatch by rider load: what each rider carries against what they can handle (3–5 orders for an experienced rider, 2–3 for a new one), plus distance. Priority colour tags and drag-to-assign for peak hours.</p>
-          </div>
-          <div class="wk-insight">
-            <h4>03 · Keep people in charge, and start light</h4>
-            <p><b>Insight.</b> A first-version algorithm would not be accurate yet, and the station manager’s habits shape the work. The stations had to open within months.<br><b>Decision.</b> AI suggests; the station manager approves or overrides. The MVP shipped in one month: the dispatch console first, with rider, pay, equipment and data tools around it.</p>
+          <p class="wk-kicker">My part · 2</p>
+          <h3>My design strategy: design only what is new</h3>
+          <p class="wk-intro">Everyone in this system already knew delivery: shoppers and merchants from Meituan, station staff from the industry. What was new was the shape of demand: bought ahead as a set, delivered at a chosen time, arriving in spikes when a video took off. So I reused what people knew and designed for that difference.</p>
+          <div class="wk-cards3">
+            <article class="wk-icard">
+              <p class="wk-icard-num">01</p>
+              <h4>Make delivery a switch, not a new tool</h4>
+              <p class="wk-icard-k">Insight</p><p class="wk-icard-t">Merchants already sold sets on Douyin and already ran delivery on Meituan. Learning another tool was the real cost.</p>
+              <p class="wk-icard-k">Decision</p><p class="wk-icard-t">Turn delivery on from their Douyin store and sets, in the structure they already used. A reserved order carries its due time.</p>
+              <span class="wk-owner is-me">Merchant tools</span>
+            </article>
+            <article class="wk-icard">
+              <p class="wk-icard-num">02</p>
+              <h4>Design for the spike, not the average</h4>
+              <p class="wk-icard-k">Insight</p><p class="wk-icard-t">A hit dish floods a shop and its station at once, and our riders were new. At peak, some were overloaded while others waited.</p>
+              <p class="wk-icard-k">Decision</p><p class="wk-icard-t">Dispatch by rider load (3–5 orders for an experienced rider, 2–3 for a new one) plus distance; colour tags and drag-to-assign for peaks.</p>
+              <span class="wk-owner is-me">Dispatch console</span>
+            </article>
+            <article class="wk-icard">
+              <p class="wk-icard-num">03</p>
+              <h4>Keep people in charge, and start light</h4>
+              <p class="wk-icard-k">Insight</p><p class="wk-icard-t">A first algorithm would not be accurate yet, the station manager’s habits shape the work, and stations had to open within months.</p>
+              <p class="wk-icard-k">Decision</p><p class="wk-icard-t">AI suggests; the manager approves or overrides. A one-month MVP: the console first, rider, pay, equipment and data tools around it.</p>
+              <span class="wk-owner is-me">Dispatch console</span>
+            </article>
           </div>
         </div>
       </section>
@@ -337,26 +511,38 @@
       <section class="scc-detail-block">
         <h3><span class="wk-kicker">My part · 3</span>Merchant side</h3>
         <div class="scc-detail-block-body">
-          <h4>Turning on delivery, settings and orders <span class="wk-owner is-me">Me</span></h4>
+          <h4>Turning on delivery <span class="wk-owner is-me">Me</span></h4>
           <ul>
-            <li><b>Turn on from what you have.</b> Start from the Douyin store and its in-store sets, with the same structure and patterns as the merchant tools they already used.</li>
+            <li><b>Turn on from what you have:</b> start from the Douyin store and its in-store sets, with the same structure as the merchant tools they already used.</li>
             <li><b>Delivery settings:</b> the delivery-only details each set needs, such as price, stock and packaging.</li>
             <li><b>Reserved orders:</b> each shows when it is due; at that time it becomes meal prep, then a rider call.</li>
           </ul>
           <h4>Delivery sets: copy, then adjust <span class="wk-owner is-team">Team</span></h4>
-          <p>A teammate owned product publishing; the logic was a team decision I worked with.</p>
-          <ul>
-            <li><b>Start from the sets they already sell.</b> Douyin sells set menus and rarely single dishes. Base items are shared; sets are copied, then adjusted.</li>
-            <li><b>Not identical, on purpose.</b> A shop costs more to run than delivery: staff, rent. If the two sets were the same, customers would compare prices and stop coming in. So merchants change a portion or swap an item in the delivery version.</li>
-            <li><b>Delivery-only sets where they fit,</b> like a camping barbecue set with a portable gas stove.</li>
-          </ul>
+          <p>Douyin sells set menus, rarely single dishes. Delivery sets start from the in-store ones, with a small difference on purpose: a shop costs more to run (staff, rent), and identical sets would let customers compare prices and stop coming in. A teammate owned product publishing.</p>
+          <div class="wk-sets">
+            <div class="wk-set">
+              <p class="wk-set-tag">In-store set</p>
+              <p class="wk-set-name">Barbecue platter for two</p>
+              <ul class="wk-chips"><li>Beef</li><li>Pork belly</li><li>Skewers</li><li>Sides</li></ul>
+              <p class="wk-set-foot">Base items shared with delivery</p>
+            </div>
+            <div class="wk-eco-link"><span>copy, then adjust</span><svg class="wk-arrow" viewBox="0 0 48 12" aria-hidden="true"><path d="M2 6h42M38 1.5 44 6l-6 4.5"/></svg></div>
+            <div class="wk-set is-delivery">
+              <p class="wk-set-tag">Delivery set</p>
+              <p class="wk-set-name">Barbecue platter for two</p>
+              <ul class="wk-chips"><li>Beef</li><li>Pork belly</li><li class="is-changed">Skewers: smaller portion</li><li class="is-changed">Different side</li></ul>
+              <p class="wk-set-foot">One or two items differ, so prices cannot be compared like for like</p>
+            </div>
+          </div>
+          <div class="wk-only"><span class="wk-ico"><svg class="wk-i" aria-hidden="true"><use href="#i-flame"/></svg></span><span><b>Delivery-only sets</b> where they fit, like a camping barbecue set with a portable gas stove.</span></div>
+          <p><small>Illustrative example; real menus varied by shop.</small></p>
           <h4>New merchants through service providers <span class="wk-owner is-team">Team</span></h4>
           <p>Many new merchants were small shops, like a couple running a fast-food place with no time and no TikTok know-how. Service providers signed them up and ran their stores for them: operations, live streams on their behalf, and matchmaking. The platform follows that work:</p>
-          <ol>
-            <li><b>Join:</b> qualification and company verification, platform review, deposit.</li>
-            <li><b>Sign merchants:</b> recruiting, signing, contracts.</li>
-            <li><b>Run their stores:</b> merchant management, live-stream schedule and promotion, data.</li>
-            <li><b>Settle:</b> settlement accounts and reconciliation.</li>
+          <ol class="wk-chain">
+            <li><b>Join</b>Qualification, company verification, platform review, deposit</li>
+            <li><b>Sign merchants</b>Recruiting, signing, contracts</li>
+            <li><b>Run their stores</b>Merchant management, live-stream schedule, data</li>
+            <li><b>Settle</b>Settlement accounts and reconciliation</li>
           </ol>
           <figure class="is-narrow"><img src="img/bd-merchant.webp" width="1400" height="1575" decoding="async" alt="Service-provider platform: merchant persona, dashboard, and its structure from joining to settlement"><figcaption>The service-provider platform, from joining to settlement.</figcaption></figure>
         </div>
@@ -403,9 +589,9 @@
           <h4>03 · Set our own balance</h4>
           <p>Our stations were new: inexperienced riders, and order spikes whenever a live stream sold vouchers. Neither model fit as it was, so the first version balances order, rider and map:</p>
           <ul>
-            <li><b>Dispatch by rider load,</b> plus distance (strategy 02 above).</li>
+            <li><b>Dispatch by rider load,</b> plus distance (strategy 02).</li>
             <li><b>Two ways in.</b> Start from an order and find a rider on the map, or start from a rider and see their route.</li>
-            <li><b>People stay in charge:</b> AI suggests, the station manager approves or overrides (strategy 03 above).</li>
+            <li><b>People stay in charge:</b> AI suggests, the station manager approves or overrides (strategy 03).</li>
           </ul>
           <figure><img src="img/bd-console-demo.webp" width="1200" height="680" decoding="async" alt="Dispatch console demo: orders by status on the left, pick-up and drop-off routes on a map, and each rider's current orders on the right"><figcaption>Console structure, shown as a demo I rebuilt from memory (the real interface is confidential): orders by status on the left, routes on the map, each rider’s current orders on the right.</figcaption></figure>
           <h4>04 · Test on site, then measure</h4>
@@ -416,23 +602,22 @@
       <section class="scc-detail-block">
         <h3>From pain points to the console</h3>
         <div class="scc-detail-block-body">
-          <ul>
-            <li><b>Dispatch by chat group</b> → a command-centre console: order board by area and time window.</li>
-            <li><b>No view of riders</b> → a live rider view: status, route, current orders.</li>
-            <li><b>Uneven workload</b> → AI suggestions by distance and load; the manager approves or overrides.</li>
-            <li><b>Peak-hour pressure</b> → priority colour tags, drag-to-assign, as few clicks as possible.</li>
-            <li><b>No efficiency data</b> → a dashboard for delivery time and rider utilisation.</li>
+          <ul class="wk-ba">
+            <li class="is-head"><span>At the station</span><span></span><span>In our console</span></li>
+            <li><span class="wk-ba-before">Dispatch by chat group</span><svg class="wk-arrow" viewBox="0 0 48 12" aria-hidden="true"><path d="M2 6h42M38 1.5 44 6l-6 4.5"/></svg><span class="wk-ba-after"><b>Command-centre console:</b> order board by area and time window</span></li>
+            <li><span class="wk-ba-before">No view of riders</span><svg class="wk-arrow" viewBox="0 0 48 12" aria-hidden="true"><path d="M2 6h42M38 1.5 44 6l-6 4.5"/></svg><span class="wk-ba-after"><b>Live rider view:</b> status, route, current orders</span></li>
+            <li><span class="wk-ba-before">Uneven workload</span><svg class="wk-arrow" viewBox="0 0 48 12" aria-hidden="true"><path d="M2 6h42M38 1.5 44 6l-6 4.5"/></svg><span class="wk-ba-after"><b>AI suggestions</b> by distance and load; the manager approves or overrides</span></li>
+            <li><span class="wk-ba-before">Peak-hour pressure</span><svg class="wk-arrow" viewBox="0 0 48 12" aria-hidden="true"><path d="M2 6h42M38 1.5 44 6l-6 4.5"/></svg><span class="wk-ba-after"><b>Priority colour tags,</b> drag-to-assign, as few clicks as possible</span></li>
+            <li><span class="wk-ba-before">No efficiency data</span><svg class="wk-arrow" viewBox="0 0 48 12" aria-hidden="true"><path d="M2 6h42M38 1.5 44 6l-6 4.5"/></svg><span class="wk-ba-after"><b>Dashboard</b> for delivery time and rider utilisation</span></li>
           </ul>
           <figure><img src="img/bd-mvp.webp" width="1600" height="900" decoding="async" alt="MVP feature map of the delivery hub system"><figcaption>MVP: the delivery-station system, launched in one month.</figcaption></figure>
           <p><b>Why it matters for engineering:</b> a real-time operations UI, a person overriding an algorithm, and a two-sided system where one change has to work for merchants, riders and shoppers.</p>
-          <div class="scc-project-links">
-            <a href="/project-scrollcarousel.html?project=4">Full case: Order First, Then Delivery</a>
-            <a href="/project-scrollcarousel.html?project=3">Full case: Rider dispatch platform</a>
-          </div>
         </div>
       </section>
+      </div>
 
       <!-- ============ 03 HEY ATU ============ -->
+      <div class="wk-panel" id="case-hey-atu" role="tabpanel" aria-labelledby="tab-hey-atu">
       <section class="scc-detail-block scc-detail-block-intro" id="hey-atu">
         <div class="scc-detail-block-body">
           <p class="wk-label">03 · Hey Atu · 2026–now · heyatu.com</p>
@@ -445,11 +630,11 @@
       <section class="scc-detail-block">
         <h3>Results</h3>
         <div class="scc-detail-block-body">
-          <ul>
-            <li><b>Live</b> with paid plans since October 2026</li>
-            <li><b>4 surfaces:</b> web, payments, Mac/Linux, iOS</li>
-            <li><b>MCP:</b> works inside Claude and ChatGPT</li>
-            <li><b>~1,500 lines</b> of front end I wrote</li>
+          <ul class="wk-stats">
+            <li><b>Live</b><span>with paid plans since October 2026</span></li>
+            <li><b>4</b><span>surfaces: web, payments, Mac/Linux, iOS</span></li>
+            <li><b>MCP</b><span>works inside Claude and ChatGPT</span></li>
+            <li><b>~1,500</b><span>lines of front end I wrote</span></li>
           </ul>
         </div>
       </section>
@@ -458,12 +643,12 @@
         <h3>Product</h3>
         <div class="scc-detail-block-body">
           <p><b>Problem:</b> your AI agent and your files live on your computer, and you are not always at it.</p>
-          <ul>
-            <li><b>Files stay home.</b> Execution stays on the user’s computer; the relay cannot read phone messages.</li>
-            <li><b>Two trust steps.</b> Link a computer, then allow each AI app. One command revokes everything.</li>
-            <li><b>MCP first, iOS next.</b> It works inside Claude and ChatGPT today, without waiting for App Store review.</li>
-            <li><b>One account, one plan</b> across MCP and iOS: Stripe subscription with a 7-day trial.</li>
-          </ul>
+          <div class="wk-cards2">
+            <div class="wk-card"><h4>Files stay home</h4><p>Execution stays on the user’s computer; the relay cannot read phone messages.</p></div>
+            <div class="wk-card"><h4>Two trust steps</h4><p>Link a computer, then allow each AI app. One command revokes everything.</p></div>
+            <div class="wk-card"><h4>MCP first, iOS next</h4><p>It works inside Claude and ChatGPT today, without waiting for App Store review.</p></div>
+            <div class="wk-card"><h4>One account, one plan</h4><p>Across MCP and iOS: a Stripe subscription with a 7-day trial.</p></div>
+          </div>
           <figure><img src="img/atu-setup-flow.webp" width="1600" height="867" decoding="async" alt="Three steps: add the connector, sign in with Google, allow on your Mac"><figcaption>Set up once: add the connector, pick the Google account, allow on the computer.</figcaption></figure>
         </div>
       </section>
@@ -471,16 +656,30 @@
       <section class="scc-detail-block">
         <h3>Architecture</h3>
         <div class="scc-detail-block-body">
-          <p><b>From the phone:</b> iPhone app (Swift, SwiftUI) → end-to-end encrypted → relay (Cloudflare Workers, Durable Objects: pairing, auth, routing) ← outbound-only connection ← agent on Mac or Linux (Node.js 22, launchd / systemd, menu bar app).</p>
-          <p><b>From an AI app:</b> Claude or ChatGPT (custom MCP connector) → MCP over TLS + OAuth → heyatu.com/mcp (same Worker, per-app approval) → forwarded, not stored → the local AI agent. Files and commands stay on the computer.</p>
+          <p class="wk-arch-label">From the phone</p>
+          <div class="wk-flow">
+            <div class="wk-node"><b>iPhone app</b><span>Swift, SwiftUI</span></div>
+            <div class="wk-edge"><span>end-to-end encrypted</span><svg class="wk-arrow" viewBox="0 0 48 12" aria-hidden="true"><path d="M2 6h42M38 1.5 44 6l-6 4.5"/></svg></div>
+            <div class="wk-node is-hub"><b>Relay</b><span>Cloudflare Workers, Durable Objects: pairing, auth, routing</span></div>
+            <div class="wk-edge is-back"><span>outbound-only connection</span><svg class="wk-arrow" viewBox="0 0 48 12" aria-hidden="true"><path d="M2 6h42M38 1.5 44 6l-6 4.5"/></svg></div>
+            <div class="wk-node"><b>Agent on Mac or Linux</b><span>Node.js 22, launchd / systemd, menu bar app</span></div>
+          </div>
+          <p class="wk-arch-label">From an AI app</p>
+          <div class="wk-flow">
+            <div class="wk-node"><b>Claude or ChatGPT</b><span>custom MCP connector</span></div>
+            <div class="wk-edge"><span>MCP over TLS + OAuth</span><svg class="wk-arrow" viewBox="0 0 48 12" aria-hidden="true"><path d="M2 6h42M38 1.5 44 6l-6 4.5"/></svg></div>
+            <div class="wk-node is-hub"><b>heyatu.com/mcp</b><span>same Worker, per-app approval</span></div>
+            <div class="wk-edge"><span>forwarded, not stored</span><svg class="wk-arrow" viewBox="0 0 48 12" aria-hidden="true"><path d="M2 6h42M38 1.5 44 6l-6 4.5"/></svg></div>
+            <div class="wk-node"><b>The local AI agent</b><span>files and commands stay on the computer</span></div>
+          </div>
           <p>The same Worker serves the public site, Google sign-in, accounts and Stripe billing. The computer needs no open inbound port.</p>
-          <ul>
-            <li><b>Web:</b> HTML, CSS, JS, 8 languages</li>
-            <li><b>Payments:</b> Stripe subscriptions, 7-day trial</li>
-            <li><b>Auth:</b> Google OAuth, QR pairing, Keychain</li>
-            <li><b>Desktop:</b> Node.js agent, auto-update with rollback</li>
-            <li><b>Mobile:</b> Swift / SwiftUI with a shared web renderer</li>
-            <li><b>Process:</b> 22 architecture decision records, tests, device acceptance runs</li>
+          <ul class="wk-stack">
+            <li><b>Web</b>HTML, CSS, JS, 8 languages</li>
+            <li><b>Payments</b>Stripe subscriptions, 7-day trial</li>
+            <li><b>Auth</b>Google OAuth, QR pairing, Keychain</li>
+            <li><b>Desktop</b>Node.js agent, auto-update with rollback</li>
+            <li><b>Mobile</b>Swift / SwiftUI with a shared web renderer</li>
+            <li><b>Process</b>22 architecture decision records, tests, device acceptance runs</li>
           </ul>
         </div>
       </section>
@@ -488,27 +687,33 @@
       <section class="scc-detail-block">
         <h3>Who did what</h3>
         <div class="scc-detail-block-body">
-          <ul>
-            <li><b>Me:</b> product, UX, pairing and approval flows, iOS screens, brand and mascot.</li>
-            <li><b>Me:</b> home page and setup guide code (~1,500 lines: animated hero, dark/light, reduced motion, English/Chinese).</li>
-            <li><b>Me:</b> business setup: Australian business name, Stripe, App Store record.</li>
-            <li><b>Me:</b> acceptance criteria; testing every release on real devices.</li>
-            <li><b>Engineering partner:</b> agent, relay, iOS app, accounts, pricing page, translations.</li>
-          </ul>
+          <div class="wk-scope is-two">
+            <div class="wk-scope-card is-me">
+              <p class="wk-scope-tag">Me</p>
+              <ul>
+                <li>Product, UX, pairing and approval flows, iOS screens, brand and mascot</li>
+                <li>Home page and setup guide code (~1,500 lines: animated hero, dark/light, reduced motion, English/Chinese)</li>
+                <li>Business setup: Australian business name, Stripe, App Store record</li>
+                <li>Acceptance criteria; testing every release on real devices</li>
+              </ul>
+            </div>
+            <div class="wk-scope-card is-team">
+              <p class="wk-scope-tag">Engineering partner</p>
+              <ul><li>Agent and relay</li><li>iOS app</li><li>Accounts and pricing page</li><li>Translations</li></ul>
+            </div>
+          </div>
         </div>
       </section>
 
       <section class="scc-detail-block">
         <h3>How we ship</h3>
         <div class="scc-detail-block-body">
-          <h4>01 · Define</h4>
-          <p>Product principle → design → written acceptance criteria.</p>
-          <h4>02 · Build</h4>
-          <p>Built with AI coding tools; every change is reviewed before it merges.</p>
-          <h4>03 · Accept</h4>
-          <p>Acceptance runs on real devices before release, with results recorded.</p>
-          <h4>04 · Release</h4>
-          <p>Test → production channels; the app and the desktop agent release independently.</p>
+          <ol class="wk-chain">
+            <li><b>Define</b>Product principle → design → written acceptance criteria</li>
+            <li><b>Build</b>With AI coding tools; every change is reviewed before it merges</li>
+            <li><b>Accept</b>Acceptance runs on real devices before release, with results recorded</li>
+            <li><b>Release</b>Test → production channels; the app and the desktop agent release independently</li>
+          </ol>
           <div class="scc-showcase-gallery">
             <figure><img src="img/atu-guide.webp" width="1600" height="1000" decoding="async" alt="Setup guide on desktop"><figcaption>Setup guide I built: each step shows the screen you will see and the one thing to click.</figcaption></figure>
             <figure class="is-narrow"><img src="img/atu-guide-mobile.webp" width="780" height="1688" decoding="async" alt="Setup guide on a phone with collapsible steps"><figcaption>Same guide on a phone: collapsible steps.</figcaption></figure>
@@ -542,9 +747,9 @@
             <a href="https://heyatu.com" rel="noopener">Visit heyatu.com</a>
             <a href="https://heyatu.com/setup-guide" rel="noopener">See the setup guide</a>
           </div>
-          <p><small>Alibaba and ByteDance details are simplified to respect confidentiality.</small></p>
         </div>
       </section>
+      </div>
 
       <!-- ============ CONTACT ============ -->
       <section class="scc-detail-block scc-detail-block-intro" id="contact">
@@ -557,6 +762,7 @@
             <a href="/assets/docs/CV_XinyiHan_2026.pdf">Résumé</a>
             <a href="/">xyhan.com</a>
           </div>
+          <p><small>Alibaba and ByteDance details are simplified to respect confidentiality.</small></p>
         </div>
       </section>
 
@@ -567,5 +773,50 @@
     <a href="/">← Back to portfolio</a>
     <a href="mailto:xinyi.han0816@outlook.com">Email me →</a>
   </footer>
+
+  <script>
+    /* Tabs: one case at a time; the URL hash (#alibaba, #bytedance, #hey-atu) picks the tab. */
+    (function () {
+      var tabs = Array.prototype.slice.call(document.querySelectorAll('.wk-tab'));
+      var panels = tabs.map(function (t) { return document.getElementById(t.getAttribute('aria-controls')); });
+      var hero = document.querySelector('.wk-hero');
+      /* The bar is sticky, so measure where it starts from the hero above it. */
+      function barTop() { return hero.offsetTop + hero.offsetHeight; }
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      function select(i, opts) {
+        opts = opts || {};
+        tabs.forEach(function (t, j) {
+          var on = i === j;
+          t.setAttribute('aria-selected', on ? 'true' : 'false');
+          t.tabIndex = on ? 0 : -1;
+          panels[j].classList.toggle('is-active', on);
+        });
+        if (opts.hash) history.replaceState(null, '', '#' + tabs[i].getAttribute('data-case'));
+        if (opts.scroll && window.scrollY > barTop()) window.scrollTo({ top: barTop(), behavior: reduce ? 'auto' : 'smooth' });
+      }
+      function indexFromHash() {
+        var h = decodeURIComponent(location.hash.slice(1));
+        for (var i = 0; i < tabs.length; i++) {
+          if (tabs[i].getAttribute('data-case') === h) return i;
+          if (h && panels[i].querySelector('[id="' + h + '"]')) return i;
+        }
+        return -1;
+      }
+      tabs.forEach(function (t, i) {
+        t.addEventListener('click', function () { select(i, { hash: true, scroll: true }); });
+        t.addEventListener('keydown', function (e) {
+          var n = e.key === 'ArrowRight' ? (i + 1) % tabs.length : e.key === 'ArrowLeft' ? (i + tabs.length - 1) % tabs.length : e.key === 'Home' ? 0 : e.key === 'End' ? tabs.length - 1 : -1;
+          if (n < 0) return;
+          e.preventDefault();
+          tabs[n].focus();
+          select(n, { hash: true });
+        });
+      });
+      var start = indexFromHash();
+      select(start < 0 ? 0 : start);
+      if (start >= 0) window.addEventListener('load', function () { window.scrollTo(0, barTop()); });
+      window.addEventListener('hashchange', function () { var i = indexFromHash(); if (i >= 0) select(i); });
+    })();
+  </script>
 </body>
 </html>
