@@ -2,7 +2,8 @@
 <!-- work/index.html: one-link portfolio for software / front-end roles (Alibaba → ByteDance → Hey Atu).
      Uses the site's project-detail template: style/scrollcarousel-tokens.css + style/scrollcarousel-detail.css,
      the same header, two-column blocks and footer. Only small layout glue is added below, using the same tokens.
-     Source copy: planning/career/jobsearch/portfolio/2026-11-02_three-case-studies.md -->
+     Source copy: planning/career/jobsearch/portfolio/2026-11-02_three-case-studies.md;
+     ByteDance facts and sources: planning/career/jobsearch/portfolio/2026-11-04_bytedance-recall.md -->
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -31,6 +32,37 @@
     .scc-detail-page .scc-detail-content h4 { margin-top: 1.6em; }
     .scc-detail-page .scc-detail-content .scc-detail-block-body > h4:first-child { margin-top: 0; }
     .scc-detail-page .scc-detail-content small { color: var(--scc-ink-soft); font-size: 12px; }
+    /* ByteDance: section kickers, tables, ownership tags, order steps, system map. */
+    .scc-detail-page .scc-detail-content .wk-kicker { display: block; margin-bottom: .6em; color: var(--scc-ink-soft); font: 500 10px/1.4 var(--scc-sans); letter-spacing: .14em; text-transform: uppercase; }
+    .scc-detail-page .scc-detail-content .wk-table-wrap { max-width: 100%; margin: 0 0 1.6em; overflow-x: auto; }
+    .scc-detail-page .scc-detail-content .wk-table { width: 100%; min-width: 300px; border-collapse: collapse; font-size: 14px; line-height: 1.5; }
+    .scc-detail-page .scc-detail-content .wk-table th,
+    .scc-detail-page .scc-detail-content .wk-table td { padding: 10px 12px 10px 0; border-bottom: 1px solid var(--scc-hairline); text-align: left; vertical-align: top; }
+    .scc-detail-page .scc-detail-content .wk-table thead th { color: var(--scc-ink-soft); font-size: 12px; font-weight: 500; }
+    .scc-detail-page .scc-detail-content .wk-table tbody th { width: 26%; font-weight: 600; }
+    .scc-detail-page .scc-detail-content .wk-owner { display: inline-block; padding: 1px 9px; border: 1px dashed var(--scc-ink-soft); border-radius: 999px; color: var(--scc-ink-soft); font: 500 11px/1.6 var(--scc-sans); white-space: nowrap; vertical-align: middle; }
+    .scc-detail-page .scc-detail-content .wk-owner.is-team { border: 1px solid var(--scc-ink); color: var(--scc-ink); }
+    .scc-detail-page .scc-detail-content .wk-owner.is-me { border: 1px solid var(--scc-ink); background: var(--scc-ink); color: var(--scc-bg); }
+    .scc-detail-page .scc-detail-content h4 .wk-owner { margin-left: 6px; }
+    .scc-detail-page .scc-detail-content .wk-steps { margin: 0 0 1.6em; padding: 0; list-style: none; counter-reset: wk-step; }
+    .scc-detail-page .scc-detail-content .wk-steps li { position: relative; margin: 0; padding: 14px 0 14px 46px; border-top: 1px solid var(--scc-hairline); }
+    .scc-detail-page .scc-detail-content .wk-steps li::before { counter-increment: wk-step; content: counter(wk-step, decimal-leading-zero); position: absolute; top: 13px; left: 0; font: 480 22px/1.1 var(--scc-serif); }
+    .scc-detail-page .scc-detail-content .wk-step-head { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; }
+    .scc-detail-page .scc-detail-content .wk-steps p { margin: 4px 0 0; color: var(--scc-ink-soft); font-size: 15px; line-height: 1.55; }
+    .scc-detail-page .scc-detail-content .wk-insight { margin: 0 0 1.6em; padding-left: 16px; border-left: 2px solid var(--scc-ink); }
+    .scc-detail-page .scc-detail-content .wk-insight h4 { margin-top: 0; }
+    .scc-detail-page .scc-detail-content .wk-insight p { margin-bottom: 0; }
+    .scc-detail-page .scc-detail-content figure.wk-map svg { display: block; width: 100%; max-width: 560px; height: auto; }
+    .wk-map-node { fill: var(--scc-bg); stroke: var(--scc-ink); stroke-width: 1.2; }
+    .wk-map-node.is-ours { stroke-width: 2.2; }
+    .wk-map-node.is-other { stroke: var(--scc-ink-soft); stroke-dasharray: 4 3; }
+    .wk-map-edge { fill: none; stroke: var(--scc-ink); stroke-width: 1.2; }
+    .wk-map-edge.is-dashed { stroke-dasharray: 4 3; }
+    .wk-map-head { fill: var(--scc-ink); }
+    .wk-map-title { fill: var(--scc-ink); font: 600 14px var(--scc-sans); }
+    .wk-map-title.is-small { font-size: 13px; }
+    .wk-map-sub { fill: var(--scc-ink-soft); font: 400 11.5px var(--scc-sans); }
+    .wk-map-label { fill: var(--scc-ink-soft); font: italic 400 11.5px var(--scc-sans); }
     html { scroll-behavior: smooth; }
     @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
   </style>
@@ -131,8 +163,8 @@
       <section class="scc-detail-block scc-detail-block-intro" id="bytedance">
         <div class="scc-detail-block-body">
           <p class="wk-label">02 · ByteDance · TikTok Local Life · 2022–2023</p>
-          <h2>Order First, Then Delivery: launching a new business fast</h2>
-          <p class="wk-lead">On Douyin (TikTok China), people get hungry watching food videos, but not right now. TikTok Local Life let them buy a meal voucher in the moment and schedule the delivery later. A consumer team owned the traffic and the shopper flow. I designed the merchant side and the rider side, starting on site at the delivery stations.</p>
+          <h2>Order First, Then Delivery: building the business side of a new delivery model</h2>
+          <p class="wk-lead">Meituan waits for hunger. Douyin (TikTok China) creates the craving: people see a dish in a video, buy it as a voucher, and schedule delivery when they want to eat. A consumer team made people want the food. My team built what happens next: the order flow, the merchant side and the delivery stations. My own part was the dispatch console for our new stations, and how merchants turn on delivery and handle reserved orders. It started on site, at the stations.</p>
           <figure><img src="img/bd-orderfirst.webp" width="1600" height="900" decoding="async" alt="Traditional on-demand ordering compared with TikTok's order first, schedule delivery later"><figcaption>Traditional mode vs. TikTok’s mode: impulse first, delivery when you want it.</figcaption></figure>
         </div>
       </section>
@@ -141,66 +173,201 @@
         <h3>Results</h3>
         <div class="scc-detail-block-body">
           <ul>
-            <li><b>+300%</b> order volume</li>
-            <li><b>−20%</b> average delivery time</li>
+            <li><b>+300%</b> order volume for the new model, business-wide</li>
+            <li><b>−20%</b> average delivery time, from the dispatch console</li>
             <li><b>1 week</b> of on-site research</li>
             <li><b>1 month</b> to launch the dispatch MVP</li>
           </ul>
+          <p><small>Below: first the business (what was different, who is involved, how one order flows), then my part.</small></p>
         </div>
       </section>
 
       <section class="scc-detail-block">
-        <h3>Why it was new</h3>
+        <h3><span class="wk-kicker">The business · 1</span>Search vs. interest</h3>
         <div class="scc-detail-block-body">
-          <p>Watch a video → “Looks great” → <b>buy a voucher (refundable)</b> → the voucher waits in the wallet → a reminder when hungry → <b>schedule delivery</b> → a rider delivers.</p>
-          <p>Content creates desire before hunger. Classic delivery apps only catch hunger. The voucher stores the intent; delivery turns it into an order later.</p>
+          <p>Douyin’s home ground was in-store group buying: a short video makes a dish look great, people buy the same set menu as a voucher and redeem it at the restaurant. Food delivery started during COVID on top of that business and copied the habit: <b>order first, then delivery.</b></p>
+          <div class="wk-table-wrap" role="region" aria-label="Search-driven compared with interest-driven delivery" tabindex="0">
+            <table class="wk-table">
+              <thead><tr><th scope="col"></th><th scope="col">Search-driven<br>Meituan, Uber Eats</th><th scope="col">Interest-driven<br>Douyin</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">Demand starts</th><td>You are hungry and search</td><td>You see a dish in a video and want it</td></tr>
+                <tr><th scope="row">A shop gets found by</th><td>Rankings and reviews</td><td>Its videos and live streams; a dish can sell out overnight</td></tr>
+                <tr><th scope="row">People buy</th><td>Single dishes, delivered now</td><td>Set menus as vouchers, stocked up, delivered later</td></tr>
+                <tr><th scope="row">Orders arrive</th><td>At mealtimes, fairly steady</td><td>Prepaid, scheduled, in spikes after a live stream</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p><b>Content can even create the product.</b> When camping was the trend, barbecue shops sold spring camping sets: meat marinated and portioned, sides included, sometimes a grill to rent. Their videos and live streams were staged as a campsite, so the set came with the mood. Order it, and it arrives ready for the trip: no supermarket run, no skewering. Drink shops did the same with new flavours, like an ice-cream drink with yogurt chunks. In an app where people search when they are hungry, products like these are hard to sell. On Douyin they sell because people see them.</p>
+          <p>For merchants, that is the offer: <b>exposure.</b> On Meituan a shop waits to be found. On Douyin it can go out and be seen.</p>
         </div>
       </section>
 
       <section class="scc-detail-block">
-        <h3>Who did what</h3>
+        <h3><span class="wk-kicker">The business · 2</span>Who is in the system</h3>
         <div class="scc-detail-block-body">
+          <figure class="wk-map">
+            <svg viewBox="0 0 400 520" role="img" aria-labelledby="bd-map-title bd-map-desc">
+              <title id="bd-map-title">Who is involved in Order First, Then Delivery</title>
+              <desc id="bd-map-desc">Douyin Local Life sits in the middle. Its consumer team sends videos and live streams to shoppers; shoppers buy a voucher and schedule delivery through the order flow built by my team. The platform sends reserved orders to merchants and gives delivery stations a dispatch console. Merchants call a rider from the station when the meal is ready. Service providers sign up small shops and run their live streams and operations, and join and settle through the platform. Delivery first ran on Ele.me's network, then on TikTok's own stations, each with a manager, a dispatcher and 50 to 100 riders covering about 5 km. The rider delivers to the shopper.</desc>
+              <defs>
+                <marker id="bd-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" class="wk-map-head"/></marker>
+              </defs>
+              <!-- edges -->
+              <path class="wk-map-edge" d="M165 128 V64" marker-end="url(#bd-arrow)"/>
+              <text class="wk-map-label" x="157" y="92" text-anchor="end">videos &amp;</text>
+              <text class="wk-map-label" x="157" y="106" text-anchor="end">live streams</text>
+              <path class="wk-map-edge" d="M235 62 V126" marker-end="url(#bd-arrow)"/>
+              <text class="wk-map-label" x="243" y="92">buy a voucher,</text>
+              <text class="wk-map-label" x="243" y="106">schedule delivery</text>
+              <path class="wk-map-edge" d="M98 236 V296" marker-end="url(#bd-arrow)"/>
+              <text class="wk-map-label" x="106" y="262">reserved orders,</text>
+              <text class="wk-map-label" x="106" y="276">merchant tools</text>
+              <path class="wk-map-edge" d="M302 236 V296" marker-end="url(#bd-arrow)"/>
+              <text class="wk-map-label" x="310" y="262">dispatch</text>
+              <text class="wk-map-label" x="310" y="276">console</text>
+              <path class="wk-map-edge" d="M170 344 H228" marker-end="url(#bd-arrow)"/>
+              <text class="wk-map-label" x="199" y="324" text-anchor="middle">call a</text>
+              <text class="wk-map-label" x="199" y="337" text-anchor="middle">rider</text>
+              <path class="wk-map-edge" d="M98 438 V378" marker-end="url(#bd-arrow)"/>
+              <text class="wk-map-label" x="106" y="404">sign up,</text>
+              <text class="wk-map-label" x="106" y="418">operate</text>
+              <path class="wk-map-edge is-dashed" d="M28 472 H12 V182 H26" marker-end="url(#bd-arrow)"/>
+              <text class="wk-map-label" x="24" y="330" text-anchor="middle" transform="rotate(-90 24 330)">join · settle</text>
+              <path class="wk-map-edge" d="M372 380 H388 V36 H274" marker-end="url(#bd-arrow)"/>
+              <text class="wk-map-label" x="384" y="200" text-anchor="middle" transform="rotate(-90 384 200)">rider delivers</text>
+              <!-- nodes -->
+              <rect class="wk-map-node" x="130" y="12" width="140" height="48" rx="8"/>
+              <text class="wk-map-title" x="200" y="33" text-anchor="middle">Shoppers</text>
+              <text class="wk-map-sub" x="200" y="50" text-anchor="middle">see it · buy · schedule</text>
+              <rect class="wk-map-node" x="28" y="130" width="344" height="104" rx="10"/>
+              <text class="wk-map-title" x="200" y="151" text-anchor="middle">Douyin Local Life</text>
+              <rect class="wk-map-node is-other" x="40" y="162" width="154" height="62" rx="6"/>
+              <text class="wk-map-title is-small" x="117" y="182" text-anchor="middle">Consumer team</text>
+              <text class="wk-map-sub" x="117" y="198" text-anchor="middle">content and</text>
+              <text class="wk-map-sub" x="117" y="212" text-anchor="middle">entry points</text>
+              <rect class="wk-map-node is-ours" x="206" y="162" width="154" height="62" rx="6"/>
+              <text class="wk-map-title is-small" x="283" y="182" text-anchor="middle">My team</text>
+              <text class="wk-map-sub" x="283" y="198" text-anchor="middle">order flow, merchant</text>
+              <text class="wk-map-sub" x="283" y="212" text-anchor="middle">and station tools</text>
+              <rect class="wk-map-node" x="28" y="300" width="142" height="76" rx="8"/>
+              <text class="wk-map-title" x="99" y="322" text-anchor="middle">Merchants</text>
+              <text class="wk-map-sub" x="99" y="340" text-anchor="middle">sell in-store sets</text>
+              <text class="wk-map-sub" x="99" y="354" text-anchor="middle">on Douyin; know</text>
+              <text class="wk-map-sub" x="99" y="368" text-anchor="middle">Meituan delivery</text>
+              <rect class="wk-map-node" x="230" y="300" width="142" height="124" rx="8"/>
+              <text class="wk-map-title" x="301" y="322" text-anchor="middle">Delivery</text>
+              <text class="wk-map-sub" x="301" y="340" text-anchor="middle">Ele.me network first,</text>
+              <text class="wk-map-sub" x="301" y="354" text-anchor="middle">then our own stations.</text>
+              <text class="wk-map-sub" x="301" y="374" text-anchor="middle">Each: a manager,</text>
+              <text class="wk-map-sub" x="301" y="388" text-anchor="middle">a dispatcher,</text>
+              <text class="wk-map-sub" x="301" y="402" text-anchor="middle">50–100 riders, ~5 km</text>
+              <rect class="wk-map-node" x="28" y="440" width="142" height="64" rx="8"/>
+              <text class="wk-map-title is-small" x="99" y="461" text-anchor="middle">Service providers</text>
+              <text class="wk-map-sub" x="99" y="478" text-anchor="middle">sign up small shops,</text>
+              <text class="wk-map-sub" x="99" y="492" text-anchor="middle">run their live streams</text>
+            </svg>
+            <figcaption>Who is involved, and what passes between them. Solid outline inside Douyin: my team; dashed: the consumer team.</figcaption>
+          </figure>
           <ul>
-            <li><b>Consumer side</b> (traffic from videos and live streams, voucher purchase, reminders): the consumer (C-end) team.</li>
-            <li><b>Merchant side</b> (delivery menu, settings, order handling): me.</li>
-            <li><b>Rider side</b> (station dispatch console, rider flow, data dashboard): me, leading design across product, engineering and operations.</li>
+            <li><b>Shoppers</b> see a dish, buy a voucher, and schedule delivery when they want it.</li>
+            <li><b>Merchants</b> are mostly restaurants already selling in-store sets on Douyin. They know delivery from Meituan; what Douyin adds is exposure. Shops already doing well on Meituan joined too, but they were not the main target.</li>
+            <li><b>Service providers</b> sign up small shops with no time or TikTok know-how, and run their live streams and operations. They join and settle through the platform.</li>
+            <li><b>Delivery</b> first ran on Ele.me’s network. As orders grew, TikTok opened its own stations in Shanghai, Beijing and Shenzhen.</li>
+            <li><b>Douyin’s teams:</b> the consumer team owns content and entry points; my team owns the order flow and the tools for merchants and stations.</li>
           </ul>
+          <p>The goal was to double order volume, merchant partners and city coverage in six months, in three steps:</p>
+          <figure><img src="img/bd-roadmap.webp" width="1600" height="900" decoding="async" alt="Six-month roadmap: consumption, merchant service, logistics"><figcaption>The six-month plan: order first, then delivery → service for merchants → our own delivery stations.</figcaption></figure>
         </div>
       </section>
 
       <section class="scc-detail-block">
-        <h3>How to start a new business fast</h3>
+        <h3><span class="wk-kicker">The business · 3</span>One order, end to end</h3>
         <div class="scc-detail-block-body">
-          <h4>01 · Reuse before you build</h4>
-          <p>Merchants already had dine-in menus and voucher tools. One click copies a dine-in menu into a delivery menu; only price, stock and packaging differ.</p>
-          <h4>02 · Go to the field first</h4>
-          <p>One week on site at delivery stations before designing anything, to see how dispatch really worked.</p>
-          <h4>03 · Ship the smallest loop</h4>
-          <p>Dispatch MVP in one month: an order board and drag-to-assign. Then AI scheduling suggestions that the manager approves or overrides.</p>
-          <h4>04 · Measure, then scale</h4>
-          <p>A data dashboard from day one. The same model was later reused for other local services.</p>
-          <figure><img src="img/bd-roadmap.webp" width="1600" height="900" decoding="async" alt="Six-month roadmap: consumption, merchant service, logistics"><figcaption>Six-month plan: consumer mechanism → merchant service → our own delivery hubs.</figcaption></figure>
+          <ol class="wk-steps">
+            <li><div class="wk-step-head"><b>See it</b><span class="wk-owner">Consumer team</span></div><p>A merchant’s video or live stream makes a dish look great.</p></li>
+            <li><div class="wk-step-head"><b>Buy a voucher</b><span class="wk-owner is-team">My team</span></div><p>“Stock up, schedule later” or “deliver now”. The voucher is refundable.</p></li>
+            <li><div class="wk-step-head"><b>Schedule delivery</b><span class="wk-owner is-team">My team</span></div><p>Address, a delivery time up to 7 days ahead, notes, cutlery and the delivery fee.</p></li>
+            <li><div class="wk-step-head"><b>The merchant prepares</b><span class="wk-owner is-me">Me</span></div><p>A reserved order shows when it is due. At that time it becomes meal prep, then a rider call.</p></li>
+            <li><div class="wk-step-head"><b>The station dispatches</b><span class="wk-owner is-me">Me</span></div><p>The dispatcher assigns by rider load and distance. AI suggests; the station manager confirms.</p></li>
+            <li><div class="wk-step-head"><b>A rider delivers</b><span class="wk-owner">Station</span></div><p>From one of TikTok’s own stations, or Ele.me’s network at first.</p></li>
+          </ol>
+          <figure class="is-narrow"><img src="img/bd-orderflow.webp" width="1400" height="1575" decoding="async" alt="User flow from discover to order to delivery, in three lanes for consumer, merchant and rider, with the app screens for each step"><figcaption>The real flow across consumer, merchant and rider. The entry points on the left came from the consumer team; from order to delivery was ours.</figcaption></figure>
         </div>
       </section>
 
       <section class="scc-detail-block">
-        <h3>Merchant side</h3>
+        <h3><span class="wk-kicker">My part · 1</span>Who did what</h3>
         <div class="scc-detail-block-body">
+          <div class="wk-table-wrap" role="region" aria-label="Who did what" tabindex="0">
+            <table class="wk-table">
+              <thead><tr><th scope="col">Area</th><th scope="col">Who</th></tr></thead>
+              <tbody>
+                <tr><td>Content, the “I want that” moment, entry points from videos and live streams</td><td><span class="wk-owner">Consumer team</span></td></tr>
+                <tr><td>Order and schedule-delivery pages: new fields and flow for delivery</td><td><span class="wk-owner is-team">My team</span></td></tr>
+                <tr><td>Delivery sets in the merchant backend (copy, then adjust)</td><td><span class="wk-owner is-team">A teammate</span></td></tr>
+                <tr><td>Service-provider platform</td><td><span class="wk-owner is-team">My team</span></td></tr>
+                <tr><td>Merchant turn-on flow, delivery settings, reserved-order handling</td><td><span class="wk-owner is-me">Me</span></td></tr>
+                <tr><td>Delivery stations: field research, dispatch console, station tools, on-site testing</td><td><span class="wk-owner is-me">Me</span> leading design across product, engineering and operations</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>I was one of three food-delivery designers, working with six product managers; engineers built it. In short: the consumer team made people want the food, and we made the order go through, from merchant to rider.</p>
+        </div>
+      </section>
+
+      <section class="scc-detail-block">
+        <h3><span class="wk-kicker">My part · 2</span>My design strategy: design only what is new</h3>
+        <div class="scc-detail-block-body">
+          <p>Everyone in this system already knew delivery: shoppers and merchants from Meituan, station staff from the industry. What was new was the shape of demand: bought ahead as a set, delivered at a chosen time, and arriving in spikes when a video or live stream took off. So I reused what people already knew and designed only for that difference.</p>
+          <div class="wk-insight">
+            <h4>01 · Make delivery a switch, not a new tool</h4>
+            <p><b>Insight.</b> Merchants already sold sets on Douyin and already ran delivery on Meituan. Learning another tool was the real cost.<br><b>Decision.</b> Turning on delivery starts from their Douyin store and sets, in the same structure as the tools they used. A reserved order carries its due time and turns into prep and a rider call when it is due.</p>
+          </div>
+          <div class="wk-insight">
+            <h4>02 · Design for the spike, not the average</h4>
+            <p><b>Insight.</b> A hit dish or a live stream floods a shop and its station at once, and our riders were new. At peak, some riders were overloaded while others waited.<br><b>Decision.</b> Dispatch by rider load: what each rider carries against what they can handle (3–5 orders for an experienced rider, 2–3 for a new one), plus distance. Priority colour tags and drag-to-assign for peak hours.</p>
+          </div>
+          <div class="wk-insight">
+            <h4>03 · Keep people in charge, and start light</h4>
+            <p><b>Insight.</b> A first-version algorithm would not be accurate yet, and the station manager’s habits shape the work. The stations had to open within months.<br><b>Decision.</b> AI suggests; the station manager approves or overrides. The MVP shipped in one month: the dispatch console first, with rider, pay, equipment and data tools around it.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="scc-detail-block">
+        <h3><span class="wk-kicker">My part · 3</span>Merchant side</h3>
+        <div class="scc-detail-block-body">
+          <h4>Turning on delivery, settings and orders <span class="wk-owner is-me">Me</span></h4>
           <ul>
-            <li><b>Building a delivery menu from zero</b> → one-click copy from the dine-in menu; edit only delivery fields.</li>
-            <li><b>A new model, no time to learn it</b> → the same structure and patterns as the merchant tools they already use.</li>
-            <li><b>Ongoing maintenance</b> → one shared menu, a small set of delivery differences.</li>
+            <li><b>Turn on from what you have.</b> Start from the Douyin store and its in-store sets, with the same structure and patterns as the merchant tools they already used.</li>
+            <li><b>Delivery settings:</b> the delivery-only details each set needs, such as price, stock and packaging.</li>
+            <li><b>Reserved orders:</b> each shows when it is due; at that time it becomes meal prep, then a rider call.</li>
           </ul>
-          <figure class="is-narrow"><img src="img/bd-merchant.webp" width="1400" height="1575" decoding="async" alt="Merchant service platform"><figcaption>Merchant-side service platform.</figcaption></figure>
+          <h4>Delivery sets: copy, then adjust <span class="wk-owner is-team">Team</span></h4>
+          <p>A teammate owned product publishing; the logic was a team decision I worked with.</p>
+          <ul>
+            <li><b>Start from the sets they already sell.</b> Douyin sells set menus and rarely single dishes. Base items are shared; sets are copied, then adjusted.</li>
+            <li><b>Not identical, on purpose.</b> A shop costs more to run than delivery: staff, rent. If the two sets were the same, customers would compare prices and stop coming in. So merchants change a portion or swap an item in the delivery version.</li>
+            <li><b>Delivery-only sets where they fit,</b> like a camping barbecue set with a portable gas stove.</li>
+          </ul>
+          <h4>New merchants through service providers <span class="wk-owner is-team">Team</span></h4>
+          <p>Many new merchants were small shops, like a couple running a fast-food place with no time and no TikTok know-how. Service providers signed them up and ran their stores for them: operations, live streams on their behalf, and matchmaking. The platform follows that work:</p>
+          <ol>
+            <li><b>Join:</b> qualification and company verification, platform review, deposit.</li>
+            <li><b>Sign merchants:</b> recruiting, signing, contracts.</li>
+            <li><b>Run their stores:</b> merchant management, live-stream schedule and promotion, data.</li>
+            <li><b>Settle:</b> settlement accounts and reconciliation.</li>
+          </ol>
+          <figure class="is-narrow"><img src="img/bd-merchant.webp" width="1400" height="1575" decoding="async" alt="Service-provider platform: merchant persona, dashboard, and its structure from joining to settlement"><figcaption>The service-provider platform, from joining to settlement.</figcaption></figure>
         </div>
       </section>
 
       <section class="scc-detail-block">
-        <h3>Rider side: getting dispatch right, fast</h3>
+        <h3><span class="wk-kicker">My part · 4</span>Delivery stations: hands-on, from the station floor</h3>
         <div class="scc-detail-block-body">
-          <p>Dispatch was new to all of us, and the first stations had to open within months. So we went to the stations first, learned from the most mature players, then set our own strategy.</p>
+          <p>Delivery first ran on Ele.me’s network. As orders grew, TikTok opened its own stations, and they had to open within months. Dispatch was new to all of us, so we went to the stations first, learned from the most mature players, then set our own strategy.</p>
           <h4>01 · Go to the stations</h4>
-          <p>TikTok was building its own delivery network in high-volume cities: Shanghai, Beijing and Shenzhen. With the product managers I went on site and mapped who does what. A station covers about 5 km and runs on a station manager, a dispatcher and 50–100 riders. Dispatch happened in chat groups and spreadsheets.</p>
+          <p>TikTok was building its own delivery network in high-volume cities: Shanghai, Beijing and Shenzhen. With the product managers I spent a week on site and mapped who does what. A station covers about 5 km and runs on a station manager, a dispatcher and 50–100 riders. Dispatch happened in chat groups and spreadsheets.</p>
           <ul>
             <li>Peak hours: slow response, some riders overloaded while others waited.</li>
             <li>No view of route efficiency.</li>
@@ -233,14 +400,16 @@
             <li><b>Meituan leans on the order.</b> Its riders are mostly experienced, so the tool keeps orders flowing and steps in only on exceptions.</li>
           </ul>
           <figure><img src="img/bd-competitors.webp" width="1600" height="917" decoding="async" alt="Comparison of Ele.me, Meituan and TikTok dispatch: rider, order and map focus"><figcaption>What each dispatch tool prioritises: rider, order or map.</figcaption></figure>
-          <h4>03 · Set our own strategy</h4>
-          <p>Our stations were new: inexperienced riders, and order spikes whenever a live stream sold vouchers. Neither model fit as it was, so the first version balances order, rider and map.</p>
+          <h4>03 · Set our own balance</h4>
+          <p>Our stations were new: inexperienced riders, and order spikes whenever a live stream sold vouchers. Neither model fit as it was, so the first version balances order, rider and map:</p>
           <ul>
-            <li><b>Dispatch by rider load.</b> The console shows how many orders each rider is carrying against what they can handle (3–5 at once for an experienced rider, 2–3 for a new one) and assigns by load and distance.</li>
+            <li><b>Dispatch by rider load,</b> plus distance (strategy 02 above).</li>
             <li><b>Two ways in.</b> Start from an order and find a rider on the map, or start from a rider and see their route.</li>
-            <li><b>People stay in charge.</b> AI suggests the assignment; the station manager approves or overrides.</li>
+            <li><b>People stay in charge:</b> AI suggests, the station manager approves or overrides (strategy 03 above).</li>
           </ul>
-          <figure><img src="img/bd-console-demo.webp" width="1200" height="680" decoding="async" alt="Dispatch console demo: orders by status on the left, pick-up and drop-off routes on a map, and each rider's current orders on the right"><figcaption>Console structure, shown as a demo (the real interface is confidential): orders by status on the left, routes on the map, each rider’s current orders on the right.</figcaption></figure>
+          <figure><img src="img/bd-console-demo.webp" width="1200" height="680" decoding="async" alt="Dispatch console demo: orders by status on the left, pick-up and drop-off routes on a map, and each rider's current orders on the right"><figcaption>Console structure, shown as a demo I rebuilt from memory (the real interface is confidential): orders by status on the left, routes on the map, each rider’s current orders on the right.</figcaption></figure>
+          <h4>04 · Test on site, then measure</h4>
+          <p>I led user testing with station staff on site, and a data dashboard tracked delivery time and rider utilisation from day one.</p>
         </div>
       </section>
 
@@ -254,8 +423,8 @@
             <li><b>Peak-hour pressure</b> → priority colour tags, drag-to-assign, as few clicks as possible.</li>
             <li><b>No efficiency data</b> → a dashboard for delivery time and rider utilisation.</li>
           </ul>
-          <figure><img src="img/bd-mvp.webp" width="1600" height="900" decoding="async" alt="MVP feature map of the delivery hub system"><figcaption>MVP: the delivery-hub system, launched in one month.</figcaption></figure>
-          <p><b>Why it matters for engineering:</b> a real-time operations UI, a person overriding an algorithm, and a two-sided system where one change has to work for merchants, riders and users.</p>
+          <figure><img src="img/bd-mvp.webp" width="1600" height="900" decoding="async" alt="MVP feature map of the delivery hub system"><figcaption>MVP: the delivery-station system, launched in one month.</figcaption></figure>
+          <p><b>Why it matters for engineering:</b> a real-time operations UI, a person overriding an algorithm, and a two-sided system where one change has to work for merchants, riders and shoppers.</p>
           <div class="scc-project-links">
             <a href="/project-scrollcarousel.html?project=4">Full case: Order First, Then Delivery</a>
             <a href="/project-scrollcarousel.html?project=3">Full case: Rider dispatch platform</a>
