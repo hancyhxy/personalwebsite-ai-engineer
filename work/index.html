@@ -91,11 +91,20 @@
     /* Search vs. interest. */
     #wk .wk-vs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
     #wk .wk-vs-card { padding: 22px 24px 8px; border: 1px solid var(--scc-hairline); border-radius: 18px; background: var(--wk-card); }
-    #wk .wk-vs-card.is-interest { border-color: rgba(106, 79, 214, .3); background: var(--wk-violet-soft); }
+    #wk .wk-vs-card.is-content { border-color: rgba(106, 79, 214, .3); background: var(--wk-violet-soft); }
     #wk .wk-vs-head { display: flex; align-items: center; gap: 12px; margin: 0 0 14px; font: 480 24px/1.15 var(--scc-serif); }
     #wk .wk-vs-head small { display: block; margin-top: 2px; color: var(--scc-ink-soft); font: 400 12px/1.4 var(--scc-sans); }
     #wk .wk-badge { display: grid; place-items: center; width: 40px; height: 40px; flex: none; border-radius: 12px; background: rgba(23, 20, 16, .06); }
-    #wk .is-interest .wk-badge { background: var(--wk-violet); color: #fff; }
+    #wk .is-content .wk-badge { background: var(--wk-violet); color: #fff; }
+    #wk .wk-vs-logos { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 0 0 14px; }
+    #wk .wk-logo { display: grid; place-items: center; width: 36px; height: 36px; overflow: hidden; border-radius: 10px; }
+    #wk .wk-logo svg { display: block; width: 100%; height: 100%; }
+    #wk .wk-logo.is-uber { background: #06c167; }
+    #wk .wk-logo.is-uber svg { width: 72%; height: 72%; fill: #fff; }
+    #wk .wk-logo.is-tiktok { background: #000; }
+    #wk .wk-logo.is-tiktok svg { width: 58%; height: 58%; fill: #fff; }
+    #wk .wk-logo.is-eleme { width: auto; }
+    #wk .wk-logo.is-eleme img { display: block; width: auto; height: 36px; }
     #wk .wk-vs dl { margin: 0; }
     #wk .wk-vs dl div { padding: 12px 0 14px; border-top: 1px solid var(--scc-hairline); }
     #wk .wk-vs dt { color: var(--scc-ink-soft); font: 500 10px/1.4 var(--scc-sans); letter-spacing: .12em; text-transform: uppercase; }
@@ -123,7 +132,7 @@
     #wk .is-supply .wk-ico { background: var(--wk-green-soft); color: var(--wk-green); }
     #wk .is-delivery .wk-ico { background: var(--wk-amber-soft); color: var(--wk-amber); }
     #wk .wk-actor b { display: block; font-size: 15px; line-height: 1.3; }
-    #wk .wk-actor span { display: block; margin-top: 3px; color: var(--scc-ink-soft); font-size: 13px; line-height: 1.45; }
+    #wk .wk-actor > div > span { display: block; margin-top: 3px; color: var(--scc-ink-soft); font-size: 13px; line-height: 1.45; }
     #wk .wk-eco-col > footer { display: grid; gap: 7px; margin-top: auto; padding: 12px 18px 14px; border-top: 1px dashed var(--scc-hairline); background: #faf8f4; font-size: 12.5px; line-height: 1.4; }
     #wk .wk-eco-col > footer p { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: baseline; gap: 8px; margin: 0; }
     #wk .wk-eco-link { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; padding: 0 4px; color: var(--scc-ink-soft); font: italic 400 12px/1.3 var(--scc-sans); text-align: center; }
@@ -230,6 +239,9 @@
 </head>
 <body class="scrollcarousel-page scc-detail-page">
   <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <symbol id="l-meituan" viewBox="0 0 24 24"><rect x="2.5" y="2.5" width="19" height="19" fill="#000"/><path fill="#ffd100" d="M6.923 0c-2.408 0-3.28.25-4.16.721A4.906 4.907 0 0 0 .722 2.763C.25 3.643 0 4.516 0 6.923v10.154c0 2.407.25 3.28.72 4.16a4.905 4.906 0 0 0 2.042 2.042c.88.47 1.752.721 4.16.721h10.156c2.407 0 3.28-.25 4.16-.721a4.906 4.907 0 0 0 2.04-2.042c.471-.88.722-1.753.722-4.16V6.923c0-2.407-.25-3.28-.722-4.16A4.906 4.907 0 0 0 21.238.72C20.357.251 19.484 0 17.077 0ZM4.17 7.51h1.084c.04.24.07.488.11.737h3.47c.05-.25.08-.497.1-.736h1.105a9.849 9.85 0 0 1-.09.736h1.562v.866H7.62v.696h3.642v.855h-3.64v.667h3.64v.854h-3.64v.816h3.89v.865H7.88c.775.935 2.218 1.532 3.78 1.651l-.538.936c-1.442-.17-3.103-.846-4.028-2.04-.856 1.194-2.487 1.92-4.525 2.07l.318-1.005c1.382-.02 2.814-.736 3.431-1.612h-3.62v-.865h3.86v-.816h-3.64v-.854h3.64v-.667h-3.64v-.855h3.64v-.697H2.7v-.866h1.56zm8.603.182h7.976c.358 0 .567.198.567.547v8.146H13.33c-.358 0-.557-.199-.557-.547zm1.044.885V15.5h6.455V8.577Zm3.999.476h1.024v.756h.975v.835h-.975V13c0 .806-.1 1.402-.318 2.02h-1.113c.338-.717.408-1.224.408-1.99v-2.387h-.935c-.14 1.541-.736 3.451-1.363 4.376h-1.134c.607-.855 1.303-2.526 1.472-4.376h-1.512v-.835h3.472z"/></symbol>
+    <symbol id="l-ubereats" viewBox="0 0 24 24"><path d="M0 2.8645v4.9972c0 1.8834 1.3315 3.1297 3.0835 3.1297a2.9652 2.9652 0 0 0 2.1502-.876v.7425H6.445V2.8645H5.223v4.9339c0 1.2642-.8696 2.1198-1.9954 2.122-1.1386-.0023-1.997-.834-1.997-2.122V2.8645zm7.3625 0v7.9934h1.163v-.7318a2.9915 2.9915 0 0 0 2.1177.876c1.714.048 3.1295-1.3283 3.1295-3.0429s-1.4155-3.091-3.1295-3.0429a2.9674 2.9674 0 0 0-2.107.876V2.8645zm9.8857 2.0561c-1.6752-.0074-3.0369 1.3492-3.0356 3.0245 0 1.7366 1.3732 3.0373 3.1537 3.0373a3.123 3.123 0 0 0 2.5578-1.2438l-.8495-.6177a2.0498 2.0498 0 0 1-1.7083.8585c-.9763.0126-1.8147-.6915-1.971-1.6553h4.818v-.379c0-1.734-1.254-3.0238-2.9638-3.0245zm6.1632.0667a1.5943 1.5943 0 0 0-1.376.7657v-.7186h-1.163v5.8235h1.1741V7.5465c0-.9023.5581-1.4847 1.3268-1.4847h.4949V4.9886c-.1576.0013-.3186-.0009-.4568-.0013zm-6.2034.944a1.844 1.844 0 0 1 1.8337 1.486H15.424a1.844 1.844 0 0 1 1.784-1.486zm-6.6589.0056c1.1223-.0084 2.0365.8992 2.0364 2.0215-.0026 1.1203-.914 2.0258-2.0343 2.021a2.0151 2.0151 0 0 1-1.4159-.5987A2.0152 2.0152 0 0 1 8.55 7.9592a2.0152 2.0152 0 0 1 .5838-1.422 2.0152 2.0152 0 0 1 1.4153-.6003zM0 12.9864v7.9716h5.7222v-1.3666H1.5458v-1.971h4.0647v-1.314H1.5458v-1.9556h4.1764v-1.3644zm14.5608.4097v1.6861h-1.1519v1.338h1.1545v3.143c0 .7927.5712 1.4209 1.6005 1.4209h1.6425L17.8 19.646h-1.1412c-.3482 0-.5714-.1509-.5714-.464v-2.7683H17.8v-1.3316h-1.7062v-1.686zm-5.2974 1.5275c-1.7348-.0103-3.141 1.4035-3.1214 3.1382.0196 1.7346 1.4575 3.1163 3.1915 3.0668a2.9915 2.9915 0 0 0 1.912-.6655v.532h1.5175v-5.9129h-1.509v.5257a3.0047 3.0047 0 0 0-1.9205-.6835c-.0244-.0007-.0492-.0006-.0701-.0008zm11.771.0077c-1.5855 0-2.7002.6437-2.7002 1.8854 0 .8607.6132 1.4213 1.936 1.695l1.4478.3286c.5694.1095.7224.2585.7224.4906 0 .3701-.438.6022-1.1279.6022-.876 0-1.3774-.1907-1.5723-.8477h-1.533c.219 1.2307 1.1563 2.05 3.0484 2.05h.0022c1.752 0 2.7422-.819 2.7422-1.9534 0-.8059-.5847-1.4084-1.8089-1.6668l-1.2943-.2605c-.7511-.1358-.988-.2738-.988-.5454 0-.357.3616-.5757 1.0295-.5757.7227 0 1.2527.1925 1.406.8473h1.5175c-.0854-1.2286-.9899-2.0497-2.8273-2.0497zM9.467 16.1815c1.0092.0096 1.8188.8369 1.8067 1.8461.0014 1.0046-.8198 1.816-1.8243 1.8025-1.0075-.0048-1.8203-.8256-1.8155-1.833.0048-1.0076.8255-1.8204 1.833-1.8156z"/></symbol>
+    <symbol id="l-tiktok" viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></symbol>
     <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></symbol>
     <symbol id="i-play" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M10 9.2v5.6l4.8-2.8z"/></symbol>
     <symbol id="i-ticket" viewBox="0 0 24 24"><path d="M3 7h18v3a2 2 0 0 0 0 4v3H3v-3a2 2 0 0 0 0-4z"/><path d="M14.5 7v10" stroke-dasharray="2 2.2"/></symbol>
@@ -361,11 +373,12 @@
       <section class="scc-detail-block scc-detail-block-intro wk-wide">
         <div class="scc-detail-block-body">
           <p class="wk-kicker">The business · 1</p>
-          <h3>Search vs. interest</h3>
+          <h3>Search vs. content</h3>
           <p class="wk-intro">Douyin’s home ground was in-store group buying: a short video makes a dish look great, people buy the same set menu as a voucher and redeem it at the restaurant. Food delivery started during COVID on top of that business and copied the habit: order first, then delivery.</p>
           <div class="wk-vs">
             <div class="wk-vs-card is-search">
-              <p class="wk-vs-head"><span class="wk-badge"><svg class="wk-i" aria-hidden="true"><use href="#i-search"/></svg></span><span>Search-driven<small>Meituan, Uber Eats</small></span></p>
+              <p class="wk-vs-logos"><span class="wk-logo" title="Meituan"><svg role="img" aria-label="Meituan"><use href="#l-meituan"/></svg></span><span class="wk-logo is-eleme" title="Ele.me"><img src="img/logo-eleme.webp" width="240" height="94" alt="Ele.me"></span><span class="wk-logo is-uber" title="Uber Eats"><svg role="img" aria-label="Uber Eats"><use href="#l-ubereats"/></svg></span></p>
+              <p class="wk-vs-head"><span>Search-driven<small>Meituan, Ele.me, Uber Eats</small></span></p>
               <dl>
                 <div><dt>Demand starts</dt><dd>You are hungry and search</dd></div>
                 <div><dt>A shop gets found by</dt><dd>Climbing rankings, collecting reviews</dd></div>
@@ -373,8 +386,9 @@
                 <div><dt>Orders arrive</dt><dd>At mealtimes, fairly steady</dd></div>
               </dl>
             </div>
-            <div class="wk-vs-card is-interest">
-              <p class="wk-vs-head"><span class="wk-badge"><svg class="wk-i" aria-hidden="true"><use href="#i-heart"/></svg></span><span>Interest-driven<small>Douyin</small></span></p>
+            <div class="wk-vs-card is-content">
+              <p class="wk-vs-logos"><span class="wk-logo is-tiktok" title="Douyin (TikTok China)"><svg role="img" aria-label="Douyin (TikTok China)"><use href="#l-tiktok"/></svg></span></p>
+              <p class="wk-vs-head"><span>Content-driven<small>Douyin (TikTok China)</small></span></p>
               <dl>
                 <div><dt>Demand starts</dt><dd>You see a dish in a video and want it</dd></div>
                 <div><dt>A shop gets found by</dt><dd>Its videos and live streams; a dish can sell out overnight</dd></div>
@@ -762,7 +776,7 @@
             <a href="/assets/docs/CV_XinyiHan_2026.pdf">Résumé</a>
             <a href="/">xyhan.com</a>
           </div>
-          <p><small>Alibaba and ByteDance details are simplified to respect confidentiality.</small></p>
+          <p><small>Alibaba and ByteDance details are simplified to respect confidentiality. Logos belong to their owners.</small></p>
         </div>
       </section>
 
