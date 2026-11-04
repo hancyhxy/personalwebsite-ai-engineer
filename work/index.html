@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<!-- work/index.html: one-link portfolio for software / front-end roles (Alibaba → ByteDance → Hey Atu), one tab per case.
-     Uses the site's project-detail template: style/scrollcarousel-tokens.css + style/scrollcarousel-detail.css,
-     the same header, two-column blocks and footer. Tabs and the diagram components below use the same tokens.
+<!-- work/index.html: one-link portfolio for software / front-end roles (Alibaba → ByteDance → Hey Atu).
+     Desktop: left directory (cases + chapters). Phone: tabs + chapter chips. Styles: work.css; behaviour: work.js.
+     Uses the site's project-detail template tokens (style/scrollcarousel-tokens.css, style/scrollcarousel-detail.css).
      Source copy: planning/career/jobsearch/portfolio/2026-11-02_three-case-studies.md;
      ByteDance facts and sources: planning/career/jobsearch/portfolio/2026-11-04_bytedance-recall.md -->
 <html lang="en">
@@ -17,225 +17,12 @@
   <link rel="icon" type="image/svg+xml" href="/logo/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/style/scrollcarousel-tokens.css">
   <link rel="stylesheet" href="/style/scrollcarousel-detail.css">
+  <link rel="stylesheet" href="work.css">
   <script>document.documentElement.classList.add('wk-js');</script>
-  <style>
-    /* Layout glue on the detail template's tokens. */
-    .scc-detail-page .wk-label { margin: 0 0 14px; color: var(--scc-ink-soft); font: 400 10px/1.4 var(--scc-sans); letter-spacing: .14em; text-transform: uppercase; }
-    .scc-detail-page .scc-detail-block-intro h2 { margin: 0 0 .5em; }
-    .scc-detail-page .scc-detail-content[data-layout="two-column"] .scc-showcase-gallery { display: grid; grid-template-columns: 1fr 1fr; align-items: start; gap: 14px; width: 100%; margin: 4vh 0; columns: auto; transform: none; }
-    .scc-detail-page .scc-detail-content[data-layout="two-column"] .scc-showcase-gallery figure { width: 100%; margin: 0; }
-    @media (max-width: 700px) { .scc-detail-page .scc-detail-content[data-layout="two-column"] .scc-showcase-gallery { grid-template-columns: 1fr; } }
-    .scc-detail-page .scc-detail-block-intro .wk-lead { max-width: 62ch; color: var(--scc-ink-soft); }
-    .scc-detail-page .scc-detail-content h4 { margin-top: 1.6em; }
-    .scc-detail-page .scc-detail-content .scc-detail-block-body > h4:first-child { margin-top: 0; }
-    .scc-detail-page .scc-detail-content small { color: var(--scc-ink-soft); font-size: 12px; }
-    #wk.scc-detail-content[data-layout="two-column"] .scc-detail-block > h3 { top: 96px; }
-    #wk { padding-top: 6vh; }
-    html { scroll-behavior: smooth; }
-    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
-
-    /* Diagram palette: matches the original ByteDance slides (purple demand, green merchants, amber delivery). */
-    .scc-detail-page { --wk-violet: #6a4fd6; --wk-violet-soft: #f2eefd; --wk-green: #2b8a57; --wk-green-soft: #e8f4ed; --wk-amber: #b7740b; --wk-amber-soft: #fcf2e0; --wk-card: #fff; --wk-warm: #f5f1ea; }
-
-    /* Hero: shorter, so the tabs show on the first screen. */
-    .scc-detail-page .wk-hero { min-height: 0; padding: 9vh 5vw 6vh; }
-    .scc-detail-page .wk-hero h1 { font-size: clamp(40px, 6.4vw, 88px); }
-
-    /* Tabs: one case per tab. Without JavaScript, all cases show in order. */
-    .wk-tabs { display: none; position: sticky; top: 0; z-index: 2; background: var(--scc-bg); border-bottom: 1px solid var(--scc-hairline); }
-    .wk-js .wk-tabs { display: block; }
-    .wk-tabs-inner { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; width: min(1160px, calc(100% - 48px)); margin: 0 auto; box-sizing: border-box; }
-    .wk-tab { margin: 0 0 -1px; padding: 16px 0 14px; border: 0; border-bottom: 2px solid transparent; background: none; color: var(--scc-ink-soft); font: inherit; text-align: left; cursor: pointer; }
-    .wk-tab small { display: block; font: 500 10px/1.4 var(--scc-sans); letter-spacing: .14em; }
-    .wk-tab b { display: block; margin-top: 2px; font: 480 24px/1.1 var(--scc-serif); }
-    .wk-tab span { display: block; margin-top: 3px; font: 400 12px/1.35 var(--scc-sans); }
-    .wk-tab:hover, .wk-tab[aria-selected="true"] { color: var(--scc-ink); }
-    .wk-tab[aria-selected="true"] { border-bottom-color: var(--scc-ink); }
-    .wk-tab:focus-visible { outline: 2px solid var(--scc-ink); outline-offset: 2px; }
-    .wk-js .wk-panel:not(.is-active) { display: none; }
-    @media (max-width: 1280px) { .wk-tabs-inner { padding-right: 60px; } }
-    @media (max-width: 700px) { .wk-tabs-inner { width: calc(100% - 36px); gap: 10px; } .wk-tab b { font-size: 19px; } .wk-tab span { display: none; } }
-
-    /* Shared pieces. */
-    .wk-i { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; flex: none; }
-    .wk-arrow { width: 48px; height: 12px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; flex: none; }
-    #wk .wk-kicker { display: block; margin: 0 0 .7em; color: var(--scc-ink-soft); font: 500 10px/1.4 var(--scc-sans); letter-spacing: .14em; text-transform: uppercase; }
-    #wk .wk-wide h3 { margin: 0 0 .4em; }
-    #wk .wk-intro { max-width: 66ch; margin: 0 0 2em; color: var(--scc-ink-soft); }
-    #wk .wk-note { margin: 14px 0 0; color: var(--scc-ink-soft); font-size: 14px; }
-    #wk .wk-owner { display: inline-block; padding: 1px 9px; border: 1px dashed var(--scc-ink-soft); border-radius: 999px; color: var(--scc-ink-soft); font: 500 11px/1.6 var(--scc-sans); white-space: nowrap; vertical-align: middle; }
-    #wk .wk-owner.is-team { border: 1px solid var(--scc-ink); color: var(--scc-ink); }
-    #wk .wk-owner.is-me { border: 1px solid var(--scc-ink); background: var(--scc-ink); color: var(--scc-bg); }
-    #wk h4 .wk-owner { margin-left: 6px; }
-    #wk .wk-legend { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; margin: 0 0 18px; color: var(--scc-ink-soft); font-size: 12px; }
-    #wk .wk-legend span { display: inline-flex; align-items: center; gap: 6px; }
-
-    /* Stat cards. */
-    #wk .wk-stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin: 0; padding: 0; list-style: none; }
-    #wk .wk-stats li { margin: 0; padding: 20px 20px 18px; border: 1px solid var(--scc-hairline); border-radius: 14px; background: var(--wk-card); }
-    #wk .wk-stats b { display: block; font: 470 42px/1 var(--scc-serif); }
-    #wk .wk-stats span { display: block; margin-top: 10px; color: var(--scc-ink-soft); font-size: 13px; line-height: 1.45; }
-
-    /* Plain cards in two columns (levers, product decisions). */
-    #wk .wk-cards2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin: 0 0 1.6em; }
-    #wk .wk-card { padding: 20px 22px; border: 1px solid var(--scc-hairline); border-radius: 16px; background: var(--wk-card); }
-    #wk .wk-card-num { margin: 0; color: var(--scc-ink-soft); font: 500 10px/1.4 var(--scc-sans); letter-spacing: .14em; }
-    #wk .wk-card h4 { margin: 8px 0 10px; font-size: 21px; }
-    #wk .wk-card p { margin: 0 0 .5em; font-size: 14.5px; line-height: 1.5; }
-    #wk .wk-card p:last-child { margin-bottom: 0; }
-    @media (max-width: 700px) { #wk .wk-cards2 { grid-template-columns: 1fr; } }
-
-    /* Search vs. interest. */
-    #wk .wk-vs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
-    #wk .wk-vs-card { padding: 22px 24px 8px; border: 1px solid var(--scc-hairline); border-radius: 18px; background: var(--wk-card); }
-    #wk .wk-vs-card.is-content { border-color: rgba(106, 79, 214, .3); background: var(--wk-violet-soft); }
-    #wk .wk-vs-head { display: flex; align-items: center; gap: 12px; margin: 0 0 14px; font: 480 24px/1.15 var(--scc-serif); }
-    #wk .wk-vs-head small { display: block; margin-top: 2px; color: var(--scc-ink-soft); font: 400 12px/1.4 var(--scc-sans); }
-    #wk .wk-badge { display: grid; place-items: center; width: 40px; height: 40px; flex: none; border-radius: 12px; background: rgba(23, 20, 16, .06); }
-    #wk .is-content .wk-badge { background: var(--wk-violet); color: #fff; }
-    #wk .wk-vs-logos { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 0 0 14px; }
-    #wk .wk-logo { display: grid; place-items: center; width: 36px; height: 36px; overflow: hidden; border-radius: 10px; }
-    #wk .wk-logo svg { display: block; width: 100%; height: 100%; }
-    #wk .wk-logo.is-uber { background: #06c167; }
-    #wk .wk-logo.is-uber svg { width: 72%; height: 72%; fill: #fff; }
-    #wk .wk-logo.is-tiktok { background: #000; }
-    #wk .wk-logo.is-tiktok svg { width: 58%; height: 58%; fill: #fff; }
-    #wk .wk-logo.is-eleme { width: auto; }
-    #wk .wk-logo.is-eleme img { display: block; width: auto; height: 36px; }
-    #wk .wk-vs dl { margin: 0; }
-    #wk .wk-vs dl div { padding: 12px 0 14px; border-top: 1px solid var(--scc-hairline); }
-    #wk .wk-vs dt { color: var(--scc-ink-soft); font: 500 10px/1.4 var(--scc-sans); letter-spacing: .12em; text-transform: uppercase; }
-    #wk .wk-vs dd { margin: 4px 0 0; font-size: 16px; line-height: 1.45; }
-    #wk .wk-story { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); gap: 28px; margin: 18px 0 0; padding: 26px 28px; border-radius: 18px; background: var(--wk-warm); }
-    #wk .wk-story h4 { margin: .25em 0 .6em; }
-    #wk .wk-story p { margin: 0 0 .8em; font-size: 15px; line-height: 1.6; }
-    #wk .wk-story .wk-story-point { margin: 0; font: italic 400 20px/1.4 var(--scc-serif); }
-    #wk .wk-chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; list-style: none; }
-    #wk .wk-chips li { margin: 0; padding: 5px 12px; border: 1px solid var(--scc-hairline); border-radius: 999px; background: var(--wk-card); font-size: 13px; line-height: 1.4; }
-    @media (max-width: 700px) { #wk .wk-vs, #wk .wk-story { grid-template-columns: 1fr; } #wk .wk-story { gap: 14px; padding: 22px; } }
-
-    /* System map. */
-    #wk .wk-eco-row { display: grid; grid-template-columns: minmax(0, 1fr) 72px minmax(0, 1fr) 72px minmax(0, 1fr); align-items: stretch; }
-    #wk .wk-eco-col { display: flex; flex-direction: column; overflow: hidden; border: 1px solid var(--scc-hairline); border-radius: 18px; background: var(--wk-card); }
-    #wk .wk-eco-col > header { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; padding: 13px 18px; font: 600 11px/1.3 var(--scc-sans); letter-spacing: .14em; text-transform: uppercase; }
-    #wk .wk-eco-col > header small { font: 400 11px/1.3 var(--scc-sans); letter-spacing: 0; text-transform: none; opacity: .8; }
-    #wk .is-demand > header { background: var(--wk-violet-soft); color: var(--wk-violet); }
-    #wk .is-supply > header { background: var(--wk-green-soft); color: var(--wk-green); }
-    #wk .is-delivery > header { background: var(--wk-amber-soft); color: var(--wk-amber); }
-    #wk .wk-actor { display: flex; gap: 12px; padding: 14px 18px; border-top: 1px solid var(--scc-hairline); }
-    #wk .wk-eco-col > header + .wk-actor { border-top: 0; }
-    #wk .wk-ico { display: grid; place-items: center; width: 38px; height: 38px; flex: none; border-radius: 12px; background: rgba(23, 20, 16, .06); }
-    #wk .is-demand .wk-ico { background: var(--wk-violet-soft); color: var(--wk-violet); }
-    #wk .is-supply .wk-ico { background: var(--wk-green-soft); color: var(--wk-green); }
-    #wk .is-delivery .wk-ico { background: var(--wk-amber-soft); color: var(--wk-amber); }
-    #wk .wk-actor b { display: block; font-size: 15px; line-height: 1.3; }
-    #wk .wk-actor > div > span { display: block; margin-top: 3px; color: var(--scc-ink-soft); font-size: 13px; line-height: 1.45; }
-    #wk .wk-eco-col > footer { display: grid; gap: 7px; margin-top: auto; padding: 12px 18px 14px; border-top: 1px dashed var(--scc-hairline); background: #faf8f4; font-size: 12.5px; line-height: 1.4; }
-    #wk .wk-eco-col > footer p { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: baseline; gap: 8px; margin: 0; }
-    #wk .wk-eco-link { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; padding: 0 4px; color: var(--scc-ink-soft); font: italic 400 12px/1.3 var(--scc-sans); text-align: center; }
-    #wk .wk-eco-return { position: relative; height: 30px; margin: 0 calc((100% - 144px) / 6) 26px; border: 1.5px solid var(--scc-ink-soft); border-top: 0; border-radius: 0 0 16px 16px; }
-    #wk .wk-eco-return::before { content: ""; position: absolute; top: -1px; left: -6.5px; border: 5.5px solid transparent; border-top: 0; border-bottom: 8px solid var(--scc-ink-soft); }
-    #wk .wk-eco-return span { position: absolute; bottom: -9px; left: 50%; padding: 0 10px; background: var(--scc-bg); color: var(--scc-ink-soft); font: italic 400 12px/1.4 var(--scc-sans); white-space: nowrap; transform: translateX(-50%); }
-    @media (max-width: 900px) {
-      #wk .wk-eco-row { grid-template-columns: 1fr; }
-      #wk .wk-eco-link { flex-direction: row; padding: 10px 0; }
-      #wk .wk-eco-link .wk-arrow { width: 26px; transform: rotate(90deg); }
-      #wk .wk-eco-return { height: auto; margin: 14px 0 26px; border: 0; text-align: center; }
-      #wk .wk-eco-return::before { display: none; }
-      #wk .wk-eco-return span { position: static; padding: 0; transform: none; white-space: normal; }
-    }
-
-    /* One order, end to end. */
-    #wk .wk-journey { position: relative; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 16px; margin: 0 0 8px; padding: 0; list-style: none; }
-    #wk .wk-journey::before { content: ""; position: absolute; top: 22px; left: 22px; right: 22px; height: 1.5px; background: var(--scc-hairline); }
-    #wk .wk-journey li { position: relative; display: flex; flex-direction: column; align-items: flex-start; margin: 0; }
-    #wk .wk-journey .wk-ico { width: 44px; height: 44px; border-radius: 50%; box-shadow: 0 0 0 6px var(--scc-bg); }
-    #wk .wk-j-num { margin: 14px 0 2px; color: var(--scc-ink-soft); font: 500 10px/1.4 var(--scc-sans); letter-spacing: .14em; }
-    #wk .wk-journey b { font-size: 15px; line-height: 1.3; }
-    #wk .wk-journey p { margin: 6px 0 12px; color: var(--scc-ink-soft); font-size: 13px; line-height: 1.45; }
-    #wk .wk-journey .wk-owner { margin-top: auto; }
-    @media (max-width: 900px) {
-      #wk .wk-journey { grid-template-columns: 1fr; gap: 0; }
-      #wk .wk-journey::before { top: 22px; bottom: 30px; left: 21px; right: auto; width: 1.5px; height: auto; }
-      #wk .wk-journey li { display: grid; grid-template-columns: 44px minmax(0, 1fr); column-gap: 16px; padding-bottom: 20px; }
-      #wk .wk-journey li > * { grid-column: 2; }
-      #wk .wk-journey .wk-ico { grid-column: 1; grid-row: 1 / span 4; }
-      #wk .wk-j-num { margin-top: 2px; }
-      #wk .wk-journey .wk-owner { justify-self: start; }
-    }
-
-    /* Who did what. */
-    #wk .wk-scope { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.3fr); gap: 14px; }
-    #wk .wk-scope.is-two { grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); }
-    #wk .wk-scope-card { padding: 20px 22px 12px; border: 1px dashed var(--scc-ink-soft); border-radius: 18px; }
-    #wk .wk-scope-card.is-team { border: 1px solid var(--scc-ink); background: var(--wk-card); }
-    #wk .wk-scope-card.is-me { border: 1px solid var(--scc-ink); background: var(--scc-ink); color: var(--scc-bg); }
-    #wk .wk-scope-tag { margin: 0 0 8px; font: 600 11px/1.3 var(--scc-sans); letter-spacing: .14em; text-transform: uppercase; opacity: .75; }
-    #wk .wk-scope-card ul { margin: 0; padding: 0; list-style: none; }
-    #wk .wk-scope-card li { margin: 0; padding: 10px 0; border-top: 1px solid rgba(23, 20, 16, .12); font-size: 14.5px; line-height: 1.45; }
-    #wk .wk-scope-card.is-me li { border-top-color: rgba(252, 251, 249, .2); }
-    @media (max-width: 900px) { #wk .wk-scope, #wk .wk-scope.is-two { grid-template-columns: 1fr; } }
-
-    /* Design strategy cards. */
-    #wk .wk-cards3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
-    #wk .wk-icard { display: flex; flex-direction: column; padding: 22px 22px 18px; border: 1px solid var(--scc-hairline); border-radius: 18px; background: var(--wk-card); }
-    #wk .wk-icard-num { margin: 0; font: 470 44px/1 var(--scc-serif); }
-    #wk .wk-icard h4 { margin: 14px 0 8px; font-size: 22px; }
-    #wk .wk-icard-k { margin: 12px 0 3px; color: var(--scc-ink-soft); font: 600 10px/1.4 var(--scc-sans); letter-spacing: .14em; text-transform: uppercase; }
-    #wk .wk-icard p.wk-icard-t { margin: 0; font-size: 14.5px; line-height: 1.5; }
-    #wk .wk-icard .wk-owner { align-self: flex-start; margin-top: 18px; }
-    @media (max-width: 900px) { #wk .wk-cards3 { grid-template-columns: 1fr; } }
-
-    /* Delivery sets: copy, then adjust. */
-    #wk .wk-sets { display: grid; grid-template-columns: minmax(0, 1fr) 72px minmax(0, 1fr); align-items: center; margin: 18px 0 12px; }
-    #wk .wk-set { padding: 18px 18px 16px; border: 1px solid var(--scc-hairline); border-radius: 16px; background: var(--wk-card); }
-    #wk .wk-set.is-delivery { border-color: rgba(43, 138, 87, .35); background: var(--wk-green-soft); }
-    #wk .wk-set-tag { margin: 0; color: var(--scc-ink-soft); font: 600 10px/1.4 var(--scc-sans); letter-spacing: .14em; text-transform: uppercase; }
-    #wk .wk-set-name { margin: 6px 0 12px; font: 480 20px/1.2 var(--scc-serif); }
-    #wk .wk-set .wk-chips li.is-changed { border-color: var(--wk-green); color: var(--wk-green); font-weight: 600; }
-    #wk .wk-set-foot { margin: 12px 0 0; color: var(--scc-ink-soft); font-size: 12.5px; line-height: 1.45; }
-    #wk .wk-only { display: flex; align-items: center; gap: 12px; margin: 0 0 8px; padding: 14px 18px; border: 1px dashed var(--wk-green); border-radius: 14px; font-size: 14px; line-height: 1.45; }
-    #wk .wk-only .wk-ico { background: var(--wk-green-soft); color: var(--wk-green); }
-    @media (max-width: 700px) { #wk .wk-sets { grid-template-columns: 1fr; } #wk .wk-sets .wk-eco-link .wk-arrow { width: 26px; transform: rotate(90deg); } #wk .wk-sets .wk-eco-link { flex-direction: row; padding: 10px 0; } }
-
-    /* Numbered step chain. */
-    #wk .wk-chain { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin: 14px 0 18px; padding: 0; list-style: none; counter-reset: wkc; }
-    #wk .wk-chain li { margin: 0; padding: 14px 16px; border: 1px solid var(--scc-hairline); border-radius: 14px; background: var(--wk-card); color: var(--scc-ink-soft); font-size: 13px; line-height: 1.45; }
-    #wk .wk-chain li::before { counter-increment: wkc; content: counter(wkc, decimal-leading-zero); display: block; margin-bottom: 8px; font: 500 10px/1 var(--scc-sans); letter-spacing: .14em; }
-    #wk .wk-chain li b { display: block; margin-bottom: 4px; color: var(--scc-ink); font-size: 15px; }
-
-    /* Before → after. */
-    #wk .wk-ba { margin: 0 0 1.6em; padding: 0; list-style: none; }
-    #wk .wk-ba li { display: grid; grid-template-columns: minmax(0, .85fr) 40px minmax(0, 1.25fr); align-items: center; gap: 8px; margin: 0; padding: 13px 0; border-top: 1px solid var(--scc-hairline); }
-    #wk .wk-ba li.is-head { padding: 0 0 8px; border-top: 0; color: var(--scc-ink-soft); font: 600 10px/1.4 var(--scc-sans); letter-spacing: .14em; text-transform: uppercase; }
-    #wk .wk-ba-before { color: var(--scc-ink-soft); font-size: 14px; line-height: 1.45; }
-    #wk .wk-ba .wk-arrow { width: 28px; color: var(--scc-ink-soft); }
-    #wk .wk-ba-after { font-size: 15px; line-height: 1.45; }
-    @media (max-width: 560px) { #wk .wk-ba li { grid-template-columns: 1fr; gap: 2px; } #wk .wk-ba .wk-arrow, #wk .wk-ba li.is-head { display: none; } }
-
-    /* Architecture flows (Hey Atu). */
-    #wk .wk-arch-label { margin: 0 0 10px; color: var(--scc-ink-soft); font: 600 10px/1.4 var(--scc-sans); letter-spacing: .14em; text-transform: uppercase; }
-    #wk .wk-flow { display: grid; grid-template-columns: minmax(0, 1fr) 92px minmax(0, 1fr) 92px minmax(0, 1fr); align-items: center; margin: 0 0 26px; }
-    #wk .wk-node { padding: 14px; border: 1px solid var(--scc-hairline); border-radius: 14px; background: var(--wk-card); text-align: center; }
-    #wk .wk-node.is-hub { border-color: var(--scc-ink); }
-    #wk .wk-node b { display: block; font-size: 14.5px; line-height: 1.3; }
-    #wk .wk-node span { display: block; margin-top: 4px; color: var(--scc-ink-soft); font-size: 12px; line-height: 1.4; }
-    #wk .wk-edge { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 0 6px; color: var(--scc-ink-soft); font: italic 400 11px/1.3 var(--scc-sans); text-align: center; }
-    #wk .wk-edge.is-back .wk-arrow { transform: scaleX(-1); }
-    #wk .wk-stack { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin: 0; padding: 0; list-style: none; }
-    #wk .wk-stack li { margin: 0; padding: 12px 14px; border-radius: 12px; background: var(--wk-warm); font-size: 13px; line-height: 1.45; }
-    #wk .wk-stack li b { display: block; margin-bottom: 2px; color: var(--scc-ink-soft); font-size: 10px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; }
-    @media (max-width: 700px) {
-      #wk .wk-flow { grid-template-columns: 1fr; }
-      #wk .wk-edge { flex-direction: row; justify-content: center; padding: 8px 0; }
-      #wk .wk-edge .wk-arrow { width: 26px; transform: rotate(90deg); }
-      #wk .wk-edge.is-back .wk-arrow { transform: rotate(-90deg); }
-      #wk .wk-stack { grid-template-columns: 1fr 1fr; }
-    }
-  </style>
+  <script src="work.js" defer></script>
 </head>
 <body class="scrollcarousel-page scc-detail-page">
   <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
@@ -244,16 +31,10 @@
     <symbol id="l-tiktok" viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></symbol>
     <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></symbol>
     <symbol id="i-play" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M10 9.2v5.6l4.8-2.8z"/></symbol>
-    <symbol id="i-ticket" viewBox="0 0 24 24"><path d="M3 7h18v3a2 2 0 0 0 0 4v3H3v-3a2 2 0 0 0 0-4z"/><path d="M14.5 7v10" stroke-dasharray="2 2.2"/></symbol>
-    <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4M8 14h3"/></symbol>
     <symbol id="i-store" viewBox="0 0 24 24"><path d="M4 10v10h16V10"/><path d="M3 10l2-6h14l2 6"/><path d="M3 10a3 3 0 0 0 6 0 3 3 0 0 0 6 0 3 3 0 0 0 6 0"/><path d="M10 20v-5h4v5"/></symbol>
     <symbol id="i-briefcase" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M3 13h18"/></symbol>
-    <symbol id="i-pot" viewBox="0 0 24 24"><path d="M4 11h16v3a6 6 0 0 1-6 6h-4a6 6 0 0 1-6-6z"/><path d="M2 11h20M9 7.5c0-1.2 1-1.3 1-2.5M14 7.5c0-1.2 1-1.3 1-2.5"/></symbol>
-    <symbol id="i-console" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/><path d="M7 12l3-3 3 2 4-4"/></symbol>
     <symbol id="i-scooter" viewBox="0 0 24 24"><circle cx="6" cy="17" r="2.6"/><circle cx="18" cy="17" r="2.6"/><path d="M8.6 17h6.8l2.6-7h-3.5M14 5h2.5l1.5 5"/><path d="M3.5 14.5 6 11h5"/></symbol>
     <symbol id="i-station" viewBox="0 0 24 24"><path d="M3 21h18M5 21V9l7-5 7 5v12"/><path d="M9.5 21v-5.5h5V21M9 11h6"/></symbol>
-    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></symbol>
-    <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.3a4.3 4.3 0 0 1 7.5 2.5C19.5 15.4 12 20 12 20z"/></symbol>
     <symbol id="i-flame" viewBox="0 0 24 24"><path d="M12 21c-3.9 0-7-2.8-7-6.6 0-3.4 2.4-5.1 3.6-8.4.7 1.7 1.8 2.6 2.9 3C12 6.4 13 4.4 14.8 3c.2 3.6 4.2 5.6 4.2 11.4 0 3.8-3.1 6.6-7 6.6z"/></symbol>
   </svg>
 
@@ -274,495 +55,640 @@
 
     <nav class="wk-tabs" aria-label="Case studies">
       <div class="wk-tabs-inner" role="tablist">
-        <button class="wk-tab" type="button" role="tab" id="tab-alibaba" aria-controls="case-alibaba" aria-selected="true" data-case="alibaba"><small>01</small><b>Alibaba</b><span>Merchant chatbot</span></button>
-        <button class="wk-tab" type="button" role="tab" id="tab-bytedance" aria-controls="case-bytedance" aria-selected="false" tabindex="-1" data-case="bytedance"><small>02</small><b>ByteDance</b><span>Order First, Then Delivery</span></button>
-        <button class="wk-tab" type="button" role="tab" id="tab-hey-atu" aria-controls="case-hey-atu" aria-selected="false" tabindex="-1" data-case="hey-atu"><small>03</small><b>Hey Atu</b><span>A complete product, shipped</span></button>
+        <button class="wk-tab" type="button" role="tab" id="tab-alibaba" aria-controls="case-alibaba" aria-selected="true"><small>01</small><b>Alibaba</b></button>
+        <button class="wk-tab" type="button" role="tab" id="tab-bytedance" aria-controls="case-bytedance" aria-selected="false" tabindex="-1"><small>02</small><b>ByteDance</b></button>
+        <button class="wk-tab" type="button" role="tab" id="tab-hey-atu" aria-controls="case-hey-atu" aria-selected="false" tabindex="-1"><small>03</small><b>Hey Atu</b></button>
       </div>
+      <div class="wk-chapnav" aria-label="Chapters"></div>
     </nav>
+
+    <div class="wk-shell">
+      <aside class="wk-side">
+        <nav aria-label="Case studies and chapters">
+          <p class="wk-side-title">Three case studies</p>
+          <ol>
+            <li class="wk-side-case is-active"><button type="button"><small>01</small><b>Alibaba</b><span>Merchant chatbot</span></button><ol class="wk-side-chapters"></ol></li>
+            <li class="wk-side-case"><button type="button"><small>02</small><b>ByteDance</b><span>Order First, Then Delivery</span></button><ol class="wk-side-chapters"></ol></li>
+            <li class="wk-side-case"><button type="button"><small>03</small><b>Hey Atu</b><span>A complete product, shipped</span></button><ol class="wk-side-chapters"></ol></li>
+          </ol>
+        </nav>
+      </aside>
 
     <article class="scc-detail-content" id="wk" data-layout="two-column">
 
       <!-- ============ 01 ALIBABA ============ -->
-      <div class="wk-panel is-active" id="case-alibaba" role="tabpanel" aria-labelledby="tab-alibaba">
-      <section class="scc-detail-block scc-detail-block-intro" id="alibaba">
-        <div class="scc-detail-block-body">
-          <p class="wk-label">01 · Alibaba · Taobao Customer Service Platform · 2020–2022</p>
-          <h2>A merchant chatbot that solves the problem, not just answers it</h2>
-          <p class="wk-lead">Taobao merchants send 200,000 support questions a day: orders, fulfilment, promotions, platform rules. I was the sole designer of the merchant chatbot and Help Center, and owned the ticket, escalation and permission modules of the agent workspace. Engineers built it. This was before LLMs: decision trees and good content.</p>
-          <figure><img src="img/ali-overview.webp" width="1600" height="900" decoding="async" alt="Help Center and chatbot on web and app, resolving 80% of customer questions"><figcaption>One system across Help Center and chatbot, web and app.</figcaption></figure>
-        </div>
-      </section>
-
-      <section class="scc-detail-block">
-        <h3>Results</h3>
-        <div class="scc-detail-block-body">
-          <ul class="wk-stats">
-            <li><b>200K</b><span>inquiries a day</span></li>
-            <li><b>80%+</b><span>solved without a human</span></li>
-            <li><b>52% → 81%</b><span>Help Center resolution</span></li>
-            <li><b>20+</b><span>localised sites reuse the framework</span></li>
-          </ul>
-        </div>
-      </section>
-
-      <section class="scc-detail-block">
-        <h3>How the resolution rate went up</h3>
-        <div class="scc-detail-block-body">
-          <div class="wk-cards2">
-            <div class="wk-card"><p class="wk-card-num">01</p><h4>Solution-first answers</h4><p><b>Problem.</b> The bot replied with an article; the merchant still had to find the fix.</p><p><b>Change.</b> Every branch of the tree ends in an action: a button, form or shortcut that does the fix.</p></div>
-            <div class="wk-card"><p class="wk-card-num">02</p><h4>Task-based tree</h4><p><b>Problem.</b> Questions were sorted by internal department, not by what the merchant was trying to do.</p><p><b>Change.</b> A tree built on merchant tasks: listing → order → fulfilment → after-sales. Guided questions narrow the case in a few taps.</p></div>
-            <div class="wk-card"><p class="wk-card-num">03</p><h4>Fix the content behind it</h4><p><b>Problem.</b> The bot is only as good as its content: 3,000+ articles, 5 levels deep, duplicated topics.</p><p><b>Change.</b> Card sorting with 16 merchants → 4 domains, 3 levels, semantic tags. Intents link straight to articles. Resolution 52% → 81%, search-to-answer −35%.</p></div>
-            <div class="wk-card"><p class="wk-card-num">04</p><h4>Hand-off with context</h4><p><b>Problem.</b> When the bot failed, merchants repeated everything to a human.</p><p><b>Change.</b> The conversation and diagnosis go to the agent, who gets AI reply suggestions in one panel. Failure is cheap, so the bot can stay strict.</p></div>
+      <div class="wk-panel is-active" id="case-alibaba" data-case="alibaba" role="tabpanel" aria-labelledby="tab-alibaba">
+        <section class="wk-chapter" id="alibaba" data-title="Overview">
+          <div class="scc-detail-block scc-detail-block-intro">
+            <div class="scc-detail-block-body">
+              <p class="wk-label">01 · Alibaba · Taobao Customer Service Platform · 2020–2022</p>
+              <h2>A merchant chatbot that solves the problem, not just answers it</h2>
+              <div class="wk-ov">
+                <div>
+                  <p class="wk-lead">Taobao merchants send 200,000 support questions a day: orders, fulfilment, promotions, platform rules. This was before LLMs: decision trees and good content.</p>
+                  <p class="wk-role"><b>My role</b>Sole designer of the merchant chatbot and Help Center; owned the ticket, escalation and permission modules of the agent workspace. Engineers built it.</p>
+                </div>
+                <ul class="wk-stats">
+                  <li><b>200K</b><span>inquiries a day</span></li>
+                  <li><b>80%+</b><span>solved without a human</span></li>
+                  <li><b>52% → 81%</b><span>Help Center resolution</span></li>
+                  <li><b>20+</b><span>localised sites reuse the framework</span></li>
+                </ul>
+              </div>
+              <figure><img src="img/ali-overview.webp" width="1600" height="900" decoding="async" alt="Help Center and chatbot on web and app, resolving 80% of customer questions"><figcaption>One system across Help Center and chatbot, web and app.</figcaption></figure>
+            </div>
           </div>
-          <p><small>Measured per node: categorisation accuracy, comprehension time and label clarity. Weak nodes were renamed and re-tested.</small></p>
-        </div>
-      </section>
+        </section>
 
-      <section class="scc-detail-block">
-        <h3>How the conversation was designed</h3>
-        <div class="scc-detail-block-body">
-          <ul>
-            <li><b>Progressive disclosure:</b> one decision per turn; the merchant never sees the whole tree.</li>
-            <li><b>Guided questions first,</b> free text as the fallback.</li>
-            <li><b>Quick actions inside the chat:</b> reply buttons and shortcuts into seller tools.</li>
-            <li><b>One taxonomy, three surfaces:</b> chatbot, Help Center and agent workspace share it, so a case keeps its shape as it moves.</li>
-          </ul>
-          <figure><img src="img/ali-sop.webp" width="1600" height="900" decoding="async" alt="Problem-solving procedure: find, select, read"><figcaption>The problem-solving procedure behind the tree: find → select → read.</figcaption></figure>
-          <figure><img src="img/ali-structure.webp" width="1600" height="900" decoding="async" alt="Card sorting study with 16 merchants"><figcaption>Letting merchants decide where things belong: card sorting with 16 merchants.</figcaption></figure>
-          <figure><img src="img/ali-handoff.webp" width="1600" height="900" decoding="async" alt="Self-service to human hand-off across Help Center, chatbot and human support"><figcaption>Seamless hand-off: Help Center → chatbot → human support.</figcaption></figure>
-        </div>
-      </section>
+        <section class="wk-chapter" id="ali-levers" data-title="How it improved">
+          <div class="scc-detail-block">
+            <h3>How the resolution rate went up</h3>
+            <div class="scc-detail-block-body">
+              <div class="wk-cards2">
+                <div class="wk-card"><p class="wk-card-num">01</p><h4>Solution-first answers</h4><p><b>Problem.</b> The bot replied with an article; the merchant still had to find the fix.</p><p><b>Change.</b> Every branch of the tree ends in an action: a button, form or shortcut that does the fix.</p></div>
+                <div class="wk-card"><p class="wk-card-num">02</p><h4>Task-based tree</h4><p><b>Problem.</b> Questions were sorted by internal department, not by what the merchant was trying to do.</p><p><b>Change.</b> A tree built on merchant tasks: listing → order → fulfilment → after-sales. Guided questions narrow the case in a few taps.</p></div>
+                <div class="wk-card"><p class="wk-card-num">03</p><h4>Fix the content behind it</h4><p><b>Problem.</b> The bot is only as good as its content: 3,000+ articles, 5 levels deep, duplicated topics.</p><p><b>Change.</b> Card sorting with 16 merchants → 4 domains, 3 levels, semantic tags. Intents link straight to articles. Resolution 52% → 81%, search-to-answer −35%.</p></div>
+                <div class="wk-card"><p class="wk-card-num">04</p><h4>Hand-off with context</h4><p><b>Problem.</b> When the bot failed, merchants repeated everything to a human.</p><p><b>Change.</b> The conversation and diagnosis go to the agent, who gets AI reply suggestions in one panel. Failure is cheap, so the bot can stay strict.</p></div>
+              </div>
+              <p><small>Measured per node: categorisation accuracy, comprehension time and label clarity. Weak nodes were renamed and re-tested.</small></p>
+            </div>
+          </div>
+        </section>
 
-      <section class="scc-detail-block">
-        <h3>What still holds for AI products</h3>
-        <div class="scc-detail-block-body">
-          <ul>
-            <li>Design the outcome, not the reply: a conversation should end in a finished task.</li>
-            <li>Content and structure are still the product. An LLM is only as good as what it retrieves.</li>
-            <li>Hand-off is a feature: know when to stop, and pass the context on.</li>
-            <li>Measure per intent and fix the weak nodes.</li>
-          </ul>
-          <p><b>If I built it today with an LLM:</b> the tree becomes the guard-rails, not the interface; quick actions become tool calls with a confirmation step; the Help Center becomes the retrieval source, so the information architecture matters more, not less.</p>
-        </div>
-      </section>
+        <section class="wk-chapter" id="ali-design" data-title="Conversation design">
+          <div class="scc-detail-block">
+            <h3>How the conversation was designed</h3>
+            <div class="scc-detail-block-body">
+              <ul>
+                <li><b>Progressive disclosure:</b> one decision per turn; the merchant never sees the whole tree.</li>
+                <li><b>Guided questions first,</b> free text as the fallback.</li>
+                <li><b>Quick actions inside the chat:</b> reply buttons and shortcuts into seller tools.</li>
+                <li><b>One taxonomy, three surfaces:</b> chatbot, Help Center and agent workspace share it, so a case keeps its shape as it moves.</li>
+              </ul>
+              <figure><img src="img/ali-sop.webp" width="1600" height="900" decoding="async" alt="Problem-solving procedure: find, select, read"><figcaption>The problem-solving procedure behind the tree: find → select → read.</figcaption></figure>
+              <details class="wk-more">
+                <summary>Research and hand-off <span>2 images</span></summary>
+                <div class="wk-more-body">
+                  <figure><img src="img/ali-structure.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Card sorting study with 16 merchants"><figcaption>Letting merchants decide where things belong: card sorting with 16 merchants.</figcaption></figure>
+                  <figure><img src="img/ali-handoff.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Self-service to human hand-off across Help Center, chatbot and human support"><figcaption>Seamless hand-off: Help Center → chatbot → human support.</figcaption></figure>
+                </div>
+              </details>
+            </div>
+          </div>
+        </section>
+
+        <section class="wk-chapter" id="ali-ai" data-title="What still holds">
+          <div class="scc-detail-block">
+            <h3>What still holds for AI products</h3>
+            <div class="scc-detail-block-body">
+              <ul>
+                <li>Design the outcome, not the reply: a conversation should end in a finished task.</li>
+                <li>Content and structure are still the product. An LLM is only as good as what it retrieves.</li>
+                <li>Hand-off is a feature: know when to stop, and pass the context on.</li>
+                <li>Measure per intent and fix the weak nodes.</li>
+              </ul>
+              <p><b>If I built it today with an LLM:</b> the tree becomes the guard-rails, not the interface; quick actions become tool calls with a confirmation step; the Help Center becomes the retrieval source, so the information architecture matters more, not less.</p>
+              <button type="button" class="wk-next" data-next="bytedance"><span><small>Next case · 02</small><b>ByteDance</b><span class="wk-next-sub">Order First, Then Delivery</span></span><svg class="wk-arrow" viewBox="0 0 48 12" aria-hidden="true"><path d="M2 6h42M38 1.5 44 6l-6 4.5"/></svg></button>
+            </div>
+          </div>
+        </section>
       </div>
 
       <!-- ============ 02 BYTEDANCE ============ -->
-      <div class="wk-panel" id="case-bytedance" role="tabpanel" aria-labelledby="tab-bytedance">
-      <section class="scc-detail-block scc-detail-block-intro" id="bytedance">
-        <div class="scc-detail-block-body">
-          <p class="wk-label">02 · ByteDance · TikTok Local Life · 2022–2023</p>
-          <h2>Order First, Then Delivery: building the business side of a new delivery model</h2>
-          <p class="wk-lead">Meituan waits for hunger. Douyin (TikTok China) creates the craving: people see a dish in a video, buy it as a voucher and schedule delivery later. A consumer team made people want the food; my team built what happens next. My own part: the dispatch console for our new delivery stations, and the merchant tools for turning on delivery and handling reserved orders. It started on site, at the stations.</p>
-          <figure><img src="img/bd-orderfirst.webp" width="1600" height="900" decoding="async" alt="Traditional on-demand ordering compared with TikTok's order first, schedule delivery later"><figcaption>Traditional mode vs. TikTok’s mode: impulse first, delivery when you want it.</figcaption></figure>
-        </div>
-      </section>
-
-      <section class="scc-detail-block">
-        <h3>Results</h3>
-        <div class="scc-detail-block-body">
-          <ul class="wk-stats">
-            <li><b>+300%</b><span>order volume for the new model, business-wide</span></li>
-            <li><b>−20%</b><span>average delivery time, from the dispatch console</span></li>
-            <li><b>1 week</b><span>on site at delivery stations</span></li>
-            <li><b>1 month</b><span>to launch the dispatch MVP</span></li>
-          </ul>
-        </div>
-      </section>
-
-      <section class="scc-detail-block scc-detail-block-intro wk-wide">
-        <div class="scc-detail-block-body">
-          <p class="wk-kicker">The business · 1</p>
-          <h3>Search vs. content</h3>
-          <p class="wk-intro">Douyin’s home ground was in-store group buying: a short video makes a dish look great, people buy the same set menu as a voucher and redeem it at the restaurant. Food delivery started during COVID on top of that business and copied the habit: order first, then delivery.</p>
-          <div class="wk-vs">
-            <div class="wk-vs-card is-search">
-              <p class="wk-vs-logos"><span class="wk-logo" title="Meituan"><svg role="img" aria-label="Meituan"><use href="#l-meituan"/></svg></span><span class="wk-logo is-eleme" title="Ele.me"><img src="img/logo-eleme.webp" width="240" height="94" alt="Ele.me"></span><span class="wk-logo is-uber" title="Uber Eats"><svg role="img" aria-label="Uber Eats"><use href="#l-ubereats"/></svg></span></p>
-              <p class="wk-vs-head"><span>Search-driven<small>Meituan, Ele.me, Uber Eats</small></span></p>
-              <dl>
-                <div><dt>Demand starts</dt><dd>You are hungry and search</dd></div>
-                <div><dt>A shop gets found by</dt><dd>Climbing rankings, collecting reviews</dd></div>
-                <div><dt>People buy</dt><dd>Single dishes, delivered now</dd></div>
-                <div><dt>Orders arrive</dt><dd>At mealtimes, fairly steady</dd></div>
-              </dl>
-            </div>
-            <div class="wk-vs-card is-content">
-              <p class="wk-vs-logos"><span class="wk-logo is-tiktok" title="Douyin (TikTok China)"><svg role="img" aria-label="Douyin (TikTok China)"><use href="#l-tiktok"/></svg></span></p>
-              <p class="wk-vs-head"><span>Content-driven<small>Douyin (TikTok China)</small></span></p>
-              <dl>
-                <div><dt>Demand starts</dt><dd>You see a dish in a video and want it</dd></div>
-                <div><dt>A shop gets found by</dt><dd>Its videos and live streams; a dish can sell out overnight</dd></div>
-                <div><dt>People buy</dt><dd>Set menus as vouchers, stocked up, delivered later</dd></div>
-                <div><dt>Orders arrive</dt><dd>Prepaid, scheduled, in spikes after a live stream</dd></div>
-              </dl>
+      <div class="wk-panel" id="case-bytedance" data-case="bytedance" role="tabpanel" aria-labelledby="tab-bytedance">
+        <section class="wk-chapter" id="bytedance" data-title="Overview">
+          <div class="scc-detail-block scc-detail-block-intro">
+            <div class="scc-detail-block-body">
+              <p class="wk-label">02 · ByteDance · TikTok Local Life · 2022–2023</p>
+              <h2>Order First, Then Delivery: building the business side of a new delivery model</h2>
+              <div class="wk-ov">
+                <div>
+                  <p class="wk-lead">Meituan waits for hunger. Douyin (TikTok China) creates the craving: people see a dish in a video, buy it as a voucher and schedule delivery later. A consumer team made people want the food; my team built what happens next.</p>
+                  <p class="wk-role"><b>My role</b>One of three food-delivery designers, with six product managers. I led the dispatch console for our new delivery stations, starting on site, and designed the merchant tools for turning on delivery and handling reserved orders.</p>
+                </div>
+                <ul class="wk-stats">
+                  <li><b>+300%</b><span>order volume for the new model, business-wide</span></li>
+                  <li><b>−20%</b><span>average delivery time, from the dispatch console</span></li>
+                  <li><b>1 week</b><span>on site at delivery stations</span></li>
+                  <li><b>1 month</b><span>to launch the dispatch MVP</span></li>
+                </ul>
+              </div>
+              <figure><img src="img/bd-orderfirst.webp" width="1600" height="900" decoding="async" alt="Traditional on-demand ordering compared with TikTok's order first, schedule delivery later"><figcaption>Traditional mode vs. TikTok’s mode: impulse first, delivery when you want it. Personal details blurred.</figcaption></figure>
             </div>
           </div>
-          <div class="wk-story">
-            <div>
-              <p class="wk-kicker">Content can create the product</p>
-              <h4>A spring camping set</h4>
-              <ul class="wk-chips">
-                <li>Meat marinated and portioned</li>
-                <li>Sides included</li>
-                <li>A grill to rent</li>
-                <li>Live stream staged as a campsite</li>
+        </section>
+
+        <section class="wk-chapter" id="bd-business" data-title="The business">
+          <div class="scc-detail-block scc-detail-block-intro">
+            <div class="scc-detail-block-body">
+              <p class="wk-kicker">The business · 1</p>
+              <h3>Search vs. content</h3>
+              <p class="wk-intro">Douyin’s home ground was in-store group buying: a short video makes a dish look great, people buy the same set menu as a voucher and redeem it at the restaurant. Food delivery started during COVID on top of that business and copied the habit: order first, then delivery.</p>
+              <div class="wk-vs">
+                <div class="wk-vs-card">
+                  <p class="wk-vs-logos"><span class="wk-logo" title="Meituan"><svg role="img" aria-label="Meituan"><use href="#l-meituan"/></svg></span><span class="wk-logo is-uber" title="Uber Eats"><svg role="img" aria-label="Uber Eats"><use href="#l-ubereats"/></svg></span></p>
+                  <p class="wk-vs-head">Search-driven<small>Meituan, Uber Eats</small></p>
+                  <dl>
+                    <div><dt>Demand starts</dt><dd>You are hungry and search</dd></div>
+                    <div><dt>A shop gets found by</dt><dd>Climbing rankings, collecting reviews</dd></div>
+                    <div><dt>People buy</dt><dd>Single dishes, delivered now</dd></div>
+                    <div><dt>Orders arrive</dt><dd>At mealtimes, fairly steady</dd></div>
+                  </dl>
+                </div>
+                <div class="wk-vs-card is-content">
+                  <p class="wk-vs-logos"><span class="wk-logo is-tiktok" title="Douyin (TikTok China)"><svg role="img" aria-label="Douyin (TikTok China)"><use href="#l-tiktok"/></svg></span></p>
+                  <p class="wk-vs-head">Content-driven<small>Douyin (TikTok China)</small></p>
+                  <dl>
+                    <div><dt>Demand starts</dt><dd>You see a dish in a video and want it</dd></div>
+                    <div><dt>A shop gets found by</dt><dd>Its videos and live streams; a dish can sell out overnight</dd></div>
+                    <div><dt>People buy</dt><dd>Set menus as vouchers, stocked up, delivered later</dd></div>
+                    <div><dt>Orders arrive</dt><dd>Prepaid, scheduled, in spikes after a live stream</dd></div>
+                  </dl>
+                </div>
+              </div>
+              <div class="wk-story">
+                <div>
+                  <p class="wk-kicker">Content can create the product</p>
+                  <h4>A spring camping set</h4>
+                  <ul class="wk-chips"><li>Meat marinated and portioned</li><li>Sides included</li><li>A grill to rent</li><li>Live stream staged as a campsite</li></ul>
+                </div>
+                <div>
+                  <p>When camping was the trend, barbecue shops sold ready-to-grill camping sets through videos and live streams. Order it, and it arrives ready for the trip: no supermarket run, no skewering. Drink shops did the same with new flavours, like an ice-cream drink with yogurt chunks.</p>
+                  <p class="wk-story-point">On a search app nobody looks for these. On Douyin they sell because people see them. For merchants, that is the offer: exposure.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="scc-detail-block scc-detail-block-intro">
+            <div class="scc-detail-block-body">
+              <p class="wk-kicker">The business · 2</p>
+              <h3>Three roles</h3>
+              <p class="wk-intro">Shoppers, merchants and delivery, linked by one order. Douyin builds the tools each of them uses; the footer of each column shows who built which tool.</p>
+              <p class="wk-legend"><span class="wk-owner">Consumer team</span><span class="wk-owner is-team">My team</span><span class="wk-owner is-me">Me</span></p>
+              <div class="wk-eco">
+                <div class="wk-eco-row">
+                  <div class="wk-eco-col is-demand">
+                    <header>Demand <small>shoppers</small></header>
+                    <div class="wk-actor"><span class="wk-ico"><svg class="wk-i" aria-hidden="true"><use href="#i-user"/></svg></span><div><b>Shoppers</b><span>See a dish, buy a voucher, schedule delivery when they want it</span></div></div>
+                    <div class="wk-actor"><span class="wk-ico"><svg class="wk-i" aria-hidden="true"><use href="#i-play"/></svg></span><div><b>Videos and live streams</b><span>Made by merchants and service providers</span></div></div>
+                    <footer><p><span class="wk-owner">Consumer team</span>content, entry points</p><p><span class="wk-owner is-team">My team</span>order and schedule-delivery pages</p></footer>
+                  </div>
+                  <div class="wk-eco-link"><span>reserved order</span><svg class="wk-arrow" viewBox="0 0 48 12" aria-hidden="true"><path d="M2 6h42M38 1.5 44 6l-6 4.5"/></svg></div>
+                  <div class="wk-eco-col is-supply">
+                    <header>Supply <small>merchants</small></header>
+                    <div class="wk-actor"><span class="wk-ico"><svg class="wk-i" aria-hidden="true"><use href="#i-store"/></svg></span><div><b>Restaurants</b><span>Already sell in-store sets on Douyin; know delivery from Meituan</span></div></div>
+                    <div class="wk-actor"><span class="wk-ico"><svg class="wk-i" aria-hidden="true"><use href="#i-briefcase"/></svg></span><div><b>Service providers</b><span>Sign up small shops and run their live streams; join and settle through Douyin</span></div></div>
+                    <footer><p><span class="wk-owner is-team">My team</span>merchant tools, service-provider platform</p><p><span class="wk-owner is-me">Me</span>turn-on flow, delivery settings, reserved orders</p></footer>
+                  </div>
+                  <div class="wk-eco-link"><span>call a rider</span><svg class="wk-arrow" viewBox="0 0 48 12" aria-hidden="true"><path d="M2 6h42M38 1.5 44 6l-6 4.5"/></svg></div>
+                  <div class="wk-eco-col is-delivery">
+                    <header>Delivery <small>riders</small></header>
+                    <div class="wk-actor"><span class="wk-ico"><svg class="wk-i" aria-hidden="true"><use href="#i-scooter"/></svg></span><div><b>Delivery network</b><span>Ele.me’s at first; then TikTok’s own stations in Shanghai, Beijing and Shenzhen</span></div></div>
+                    <div class="wk-actor"><span class="wk-ico"><svg class="wk-i" aria-hidden="true"><use href="#i-station"/></svg></span><div><b>One station</b><span>A manager, a dispatcher and 50–100 riders, covering about 5 km</span></div></div>
+                    <footer><p><span class="wk-owner is-team">My team</span>station tools</p><p><span class="wk-owner is-me">Me</span>dispatch console</p></footer>
+                  </div>
+                </div>
+                <div class="wk-eco-return"><span>the rider delivers to the shopper</span></div>
+              </div>
+              <details class="wk-more">
+                <summary>The six-month plan <span>double orders, merchants and cities</span></summary>
+                <div class="wk-more-body">
+                  <figure><img src="img/bd-roadmap.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Six-month roadmap: consumption, merchant service, logistics"><figcaption>Order first, then delivery → service for merchants → our own delivery stations.</figcaption></figure>
+                </div>
+              </details>
+            </div>
+          </div>
+
+          <div class="scc-detail-block scc-detail-block-intro">
+            <div class="scc-detail-block-body">
+              <p class="wk-kicker">The business · 3</p>
+              <h3>One order, role by role</h3>
+              <p class="wk-intro">The three roles across six stages. The bar above each stage shows who built it. Click a step to see what happens and where the design effort went.</p>
+              <div class="wk-lanes" data-lanes data-links='[["1","2"],["2","3"],["3","4"],["4","5"],["5","6"],["6","7"],["s","1","side"]]'>
+                <div class="wk-lanes-grid">
+                  <svg class="wk-lanes-links" aria-hidden="true"></svg>
+                  <div class="wk-lane-bg is-demand" style="grid-row:3"></div>
+                  <div class="wk-lane-bg is-supply" style="grid-row:4"></div>
+                  <div class="wk-lane-bg is-delivery" style="grid-row:5"></div>
+                  <p class="wk-lh" style="grid-column:2">Discover</p>
+                  <p class="wk-lh" style="grid-column:3">Buy</p>
+                  <p class="wk-lh" style="grid-column:4">Schedule</p>
+                  <p class="wk-lh" style="grid-column:5">Prepare</p>
+                  <p class="wk-lh" style="grid-column:6">Dispatch</p>
+                  <p class="wk-lh" style="grid-column:7">Deliver</p>
+                  <p class="wk-band" style="grid-column:2">Consumer team</p>
+                  <p class="wk-band is-team" style="grid-column:3 / 5">My team · order flow</p>
+                  <p class="wk-band is-me" style="grid-column:5">Me · merchant tools</p>
+                  <p class="wk-band is-me" style="grid-column:6">Me · console</p>
+                  <p class="wk-band" style="grid-column:7">Riders</p>
+                  <p class="wk-lane-label is-demand" style="grid-row:3"><svg class="wk-i" aria-hidden="true"><use href="#i-user"/></svg>Shopper</p>
+                  <p class="wk-lane-label is-supply" style="grid-row:4"><svg class="wk-i" aria-hidden="true"><use href="#i-store"/></svg>Merchant</p>
+                  <p class="wk-lane-label is-delivery" style="grid-row:5"><svg class="wk-i" aria-hidden="true"><use href="#i-scooter"/></svg>Station &amp; rider</p>
+                  <button type="button" class="wk-step is-demand" data-step="1" style="grid-column:2;grid-row:3" aria-pressed="false"><span class="wk-step-top"><span class="wk-step-n">1</span><b>Sees a dish</b></span><span class="wk-step-meta">Discover · Shopper</span><span class="wk-owner">Consumer team</span></button>
+                  <button type="button" class="wk-step is-supply is-side" data-step="s" style="grid-column:2;grid-row:4" aria-pressed="false"><span class="wk-step-top"><span class="wk-step-n">+</span><b>Posts videos</b></span><span class="wk-step-meta">Discover · Merchant</span><span class="wk-owner">Consumer team</span></button>
+                  <button type="button" class="wk-step is-demand" data-step="2" data-default style="grid-column:3;grid-row:3" aria-pressed="false"><span class="wk-step-top"><span class="wk-step-n">2</span><b>Buys a voucher</b></span><span class="wk-step-meta">Buy · Shopper</span><span class="wk-owner is-team">My team</span></button>
+                  <button type="button" class="wk-step is-demand" data-step="3" style="grid-column:4;grid-row:3" aria-pressed="false"><span class="wk-step-top"><span class="wk-step-n">3</span><b>Schedules delivery</b></span><span class="wk-step-meta">Schedule · Shopper</span><span class="wk-owner is-team">My team</span></button>
+                  <button type="button" class="wk-step is-supply" data-step="4" style="grid-column:5;grid-row:4" aria-pressed="false"><span class="wk-step-top"><span class="wk-step-n">4</span><b>Prepares the order</b></span><span class="wk-step-meta">Prepare · Merchant</span><span class="wk-owner is-me">Me</span></button>
+                  <button type="button" class="wk-step is-delivery" data-step="5" style="grid-column:6;grid-row:5" aria-pressed="false"><span class="wk-step-top"><span class="wk-step-n">5</span><b>Assigns a rider</b></span><span class="wk-step-meta">Dispatch · Station</span><span class="wk-owner is-me">Me</span></button>
+                  <button type="button" class="wk-step is-delivery" data-step="6" style="grid-column:7;grid-row:5" aria-pressed="false"><span class="wk-step-top"><span class="wk-step-n">6</span><b>Picks up, delivers</b></span><span class="wk-step-meta">Deliver · Rider</span><span class="wk-owner">Station</span></button>
+                  <button type="button" class="wk-step is-demand is-end" data-step="7" style="grid-column:7;grid-row:3" aria-pressed="false"><span class="wk-step-top"><span class="wk-step-n">7</span><b>Meal arrives</b></span><span class="wk-step-meta">Deliver · Shopper</span></button>
+                </div>
+                <div class="wk-ldetail" aria-live="polite"></div>
+
+                <div class="wk-ldata" data-for="1"><div class="wk-ldetail-grid no-media"><div>
+                  <p class="wk-ldetail-head">Step 1 · Discover · Shopper <span class="wk-owner">Consumer team</span></p>
+                  <h4>Sees a dish in a video</h4>
+                  <p class="wk-ldetail-k">What happens</p><p>A merchant’s short video or live stream makes a dish look great: a spring camping set, a new drink.</p>
+                  <p class="wk-ldetail-k">Design focus</p><p class="wk-ldetail-focus">Desire comes before hunger. This part belongs to the consumer team; my team takes over at the tap.</p>
+                </div></div></div>
+                <div class="wk-ldata" data-for="s"><div class="wk-ldetail-grid no-media"><div>
+                  <p class="wk-ldetail-head">Discover · Merchant</p>
+                  <h4>Merchants post videos and live streams</h4>
+                  <p class="wk-ldetail-k">What happens</p><p>Merchants post their own content. For small shops with no time or TikTok know-how, a service provider runs the live stream for them.</p>
+                  <p class="wk-ldetail-k">Design focus</p><p class="wk-ldetail-focus">Exposure is what Douyin offers merchants. On Meituan a shop waits to be found; here it can go out and be seen.</p>
+                </div></div></div>
+                <div class="wk-ldata" data-for="2"><div class="wk-ldetail-grid"><div>
+                  <p class="wk-ldetail-head">Step 2 · Buy · Shopper <span class="wk-owner is-team">My team</span></p>
+                  <h4>Buys a voucher</h4>
+                  <p class="wk-ldetail-k">What happens</p><p>The product page offers two choices: “stock up, schedule later” or “deliver now”. The voucher is refundable, and refunded automatically if it expires.</p>
+                  <p class="wk-ldetail-k">Design focus</p><p class="wk-ldetail-focus">Reuse the in-store voucher people already know. Delivery is one more choice on the same page, not a new flow.</p>
+                </div><figure><img src="img/bd-scr-buy.webp" width="360" height="552" loading="lazy" decoding="async" alt="Product page with two buttons: stock up and schedule later, or deliver now"><figcaption>① Stock up, schedule later ② Deliver now.</figcaption></figure></div></div>
+                <div class="wk-ldata" data-for="3"><div class="wk-ldetail-grid"><div>
+                  <p class="wk-ldetail-head">Step 3 · Schedule · Shopper <span class="wk-owner is-team">My team</span></p>
+                  <h4>Schedules delivery</h4>
+                  <p class="wk-ldetail-k">What happens</p><p>The shopper picks the address and a delivery time up to 7 days ahead, adds notes and cutlery, and sees the delivery fee.</p>
+                  <p class="wk-ldetail-k">Design focus</p><p class="wk-ldetail-focus">Fields, not new screens: scheduling sits inside the order flow people already use.</p>
+                </div><figure><img src="img/bd-scr-schedule.webp" width="360" height="743" loading="lazy" decoding="async" alt="Schedule delivery page with time slots up to seven days ahead"><figcaption>Time slots up to 7 days ahead. Personal details blurred.</figcaption></figure></div></div>
+                <div class="wk-ldata" data-for="4"><div class="wk-ldetail-grid no-media"><div>
+                  <p class="wk-ldetail-head">Step 4 · Prepare · Merchant <span class="wk-owner is-me">Me</span></p>
+                  <h4>The merchant prepares the order</h4>
+                  <p class="wk-ldetail-k">What happens</p><p>A reserved order arrives with its due time. When it is due, it becomes meal prep, then a rider call. Turning on delivery and the delivery settings were mine too.</p>
+                  <ul class="wk-mini"><li>Reserved order</li><li class="is-arrow">→</li><li>Due 17:30</li><li class="is-arrow">→</li><li>Prep</li><li class="is-arrow">→</li><li>Call a rider</li></ul>
+                  <p class="wk-ldetail-k">Design focus</p><p class="wk-ldetail-focus">Merchants already know delivery from Meituan. The new thing is the due time, so the reserved order carries it from the start.</p>
+                </div></div></div>
+                <div class="wk-ldata" data-for="5"><div class="wk-ldetail-grid no-media"><div>
+                  <p class="wk-ldetail-head">Step 5 · Dispatch · Station <span class="wk-owner is-me">Me</span></p>
+                  <h4>The station assigns a rider</h4>
+                  <p class="wk-ldetail-k">What happens</p><p>The dispatcher assigns each order by rider load and distance. AI suggests a rider; the station manager approves or overrides.</p>
+                  <p class="wk-ldetail-k">Design focus</p><p class="wk-ldetail-focus">Design for the spike: a new rider carries 2–3 orders, an experienced one 3–5.</p>
+                  <a class="wk-jump" href="#bd-console">Try it in the console ↓</a>
+                </div></div></div>
+                <div class="wk-ldata" data-for="6"><div class="wk-ldetail-grid no-media"><div>
+                  <p class="wk-ldetail-head">Step 6 · Deliver · Rider <span class="wk-owner">Station</span></p>
+                  <h4>The rider picks up and delivers</h4>
+                  <p class="wk-ldetail-k">What happens</p><p>From one of TikTok’s own stations: a manager, a dispatcher and 50–100 riders covering about 5 km. Ele.me’s network handled delivery at first.</p>
+                  <p class="wk-ldetail-k">Design focus</p><p class="wk-ldetail-focus">Our riders were new and live streams made demand spiky. That shaped the console.</p>
+                </div></div></div>
+                <div class="wk-ldata" data-for="7"><div class="wk-ldetail-grid no-media"><div>
+                  <p class="wk-ldetail-head">Step 7 · Deliver · Shopper</p>
+                  <h4>The meal arrives</h4>
+                  <p class="wk-ldetail-k">What happens</p><p>At the time the shopper chose, sometimes days after the video that started it.</p>
+                  <p class="wk-ldetail-k">Design focus</p><p class="wk-ldetail-focus">The voucher kept the craving until mealtime.</p>
+                </div></div></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="wk-chapter" id="bd-mypart" data-title="My part">
+          <div class="scc-detail-block scc-detail-block-intro">
+            <div class="scc-detail-block-body">
+              <p class="wk-kicker">My part · 1</p>
+              <h3>Who did what</h3>
+              <div class="wk-scope">
+                <div class="wk-scope-card">
+                  <p class="wk-scope-tag">Consumer team</p>
+                  <ul><li>Content and the “I want that” moment</li><li>Entry points from videos and live streams</li></ul>
+                </div>
+                <div class="wk-scope-card is-team">
+                  <p class="wk-scope-tag">My team</p>
+                  <ul><li>Order and schedule-delivery pages: new fields and flow</li><li>Service-provider platform</li><li>Delivery sets in the merchant backend (a teammate)</li></ul>
+                </div>
+                <div class="wk-scope-card is-me">
+                  <p class="wk-scope-tag">Me</p>
+                  <ul><li><b>Dispatch console</b> for our new stations: field research, design and on-site testing, leading across product, engineering and operations</li><li><b>Merchant delivery tools:</b> turn-on flow, delivery settings and reserved-order handling</li></ul>
+                </div>
+              </div>
+              <p class="wk-note">I was one of three food-delivery designers, working with six product managers; engineers built it.</p>
+            </div>
+          </div>
+
+          <div class="scc-detail-block scc-detail-block-intro">
+            <div class="scc-detail-block-body">
+              <p class="wk-kicker">My part · 2</p>
+              <h3>My design strategy: design only what is new</h3>
+              <p class="wk-intro">Everyone in this system already knew delivery: shoppers and merchants from Meituan, station staff from the industry. What was new was the shape of demand: bought ahead as a set, delivered at a chosen time, arriving in spikes when a video took off. So I reused what people knew and designed for that difference.</p>
+              <div class="wk-cards3">
+                <article class="wk-icard">
+                  <p class="wk-icard-num">01</p>
+                  <h4>Make delivery a switch, not a new tool</h4>
+                  <p class="wk-icard-k">Insight</p><p class="wk-icard-t">Merchants already sold sets on Douyin and already ran delivery on Meituan. Learning another tool was the real cost.</p>
+                  <p class="wk-icard-k">Decision</p><p class="wk-icard-t">Turn delivery on from their Douyin store and sets, in the structure they already used. A reserved order carries its due time.</p>
+                  <span class="wk-owner is-me">Merchant tools</span>
+                </article>
+                <article class="wk-icard">
+                  <p class="wk-icard-num">02</p>
+                  <h4>Design for the spike, not the average</h4>
+                  <p class="wk-icard-k">Insight</p><p class="wk-icard-t">A hit dish floods a shop and its station at once, and our riders were new. At peak, some were overloaded while others waited.</p>
+                  <p class="wk-icard-k">Decision</p><p class="wk-icard-t">Dispatch by rider load (3–5 orders for an experienced rider, 2–3 for a new one) plus distance; colour tags and drag-to-assign for peaks.</p>
+                  <span class="wk-owner is-me">Dispatch console</span>
+                </article>
+                <article class="wk-icard">
+                  <p class="wk-icard-num">03</p>
+                  <h4>Keep people in charge, and start light</h4>
+                  <p class="wk-icard-k">Insight</p><p class="wk-icard-t">A first algorithm would not be accurate yet, the station manager’s habits shape the work, and stations had to open within months.</p>
+                  <p class="wk-icard-k">Decision</p><p class="wk-icard-t">AI suggests; the manager approves or overrides. A one-month MVP: the console first, rider, pay, equipment and data tools around it.</p>
+                  <span class="wk-owner is-me">Dispatch console</span>
+                </article>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="wk-chapter" id="bd-merchant" data-title="Merchant side">
+          <div class="scc-detail-block">
+            <h3><span class="wk-kicker">My part · 3</span>Merchant side</h3>
+            <div class="scc-detail-block-body">
+              <h4>Turning on delivery <span class="wk-owner is-me">Me</span></h4>
+              <ul>
+                <li><b>Turn on from what you have:</b> start from the Douyin store and its in-store sets, with the same structure as the merchant tools they already used.</li>
+                <li><b>Delivery settings:</b> the delivery-only details each set needs, such as price, stock and packaging.</li>
+                <li><b>Reserved orders:</b> each shows when it is due; at that time it becomes meal prep, then a rider call.</li>
               </ul>
-            </div>
-            <div>
-              <p>When camping was the trend, barbecue shops sold ready-to-grill camping sets through videos and live streams. Order it, and it arrives ready for the trip: no supermarket run, no skewering. Drink shops did the same with new flavours, like an ice-cream drink with yogurt chunks.</p>
-              <p class="wk-story-point">On a search app nobody looks for these. On Douyin they sell because people see them. For merchants, that is the offer: exposure.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="scc-detail-block scc-detail-block-intro wk-wide">
-        <div class="scc-detail-block-body">
-          <p class="wk-kicker">The business · 2</p>
-          <h3>Who is in the system</h3>
-          <p class="wk-intro">Three groups, linked by one order. Douyin builds the tools each of them uses; the footer of each column shows who built which tool.</p>
-          <p class="wk-legend"><span><span class="wk-owner">Consumer team</span></span><span><span class="wk-owner is-team">My team</span></span><span><span class="wk-owner is-me">Me</span></span></p>
-          <div class="wk-eco">
-            <div class="wk-eco-row">
-              <div class="wk-eco-col is-demand">
-                <header>Demand <small>shoppers</small></header>
-                <div class="wk-actor"><span class="wk-ico"><svg class="wk-i" aria-hidden="true"><use href="#i-user"/></svg></span><div><b>Shoppers</b><span>See a dish, buy a voucher, schedule delivery when they want it</span></div></div>
-                <div class="wk-actor"><span class="wk-ico"><svg class="wk-i" aria-hidden="true"><use href="#i-play"/></svg></span><div><b>Videos and live streams</b><span>Made by merchants and service providers</span></div></div>
-                <footer><p><span class="wk-owner">Consumer team</span>content, entry points</p><p><span class="wk-owner is-team">My team</span>order and schedule-delivery pages</p></footer>
+              <h4>Delivery sets: copy, then adjust <span class="wk-owner is-team">Team</span></h4>
+              <p>Douyin sells set menus, rarely single dishes. Delivery sets start from the in-store ones, with a small difference on purpose: a shop costs more to run (staff, rent), and identical sets would let customers compare prices and stop coming in. A teammate owned product publishing.</p>
+              <div class="wk-sets">
+                <div class="wk-set">
+                  <p class="wk-set-tag">In-store set</p>
+                  <p class="wk-set-name">Barbecue platter for two</p>
+                  <ul class="wk-chips"><li>Beef</li><li>Pork belly</li><li>Skewers</li><li>Sides</li></ul>
+                  <p class="wk-set-foot">Base items shared with delivery</p>
+                </div>
+                <div class="wk-eco-link"><span>copy, then adjust</span><svg class="wk-arrow" viewBox="0 0 48 12" aria-hidden="true"><path d="M2 6h42M38 1.5 44 6l-6 4.5"/></svg></div>
+                <div class="wk-set is-delivery">
+                  <p class="wk-set-tag">Delivery set</p>
+                  <p class="wk-set-name">Barbecue platter for two</p>
+                  <ul class="wk-chips"><li>Beef</li><li>Pork belly</li><li class="is-changed">Skewers: smaller portion</li><li class="is-changed">Different side</li></ul>
+                  <p class="wk-set-foot">One or two items differ, so prices cannot be compared like for like</p>
+                </div>
               </div>
-              <div class="wk-eco-link"><span>reserved order</span><svg class="wk-arrow" viewBox="0 0 48 12" aria-hidden="true"><path d="M2 6h42M38 1.5 44 6l-6 4.5"/></svg></div>
-              <div class="wk-eco-col is-supply">
-                <header>Supply <small>merchants</small></header>
-                <div class="wk-actor"><span class="wk-ico"><svg class="wk-i" aria-hidden="true"><use href="#i-store"/></svg></span><div><b>Restaurants</b><span>Already sell in-store sets on Douyin; know delivery from Meituan</span></div></div>
-                <div class="wk-actor"><span class="wk-ico"><svg class="wk-i" aria-hidden="true"><use href="#i-briefcase"/></svg></span><div><b>Service providers</b><span>Sign up small shops and run their live streams; join and settle through Douyin</span></div></div>
-                <footer><p><span class="wk-owner is-team">My team</span>merchant tools, service-provider platform</p><p><span class="wk-owner is-me">Me</span>turn-on flow, delivery settings, reserved orders</p></footer>
+              <div class="wk-only"><span class="wk-ico"><svg class="wk-i" aria-hidden="true"><use href="#i-flame"/></svg></span><span><b>Delivery-only sets</b> where they fit, like a camping barbecue set with a portable gas stove.</span></div>
+              <p><small>Illustrative example; real menus varied by shop.</small></p>
+              <h4>New merchants through service providers <span class="wk-owner is-team">Team</span></h4>
+              <p>Many new merchants were small shops, like a couple running a fast-food place with no time and no TikTok know-how. Service providers signed them up and ran their stores for them: operations, live streams on their behalf, and matchmaking. The platform follows that work:</p>
+              <ol class="wk-chain">
+                <li><b>Join</b>Qualification, company verification, platform review, deposit</li>
+                <li><b>Sign merchants</b>Recruiting, signing, contracts</li>
+                <li><b>Run their stores</b>Merchant management, live-stream schedule, data</li>
+                <li><b>Settle</b>Settlement accounts and reconciliation</li>
+              </ol>
+              <details class="wk-more">
+                <summary>The service-provider platform <span>structure and dashboard</span></summary>
+                <div class="wk-more-body">
+                  <figure class="is-narrow"><img src="img/bd-merchant.webp" width="1400" height="1575" loading="lazy" decoding="async" alt="Service-provider platform: merchant persona, dashboard, and its structure from joining to settlement"><figcaption>The service-provider platform, from joining to settlement.</figcaption></figure>
+                </div>
+              </details>
+            </div>
+          </div>
+        </section>
+
+        <section class="wk-chapter" id="bd-stations" data-title="Field research">
+          <div class="scc-detail-block">
+            <h3><span class="wk-kicker">My part · 4</span>Delivery stations: hands-on, from the station floor</h3>
+            <div class="scc-detail-block-body">
+              <p>Delivery first ran on Ele.me’s network. As orders grew, TikTok opened its own stations, and they had to open within months. Dispatch was new to all of us, so we went to the stations first, learned from the most mature players, then set our own strategy.</p>
+              <h4>01 · Go to the stations</h4>
+              <p>TikTok was building its own delivery network in high-volume cities: Shanghai, Beijing and Shenzhen. With the product managers I spent a week on site and mapped who does what. A station covers about 5 km and runs on a station manager, a dispatcher and 50–100 riders. Dispatch happened in chat groups and spreadsheets.</p>
+              <ul>
+                <li>Peak hours: slow response, some riders overloaded while others waited.</li>
+                <li>No view of route efficiency.</li>
+                <li>New stations: inexperienced riders and spiky demand from live streams.</li>
+              </ul>
+              <figure><img src="img/bd-field.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Personas: station manager, dispatcher, experienced rider, new rider"><figcaption>Who we met at the stations. An experienced rider carries 3–5 orders at once (100+ a day); a new rider carries 2–3 (about 80 a day) and struggles at peak.</figcaption></figure>
+              <details class="wk-more">
+                <summary>Inside a Meituan station <span>3 photos</span></summary>
+                <div class="wk-more-body">
+                  <p>To see what a station really needs, we studied how Meituan, the most mature player, runs one.</p>
+                  <figure><img src="img/bd-station-meeting.webp" width="1024" height="768" loading="lazy" decoding="async" alt="Seen from above, a station manager stands in front of about forty Meituan riders lined up beside their delivery boxes for the morning meeting, with markers 1 to 3"><figcaption>A Meituan station’s morning meeting, Shanghai 2019. Photo: <a href="https://www.sinosplice.com/life/archives/2019/04/04/meituan-morning-meeting" rel="noopener">John Pasden, Sinosplice</a>; numbered markers added.</figcaption></figure>
+                  <ol>
+                    <li><b>The station manager</b> runs the morning meeting: yesterday’s numbers, today’s plan, safety.</li>
+                    <li><b>One station’s riders,</b> about forty here. Large stations run 100 or more.</li>
+                    <li><b>Delivery boxes,</b> helmets and uniforms are checked before everyone heads out.</li>
+                  </ol>
+                  <div class="scc-showcase-gallery">
+                    <figure><img src="img/bd-station-office.webp" width="960" height="640" loading="lazy" decoding="async" alt="Inside a station office: shift schedule and rider data pinned on the wall, a staff member on the phone, crates of paper folders on the desk, markers 4 to 6"><figcaption>The station office.</figcaption></figure>
+                    <figure><img src="img/bd-station-board.webp" width="960" height="639" loading="lazy" decoding="async" alt="A station manager writes the day’s station numbers on a whiteboard by hand, marker 7"><figcaption>The station data board.</figcaption></figure>
+                  </div>
+                  <ol start="4">
+                    <li><b>Shift schedule and rider data,</b> on paper on the wall.</li>
+                    <li><b>Dispatch by phone call.</b></li>
+                    <li><b>Paper records</b> in crates on the desk.</li>
+                    <li><b>The station’s numbers,</b> written by hand each day: on-time rate, delivered rate, one-star rate, complaints.</li>
+                  </ol>
+                  <p><small>Office and data board: a Meituan station in Jinan. Photos: Meituan, published on <a href="https://www.logclub.com/articleInfo/MTYyNzU=" rel="noopener">LogClub</a>, 2020; numbered markers added.</small></p>
+                </div>
+              </details>
+              <p>Even at the market leader, a station ran on whiteboards, phone calls and paper. Our console had to put the same things on one screen: who is on shift, what each rider is carrying, and the station’s numbers.</p>
+              <h4>02 · Learn from the most mature players</h4>
+              <ul>
+                <li><b>Ele.me leans on the rider.</b> It watches how orders and riders match up, with an eye on growing new riders.</li>
+                <li><b>Meituan leans on the order.</b> Its riders are mostly experienced, so the tool keeps orders flowing and steps in only on exceptions.</li>
+              </ul>
+              <details class="wk-more">
+                <summary>The competitor comparison <span>rider, order or map</span></summary>
+                <div class="wk-more-body">
+                  <figure><img src="img/bd-competitors.webp" width="1600" height="917" loading="lazy" decoding="async" alt="Comparison of Ele.me, Meituan and TikTok dispatch: rider, order and map focus"><figcaption>What each dispatch tool prioritises: rider, order or map.</figcaption></figure>
+                </div>
+              </details>
+              <h4>03 · Set our own balance</h4>
+              <p>Our stations were new: inexperienced riders, and order spikes whenever a live stream sold vouchers. Neither model fit as it was, so the first version balances order, rider and map:</p>
+              <ul>
+                <li><b>Dispatch by rider load,</b> plus distance.</li>
+                <li><b>Two ways in.</b> Start from an order and find a rider on the map, or start from a rider and see their route.</li>
+                <li><b>People stay in charge:</b> AI suggests, the station manager approves or overrides.</li>
+              </ul>
+              <h4>04 · Test on site, then measure</h4>
+              <p>I led user testing with station staff on site, and a data dashboard tracked delivery time and rider utilisation from day one.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="wk-chapter" id="bd-console" data-title="The console">
+          <div class="scc-detail-block scc-detail-block-intro">
+            <div class="scc-detail-block-body">
+              <p class="wk-kicker">My part · 5</p>
+              <h3>The dispatch console</h3>
+              <p class="wk-intro">Rebuilt as an interactive demo with fictional data; the real interface is confidential. Try it: approve the AI suggestion, drag an order onto a rider, open a rider’s route, or simulate a live-stream spike. Switch to 中文 for the original language.</p>
+              <div class="wk-console" data-console>
+                <figure><img src="img/bd-console-demo.webp" width="1200" height="680" decoding="async" alt="Dispatch console: orders by status, routes on a map, each rider's current orders"><figcaption>Console structure. Turn on JavaScript to try the interactive version.</figcaption></figure>
               </div>
-              <div class="wk-eco-link"><span>call a rider</span><svg class="wk-arrow" viewBox="0 0 48 12" aria-hidden="true"><path d="M2 6h42M38 1.5 44 6l-6 4.5"/></svg></div>
-              <div class="wk-eco-col is-delivery">
-                <header>Delivery <small>riders</small></header>
-                <div class="wk-actor"><span class="wk-ico"><svg class="wk-i" aria-hidden="true"><use href="#i-scooter"/></svg></span><div><b>Delivery network</b><span>Ele.me’s at first; then TikTok’s own stations in Shanghai, Beijing and Shenzhen</span></div></div>
-                <div class="wk-actor"><span class="wk-ico"><svg class="wk-i" aria-hidden="true"><use href="#i-station"/></svg></span><div><b>One station</b><span>A manager, a dispatcher and 50–100 riders, covering about 5 km</span></div></div>
-                <footer><p><span class="wk-owner is-team">My team</span>station tools</p><p><span class="wk-owner is-me">Me</span>dispatch console</p></footer>
-              </div>
-            </div>
-            <div class="wk-eco-return"><span>the rider delivers to the shopper</span></div>
-          </div>
-          <p class="wk-intro">The goal: double order volume, merchant partners and city coverage in six months, in three steps.</p>
-          <figure><img src="img/bd-roadmap.webp" width="1600" height="900" decoding="async" alt="Six-month roadmap: consumption, merchant service, logistics"><figcaption>The six-month plan: order first, then delivery → service for merchants → our own delivery stations.</figcaption></figure>
-        </div>
-      </section>
-
-      <section class="scc-detail-block scc-detail-block-intro wk-wide">
-        <div class="scc-detail-block-body">
-          <p class="wk-kicker">The business · 3</p>
-          <h3>One order, end to end</h3>
-          <p class="wk-intro">Colour shows who acts at each step; the tag shows who built it.</p>
-          <ol class="wk-journey">
-            <li class="is-demand"><span class="wk-ico"><svg class="wk-i" aria-hidden="true"><use href="#i-play"/></svg></span><p class="wk-j-num">01</p><b>See it</b><p>A merchant’s video or live stream makes a dish look great.</p><span class="wk-owner">Consumer team</span></li>
-            <li class="is-demand"><span class="wk-ico"><svg class="wk-i" aria-hidden="true"><use href="#i-ticket"/></svg></span><p class="wk-j-num">02</p><b>Buy a voucher</b><p>“Stock up, schedule later” or “deliver now”. Refundable.</p><span class="wk-owner is-team">My team</span></li>
-            <li class="is-demand"><span class="wk-ico"><svg class="wk-i" aria-hidden="true"><use href="#i-calendar"/></svg></span><p class="wk-j-num">03</p><b>Schedule delivery</b><p>Address, a time up to 7 days ahead, notes, cutlery, fee.</p><span class="wk-owner is-team">My team</span></li>
-            <li class="is-supply"><span class="wk-ico"><svg class="wk-i" aria-hidden="true"><use href="#i-pot"/></svg></span><p class="wk-j-num">04</p><b>The merchant prepares</b><p>The reserved order shows when it is due; then prep and a rider call.</p><span class="wk-owner is-me">Me</span></li>
-            <li class="is-delivery"><span class="wk-ico"><svg class="wk-i" aria-hidden="true"><use href="#i-console"/></svg></span><p class="wk-j-num">05</p><b>The station dispatches</b><p>By rider load and distance. AI suggests; the station manager confirms.</p><span class="wk-owner is-me">Me</span></li>
-            <li class="is-delivery"><span class="wk-ico"><svg class="wk-i" aria-hidden="true"><use href="#i-scooter"/></svg></span><p class="wk-j-num">06</p><b>A rider delivers</b><p>From one of TikTok’s own stations, or Ele.me’s network at first.</p><span class="wk-owner">Station</span></li>
-          </ol>
-          <figure class="is-narrow"><img src="img/bd-orderflow.webp" width="1400" height="1575" decoding="async" alt="User flow from discover to order to delivery, in three lanes for consumer, merchant and rider, with the app screens for each step"><figcaption>The real flow and screens across consumer, merchant and rider. The entry points on the left came from the consumer team; from order to delivery was ours.</figcaption></figure>
-        </div>
-      </section>
-
-      <section class="scc-detail-block scc-detail-block-intro wk-wide">
-        <div class="scc-detail-block-body">
-          <p class="wk-kicker">My part · 1</p>
-          <h3>Who did what</h3>
-          <div class="wk-scope">
-            <div class="wk-scope-card">
-              <p class="wk-scope-tag">Consumer team</p>
-              <ul><li>Content and the “I want that” moment</li><li>Entry points from videos and live streams</li></ul>
-            </div>
-            <div class="wk-scope-card is-team">
-              <p class="wk-scope-tag">My team</p>
-              <ul><li>Order and schedule-delivery pages: new fields and flow</li><li>Service-provider platform</li><li>Delivery sets in the merchant backend (a teammate)</li></ul>
-            </div>
-            <div class="wk-scope-card is-me">
-              <p class="wk-scope-tag">Me</p>
-              <ul><li><b>Dispatch console</b> for our new stations: field research, design and on-site testing, leading across product, engineering and operations</li><li><b>Merchant delivery tools:</b> turn-on flow, delivery settings and reserved-order handling</li></ul>
+              <ul class="wk-ba">
+                <li class="is-head"><span>At the station</span><span></span><span>In our console</span></li>
+                <li><span class="wk-ba-before">Dispatch by chat group</span><svg class="wk-arrow" viewBox="0 0 48 12" aria-hidden="true"><path d="M2 6h42M38 1.5 44 6l-6 4.5"/></svg><span class="wk-ba-after"><b>One console:</b> orders by status, the map and every rider’s load</span></li>
+                <li><span class="wk-ba-before">No view of riders</span><svg class="wk-arrow" viewBox="0 0 48 12" aria-hidden="true"><path d="M2 6h42M38 1.5 44 6l-6 4.5"/></svg><span class="wk-ba-after"><b>Live rider view:</b> position, route and orders carried against capacity</span></li>
+                <li><span class="wk-ba-before">Uneven workload</span><svg class="wk-arrow" viewBox="0 0 48 12" aria-hidden="true"><path d="M2 6h42M38 1.5 44 6l-6 4.5"/></svg><span class="wk-ba-after"><b>AI suggestions</b> by load and distance; the manager approves or overrides</span></li>
+                <li><span class="wk-ba-before">Peak-hour pressure</span><svg class="wk-arrow" viewBox="0 0 48 12" aria-hidden="true"><path d="M2 6h42M38 1.5 44 6l-6 4.5"/></svg><span class="wk-ba-after"><b>Priority tags,</b> due times and drag-to-assign, as few clicks as possible</span></li>
+                <li><span class="wk-ba-before">No efficiency data</span><svg class="wk-arrow" viewBox="0 0 48 12" aria-hidden="true"><path d="M2 6h42M38 1.5 44 6l-6 4.5"/></svg><span class="wk-ba-after"><b>Dashboard</b> for delivery time and rider utilisation</span></li>
+              </ul>
+              <details class="wk-more">
+                <summary>The MVP feature map and my original sketch <span>2 images</span></summary>
+                <div class="wk-more-body">
+                  <figure><img src="img/bd-mvp.webp" width="1600" height="900" loading="lazy" decoding="async" alt="MVP feature map of the delivery hub system"><figcaption>MVP: the delivery-station system, launched in one month.</figcaption></figure>
+                  <figure><img src="img/bd-console-demo.webp" width="1200" height="680" loading="lazy" decoding="async" alt="Original console sketch: orders by status on the left, routes on a map, each rider's current orders on the right"><figcaption>The sketch I first drew from memory, in Chinese.</figcaption></figure>
+                </div>
+              </details>
+              <p><b>Why it matters for engineering:</b> a real-time operations UI, a person overriding an algorithm, and a two-sided system where one change has to work for merchants, riders and shoppers.</p>
+              <button type="button" class="wk-next" data-next="hey-atu"><span><small>Next case · 03</small><b>Hey Atu</b><span class="wk-next-sub">A complete product, shipped</span></span><svg class="wk-arrow" viewBox="0 0 48 12" aria-hidden="true"><path d="M2 6h42M38 1.5 44 6l-6 4.5"/></svg></button>
             </div>
           </div>
-          <p class="wk-note">I was one of three food-delivery designers, working with six product managers; engineers built it.</p>
-        </div>
-      </section>
-
-      <section class="scc-detail-block scc-detail-block-intro wk-wide">
-        <div class="scc-detail-block-body">
-          <p class="wk-kicker">My part · 2</p>
-          <h3>My design strategy: design only what is new</h3>
-          <p class="wk-intro">Everyone in this system already knew delivery: shoppers and merchants from Meituan, station staff from the industry. What was new was the shape of demand: bought ahead as a set, delivered at a chosen time, arriving in spikes when a video took off. So I reused what people knew and designed for that difference.</p>
-          <div class="wk-cards3">
-            <article class="wk-icard">
-              <p class="wk-icard-num">01</p>
-              <h4>Make delivery a switch, not a new tool</h4>
-              <p class="wk-icard-k">Insight</p><p class="wk-icard-t">Merchants already sold sets on Douyin and already ran delivery on Meituan. Learning another tool was the real cost.</p>
-              <p class="wk-icard-k">Decision</p><p class="wk-icard-t">Turn delivery on from their Douyin store and sets, in the structure they already used. A reserved order carries its due time.</p>
-              <span class="wk-owner is-me">Merchant tools</span>
-            </article>
-            <article class="wk-icard">
-              <p class="wk-icard-num">02</p>
-              <h4>Design for the spike, not the average</h4>
-              <p class="wk-icard-k">Insight</p><p class="wk-icard-t">A hit dish floods a shop and its station at once, and our riders were new. At peak, some were overloaded while others waited.</p>
-              <p class="wk-icard-k">Decision</p><p class="wk-icard-t">Dispatch by rider load (3–5 orders for an experienced rider, 2–3 for a new one) plus distance; colour tags and drag-to-assign for peaks.</p>
-              <span class="wk-owner is-me">Dispatch console</span>
-            </article>
-            <article class="wk-icard">
-              <p class="wk-icard-num">03</p>
-              <h4>Keep people in charge, and start light</h4>
-              <p class="wk-icard-k">Insight</p><p class="wk-icard-t">A first algorithm would not be accurate yet, the station manager’s habits shape the work, and stations had to open within months.</p>
-              <p class="wk-icard-k">Decision</p><p class="wk-icard-t">AI suggests; the manager approves or overrides. A one-month MVP: the console first, rider, pay, equipment and data tools around it.</p>
-              <span class="wk-owner is-me">Dispatch console</span>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <section class="scc-detail-block">
-        <h3><span class="wk-kicker">My part · 3</span>Merchant side</h3>
-        <div class="scc-detail-block-body">
-          <h4>Turning on delivery <span class="wk-owner is-me">Me</span></h4>
-          <ul>
-            <li><b>Turn on from what you have:</b> start from the Douyin store and its in-store sets, with the same structure as the merchant tools they already used.</li>
-            <li><b>Delivery settings:</b> the delivery-only details each set needs, such as price, stock and packaging.</li>
-            <li><b>Reserved orders:</b> each shows when it is due; at that time it becomes meal prep, then a rider call.</li>
-          </ul>
-          <h4>Delivery sets: copy, then adjust <span class="wk-owner is-team">Team</span></h4>
-          <p>Douyin sells set menus, rarely single dishes. Delivery sets start from the in-store ones, with a small difference on purpose: a shop costs more to run (staff, rent), and identical sets would let customers compare prices and stop coming in. A teammate owned product publishing.</p>
-          <div class="wk-sets">
-            <div class="wk-set">
-              <p class="wk-set-tag">In-store set</p>
-              <p class="wk-set-name">Barbecue platter for two</p>
-              <ul class="wk-chips"><li>Beef</li><li>Pork belly</li><li>Skewers</li><li>Sides</li></ul>
-              <p class="wk-set-foot">Base items shared with delivery</p>
-            </div>
-            <div class="wk-eco-link"><span>copy, then adjust</span><svg class="wk-arrow" viewBox="0 0 48 12" aria-hidden="true"><path d="M2 6h42M38 1.5 44 6l-6 4.5"/></svg></div>
-            <div class="wk-set is-delivery">
-              <p class="wk-set-tag">Delivery set</p>
-              <p class="wk-set-name">Barbecue platter for two</p>
-              <ul class="wk-chips"><li>Beef</li><li>Pork belly</li><li class="is-changed">Skewers: smaller portion</li><li class="is-changed">Different side</li></ul>
-              <p class="wk-set-foot">One or two items differ, so prices cannot be compared like for like</p>
-            </div>
-          </div>
-          <div class="wk-only"><span class="wk-ico"><svg class="wk-i" aria-hidden="true"><use href="#i-flame"/></svg></span><span><b>Delivery-only sets</b> where they fit, like a camping barbecue set with a portable gas stove.</span></div>
-          <p><small>Illustrative example; real menus varied by shop.</small></p>
-          <h4>New merchants through service providers <span class="wk-owner is-team">Team</span></h4>
-          <p>Many new merchants were small shops, like a couple running a fast-food place with no time and no TikTok know-how. Service providers signed them up and ran their stores for them: operations, live streams on their behalf, and matchmaking. The platform follows that work:</p>
-          <ol class="wk-chain">
-            <li><b>Join</b>Qualification, company verification, platform review, deposit</li>
-            <li><b>Sign merchants</b>Recruiting, signing, contracts</li>
-            <li><b>Run their stores</b>Merchant management, live-stream schedule, data</li>
-            <li><b>Settle</b>Settlement accounts and reconciliation</li>
-          </ol>
-          <figure class="is-narrow"><img src="img/bd-merchant.webp" width="1400" height="1575" decoding="async" alt="Service-provider platform: merchant persona, dashboard, and its structure from joining to settlement"><figcaption>The service-provider platform, from joining to settlement.</figcaption></figure>
-        </div>
-      </section>
-
-      <section class="scc-detail-block">
-        <h3><span class="wk-kicker">My part · 4</span>Delivery stations: hands-on, from the station floor</h3>
-        <div class="scc-detail-block-body">
-          <p>Delivery first ran on Ele.me’s network. As orders grew, TikTok opened its own stations, and they had to open within months. Dispatch was new to all of us, so we went to the stations first, learned from the most mature players, then set our own strategy.</p>
-          <h4>01 · Go to the stations</h4>
-          <p>TikTok was building its own delivery network in high-volume cities: Shanghai, Beijing and Shenzhen. With the product managers I spent a week on site and mapped who does what. A station covers about 5 km and runs on a station manager, a dispatcher and 50–100 riders. Dispatch happened in chat groups and spreadsheets.</p>
-          <ul>
-            <li>Peak hours: slow response, some riders overloaded while others waited.</li>
-            <li>No view of route efficiency.</li>
-            <li>New stations: inexperienced riders and spiky demand from live streams.</li>
-          </ul>
-          <p>To see what a station really needs, we studied how Meituan, the most mature player, runs one.</p>
-          <figure><img src="img/bd-station-meeting.webp" width="1024" height="768" decoding="async" alt="Seen from above, a station manager stands in front of about forty Meituan riders lined up beside their delivery boxes for the morning meeting, with markers 1 to 3"><figcaption>A Meituan station’s morning meeting, Shanghai 2019. Photo: <a href="https://www.sinosplice.com/life/archives/2019/04/04/meituan-morning-meeting" rel="noopener">John Pasden, Sinosplice</a>; numbered markers added.</figcaption></figure>
-          <ol>
-            <li><b>The station manager</b> runs the morning meeting: yesterday’s numbers, today’s plan, safety.</li>
-            <li><b>One station’s riders,</b> about forty here. Large stations run 100 or more.</li>
-            <li><b>Delivery boxes,</b> helmets and uniforms are checked before everyone heads out.</li>
-          </ol>
-          <div class="scc-showcase-gallery">
-            <figure><img src="img/bd-station-office.webp" width="960" height="640" decoding="async" alt="Inside a station office: shift schedule and rider data pinned on the wall, a staff member on the phone, crates of paper folders on the desk, markers 4 to 6"><figcaption>The station office.</figcaption></figure>
-            <figure><img src="img/bd-station-board.webp" width="960" height="639" decoding="async" alt="A station manager writes the day’s station numbers on a whiteboard by hand, marker 7"><figcaption>The station data board.</figcaption></figure>
-          </div>
-          <ol start="4">
-            <li><b>Shift schedule and rider data,</b> on paper on the wall.</li>
-            <li><b>Dispatch by phone call.</b></li>
-            <li><b>Paper records</b> in crates on the desk.</li>
-            <li><b>The station’s numbers,</b> written by hand each day: on-time rate, delivered rate, one-star rate, complaints.</li>
-          </ol>
-          <p><small>Office and data board: a Meituan station in Jinan. Photos: Meituan, published on <a href="https://www.logclub.com/articleInfo/MTYyNzU=" rel="noopener">LogClub</a>, 2020; numbered markers added.</small></p>
-          <p>Even at the market leader, a station ran on whiteboards, phone calls and paper. Our console had to put the same things on one screen: who is on shift, what each rider is carrying, and the station’s numbers.</p>
-          <figure><img src="img/bd-field.webp" width="1600" height="900" decoding="async" alt="Personas: station manager, dispatcher, experienced rider, new rider"><figcaption>Who we met at the stations. An experienced rider carries 3–5 orders at once (100+ a day); a new rider carries 2–3 (about 80 a day) and struggles at peak.</figcaption></figure>
-          <h4>02 · Learn from the most mature players</h4>
-          <p>We studied the two leaders, Meituan and Ele.me. Each dispatch tool fits its riders:</p>
-          <ul>
-            <li><b>Ele.me leans on the rider.</b> It watches how orders and riders match up, with an eye on growing new riders.</li>
-            <li><b>Meituan leans on the order.</b> Its riders are mostly experienced, so the tool keeps orders flowing and steps in only on exceptions.</li>
-          </ul>
-          <figure><img src="img/bd-competitors.webp" width="1600" height="917" decoding="async" alt="Comparison of Ele.me, Meituan and TikTok dispatch: rider, order and map focus"><figcaption>What each dispatch tool prioritises: rider, order or map.</figcaption></figure>
-          <h4>03 · Set our own balance</h4>
-          <p>Our stations were new: inexperienced riders, and order spikes whenever a live stream sold vouchers. Neither model fit as it was, so the first version balances order, rider and map:</p>
-          <ul>
-            <li><b>Dispatch by rider load,</b> plus distance (strategy 02).</li>
-            <li><b>Two ways in.</b> Start from an order and find a rider on the map, or start from a rider and see their route.</li>
-            <li><b>People stay in charge:</b> AI suggests, the station manager approves or overrides (strategy 03).</li>
-          </ul>
-          <figure><img src="img/bd-console-demo.webp" width="1200" height="680" decoding="async" alt="Dispatch console demo: orders by status on the left, pick-up and drop-off routes on a map, and each rider's current orders on the right"><figcaption>Console structure, shown as a demo I rebuilt from memory (the real interface is confidential): orders by status on the left, routes on the map, each rider’s current orders on the right.</figcaption></figure>
-          <h4>04 · Test on site, then measure</h4>
-          <p>I led user testing with station staff on site, and a data dashboard tracked delivery time and rider utilisation from day one.</p>
-        </div>
-      </section>
-
-      <section class="scc-detail-block">
-        <h3>From pain points to the console</h3>
-        <div class="scc-detail-block-body">
-          <ul class="wk-ba">
-            <li class="is-head"><span>At the station</span><span></span><span>In our console</span></li>
-            <li><span class="wk-ba-before">Dispatch by chat group</span><svg class="wk-arrow" viewBox="0 0 48 12" aria-hidden="true"><path d="M2 6h42M38 1.5 44 6l-6 4.5"/></svg><span class="wk-ba-after"><b>Command-centre console:</b> order board by area and time window</span></li>
-            <li><span class="wk-ba-before">No view of riders</span><svg class="wk-arrow" viewBox="0 0 48 12" aria-hidden="true"><path d="M2 6h42M38 1.5 44 6l-6 4.5"/></svg><span class="wk-ba-after"><b>Live rider view:</b> status, route, current orders</span></li>
-            <li><span class="wk-ba-before">Uneven workload</span><svg class="wk-arrow" viewBox="0 0 48 12" aria-hidden="true"><path d="M2 6h42M38 1.5 44 6l-6 4.5"/></svg><span class="wk-ba-after"><b>AI suggestions</b> by distance and load; the manager approves or overrides</span></li>
-            <li><span class="wk-ba-before">Peak-hour pressure</span><svg class="wk-arrow" viewBox="0 0 48 12" aria-hidden="true"><path d="M2 6h42M38 1.5 44 6l-6 4.5"/></svg><span class="wk-ba-after"><b>Priority colour tags,</b> drag-to-assign, as few clicks as possible</span></li>
-            <li><span class="wk-ba-before">No efficiency data</span><svg class="wk-arrow" viewBox="0 0 48 12" aria-hidden="true"><path d="M2 6h42M38 1.5 44 6l-6 4.5"/></svg><span class="wk-ba-after"><b>Dashboard</b> for delivery time and rider utilisation</span></li>
-          </ul>
-          <figure><img src="img/bd-mvp.webp" width="1600" height="900" decoding="async" alt="MVP feature map of the delivery hub system"><figcaption>MVP: the delivery-station system, launched in one month.</figcaption></figure>
-          <p><b>Why it matters for engineering:</b> a real-time operations UI, a person overriding an algorithm, and a two-sided system where one change has to work for merchants, riders and shoppers.</p>
-        </div>
-      </section>
+        </section>
       </div>
 
       <!-- ============ 03 HEY ATU ============ -->
-      <div class="wk-panel" id="case-hey-atu" role="tabpanel" aria-labelledby="tab-hey-atu">
-      <section class="scc-detail-block scc-detail-block-intro" id="hey-atu">
-        <div class="scc-detail-block-body">
-          <p class="wk-label">03 · Hey Atu · 2026–now · heyatu.com</p>
-          <h2>Hey Atu: shipping a complete product</h2>
-          <p class="wk-lead">Hey Atu lets Claude and ChatGPT use your own computer, so you can ask from your phone and the work runs at home. It is live at heyatu.com with paid plans. This is where I moved from designer to full-stack + UX: I own the product, the UX and the front end I write; my engineering partner builds the agent, relay and app; we ship together.</p>
-          <figure><img src="img/atu-home.webp" width="1600" height="1000" decoding="async" alt="heyatu.com home page"><figcaption>heyatu.com home page: I designed and built it (HTML, CSS, JS).</figcaption></figure>
-        </div>
-      </section>
-
-      <section class="scc-detail-block">
-        <h3>Results</h3>
-        <div class="scc-detail-block-body">
-          <ul class="wk-stats">
-            <li><b>Live</b><span>with paid plans since October 2026</span></li>
-            <li><b>4</b><span>surfaces: web, payments, Mac/Linux, iOS</span></li>
-            <li><b>MCP</b><span>works inside Claude and ChatGPT</span></li>
-            <li><b>~1,500</b><span>lines of front end I wrote</span></li>
-          </ul>
-        </div>
-      </section>
-
-      <section class="scc-detail-block">
-        <h3>Product</h3>
-        <div class="scc-detail-block-body">
-          <p><b>Problem:</b> your AI agent and your files live on your computer, and you are not always at it.</p>
-          <div class="wk-cards2">
-            <div class="wk-card"><h4>Files stay home</h4><p>Execution stays on the user’s computer; the relay cannot read phone messages.</p></div>
-            <div class="wk-card"><h4>Two trust steps</h4><p>Link a computer, then allow each AI app. One command revokes everything.</p></div>
-            <div class="wk-card"><h4>MCP first, iOS next</h4><p>It works inside Claude and ChatGPT today, without waiting for App Store review.</p></div>
-            <div class="wk-card"><h4>One account, one plan</h4><p>Across MCP and iOS: a Stripe subscription with a 7-day trial.</p></div>
+      <div class="wk-panel" id="case-hey-atu" data-case="hey-atu" role="tabpanel" aria-labelledby="tab-hey-atu">
+        <section class="wk-chapter" id="hey-atu" data-title="Overview">
+          <div class="scc-detail-block scc-detail-block-intro">
+            <div class="scc-detail-block-body">
+              <p class="wk-label">03 · Hey Atu · 2026–now · heyatu.com</p>
+              <h2>Hey Atu: shipping a complete product</h2>
+              <div class="wk-ov">
+                <div>
+                  <p class="wk-lead">Hey Atu lets Claude and ChatGPT use your own computer, so you can ask from your phone and the work runs at home. It is live at heyatu.com with paid plans.</p>
+                  <p class="wk-role"><b>My role</b>Where I moved from designer to full-stack + UX: I own the product, the UX and the front end I write; my engineering partner builds the agent, relay and app; we ship together.</p>
+                </div>
+                <ul class="wk-stats">
+                  <li><b>Live</b><span>with paid plans since October 2026</span></li>
+                  <li><b>4</b><span>surfaces: web, payments, Mac/Linux, iOS</span></li>
+                  <li><b>MCP</b><span>works inside Claude and ChatGPT</span></li>
+                  <li><b>~1,500</b><span>lines of front end I wrote</span></li>
+                </ul>
+              </div>
+              <figure><img src="img/atu-home.webp" width="1600" height="1000" decoding="async" alt="heyatu.com home page"><figcaption>heyatu.com home page: I designed and built it (HTML, CSS, JS).</figcaption></figure>
+            </div>
           </div>
-          <figure><img src="img/atu-setup-flow.webp" width="1600" height="867" decoding="async" alt="Three steps: add the connector, sign in with Google, allow on your Mac"><figcaption>Set up once: add the connector, pick the Google account, allow on the computer.</figcaption></figure>
-        </div>
-      </section>
+        </section>
 
-      <section class="scc-detail-block">
-        <h3>Architecture</h3>
-        <div class="scc-detail-block-body">
-          <p class="wk-arch-label">From the phone</p>
-          <div class="wk-flow">
-            <div class="wk-node"><b>iPhone app</b><span>Swift, SwiftUI</span></div>
-            <div class="wk-edge"><span>end-to-end encrypted</span><svg class="wk-arrow" viewBox="0 0 48 12" aria-hidden="true"><path d="M2 6h42M38 1.5 44 6l-6 4.5"/></svg></div>
-            <div class="wk-node is-hub"><b>Relay</b><span>Cloudflare Workers, Durable Objects: pairing, auth, routing</span></div>
-            <div class="wk-edge is-back"><span>outbound-only connection</span><svg class="wk-arrow" viewBox="0 0 48 12" aria-hidden="true"><path d="M2 6h42M38 1.5 44 6l-6 4.5"/></svg></div>
-            <div class="wk-node"><b>Agent on Mac or Linux</b><span>Node.js 22, launchd / systemd, menu bar app</span></div>
+        <section class="wk-chapter" id="atu-product" data-title="Product">
+          <div class="scc-detail-block">
+            <h3>Product</h3>
+            <div class="scc-detail-block-body">
+              <p><b>Problem:</b> your AI agent and your files live on your computer, and you are not always at it.</p>
+              <div class="wk-cards2">
+                <div class="wk-card"><h4>Files stay home</h4><p>Execution stays on the user’s computer; the relay cannot read phone messages.</p></div>
+                <div class="wk-card"><h4>Two trust steps</h4><p>Link a computer, then allow each AI app. One command revokes everything.</p></div>
+                <div class="wk-card"><h4>MCP first, iOS next</h4><p>It works inside Claude and ChatGPT today, without waiting for App Store review.</p></div>
+                <div class="wk-card"><h4>One account, one plan</h4><p>Across MCP and iOS: a Stripe subscription with a 7-day trial.</p></div>
+              </div>
+              <figure><img src="img/atu-setup-flow.webp" width="1600" height="867" loading="lazy" decoding="async" alt="Three steps: add the connector, sign in with Google, allow on your Mac"><figcaption>Set up once: add the connector, pick the Google account, allow on the computer.</figcaption></figure>
+            </div>
           </div>
-          <p class="wk-arch-label">From an AI app</p>
-          <div class="wk-flow">
-            <div class="wk-node"><b>Claude or ChatGPT</b><span>custom MCP connector</span></div>
-            <div class="wk-edge"><span>MCP over TLS + OAuth</span><svg class="wk-arrow" viewBox="0 0 48 12" aria-hidden="true"><path d="M2 6h42M38 1.5 44 6l-6 4.5"/></svg></div>
-            <div class="wk-node is-hub"><b>heyatu.com/mcp</b><span>same Worker, per-app approval</span></div>
-            <div class="wk-edge"><span>forwarded, not stored</span><svg class="wk-arrow" viewBox="0 0 48 12" aria-hidden="true"><path d="M2 6h42M38 1.5 44 6l-6 4.5"/></svg></div>
-            <div class="wk-node"><b>The local AI agent</b><span>files and commands stay on the computer</span></div>
-          </div>
-          <p>The same Worker serves the public site, Google sign-in, accounts and Stripe billing. The computer needs no open inbound port.</p>
-          <ul class="wk-stack">
-            <li><b>Web</b>HTML, CSS, JS, 8 languages</li>
-            <li><b>Payments</b>Stripe subscriptions, 7-day trial</li>
-            <li><b>Auth</b>Google OAuth, QR pairing, Keychain</li>
-            <li><b>Desktop</b>Node.js agent, auto-update with rollback</li>
-            <li><b>Mobile</b>Swift / SwiftUI with a shared web renderer</li>
-            <li><b>Process</b>22 architecture decision records, tests, device acceptance runs</li>
-          </ul>
-        </div>
-      </section>
+        </section>
 
-      <section class="scc-detail-block">
-        <h3>Who did what</h3>
-        <div class="scc-detail-block-body">
-          <div class="wk-scope is-two">
-            <div class="wk-scope-card is-me">
-              <p class="wk-scope-tag">Me</p>
-              <ul>
-                <li>Product, UX, pairing and approval flows, iOS screens, brand and mascot</li>
-                <li>Home page and setup guide code (~1,500 lines: animated hero, dark/light, reduced motion, English/Chinese)</li>
-                <li>Business setup: Australian business name, Stripe, App Store record</li>
-                <li>Acceptance criteria; testing every release on real devices</li>
+        <section class="wk-chapter" id="atu-arch" data-title="Architecture">
+          <div class="scc-detail-block">
+            <h3>Architecture</h3>
+            <div class="scc-detail-block-body">
+              <p class="wk-arch-label">From the phone</p>
+              <div class="wk-flow">
+                <div class="wk-node"><b>iPhone app</b><span>Swift, SwiftUI</span></div>
+                <div class="wk-edge"><span>end-to-end encrypted</span><svg class="wk-arrow" viewBox="0 0 48 12" aria-hidden="true"><path d="M2 6h42M38 1.5 44 6l-6 4.5"/></svg></div>
+                <div class="wk-node is-hub"><b>Relay</b><span>Cloudflare Workers, Durable Objects: pairing, auth, routing</span></div>
+                <div class="wk-edge is-back"><span>outbound-only connection</span><svg class="wk-arrow" viewBox="0 0 48 12" aria-hidden="true"><path d="M2 6h42M38 1.5 44 6l-6 4.5"/></svg></div>
+                <div class="wk-node"><b>Agent on Mac or Linux</b><span>Node.js 22, launchd / systemd, menu bar app</span></div>
+              </div>
+              <p class="wk-arch-label">From an AI app</p>
+              <div class="wk-flow">
+                <div class="wk-node"><b>Claude or ChatGPT</b><span>custom MCP connector</span></div>
+                <div class="wk-edge"><span>MCP over TLS + OAuth</span><svg class="wk-arrow" viewBox="0 0 48 12" aria-hidden="true"><path d="M2 6h42M38 1.5 44 6l-6 4.5"/></svg></div>
+                <div class="wk-node is-hub"><b>heyatu.com/mcp</b><span>same Worker, per-app approval</span></div>
+                <div class="wk-edge"><span>forwarded, not stored</span><svg class="wk-arrow" viewBox="0 0 48 12" aria-hidden="true"><path d="M2 6h42M38 1.5 44 6l-6 4.5"/></svg></div>
+                <div class="wk-node"><b>The local AI agent</b><span>files and commands stay on the computer</span></div>
+              </div>
+              <p>The same Worker serves the public site, Google sign-in, accounts and Stripe billing. The computer needs no open inbound port.</p>
+              <ul class="wk-stack">
+                <li><b>Web</b>HTML, CSS, JS, 8 languages</li>
+                <li><b>Payments</b>Stripe subscriptions, 7-day trial</li>
+                <li><b>Auth</b>Google OAuth, QR pairing, Keychain</li>
+                <li><b>Desktop</b>Node.js agent, auto-update with rollback</li>
+                <li><b>Mobile</b>Swift / SwiftUI with a shared web renderer</li>
+                <li><b>Process</b>22 architecture decision records, tests, device acceptance runs</li>
               </ul>
             </div>
-            <div class="wk-scope-card is-team">
-              <p class="wk-scope-tag">Engineering partner</p>
-              <ul><li>Agent and relay</li><li>iOS app</li><li>Accounts and pricing page</li><li>Translations</li></ul>
+          </div>
+        </section>
+
+        <section class="wk-chapter" id="atu-team" data-title="Who did what">
+          <div class="scc-detail-block">
+            <h3>Who did what</h3>
+            <div class="scc-detail-block-body">
+              <div class="wk-scope is-two">
+                <div class="wk-scope-card is-me">
+                  <p class="wk-scope-tag">Me</p>
+                  <ul>
+                    <li>Product, UX, pairing and approval flows, iOS screens, brand and mascot</li>
+                    <li>Home page and setup guide code (~1,500 lines: animated hero, dark/light, reduced motion, English/Chinese)</li>
+                    <li>Business setup: Australian business name, Stripe, App Store record</li>
+                    <li>Acceptance criteria; testing every release on real devices</li>
+                  </ul>
+                </div>
+                <div class="wk-scope-card is-team">
+                  <p class="wk-scope-tag">Engineering partner</p>
+                  <ul><li>Agent and relay</li><li>iOS app</li><li>Accounts and pricing page</li><li>Translations</li></ul>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
-
-      <section class="scc-detail-block">
-        <h3>How we ship</h3>
-        <div class="scc-detail-block-body">
-          <ol class="wk-chain">
-            <li><b>Define</b>Product principle → design → written acceptance criteria</li>
-            <li><b>Build</b>With AI coding tools; every change is reviewed before it merges</li>
-            <li><b>Accept</b>Acceptance runs on real devices before release, with results recorded</li>
-            <li><b>Release</b>Test → production channels; the app and the desktop agent release independently</li>
-          </ol>
-          <div class="scc-showcase-gallery">
-            <figure><img src="img/atu-guide.webp" width="1600" height="1000" decoding="async" alt="Setup guide on desktop"><figcaption>Setup guide I built: each step shows the screen you will see and the one thing to click.</figcaption></figure>
-            <figure class="is-narrow"><img src="img/atu-guide-mobile.webp" width="780" height="1688" decoding="async" alt="Setup guide on a phone with collapsible steps"><figcaption>Same guide on a phone: collapsible steps.</figcaption></figure>
+          <div class="scc-detail-block">
+            <h3>How we ship</h3>
+            <div class="scc-detail-block-body">
+              <ol class="wk-chain">
+                <li><b>Define</b>Product principle → design → written acceptance criteria</li>
+                <li><b>Build</b>With AI coding tools; every change is reviewed before it merges</li>
+                <li><b>Accept</b>Acceptance runs on real devices before release, with results recorded</li>
+                <li><b>Release</b>Test → production channels; the app and the desktop agent release independently</li>
+              </ol>
+              <div class="scc-showcase-gallery">
+                <figure><img src="img/atu-guide.webp" width="1600" height="1000" loading="lazy" decoding="async" alt="Setup guide on desktop"><figcaption>Setup guide I built: each step shows the screen you will see and the one thing to click.</figcaption></figure>
+                <figure class="is-narrow"><img src="img/atu-guide-mobile.webp" width="780" height="1688" loading="lazy" decoding="async" alt="Setup guide on a phone with collapsible steps"><figcaption>Same guide on a phone: collapsible steps.</figcaption></figure>
+              </div>
+              <figure><img src="img/atu-iphone.webp" width="1600" height="1549" loading="lazy" decoding="async" alt="Hey Atu iPhone app screens: Updates, Chats, Todo"><figcaption>iPhone app (in development): I designed the screens; my partner builds the app.</figcaption></figure>
+            </div>
           </div>
-          <figure><img src="img/atu-iphone.webp" width="1600" height="1549" decoding="async" alt="Hey Atu iPhone app screens: Updates, Chats, Todo"><figcaption>iPhone app (in development): I designed the screens; my partner builds the app.</figcaption></figure>
-        </div>
-      </section>
+        </section>
 
-      <section class="scc-detail-block">
-        <h3>What moving into full-stack taught me</h3>
-        <div class="scc-detail-block-body">
-          <ul>
-            <li>Architecture choices are product choices: end-to-end encryption decides what the app can show.</li>
-            <li>Writing acceptance criteria made me think in states and failure cases, and read the code that handles them.</li>
-          </ul>
-        </div>
-      </section>
-
-      <section class="scc-detail-block">
-        <h3>How I work with AI tools</h3>
-        <div class="scc-detail-block-body">
-          <h4>01 · Start from the use case</h4>
-          <p>I come at engineering from UX, so I don't always know the architecture underneath. I describe the concrete use case and what the person should see, then have AI tools explain each option, check each other's answers, and spell out what each choice costs. Then I decide.</p>
-          <h4>02 · Deployment: know the trade-offs</h4>
-          <p>My creator-business app runs on a home computer and had to be reachable from my phone. I didn't know the hosting options, so I had AI compare a VPS, fully hosted Cloudflare (Workers, R2, D1) and a Cloudflare Tunnel, and recompute the free-tier limits from our real data. I chose the Tunnel: no open ports, no VPN app on the phone. The trade-off: the app is down when that computer is off.</p>
-          <h4>03 · A plausible page is cheap; the story isn't</h4>
-          <p>AI produces a convincing landing page in minutes. The Hey Atu story took many rounds: the one-line hero, which scenario leads, and showing what it can do before teaching how to pair. AI also hid the waitlist email field behind a button. I kept a plain input box, because signing up is the one thing the page must do.</p>
-          <h4>04 · “Fixed” means fixed on the phone</h4>
-          <p><b>Bug.</b> On iPhone, page content showed through above the sticky nav. The AI fixed it twice, checking only in desktop browsers; on my phone it was still broken.<br><b>Cause.</b> I had it reproduce the bug in iOS Safari instead of guessing. iOS 26 Safari reads the top bar's colour once, at page load: our nav was transparent at load, and a grain overlay sat on top of it.<br><b>Fix.</b> A solid nav from the first frame, with the overlay moved underneath. Same pattern with the mascot: its transparent video left ghost trails on iPhone, so we baked it onto the tile colour, one video per theme.</p>
-          <div class="scc-project-links">
-            <a href="https://heyatu.com" rel="noopener">Visit heyatu.com</a>
-            <a href="https://heyatu.com/setup-guide" rel="noopener">See the setup guide</a>
+        <section class="wk-chapter" id="atu-ai" data-title="Working with AI">
+          <div class="scc-detail-block">
+            <h3>What moving into full-stack taught me</h3>
+            <div class="scc-detail-block-body">
+              <ul>
+                <li>Architecture choices are product choices: end-to-end encryption decides what the app can show.</li>
+                <li>Writing acceptance criteria made me think in states and failure cases, and read the code that handles them.</li>
+              </ul>
+              <h4>How I work with AI tools</h4>
+              <details class="wk-acc">
+                <summary>01 · Start from the use case</summary>
+                <p>I come at engineering from UX, so I don't always know the architecture underneath. I describe the concrete use case and what the person should see, then have AI tools explain each option, check each other's answers, and spell out what each choice costs. Then I decide.</p>
+              </details>
+              <details class="wk-acc">
+                <summary>02 · Deployment: know the trade-offs</summary>
+                <p>My creator-business app runs on a home computer and had to be reachable from my phone. I didn't know the hosting options, so I had AI compare a VPS, fully hosted Cloudflare (Workers, R2, D1) and a Cloudflare Tunnel, and recompute the free-tier limits from our real data. I chose the Tunnel: no open ports, no VPN app on the phone. The trade-off: the app is down when that computer is off.</p>
+              </details>
+              <details class="wk-acc">
+                <summary>03 · A plausible page is cheap; the story isn't</summary>
+                <p>AI produces a convincing landing page in minutes. The Hey Atu story took many rounds: the one-line hero, which scenario leads, and showing what it can do before teaching how to pair. AI also hid the waitlist email field behind a button. I kept a plain input box, because signing up is the one thing the page must do.</p>
+              </details>
+              <details class="wk-acc">
+                <summary>04 · “Fixed” means fixed on the phone</summary>
+                <p><b>Bug.</b> On iPhone, page content showed through above the sticky nav. The AI fixed it twice, checking only in desktop browsers; on my phone it was still broken.<br><b>Cause.</b> I had it reproduce the bug in iOS Safari instead of guessing. iOS 26 Safari reads the top bar's colour once, at page load: our nav was transparent at load, and a grain overlay sat on top of it.<br><b>Fix.</b> A solid nav from the first frame, with the overlay moved underneath. Same pattern with the mascot: its transparent video left ghost trails on iPhone, so we baked it onto the tile colour, one video per theme.</p>
+              </details>
+              <div class="scc-project-links" style="margin-top:2em">
+                <a href="https://heyatu.com" rel="noopener">Visit heyatu.com</a>
+                <a href="https://heyatu.com/setup-guide" rel="noopener">See the setup guide</a>
+              </div>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
       </div>
 
       <!-- ============ CONTACT ============ -->
@@ -781,56 +707,12 @@
       </section>
 
     </article>
+    </div>
   </main>
 
   <footer class="scc-detail-footer">
     <a href="/">← Back to portfolio</a>
     <a href="mailto:xinyi.han0816@outlook.com">Email me →</a>
   </footer>
-
-  <script>
-    /* Tabs: one case at a time; the URL hash (#alibaba, #bytedance, #hey-atu) picks the tab. */
-    (function () {
-      var tabs = Array.prototype.slice.call(document.querySelectorAll('.wk-tab'));
-      var panels = tabs.map(function (t) { return document.getElementById(t.getAttribute('aria-controls')); });
-      var hero = document.querySelector('.wk-hero');
-      /* The bar is sticky, so measure where it starts from the hero above it. */
-      function barTop() { return hero.offsetTop + hero.offsetHeight; }
-      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      function select(i, opts) {
-        opts = opts || {};
-        tabs.forEach(function (t, j) {
-          var on = i === j;
-          t.setAttribute('aria-selected', on ? 'true' : 'false');
-          t.tabIndex = on ? 0 : -1;
-          panels[j].classList.toggle('is-active', on);
-        });
-        if (opts.hash) history.replaceState(null, '', '#' + tabs[i].getAttribute('data-case'));
-        if (opts.scroll && window.scrollY > barTop()) window.scrollTo({ top: barTop(), behavior: reduce ? 'auto' : 'smooth' });
-      }
-      function indexFromHash() {
-        var h = decodeURIComponent(location.hash.slice(1));
-        for (var i = 0; i < tabs.length; i++) {
-          if (tabs[i].getAttribute('data-case') === h) return i;
-          if (h && panels[i].querySelector('[id="' + h + '"]')) return i;
-        }
-        return -1;
-      }
-      tabs.forEach(function (t, i) {
-        t.addEventListener('click', function () { select(i, { hash: true, scroll: true }); });
-        t.addEventListener('keydown', function (e) {
-          var n = e.key === 'ArrowRight' ? (i + 1) % tabs.length : e.key === 'ArrowLeft' ? (i + tabs.length - 1) % tabs.length : e.key === 'Home' ? 0 : e.key === 'End' ? tabs.length - 1 : -1;
-          if (n < 0) return;
-          e.preventDefault();
-          tabs[n].focus();
-          select(n, { hash: true });
-        });
-      });
-      var start = indexFromHash();
-      select(start < 0 ? 0 : start);
-      if (start >= 0) window.addEventListener('load', function () { window.scrollTo(0, barTop()); });
-      window.addEventListener('hashchange', function () { var i = indexFromHash(); if (i >= 0) select(i); });
-    })();
-  </script>
 </body>
 </html>
