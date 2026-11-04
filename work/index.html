@@ -2,6 +2,7 @@
 <!-- work/index.html: one-link portfolio for software / front-end roles (Alibaba → ByteDance → Hey Atu).
      Desktop: left directory (cases + chapters). Phone: tabs + chapter chips. Styles: work.css; behaviour: work.js.
      Uses the site's project-detail template tokens (style/scrollcarousel-tokens.css, style/scrollcarousel-detail.css).
+     Alibaba "Try the product" demo: helpdesk.js + helpdesk.css (fictional data; notes in planning/career/jobsearch/portfolio/2026-11-04_alibaba-recall.md).
      Source copy: planning/career/jobsearch/portfolio/2026-11-02_three-case-studies.md;
      ByteDance facts and sources: planning/career/jobsearch/portfolio/2026-11-04_bytedance-recall.md -->
 <html lang="en">
@@ -21,8 +22,10 @@
   <link rel="stylesheet" href="/style/scrollcarousel-tokens.css">
   <link rel="stylesheet" href="/style/scrollcarousel-detail.css">
   <link rel="stylesheet" href="work.css">
+  <link rel="stylesheet" href="helpdesk.css">
   <script>document.documentElement.classList.add('wk-js');</script>
   <script src="work.js" defer></script>
+  <script src="helpdesk.js" defer></script>
 </head>
 <body class="scrollcarousel-page scc-detail-page">
   <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
@@ -96,6 +99,24 @@
                 </ul>
               </div>
               <figure><img src="img/ali-overview.webp" width="1600" height="900" decoding="async" alt="Help Center and chatbot on web and app, resolving 80% of customer questions"><figcaption>One system across Help Center and chatbot, web and app.</figcaption></figure>
+            </div>
+          </div>
+        </section>
+
+        <section class="wk-chapter" id="ali-product" data-title="Try the product">
+          <div class="scc-detail-block scc-detail-block-intro">
+            <div class="scc-detail-block-body">
+              <p class="wk-kicker">The product</p>
+              <h3>From self-service to a person</h3>
+              <p class="wk-intro">Rebuilt as an interactive demo with fictional data; the real interface is confidential. One help system on three surfaces: the Help Center website, a help plugin inside Seller Center, and the mobile app. A merchant’s question starts in self-service, moves to the assistant, and reaches an agent only when it needs one. The bar above the product shows that stage; the panel below shows what happens behind the scenes.</p>
+              <ol class="wk-try">
+                <li><b>In Seller Center, click “Get help” on an order.</b> The plugin opens on that case and checks the order’s facts step by step, instead of asking the merchant to classify the problem.</li>
+                <li><b>Ask for an agent, then minimise the plugin.</b> The Help button keeps the state: in line, with agent, unread messages. The agent already has the case.</li>
+                <li><b>Switch to the website or the app, or to العربية or Español.</b> Same content and tools; layout rules per language, local modules per region.</li>
+              </ol>
+              <div class="wk-helpdesk" data-helpdesk>
+                <figure><img src="img/ali-handoff.webp" width="1600" height="900" decoding="async" alt="Self-service Help Center, AI chatbot and human support as three connected layers"><figcaption>Self-service, chatbot and human support. Turn on JavaScript to try the interactive version.</figcaption></figure>
+              </div>
             </div>
           </div>
         </section>
